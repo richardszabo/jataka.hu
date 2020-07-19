@@ -1,0 +1,187 @@
+#include "NXCDefs.h"
+
+// working mode of the program
+int mode;
+// possible values
+#define MODE_SEARCH 1
+#define MODE_LEFT_FOLLOW 2
+#define MODE_RIGHT_FOLLOW 3
+
+#define min(a,b) ((a)<(b)?(a):(b))
+#define max(a,b) ((a)>(b)?(a):(b))
+
+// normal speed is 50%
+#define FORWARD_SPEED 20
+
+int dist_ahead;
+// n lateral directions
+int dist1;
+int dist2;
+int dist3;
+
+mutex dist_mutex;
+
+int inited;
+
+mutex init_mutex;
+
+// turns the sonar head with dir angle (measured on motor's tachometer)
+void turn(int dir) {
+     // turns in one direction
+     RotateMotor(OUT_A,50,30*dir);
+}
+
+// turns the sonar head from middle to lateral point and measures distances
+void turn_one_half(int dir) {
+     int d;
+     Acquire(dist_mutex);
+     dist_ahead = SensorUS(IN_2);
+     turn(dir);
+     Wait(1);
+     dist1 = SensorUS(IN_2);
+     turn(dir);
+     Wait(1);
+     dist2 = SensorUS(IN_2);
+     turn(dir);
+     Wait(1);
+     dist3 = SensorUS(IN_2);
+     Release(dist_mutex);
+}
+
+
+// turns the sonar head from lateral to middle point and measures distances
+void turn_one_half_back(int dir) {
+     Acquire(dist_mutex);
+     dist3 = SensorUS(IN_2);
+     turn(-1 * dir);
+     Wait(1);
+     dist2 = SensorUS(IN_2);
+     turn(-1 * dir);
+     Wait(1);
+     dist1 = SensorUS(IN_2);
+     turn(-1 * dir);
+     Wait(1);
+     dist_ahead = SensorUS(IN_2);
+     Release(dist_mutex);
+}
+
+// displays current senses
+void display_senses(int pos) {
+     int i;
+     NumOut(pos,LCD_LINE1,dist_ahead,true);
+     NumOut(pos,LCD_LINE2,dist1);
+     NumOut(pos,LCD_LINE3,dist2);
+     NumOut(pos,LCD_LINE4,dist3);
+}
+
+// rotates the sonar to sense the wall in one direction and ahead
+task rotating_for_wall() {
+     int dir;
+     
+     SetSensorLowspeed(IN_2);
+     while(true) {
+          if( mode == MODE_LEFT_FOLLOW ) {
+              dir = -1;
+          } else if( mode == MODE_RIGHT_FOLLOW ) {
+              dir = 1;
+          } else {
+              dir = 0; // in search mode the sonar does not move
+          }
+          
+          // turns in one direction
+          turn_one_half(dir);
+          
+          // display sensed values
+          display_senses(5);
+          
+          // turns back
+          turn_one_half_back(dir);
+          
+          // display sensed values
+          display_senses(70);
+          
+          Acquire(init_mutex);
+          inited = 1;
+          Release(init_mutex);
+     }
+}
+
+
+// converts distances
+// to 100-0 domain
+// distances bigger than 33 cm are ignored
+// 100 - at an obstacle
+// 0 - clear sight
+int convert_dist(int dist) {
+     //return dist > 33 ? 33 : dist;
+     return max(33 - dist,0) * 3;
+}
+
+// moves the robot depending on the distance measures
+task move() {
+     int stimulus;
+     int left_speed;
+     int right_speed;
+
+     while(true) {
+          // senses ahead are more important than in lateral position
+          // stimulus is in 0-1800 interval, theoretically
+          Acquire(init_mutex);
+          if( inited == 0 ) {
+              Release(init_mutex);
+              continue;
+          } else {
+              Release(init_mutex);
+          }
+          
+          Acquire(dist_mutex);
+          
+          /*if( dist_ahead > 33 &&
+              dist1 > 33 &&
+              dist2 > 33 &&
+              dist3 > 33 ) {
+              
+              // no wall in the neighborhood
+              // just go ahead
+              stimulus = 0;
+              
+          } else {*/
+          
+              // calculation based on wall distance
+              stimulus = (convert_dist(dist3) - 40) +
+                     (convert_dist(dist2) - 40) +
+                     convert_dist(dist1) +
+                     2 * convert_dist(dist_ahead);
+          //}
+          Release(dist_mutex);
+          
+          // stimulus converted to 0-100 interval
+          stimulus = stimulus/12;
+          left_speed = max(min(FORWARD_SPEED + stimulus,100),-100);
+          right_speed = max(min(FORWARD_SPEED - stimulus,100),-100);
+          
+          // some debug messages
+          TextOut(5,LCD_LINE6,"                                                                            ");
+          TextOut(5,LCD_LINE7,"                                                                            ");
+          NumOut(5,LCD_LINE6,stimulus);
+          NumOut(70,LCD_LINE6,convert_dist(dist3));
+          NumOut(5,LCD_LINE7,left_speed);
+          NumOut(70,LCD_LINE7,right_speed);
+          
+          // acting on motors
+          OnFwd(OUT_B,left_speed);
+          OnFwd(OUT_C,right_speed);
+          
+          Wait(5);
+    }
+}
+
+// the main program
+task main() {
+     inited = 0;
+     // following right wall
+     // only this mode is implemented
+     mode = MODE_RIGHT_FOLLOW;
+     start rotating_for_wall;
+     start move;
+}

@@ -1,0 +1,773 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head>
+  
+  <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+
+  
+  <meta name="author" content="haran" />
+
+<!-- Navigational metadata for large websites (an accessibility feature): -->
+  <title>A 30 ezer forintos robot</title>
+
+  
+  
+  <link rel="top" href="./index.html" title="Homepage" />
+
+  
+  <link rel="up" href="./index.html" title="Up" />
+
+  
+  <link rel="first" href="./index.html" title="First page" />
+
+  
+  <link rel="previous" href="./index.html" title="Previous page" />
+
+  
+  <link rel="next" href="./index.html" title="Next page" />
+
+  
+  <link rel="last" href="./index.html" title="Last page" />
+
+  
+  <link rel="toc" href="./index.html" title="Table of contents" />
+
+  
+  <link rel="index" href="./index.html" title="Site map" />
+
+  
+  <link rel="stylesheet" type="text/css" href="tierraverde-blue-screen.css" media="screen" title="Tierra Verde (screen)" />
+
+  
+  <link rel="stylesheet" type="text/css" href="tierraverde-print.css" media="print" />
+
+  
+  <link rel="stylesheet" type="text/css" href="artu.css" media="screen" title="Tierra Verde (screen)" />
+
+  
+  <style type="text/css">
+<!--
+.style1 {color: #C1FF64}
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </style>
+</head><body>
+<!-- For non-visual user agents: -->
+<div id="top"><a href="#main-copy" class="doNotDisplay doNotPrint">Skip
+to main
+content.</a></div>
+
+<!-- ##### Header ##### -->
+<div id="header">
+<h1 class="headerTitle"><a href="./index.html" title="Browse to homepage">A
+30 ezer forintos robot</a> </h1>
+</div>
+
+<!-- ##### Side Bar ##### -->
+<div id="side-bar">
+<p class="sideBarTitle"><a href="#motivation">Miért is építünk
+robotot?</a></p>
+<ul>
+  <li><a href="#start">Kezdési lehetőségek</a></li>
+  <li><a href="#csavarhuzo">Csak csavarhúzóm van! - verzió</a></li>
+</ul>
+<p class="sideBarTitle"><a href="#tervezes">Robottervezés</a></p>
+<ul>
+  <li><a href="#30ezresterv">A 30 ezer forintos robot
+  tervezése</a></li>
+  <li><a href="#beszerzes">Beszerzés</a></li>
+</ul>
+<p class="sideBarTitle"><a href="#epites">A váz építése</a></p>
+<p class="sideBarTitle"><a href="#elektronika">Elektronika</a></p>
+<ul>
+  <li><a href="#arduino">Az Arduino mikrokontroller</a></li>
+  <li><a href="#huzal">Összekötés</a></li>
+</ul>
+<p class="sideBarTitle"><a href="#programozas">Programozás</a></p>
+<ul>
+  <li><a href="#remote">Irányítás</a></li>
+</ul>
+<p class="sideBarTitle"><a href="#experiences">Eredmények</a></p>
+<p class="sideBarTitle"><a href="#various">Tapasztalatok, folytatás</a></p>
+<p class="sideBarTitle"><a href="#links">További hasznos oldalak</a></p>
+<!--<span class="sideBarText">
+<span class="doNotDisplay">Useful Links: </span>
+</span>-->
+</div>
+
+<!-- ##### Main Copy ##### -->
+<div id="main-copy">
+<div id="introduction" class="darkerBox">
+<p>Ezen az oldalon arról lesz szó, hogy
+miként lehet viszonylag olcsó,
+működőképes robotot házilag építeni, mely képes a kerekein gurulni, és
+az érzékelője segítségével akadályokat kikerülni.
+Cél az alábbi robot megépítése, kevesebb, mint 30 ezer forintból. Bár lehet, hogy elsőre nem
+túl látványos a sok karton miatt, a kivitelezésben nincs lényeges
+különbség, ha az egészet egy játékautóba építjük, egy
+építőkészlet elemeit használjuk föl, vagy ha plexi, esetleg fém lemezt
+használunk. A költségek persze arányosan növekednek. Később talán
+még visszatérek ezekre a lehetőségekre.</p>
+
+<p>Időközben elkészült a robot egy újabb változata egy pénzgyűjtő
+  robot, amiről <a href="../begr/index.html">itt</a> lehet olvasni.</p>
+
+<p><img class="standalone" alt="artu total"
+	src="images/artu_total.jpg" width="500" /></p>
+
+<h2><a name="motivation">Miért is építünk robotot?</a> </h2>
+Ide nagyon szép blabla szövegeket lehetne írni, a jövőről, gyorsuló
+világunkról, a magyar iparról, a fiatalok oktatásáról, de ezt inkább
+kihagyom. Akit ez bővebben érdekel, az magyar nyelven is tájékozódhat,
+többek között az alábbi oldalakon: <a href="http://w.blog.hu/2007/04/16/szaz_robotot_ezeret">Száz robotot,
+ezeret</a>, <a href="http://www.sg.hu/cikkek/35568">Jönnek a robotok</a>,
+<a href="http://www.robotika.njszt.hu/index.php?title=H%C3%ADrek#2008._december">NJSZT
+Robotnap 2008</a>.
+<p>Szerintem azért érdemes robotot építeni, mert</p>
+<ul>
+  <li>érdekes,</li>
+  <li>sokat lehet tanulni belőle mechanika, elektronika, programozás,
+stb. témakörökben,</li>
+  <li>az eredmény aktuális és kézzelfogható,</li>
+  <li>nem túl költséges.</li>
+</ul>
+<table class="image">
+<tr>
+<td>
+<img alt="kivancsi lany" src="images/dsc_0013.jpg" width="400"
+	/>
+</td>
+<td><img alt="rescue" src="images/dsc_0054.jpg" width="400"
+	/>
+</td></tr>
+<tr>
+<td>
+<img alt="aquajelly" src="images/jellyfish-robots.jpg" height="300"
+	width="400" /></td>
+<td>
+<img alt="a-pod" src="images/a-pod.jpg" height="300" width="400" />
+</td>
+</tr>
+</table>
+
+<p>A témáról rengeteg jó oldalt lehet találni (lásd a listát <a href="#links">lentebb</a>), de viszonylag kevés magyar nyelvűt, ezért
+készítettem ezt az oldalt. Az alapokhoz szerintem segítség lehet,
+  viszont aki
+komolyan el szeretne mélyedni a témában, annak az angol nyelv ismerete
+amúgy is szükséges lesz.</p>
+<p>A robotépítés egy évtizede még jóval drágább mulatság volt, mint
+most. Persze komoly robotokat építeni most is sok pénzbe kerül, de
+egyszerűbb robotot már egy átlagos fényképezőgép árából is össze
+lehet rakni. Aki pedig ért a forrasztáshoz, hajlandó régi háztartási
+  eszközökből, játékokból a szükséges alkatrészeket kiszerelni, az
+  még olcsóbban hasonló eredményre juthat.</p>
+<h3><a name="start">Kezdési lehetőségek</a></h3>
+<p>Ezen az oldalon elsősorban kerekeken guruló, villanymotorral
+meghajtott
+robotjárművekről lesz szó. Az ilyen robotokkal való ismerkedésnek
+többféle útja is elképzelhető. </p>
+<ol>
+  <li>Ha valaki jártas az elektronikában, elfekvőben vannak mindenféle
+alkatrészei, és tud forrasztani, akkor az elég olcsón meg tud építeni
+egy egyszerű robotot. <a href="http://www.societyofrobots.com/step_by_step_robot.shtml">Ezen</a>
+az oldalon a szerző már 50 $-ból, azaz 10-15 ezer forintból készít
+egy autonóm robotot.
+    <p><img class="standalone" alt="50 $" src="images/sbs_finished_small.jpg" height="194" width="250" /><br />
+Hasonló <a href="http://www.personalrobotics.nl/mambo/index.php?option=com_content&amp;task=view&amp;id=106&amp;Itemid=84">eredmény</a>
+Európából "50 eurós robot" néven érhető el. Az elkészült robot kicsit
+drágább, de cserébe kicsit elegánsabb, és kevésbé kell "bepiszkolnunk"
+a kezünket, vagyis kissé magasabb absztrakciós szinten kell elvégezni a
+feladatot.<br />
+    <img class="standalone" alt="50 EURO" src="images/50eurorobot-background01.jpg" width="200" /><br />
+    </p>
+ <p>Szerencsére már magyar nyelven is vannak robotépítéssel foglalkozó
+ oldalak, például <a href="http://www.hobbielektronika.hu/kapcsolasok/will-i_epitese_avagy_nullarol_a_robotokig_-_avr_mikrovezerlok.html
+">ez</a>, mely egy WILL-I nevű robot
+ elkészítéséhez és <a href="http://www.hobbielektronika.hu/kapcsolasok/will-i_v20_robotika_es_avr_kezdoknek.html?pg=1">továbbfejlesztéséhez</a> nyújt segítséget.
+    <img class="standalone" alt="will-i" src="images/willi280.jpg" width="200" /><br />
+</p>
+  </li>
+  <li>Ha valaki csak édi-bédi kis önjáró robotot szeretne programozás,
+szerelés nélkül, annak sem kell elkeserednie. Rengeteg helyen lehet már
+ilyet venni, rendelni, például <a href="http://www.powscience.com/store/robots/robots.html">itt</a>.
+    <p><img class="standalone" alt="hexbug" src="images/hexbug_echo.gif" height="122" width="200" /></p>
+  </li>
+  <li>Aki szerelgetne, de örülne, ha minden a keze ügyében lenne, és
+nem magának kellene kitalálnia az összes részletet, annak a <a href="../lego/index.html">LEGO Mindstorms készlet</a> lehet
+segítségére, ami a nagyobbaknak való hagyományos LEGO elemek mellett
+egy kis programozható számítógépet, motorokat és érzékelőket tartalmaz,
+mintegy 70 ezer forintért. <br />
+    <img class="standalone" alt="Mindstorms" src="images/Spike.jpg" width="300" /><br />
+    <br />
+Hasonló kihívást jelent a Parallax cég <a href="http://www.parallax.com/Store/Robots/RollingRobots/tabid/128/CategoryID/3/List/0/Level/a/ProductID/296/Default.aspx?SortField=ProductName%2cProductName">Boe-Bot</a>
+nevű robotjának vagy <a href="http://www.instructables.com/id/How_to_Make_an_Arduino_Controlled_Servo_Robot_SER/">az
+Arduino Controlled Servo Robot</a>nak az összeszerelése. Ez utóbbi alapján készült az én robotom is. 
+<table class="image">
+    <tr><td><img alt="boe" src="images/boe.jpg" height="225" width="240" /></td><td><img width="340" height="225" alt="serb robot" src="images/serb.jpg" /></td></tr>
+</table>
+  </li>
+  <li>További robotépítő-készletek találhatóak többek között <a href="http://artu.hu/oscommerce-2.2ms2/catalog/index.php?cPath=28">itt</a>.</li>
+  <li>Végül, aki robotot csak programozni szeretne, de valódi robotot
+még távolról sem akar látni, az a <a href="http://www.ceebot.com/colobot/index-e.php">Colobot</a>-hoz
+hasonló háromdimenziós szimulációs környezetet próbálhat ki.
+    <p><img class="standalone"  alt="colobot" src="images/colobot.jpg" height="308" width="580" /></p>
+  </li>
+</ol>
+<h3><a name="csavarhuzo">Csak csavarhúzóm van! - verzió</a></h3>
+<p><img class="floatLeft" alt="screwdriver" src="images/Screwdriver.png" width="50" />Mivel
+a
+többi irányt már nagyjából ismerem, ezért ezúttal az 1. változatnak
+láttam neki. Azonban mivel nem szerettem volna forrasztani, saját nyomtatott
+áramkört tervezni, maratni, ezért csak olyan szerszámokat használtam
+föl, amik egy átlagos szerszámos táskában megtalálhatók. Ez
+valószínűleg a lelkes fiatal diákolvasóknak (ha valaki egyáltalán
+olvassa az oldalt) is segítség lehet. </p>
+<p>Hosszabb távon egy olyan robotot szeretnék csinálni, ami egy
+masszív,
+kerekeken guruló vázra rögzíthető laptoppal végzi a számítási
+feladatokat, és különféle szenzorokon keresztül gyűjti be az
+információkat a külvilágból. Továbbá egy vagy több robotkarral is
+rendelkezne, amivel egyszerűbb feladatokat tudna elvégezni. Ehhez
+először
+egy prototípust készítettem, ami az elektronika mellett a ház körül
+található, egyszerű alkatrészekből áll, de tartalmazza mindazon
+elemeket, ami a komolyabb változathoz kell.</p>
+<p>Egy guruló robotjármű elkészítésének főbb részfeladatai a
+következők:</p>
+<ul>
+  <li>Robot tervezése</li>
+  <li>Váz megépítése</li>
+  <li>Elektronika beépítése</li>
+  <li>Programozás</li>
+</ul>
+</div>
+<div class="lighterBox">
+<h2><a name="tervezes">Robottervezés</a></h2>
+Nem lehet eléggé hangsúlyozni, hogy erre a fázisra mennyire szükség
+van. Ahogy a <a href="http://www.societyofrobots.com/step_by_step_robot_step1.shtml">society of robots blog</a> szerzője is írja,
+eredetileg az idő 10%-át fordította tervezésre, 90%-át a
+megvalósításra. Mostanra, hogy tapasztalt robotépítő lett, ez az arány
+megfordult.
+<p>Ez nem azt jelenti, hogy ugyanannyi időt szerel, csak sokkal többet
+"vacakol" előtte: ennél sokkal jobb a helyzet. Eleinte számtalan
+apróbb, nagyobb probléma merült föl szerelés közben, ami miatt esetleg
+teljesen újra kellett tervezni a robotot. Esetleg a teljes feladat
+kudarccal
+végződött. Mostanra az alapos tervezésnek köszönhetően, amikor az
+összes alkatrész megérkezik, jó eséllyel még aznap, pár órán belül
+el tudja végezni az összeállítást. </p>
+<p><a href="http://www.societyofrobots.com/calculator.shtml"><img class="floatLeft"
+								  alt="calculator"
+								  src="images/calculator_RMF.png"
+								  /></a>
+A tervezéssel el lehet kerülni a "Miért nem mozdul meg a robot,
+pedig a
+motorok dolgoznak?" típusú kérdéseket. Az ilyen előzetes
+igényfelmérésben segíthet a society of robots <a href="http://www.societyofrobots.com/calculator.shtml">calculator</a>
+oldala,
+ahol ki lehet számítani a robot súlyának megfelelő erejű motort, a
+szükséges erőforrásokat és hasonlókat. Az oldal egyúttal tutorialokat,
+azaz ismertetőket is tartalmaz a különféle alkatrészek
+kiválasztásához. </p>
+
+<p>Az első robot(ok) megtervezésénél a legfontosabb a KISS alapelv
+betartása: Keep It Simple, Stupid, azaz mindent a lehető
+legegyszerűbben
+kell megvalósítani, nem az első robotnál kell kitalálni forradalmian új
+haladási módot vagy útvonalkeresési algoritmust. Ezeket a későbbi
+robotokra érdemes tartogatni. </p>
+<p>Először is érdemes elkészíteni a robot tervrajzát, akár papírt és
+ceruzát felhasználva, akár valamilyen számítógépes modellező eszközt
+alkalmazva: utóbbiból, a már klasszikus CAD szoftverek mellett, amelyek
+elég drágák és összetettek, kisebb feladatokhoz elég az ingyenes <a href="http://sketchup.google.com/">SketchUp</a> is.</p>
+<h3><a name="30ezresterv">A 30 ezer forintos robot tervezése</a></h3>
+<p>A saját robot esetében egy olyan kereken guruló járművet szerettem
+  volna csinálni, mely kitér az előtte felbukkanó akadályok elől.
+Ehhez egy előregyártott nyomtatott áramkör
+felhasználásával, két motorral és egy ultrahangos szenzorral felszerelt
+robotot építettem, aminek a váza és a kerekei egyszerű kartonpapírból
+készültek. </p>
+<p>A karton mellett azért döntöttem, mert egyszerű dolgozni vele és az
+eredmény elég könnyű: az elektronikán, a motorokon és akkumulátorokon
+kívül semmit nem kell szállítani. Az előregyártott <a href="http://arduino.cc/">Arduino</a> áramkör USB porton tud
+csatlakozni
+egy számítógéphez, saját kezelő nyelvvel, fordítóprogrammal és
+letöltő eszközzel rendelkezik, így tetszőleges linuxos, windowsos
+géppel használható. Ezen kívül az áramkör csatlakozói képesek
+szenzorjeleket fogadni és a motorokat mozgásra bírni.</p>
+<p>A robot felépítése rendkívül egyszerű lett, az egész nem több,
+mint egy lap, amire a szükséges alkatrészek felrögzíthetők, valamint az
+oldalfalak, amik a kerekeket és a szonárt tartják.</p>
+<p>A felhasznált alkatrészek listája a következő: </p>
+<ul>
+  <li>1 db Arduino Duemilanove nyomtatott áramkör<br />
+    <p><img alt="ArduinoDuemilanove" src="images/ArduinoDuemilanove.jpg" width="200" /></p>
+  </li>
+  <li>2 db <a href="http://www.parallax.com/Store/Accessories/MotorServos/tabid/163/CategoryID/57/List/0/Level/a/ProductID/102/Default.aspx?SortField=ProductName%2cProductName">Parallax
+(Futaba) körbeforgó szervomotor</a>
+    <p><img alt="szervo" src="images/servo.gif" height="122" width="100" /></p>
+  </li>
+  <li>1 db <a href="http://www.parallax.com/tabid/768/ProductID/92/Default.aspx">Parallax
+Ping ultrahangos szenzor</a>
+    <p><img
+    alt="ping ultrahangos szenzor" src="images/ping.jpg" height="83" width="125" /></p>
+  </li>
+  <li>1 db (5 elemű) sorkapocs, azaz csoki
+    <p><img alt="sorkapocs" src="images/csoki.jpg" height="100" width="100" /></p>
+  </li>
+  <li>1 db elemtartó, az előny, ha van rajta kapcsoló
+    <p><img alt="elemtarto" src="images/elemtarto.jpg" height="100" width="100" /></p>
+  </li>
+  <li>szervokábel
+    <p><img alt="szervokabel" src="images/servocable.jpg" height="67" width="125" /></p>
+  </li>
+  <li>1 db kartondoboz
+    <p><img alt="doboz" src="images/doboz.jpg" width="250" /><br />
+    </p>
+  </li>
+  <li>4 db AA akkumulátor vagy esetleg ceruzaelem</li>
+  <li>vezetékek</li>
+  <li>csavarok, anyák</li>
+  <li>kartonlapok</li>
+  <li>1 db henger alakú joghurtos doboz</li>
+</ul>
+<p>Az elkészítéshez és működtetéshez felhasznált eszközök:</p>
+<ul>
+  <li>1 db USB A-B típusú kábel
+    <p><img alt="usb-ab" src="images/usb-ab.jpg" height="117" width="150" /><br />
+Számítógép és digitális fényképező, kamera, GPS stb. összekötésére is
+ezt szokták használni.</p>
+  </li>
+  <li>számítógép, célszerűen laptop</li>
+  <li>csavarhúzó</li>
+  <li>körző</li>
+  <li>olló</li>
+  <li>tapétavágó, azaz sniccer</li>
+</ul>
+<h3><a name="beszerzes">Beszerzés</a></h3>
+<p>A fenti eszközök és alkatrészek interneten keresztül viszonylag
+könnyen megrendelhetőek. Ezen kívül kis utánajárással Magyarországon
+is megvásárolhatóak. Az Arduino eredetijét a <a href="http://kitchenbudapest.hu/">Kitchen Budapestnél</a> vagy egy
+kompatibilis eszközt a <a href="http://avr.tavir.hu/">TávIRnál</a>
+vehetünk, kb. 10000 Ft-ból. Az ultrahangos érzékelőt én a <a href="http://www.chipcad.hu">Chipcad</a>nél találtam 6600 Ft-ért, de biztos
+máshol is van. A szervokat szintén itt vettem meg, darabját 3100
+Ft-ért.
+A szervokat egyébként modellboltban is meg lehet kapni. Ezen kívül még
+a szervokábel okozott gondot, ami az Arduino és az ultrahangos érzékelő
+összekötéséhez kell, de amint megtudtam, hogy mi a neve, már nem volt
+probléma. Végül ezt is egy modell-/játékboltban találtam meg, mintegy
+500 Ft-ba került.<br />
+A többi alkatrész barkácsáruházból vagy villanyszerelési boltból
+beszerezhető, együttesen szintén pár száz Ft-ért.</p>
+<p>Ezzel összességében nem költöttem többet, mint 30 ezer forint, ami a
+cikk címében célul kitűzött összeg.</p>
+<p>
+</p>
+</div>
+<div class="darkerBox">
+<h2><a name="epites">A váz építése</a> </h2>
+<p>A váz alapvetően egy 10*14 centiméteres kartondoboz, mely eredetileg
+egy spotlámpa csomagolóanyaga volt. A dobozt néhány helyen
+csavarhúzóval kellett átfúrni, illetve a motoroknak és az Arduino
+csatlakozóinak kellett kis "ablakokat" vágni az oldalfalba.</p>
+<p>Először a kartondobozt hajtogattam szét, hogy a megfelelő lyukakat
+sniccerrel kivágjam. A hátsó falon két nyílás enged hozzáférést az
+Arduino USB- és tápcsatlakozójának. Az oldalakra vágott egy-egy nagyobb
+téglalapon a szervomotorok külső felülete kandikál ki. Ezen a részen
+lehet a kerekeket is rögzíteni. A dobozon már eleve volt egy kis rés
+elöl, amin keresztül az ultrahangos érzékelő kábelei jutnak a
+csatlakozásokhoz.</p>
+<p>A vágások után a dobozt visszahajtogatva következtek a "fúrások".</p>
+<p>Elsőként az Arduino-lapot rögzítettem a doboz aljához a lapon erre a
+célra kialakított lyukakon keresztül.</p>
+<p>Ezután a két oldalsó nyílás mellé fúrt két-két lyukra csavaroztam
+fel a szervokat. Ehhez először a szervokarokat kell eltávolítani a
+középső csavarjukkal, hogy a szervok átférjenek a kivágott nyíláson.
+A szervokra a kartonlapból előzetesen körzővel megjelölt, majd
+kivágott, 8 centiméteres átmérőjű kerekkel együtt kell a
+szervokarokat visszacsavarozni. Ha a kerék csak a csavaron keresztül
+rögzül a szervohoz, akkor haladás közben könnyen elfordul, sőt még a
+szervo középső csavarját is le lehet így tekerni. Ezért két kicsi, a
+szervokarokon átmenő szöggel akadályoztam meg az ilyen irányú
+elmozdulást.</p>
+<p>Következett a robot harmadik talajérintkezési pontjának
+kialakítása. Ehhez a joghurtos doboz aljából vágtam le egy olyan magas
+részt, amekkora a kerekekből túlnyúlt a robot törzsén, majd ezt a
+darabot csavaroztam a robot aljához facsavarral. Igazából ezt az
+Arduino
+előtt kellett volna vékony, hosszú anyás csavarral megcsinálni, de a
+szereléskor éppen nem volt ilyen kéznél. Viszont így nagyon óvatosan
+kellett dolgozni, hogy a nyomtatott áramkör meg ne sérüljön. Erre a
+célra néhány pár négyzet-centiméteres kartonlapot tettem az Arduino
+alá.</p>
+<p>Végül az ultrahangos szenzort csavaroztam fel a robot elejére a
+szenzor
+lapkáján lévő két nyílást felhasználva.</p>
+<p>Az elkészült robot így néz ki:</p>
+<table class="image">
+<tr><td><img alt="artu1" src="images/artu1.jpg" width="250" /></td><td><img alt="artu2" src="images/artu2.jpg" width="250" /> </td></tr>
+<tr><td><img alt="artu elol" src="images/artu_elol.jpg" width="250"
+	/></td><td><img alt="artu hatul" src="images/artu_hatul.jpg"
+	       width="250" /></td></tr>
+</table>
+</div>
+<div class="lighterBox">
+<h2><a name="elektronika">Elektronika</a> </h2>
+Az elektronika kialakítása röviden úgy néz ki, hogy mindent össze kell
+kötni a központi áramkörrel, vagyis az Arduinoval, és minden eszközt el
+kell látni árammal.
+<h3><a name="arduino">Az Arduino mikrokontroller</a></h3>
+<p>Miért is jó az Arduino? </p>
+<ul>
+  <li>A központi Atmel ATmega168 egy AVR típusú mikrokontroller, aminek
+programozása elég komoly irodalommal rendelkezik. Állítólag jobban
+kidolgozott, mint a szintén nagyon elterjedt <a href="http://hu.wikipedia.org/wiki/PIC_mikrokontroller">PIC szabvány</a>.
+(Mielőtt valaki azt gondolná, hogy vitát szeretnék indítani, tudom, hogy
+sokan a PIC-re esküsznek.)</li>
+  <li>Az általam vásárolt Duemilanove modellnek USB csatlakozója van (bár igazából soros kommunikációt végez), így könnyen számítógéphez köthető.  <br />
+</li>
+  <li>16 KByte memória, 20 MHz futási sebesség. Tehát tenyérnyi
+méretben a Commodore 64-vel összemérhető teljesítményt kapunk.</li>
+  <li>14 digitális ki- és bemenete, valamint 6 analóg bemenete van.</li>
+  <li>Kiegészíthető újabb áramkörökkel.</li>
+  <li>Viszonylag olcsón beszerezhető Magyarországon is.</li>
+</ul>
+<h3><a name="huzal">Összekötés</a></h3>
+<p>Az Arduino és a többi hardverelem összekötéséhez én először
+próbapanelt használtam, majd a helyigény és a súly csökkentése miatt
+egy sorkapocsra (más néven csokira) cseréltem. </p>
+<p>Az összekötés során először is a fekete földvezetékeket az
+Arduino két Gnd-vel jelölt földelésének valamelyikéhez kell vezetni. A
+szonár fekete vezetékét az egyik, míg a két szervo és az elemtartó
+fekete vezetékeit a sorkapcson keresztül a másik földeléshez
+kötöttem. Az eltérő piros fázisvezetékek két helyről jutnak áramhoz:
+a szervokat a négy ceruzaakku hajtja a sorkapcson át, a szonár az
+Arduino 5V-os csatlakozójához van kötve, ami az USB porton keresztül, a
+laptopról kap áramot. Mivel a szervok 4-6 V feszültségtartományban
+működnek, ezért akár ezek is kaphatnák az energiát az Arduinoból, de
+általános szabály szokott lenni, hogy a robot meghajtása és a
+vezérlése külön áramforráshoz csatlakozzon. Sőt a két szervo akár
+külön akkumulátorokat is használhatna, amivel azonos feszültségnél a
+teljesítményt lehetne növelni.</p>
+<p>Működése közben a robot a laptopot csak áramfelvételre használja, a
+vezérlő kód mind az Arduinon fut, így 9V-os akkumulátorral a robot
+teljesen függetlenné válna a külső áramforrástól, és a
+feladatvégzés alatt nem kellene mögötte sétálni az USB vezeték miatt.
+Ehhez a 9V-vel jelölt csatlakozóhoz kell hozzákötni egy koaxiális
+csatlakozót, aminek a másik vége az akkumulátorhoz kapcsolódik. A
+vezeték két végéhez szükséges eszközök a következő képeken
+látszanak:</p>
+<table class="image"><tr><td><img alt="coax" src="images/9vcoax.png" height="79" width="345" /></td><td><img alt="9v" src="images/9vcsatolo.png" height="252" width="250" /></td></tr></table>
+<p>Ezután már csak a jelvezetékek bekötése van hátra. A jobb szervot a
+9-es, a balt pedig a 10-es csatlakozóra kötöttem, a választás
+tetszőleges, lényeg, hogy az Arduino valamelyik <a href="http://www.freeweb.hu/t-t/elokep/pic/felhkk/kk/sz1604.htm">PWM</a>
+típusú digitális csatlakozóját használjuk (3, 5, 6, 9, 10, 11), mivel a
+szervoknak a forgási utasítást ilyen módon lehet megadni. A szonár
+digitális csatlakozót igényel, de nem PWM típusút, így ehhez a 7-es
+sorszámút választottam.</p>
+<p>A végleges robot huzalozása így néz ki:</p>
+<p><img class="standalone"  alt="huzalozás" src="images/wiring.png" height="383" width="554" /></p>
+</div>
+<div class="darkerBox">
+<h2><a name="programozas">Programozás</a> </h2>
+<p>A robot programozása jelen esetben az Arduino AVR
+mikrokontrollerének a
+programozását jelenti az <a href="http://arduino.cc/en/Reference/HomePage">Arduino programozási
+nyelven</a>, mely a <a href="http://wiring.org.co/">Wiring</a> nyelv
+egy
+kiterjesztése. Ez utóbbit nyomtatott áramkörök programozására szokták
+használni, elektronikus média, design, művészet témakörökben. Ahhoz,
+hogy a programokat meg tudjuk írni, természetesen számítógépre van
+szükségünk, valamint arra, hogy a kész programot lefordítsuk, és az
+Arduinora töltsük. Erre a célra az Arduinonak saját <a href="http://arduino.cc/en/Main/Software">fejlesztői környezete</a>
+(IDE)
+van. Ebben a környezetben a fájlként kezelt forráskódot megírjuk (lásd
+lentebb), majd lefordítjuk (Ctrl-R vagy lejátszás gomb), végül
+feltölthetjük a nyomtatott áramkörre (Ctrl-U vagy jobbra nyíl, ez
+egyúttal fordítást is végez).</p>
+<p><img class="standalone" alt="ide" src="images/arduino_ide.png" height="620" width="675" /></p>
+<p>A letöltés után a program rögtön el is indul, vagyis elkezdi küldeni
+a jeleket a szervok felé, így érdemes úgy elhelyezni a robotot, hogy
+emiatt például ne szaladjon le azonnal az asztalról. Esetleg a
+szervokhoz
+tartozó akkumulátorokat a program letöltése után, közvetlenül a
+használat előtt kell betenni vagy az elemtartót ekkor kell bekapcsolni.
+Az Arduinon található
+reset gomb hosszan tartó lenyomásával a program futása újrakezdhető.<br />
+</p>
+<h3>Az Arduino programozási nyelv</h3>
+<p>Az Arduino programozási nyelv egy C-szerű, annál jóval egyszerűbb
+nyelv, amit más jellegű feladatoknál is előszeretettel
+használnak.. Az Arduino <a href="http://arduino.cc/en/Tutorial/HomePage">honlapon</a> sok példát
+lehet találni, melyek bemutatják, hogy miként lehet
+nyomógombbal állítani a LED-et, kezelni a szenzorokat, a szervokat, vagy kommunikálni a soros porton keresztül. A <a href="http://www.arduino.cc/cgi-bin/yabb2/YaBB.pl">fórumon</a>
+feltett
+kérdésekre is többnyire válaszolnak. Ezen kívül, bár általánosabb
+célra készült, a <a href="http://stackoverflow.com/search?q=arduino">stackoverflow</a>
+nevű,
+egyre népszerűbb programozási fórumon is lehet Arduinoval kapcsolatos
+válaszokat találni. </p>
+<p>Minden Arduino nyelvű program egy végtelen ciklus, amit a
+<code>loop</code> eljárás definiál. A ciklus magja folyamatosan fut
+mindaddig, míg az akkumulátor ki nem merül. Ebben az eljárásban kell
+megírni mindazt, amit szeretnénk, hogy a robot csináljon.<br /> 
+Ezen kívül még a <code>setup</code>
+eljárás kötelező, amiben a kezdeti inicializálásokat lehet elvégezni.
+Az összes többi eljárás ezen kettő kiegészítéseként működik.
+Minden programnyelv első példája a <code>Helló, világ!</code>, ami
+összesen annyit csinál, hogy a képernyőre kiírja ezt a szöveget. Mivel
+az Arduinonak nincsen képernyője, ezért az első program, amit erre a
+kártyára meg szokás írni: a <code>blink</code>. Ez összesen annyit
+csinál, hogy a kártya LED-jét villogtatja, az alábbi kód alapján. </p>
+<p>
+</p>
+<pre>int ledPin = 13; <br /><br />void setup() { <br />    pinMode(ledPin, OUTPUT); <br />} <br /><br />void loop() { <br />    digitalWrite(ledPin, HIGH); <br />    delay(1000); <br />    digitalWrite(ledPin, LOW);<br />    delay(1000); <br />}<br /></pre>
+<p>A rövid program a 13-as kimenetre kötött LED-del dolgozik, ez a
+Duemilanove-modell esetén a kártyára van integrálva. A <code>setup</code>
+során a 13-as csatlakozást kimeneti módra állítja. A fő ciklus a <code>digitalWrite</code>
+függvénnyel - mivel a 13-as kimenet digitális - először magas, majd alacsony jelet küld a LED-nek, két
+küldés között egy-egy másodpercet várakozva a <code>delay</code>
+utasítás segítségével.</p>
+
+<p>Tervezett robotunk kódja sem sokkal bonyolultabb ennél a kezdő
+példánál. A program első részlete a <code>setup</code> eljárás, mely a két szervot
+inicializálja és úgy állítja be őket, hogy ne mozduljanak.<br />
+<code><br />
+#define LEFTSERVOPIN&nbsp; 10<br />
+#define RIGHTSERVOPIN&nbsp; 9</code></p>
+<p><code>void setup(){<br />
+&nbsp; pinMode(LEFTSERVOPIN, OUTPUT);&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp; pinMode(RIGHTSERVOPIN, OUTPUT);&nbsp;&nbsp; <br />
+&nbsp; leftServo.attach(LEFTSERVOPIN);&nbsp;&nbsp;&nbsp; <br />
+&nbsp; rightServo.attach(RIGHTSERVOPIN);&nbsp; <br />
+&nbsp; goStop();<br />
+}<br />
+</code>&nbsp;<br />
+A <code>goStop</code> eljárás, valamint a teljesen hasonló <code>goForward</code> és <code>goRight</code>
+a szervoknak küldenek jeleket a <code>write</code> utasítással, amivel a robot megfelelő mozgását
+váltják ki. A jel értéke azt határozza meg, hogy a szervo milyen szöget
+vegyen fel. Ha a szervonk nem körbeforgó lenne, akkor a típusának
+megfelelő alsó és felső határon belül bármilyen értékre be lehetne
+állítani. A körbeforgó szervo esetén a működés ehelyett az, hogy 90 fok
+megadása esetén a szervo nem fordul, míg ennél kisebb szám esetén az
+egyik, nagyobb szám esetén a másik irányba fordul el, a 90 foktól való
+eltérés nagyságától függő sebességgel. (A középre tartás szöge a
+szervon egy kis csavarral kalibrálható, így elkerülve, hogy 90-es
+értéket megadva a szervo mégis megmozduljon).<br />
+A <code>goForward</code> esetében a két szervonak a 90 foktól azonos
+  mértékben, de ellentétes irányba eltérő jelet küldünk, mivel a
+  szervok egymással szemben, szimmetrikusan vannak fölszerelve, így
+  ami az egyiknek előre, az a másiknak hátra. Hasonlóan
+  a <code>goRight</code> használatával a robot egy kereke előre, a
+  másik hátrafelé fog forogni, és így a saját középpontja körül elfordul.
+</p>
+
+
+<pre>void goStop(){<br /> leftServo.write(90);<br /> rightServo.write(90);<br />} <br /><br />void goForward(){<br /> leftServo.write(90 + speed);<br /> rightServo.write(90 - speed);<br />}<br /><br />void goRight(){<br /> leftServo.write(90 + speed);<br /> rightServo.write(90 + speed);<br />}</pre>
+<p>Robotunk működéséhez szükség van az ultrahangos szenzor használatára
+is, aminek segítségével a robot ki tudja kerülni az előtte felbukkanó
+akadályokat. Erre a célra szolgál a <code>ping</code> eljárás, ami egy
+  magas értékű ultrahang kibocsátása és visszaérkezése között eltelt
+  időt méri. Ezt az értéket a <code>microsecondsToCentimeters</code> függvénnyel konvertáljuk távolsággá.
+Eközben a csatlakozó elérési módját is változtatni kell kimenet és
+bemenet között, valamint célszerű két alacsony értékű jelet
+kibocsátani, hogy a magas jel egyértelműbben azonosítható legyen.<br />
+</p>
+<pre>long ping() <br />{<br />  long duration;<br /><br />  pinMode(SONARPIN, OUTPUT);<br />  digitalWrite(SONARPIN, LOW);<br />  delayMicroseconds(2);<br />  digitalWrite(SONARPIN, HIGH);<br />  delayMicroseconds(5);<br />  digitalWrite(SONARPIN, LOW);<br /><br />  pinMode(SONARPIN, INPUT);<br />  duration = pulseIn(SONARPIN, HIGH);<br /><br />  // convert the time into a distance<br />  return microsecondsToCentimeters(duration);  <br />}</pre>
+<p>Ezután már csak a fő eljárás van hátra, ami az eddigieket fogja
+össze. Lényege, hogy a robot egyenesen halad mindaddig, amíg nem
+érzékel maga előtt akadályt nagyjából 20 centiméterre. Utóbbi esetben jobbra fordul 1
+  másodpercig, ami elég ahhoz, hogy egy falszerű akadálytól
+  elforduljon. A szonár által mért értékeket a robot folyamatosan
+  elküldi az USB csatlakozón keresztül a számítógéphez, így annak
+  konzolján a távolságok megjelennek. A robot
+programkódja <a href="src/artu.pde">innen</a>
+tölthető le, lényegi része az alábbi:<br />
+</p>
+<pre>void loop() {                     <br />   cm = ping();<br />   Serial.print(cm);<br />   Serial.println();<br />   if( cm &lt; 20 ) {<br />     goRight();<br />     delay(1000);                     <br />   } else {<br />     goForward();<br />     delay(500);                     <br />   }<br />}</pre>
+<p>A program összeállításához a már említett <a href="http://www.instructables.com/id/How_to_Make_an_Arduino_Controlled_Servo_Robot_SER/">SERB robot</a>
+kódját is fölhasználtam.</p> </div>
+<div class="lighterBox">
+<h2><a name="experiences">Eredmények</a> </h2>
+<p>Az elkészült robot teljesíti az eredetileg kitűzött célt: mozog,
+  fordul, kikerüli az akadályokat és nem kerül többe, mint 30 ezer forint.<br /> 
+ 
+Íme egy videó a működésről:  </p>
+<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/IkiH2uRI3rw&hl=en_US&fs=1&"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/IkiH2uRI3rw&hl=en_US&fs=1&" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344"></embed></object>
+</div>
+<div class="darkerBox">
+<h2><a name="various">Tapasztalatok, folytatás</a></h2>
+<p>Ahogy az többnyire lenni szokott, az eredmény nem pontosan olyan, ahogy azt
+  eredetileg elképzeltem.</p>
+<p>Nem túl meglepő módon látható, hogy a karton nem
+  az igazi választás egy robot vázának. Hajlik, súlyt nem lehet
+  ráhelyezni, a fúrt lyukak széle hamar enged.
+  Emiatt például facsavar helyett anyával ellátott kis csavarokat érdemes alkalmazni,
+mert enélkül túlságosan át kell ütnie a csavarnak a kartont, hogy
+eléggé rögzítsen, viszont a kiálló csavarfejek nem túl praktikusak:
+szúrnak és megsérthetik a szomszédos alkatrészt.<br />
+Szintén rossz választás a kartonkerék: a parkettán csúszik, a
+  szőnyegen elakad. A kültéri enyhén rücskös betonon elfogadhatóan
+  halad.</p>
+<p>A robottal kapcsolatos eredeti elképzelés az volt, hogy plexilapból, egyéb merev műanyagból, esetleg fémből készül el. Ezen
+  anyagok megmunkálása azonban nem annyira egyszerű, mint a
+  kartoné. Ha én kézzel vágnám ki, akkor a szerkezet hasonlóan
+  hevenyészett lenne, mint amennyire egy kartonrobot lehet, de
+  legalább sokkal lassabban készül el, az eredmény nehezebb, így lassabb.
+  Utánanéztem a lézer- és a vízvágásnak is, amivel a
+  megmunkálást elég pontosan el lehetne végezni. Ehhez pontos
+  tervrajzot kell készíteni, ami alapján a gyártó cég elkészíti az
+  elemeket, mintegy tízezer forintért. </p>
+ 
+<p> Két dimenzióban a lapok vágásának
+  megtervezéséhez jól jöhet az
+  ingyenes <a href="http://www.plm.automation.siemens.com/en_us/products/velocity/solidedge/free2d/index.shtml">SolidEdge</a>.<br />
+<img class="standalone" src="images/Free2D.jpg" alt="solidedge"/></p>
+
+<p>  Ezt a plusz költséget egyelőre nem
+  terveztem be a feladatba, mivel ez a robot csak egy prototípus;
+  hosszabb távon valószínűleg nem erre a formára lesz szükség:
+  például mivel szükség lesz egy laptopot hordozó részre.<br />
+  Ettől függetlenül a robot folytatásának egyik első lépése a hordozó
+  szerkezet kicserélése lesz.</p>
+
+<p>Szintén látszik, hogy az elemtartónak nincs igazán jó helye,
+  valamivel nagyobb szerkezetben ezt is rögzíteni kellene. Az is jó
+  volna, ha lenne rajta kapcsoló: ez a nagyjából 150 forintos
+  beszerzési árat akár meg is duplázhatja, ugyanakkor hasznos, hogy
+  a robot nem indul el rögtön a program letöltése után.</p>
+
+<p>Az Arduinohoz tartozik egy áramforrás-csatlakozó is. A laptopot
+  jelen helyzetben csak energiafelvételre használja a robot. Ehelyett
+  lehetne egy 9 V-os akkumulátort a robothoz csatolni egy plusz,
+  esetleg saját készítésű kábellel. Mivel a laptopos irányba
+  szeretnék továbblépni, ezért ezzel most nem foglalkoztam.</p>
+
+<p>Úgy tűnik, hogy az elkészült robot nem elég erős. Ennek javításához
+ nagyobb teljesítményű meghajtást kellene alkalmazni. Emiatt esetleg
+ az áramforrást is módosítani kell.</p>
+
+<p>Ha a motor számlálni tudná az elfordulásait, akkor a robot
+ pozícióját becsülni lehetne. Így a robot képes lenne visszatalálni a
+ kiindulási helyére. (A becslés növekvő hibája miatt ez a gyakorlatban
+ csak mérsékelten működik, de más szenzorokkal együtt hatékony
+ lehet.)</p>
+<p>Több érzékelő bevezetésével jobban megismerhetné a robot a
+ környezetét. A más irányba néző további távolságszenzorok mellett
+ egy kamera jelentene lényeges előrelépést.</p>
+
+<p>Az Arduino mikrokontroller számítási kapacitása komolyabb
+ kalkulációkat nem tesz lehetővé. Ha a robot egy netbook méretű
+ gépet szállítana, akkor ez a probléma megoldódna. Ez persze a robot
+ jelenlegi tömegét lényegesen megnövelné.</p>
+
+<p>A laptop szállítása helyett valamilyen vezetéknélküli kapcsolaton
+  (wi-fi, Bluetooth) kommunikálhatna a robot a számítógéppel. Így a
+  robot könnyű maradna, és a bonyolult számításokat is komolyabb
+  hardveren lehetne elvégezni. Ehhez használható az Arduino Xbee, ami
+  nagyjából 20 ezer forintért kapható és Bluetooth kapcsolatot
+  biztosít.<br />
+  Itt a szűk keresztmetszet a kommunikációs csatorna lehet. 
+  Például másodpercenként harmincszor átküldeni egy kamera képét a
+  robotról csak elég kicsi képek esetén oldható meg.
+  </p>
+
+<p>Ahhoz, hogy a robot valami érdekeset is csináljon, szükség van
+  valami aktuátorra, azaz például egy karra. A kar kialakításához
+  kell legalább egy újabb motor, energiaellátással,
+  felfüggesztéssel. Egy egyszerűbb változat a tolólap, ami a robot
+  elején elhelyezkedve kisebb tárgyakat képes mozgatni, és például
+  válogatási feladatokban használható.</p>
+
+<p>A középtávú cél egy önálló, többszenzoros, netbookot hordozó robot
+  létrehozása, például ilyen. </p>
+<img class="standalone"  src="images/serb_netbook.jpg" alt="serb_netbook"/>
+
+</div>
+<div class="lighterBox">
+<h2><a name="links">További hasznos oldalak</a> </h2>
+Magyarul
+<ul>
+  <li><a href="http://www.jataka.hu/rics">Egyéb robotos
+  oldalaim</a></li>
+<li>A robot egy újabb változata <a href="../begr/index.html">egy
+    pénzgyűjtő robot</a>.</li>
+<li><a href="http://www.robotika.njszt.hu/index.php?title=Kezd%C5%91lap">NJSZT
+  Robotika szakosztály</a>, ahol többen segíthetnek, ha valamilyen
+  robotot szeretnél építeni. </li>
+<li><a href="http://www.hobbielektronika.hu/cikkek/nullarol_a_robotokig_-_pic_mikrovezerlok_i_resz.html">Hobbielektronika
+    PIC 1.</a>
+    és <a href="http://www.hobbielektronika.hu/cikkek/nullarol_a_robotokig_-_pic_mikrovezerlok_ii_resz.html">PIC
+    2.</a></li>
+<li><a href="http://www.picnick.hu/fejlesztesek/lfr/ibag.html">Egy vonalkövető robot</a></li>
+<li><a href="http://www.sulinet.hu/fizika/robot/robot.htm">Egy rövid
+    leírás robotépítésről</a></li>
+  <li>Magyar gyártású <a href="http://avr.tavir.hu/modules.php?name=Content&amp;pa=showpage&amp;pid=97">Arduino-klón</a></li>
+  <li><a href="http://people.inf.elte.hu/istenes/robotika/">ELTE</a>-s
+robotika honlap</li>
+  <li><a href="http://www.bmfnik.hu/iar/">BMF</a> automatizált
+rendszerek honlap</li>
+</ul>
+Angolul
+<ul>
+  <li>Az <a href="http://www.societyofrobots.com/step_by_step_robot.shtml">50
+$-os robot</a></li>
+  <li>Az <a href="http://www.personalrobotics.nl/mambo/index.php?option=com_content&amp;task=view&amp;id=106&amp;Itemid=84">50
+€-s robot</a></li>
+  <li>Komoly <a href="http://www.instructables.com/id/Quick_Notebook_PC_Robot_Base/">robotjármű</a>
+építése laptopos robotirányításhoz</li>
+  <li><a href="http://www.instructables.com/id/Make-a-wall-avoiding-Robot%21">Falkikerülést
+végző robot</a> Arduinoval és saját tervezésű áramkörrel</li>
+  <li>Arduino alapú, <a href="http://www.instructables.com/id/How_to_Make_an_Arduino_Controlled_Servo_Robot_SER/">profin
+kinéző robot</a>, ami készletben is <a href="http://www.oomlout.com/serb.html">rendelhető</a></li>
+  <li>Az előbbi robot <a href="http://www.instructables.com/id/SX5NPB8FNZAH9RU/">bővítése
+netbookkal</a></li>
+  <li>Egy másik netbookon és Arduinon alapuló <a href="http://www.liliputing.com/2008/12/building-an-acer-aspire-one-based-robot.html">guruló
+robot</a></li>
+  <li>Arduino alapú <a href="http://www.instructables.com/id/Ard-e-The-robot-with-an-Arduino-as-a-brain">egyszerű
+robot</a></li>
+  <li><a href="http://www.arduino.cc/">Arduino</a> honlap</li>
+  <li><a href="http://www.freeduino.org/">Freeduino</a>, egy Arduino-változat</li>
+  <li>Robotokra specializált Arduino-klón:
+  a <a href="http://www.curiousinventor.com/kits/roboduino">Roboduino</a></li>
+  <li><a href="http://www.instructables.com">Instructables.com</a> Egy nagyon
+érdekes barkácsoldal</li>
+</ul>
+<p>Ha ismersz még ide tartozó érdekes oldalt, különösen magyar robotikai
+eredményeket, kérlek, írd meg! </p>
+</div>
+</div>
+
+<!-- ##### Footer ##### -->
+<div id="footer">
+<div class="right">Utolsó módosítás: 2011-márc-31 </div>
+<br class="doNotDisplay doNotPrint" />
+</div>
+
+<div class="subFooter">
+<p>Copyright © 2009, Szabó Richárd<br />
+richard_szabo@nospam.invitel.hu (a nospam törlendő)<br />
+<!--This theme is free for distriubtion, so long as link to openwebdesing.org and florida-villa.com stay on the theme-->
+Courtesy <a href="http://www.openwebdesign.org">Open Web Design</a><a href="http://www.dubaiapartments.biz"></a>Thanks to <a href="http://www.florida-villa.com">Florida Vacation Homes</a> <br class="doNotPrint" />
+      <p>&nbsp;  </p>
+<!-- BEGIN WebSTAT Activation Code -->
+<script type="text/javascript" language="JavaScript" src="http://hits.webstat.com/cgi-bin/wsv2.cgi?39877"></script>
+<noscript>
+<a href="http://www.webstat.com">
+<img src="http://hits.webstat.com/scripts/wsb.php?ac=39877" border="0" alt="WebSTAT - Free Web Statistics" /></a>
+</noscript>
+<!-- END WebSTAT Activation Code --></p>
+</div>
+
+</body></html>

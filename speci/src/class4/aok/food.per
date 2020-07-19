@@ -1,0 +1,32 @@
+; Percentages
+(defconst FOOD-GATHERER-PERCENTAGE 70)
+(defconst WOOD-GATHERER-PERCENTAGE 30)
+
+(defrule
+    (true)
+=>
+    (chat-to-all "Food 3")
+    (disable-self)
+)
+
+(defrule
+    (true)
+=>
+	(set-strategic-number sn-wood-gatherer-percentage WOOD-GATHERER-PERCENTAGE)
+	(set-strategic-number sn-food-gatherer-percentage FOOD-GATHERER-PERCENTAGE)
+    (disable-self)
+)
+
+(defrule
+    (can-afford-unit villager)
+    (can-train villager)
+=>
+    (train villager)
+)
+
+(defrule
+    (can-afford-building house)
+    (population-headroom >= 0) 
+=>
+    (build house)
+)

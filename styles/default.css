@@ -1,0 +1,102 @@
+#up-to-date {
+  text-align: center;
+  font-weight: bold;
+  font-style: italic;
+
+}
+
+body {
+  background-color: #e9e1ce;
+}
+h1 {
+  text-align: center;
+  font-size: 140%;
+  font-weight: bold;
+}
+h2 {
+  font-size: 120%;
+  font-weight: bold;
+}
+h3 {
+  font-weight: bold;
+  font-size: 100%;
+}
+dt {
+  font-weight: bold;
+  font-style: italic;
+}
+thead {
+  font-weight: bold;
+}
+code {
+  font-size: 90%;
+  font-family: monospace;
+}
+.page-contents {
+  font-family: serif;
+  margin-left: 5%
+}
+.page-footer {
+  font-size: 70%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.page-navigator {
+  font-family: Arial, Helvetica, sans-serif;
+}
+.own-photo {
+  text-align: center;
+}
+/*
+/* classes for developer comments; separate style for each person */
+.cbalint {
+  color: brown;
+}
+.csala {
+  color: blue;
+}
+.crics {
+  color: red;
+}
+.candi {
+  color: purple;
+}
+.cbari {
+  color: green;
+}
+.crick {
+  color: black;
+  text-decoration: underline;
+}
+/* class for marking parts in the documentation
+   that are uncertain; "To Be Clarified" */
+.tbc {
+  background-color: red;
+}
+
+/* incomplete */
+.inc {
+  background-color: cyan;
+}
+/* very important (exclamation) */
+.exclam {
+  font-weight: bold;
+  background-color: #ff3333;
+  padding: 1em;
+}
+
+/* imporovement ready */
+.ready {
+  color: #cc6600;
+}
+
+/* comment */
+.comment {
+  color: #009900;
+}
+
+/*
+li p {
+  color: red;
+}
+*/
+*/

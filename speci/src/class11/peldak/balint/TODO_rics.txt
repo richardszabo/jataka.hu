@@ -1,0 +1,2 @@
+- goalie
+- pass to a free teammate forward, if the direction of the goal is not free

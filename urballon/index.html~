@@ -1,0 +1,268 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head>
+  
+  <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+
+  
+  <meta name="author" content="haran" />
+
+<!-- Navigational metadata for large websites (an accessibility feature): -->
+  <title>Az Űrballon küldetés</title>
+
+  
+  
+  <link rel="top" href="./index.html" title="Homepage" />
+
+  
+  <link rel="up" href="./index.html" title="Up" />
+
+  
+  <link rel="first" href="./index.html" title="First page" />
+
+  
+  <link rel="previous" href="./index.html" title="Previous page" />
+
+  
+  <link rel="next" href="./index.html" title="Next page" />
+
+  
+  <link rel="last" href="./index.html" title="Last page" />
+
+  
+  <link rel="toc" href="./index.html" title="Table of contents" />
+
+  
+  <link rel="index" href="./index.html" title="Site map" />
+
+  
+  <link rel="stylesheet" type="text/css" href="tierraverde-yellow-screen.css" media="screen" title="Tierra Verde (screen)" />
+
+  
+  <link rel="stylesheet" type="text/css" href="tierraverde-print.css" media="print" />
+
+  
+  <link rel="stylesheet" type="text/css" href="surveyor.css" media="screen" />
+  
+</head><body>
+<!-- For non-visual user agents: -->
+<div id="top"><a href="#main-copy" class="doNotDisplay doNotPrint">Skip
+to main
+content.</a></div>
+
+<!-- ##### Header ##### -->
+<div id="header">
+<h1 class="headerTitle"><a href="./index.html" title="Browse to homepage">Az Űrballon küldetés</a> </h1>
+</div>
+
+<!-- ##### Side Bar ##### -->
+<div id="side-bar">
+<p class="sideBarTitle"><a href="#intro">Bevezetés</a></p>
+<p class="sideBarTitle"><a href="#therobot">A robot bemutatása</a></p>
+<ul>
+  <li><a href="#wares">Hardver és szoftver</a></li>
+  <li><a href="#connection">Kapcsolat létrehozása a robot és a számítógép között</a></li>
+  <li><a href="#directmove">Közvetlen működtetés</a></li>
+  <li><a href="#picoc">Programozás PicoC-ben</a></li>
+</ul>
+<p class="sideBarTitle"><a href="#controlling">Irányítás vezeték nélküli kapcsolaton át</a></p>
+<ul>
+  <li><a href="#surveyorlib">A Blackfin robot eljárások</a></li>
+  <li><a href="#remote">Távirányítás</a></li>
+  <li><a href="#opencv">Az openCV</a></li>
+  <li><a href="#agent">Az ügynökrobot</a></li>
+  <li><a href="#lightsearch">Fénykeresés</a></li>
+  <li><a href="#colorsearch">Színkeresés</a></li>
+</ul>
+<p class="sideBarTitle"><a href="#linkek">Linkek</a></p>
+</div>
+
+<!-- ##### Main Copy ##### -->
+<div id="main-copy">
+<div class="lighterBox">
+<h1><a name="intro">Bevezetés</a></h1>
+
+<!-- TODO angolul -->
+
+<p><img alt="surveyor" src="images/surveyor.gif"	/></p>
+
+<p>Ezen az oldalon
+  az <a href="http://www.surveyor.com/SRV_info.html">SRV1 Blackfin</a>
+  robotról fogok írni, mely a
+  <a href="http://www.surveyor.com/">Surveyor cég
+  terméke</a>. 
+<br /> 
+  Az alapfunkciók kipróbálása mellett az volt a célom,
+  hogy a kamera képének egyszerű továbbításán kívül, a képek alapján a
+  robot valamilyen elemi feladatot elvégezzen. Ezért a távirányítás
+  megvalósítása után fény- és színkeresést végeztettem vele.<br />
+  Mivel viszonylag kevés ideig volt lehetőségem a robottal
+  foglalkozni, ezért inkább a programok befejezését tartottam
+  fontosnak, mint azt, hogy a kódok valódi működő környezetben is
+  kipróbáltak legyenek. Ebből következően a bemutatott megoldások
+  csupán továbbfejlesztést igénylő kiinduló pontoknak tekinthetőek.
+</p>
+</div>
+<div class="darkerBox">
+<h1><a name="therobot">A robot bemutatása</a></h1>
+<p>  
+Ez a robot önálló mozgásra képes lánctalpas szerkezet, melynek
+  legfontosabb tulajdonsága, hogy lézeres távolságmérővel és egy
+  kamerával van felszerelve. 
+  Ára 495 dollár, mintegy 100 ezer forint, szóval nem
+  kifejezetten a kezdő hobbi robotosoknak vagy a gyerekeknek
+  szánták. </p>
+<p>A következő képeken a robot látható:</p>
+
+<table class="image">
+<tr>
+<td>
+<img alt="surveyor1" src="images/dsc_0388.jpg" height="300" width="400"
+	/>
+</td>
+<td><img alt="surveyor2" src="images//bfboards1.jpg" height="300" width="400"
+	/>
+</td></tr>
+<tr>
+<td>
+<img alt="surveyor3" src="images/dsc_0390.jpg" height="300"
+	width="400" /></td>
+<td>
+<img alt="surveyor4" src="images/dsc_0391.jpg" height="300" width="400" />
+</td>
+</tr>
+</table>
+
+</div>
+<div class="lighterBox">
+<h2><a name="wares">Hardver és szoftver</a></h2>
+<p>A Surveyor Blackfin robot többféle kiszerelésben is létezik,
+  különféle kiegészítők rendelhetők hozzá.
+  Az alaptípus egy nagyobb tenyérben elfér, ennek megfelelően a súlya a
+  masszív szerkezet ellenére sem
+  számottevő. A jármű fémkazetta formájú alsó részében helyezkednek el
+  a lítium-polimer
+  akkumulátorok, melyek nagyjából 4 órás használatot bírnak ki. 
+A töltést hálózati feszültségről egy külön táppal
+  lehet megoldani.<br />
+  A fémdoboz két oldalán két-két tengelyen elől és hátul, fogazott,
+  oldalanként független meghajtású kerekek
+  helyezkednek el, amik gumi lánctalpakat hordanak. <br />
+  A robot elején két oldalt található a két lézeres távolságmérő, mely
+  mintegy két méter távolságig képes érzékelni.<br />
+  A fémdoboz fölött az elektronika egymásra épített nyomtatott
+  áramkörökből áll. A legfelső elemhez tartozik a kamera, melynek
+  fókusza kézzel állítható.<br />
+  A robot hátulján a kommunikációhoz szükséges antenna látható.</p>
+<p>
+Bővítési lehetőségként fölmerül
+egy <a href="http://surveyor-corporation.stores.yahoo.net/srnabo.html">navigációs
+    áramkör</a> használata, mely GPS-t, iránytűt és gyorsulásmérőt is
+tartalmaz (bal oldali kép). A robot
+fölszerelhető <a href="http://surveyor-corporation.stores.yahoo.net/srblstup.html">sztereó
+    kamerával</a> is (jobb oldali kép).
+</p>
+
+<table class="image">
+<tr>
+<td>
+<img alt="navigation" src="images/srv-navigation.jpg" height="300" width="400" />
+</td>
+<td>
+<img alt="stereo" src="images/srv1-stereo-upgrade550a.jpg" height="300" width="400" />
+</td>
+</tr>
+</table>
+
+<p> 
+A robotot egy java nyelven írott <a href="http://www.surveyor.com/blackfin/#blackfin5">konzol programmal</a> lehet elérni
+különféle operációs rendszerekről (Windows, Linux, Mac).<br />
+Íme a konzol felülete:
+</p>
+<img class="standalone" alt="console" src="images/SRV1Console.jpg" height="400"   />
+
+<p>Valamint a robot futás közben:</p>
+
+<table class="image">
+<tr>
+<td>
+<object type="application/x-shockwave-flash" data="http://www.youtube.com/v/xxo4j4V2SVk" width="425" height="344"><param name="movie" value="http://www.youtube.com/v/xxo4j4V2SVk" /><param name="FlashVars" value="playerMode=embedded" /></object>
+</td>
+<td>
+<object type="application/x-shockwave-flash" data="http://www.youtube.com/v/EDM1oqzhOzs" width="425" height="344"><param name="movie" value="http://www.youtube.com/v/EDM1oqzhOzs" /><param name="FlashVars" value="playerMode=embedded" /></object>
+</td>
+</tr>
+</table>
+<p>A robot iPhone-nal és Google Androiddal is irányítható, ahogy az az alábbi videókból
+kiderül.</p>
+
+<table class="image">
+<tr>
+<td>
+<object type="application/x-shockwave-flash" data="http://www.youtube.com/v/yBh73fU-xF4" width="425" height="344"><param name="movie" value="http://www.youtube.com/v/yBh73fU-xF4" /><param name="FlashVars" value="playerMode=embedded" /></object>
+</td>
+<td>
+<object type="application/x-shockwave-flash" data="http://www.youtube.com/v/MmzeTcKvmjE" width="425" height="344"><param name="movie" value="http://www.youtube.com/v/MmzeTcKvmjE" /><param name="FlashVars" value="playerMode=embedded" /></object>
+</td>
+</tr>
+</table>
+
+<p>Az Androidhoz használt
+  szoftver <a href="http://code.google.com/p/srv1console/">innen</a>
+  tölthető le.</p>
+<p>
+Ezen kívül általános célű, fizetős robotcsomagok is képesek kezelni az
+SRV1-et: <a href="http://www.roborealm.com/help/Surveyor_SRV1.php">Roborealm</a>,
+<a href="http://www.cyberbotics.com/">Cyberbotics Webots</a>
+<a href="http://www.surveyor.com/MSRS.html">Microsoft Robotic Studio</a>
+</p>
+</div>
+<div class="lighterBox">
+<h2><a name="linkek">Linkek</a></h2>
+<ul>
+<li>robotika.blog.hu eddigi bejegyzései
+</li>
+<li>http://www.universetoday.com/11287/satellites-on-a-budget-high-altitude-balloons/
+</li>
+<li>http://hackaday.com/2009/09/19/high-altitude-balloons/
+</li>
+<li>http://moo.pl/~tygrys/balloon/
+</li>
+<li>
+http://www.natrium42.com/halo/flight2/
+</li>
+<li>ballon.hu
+</li>
+<li>
+http://kszk.sch.bme.hu/projekt/magasl%C3%A9gk%C3%B6ri-ballon-projekt
+</li>
+<li>
+http://www.ha5mrc.hu/events/mrcday10/HNSF-V2.pdf
+</li>
+<li>
+halb? honlap
+</li>
+</ul>
+</div>
+
+
+</div>
+
+<!-- ##### Footer ##### -->
+<div id="footer">
+<div class="right">Utolsó módosítás: 2010-Dec-24 </div>
+<br class="doNotDisplay doNotPrint" />
+</div>
+
+<div class="subFooter">
+<p>Copyright © 2010, Szabó Richárd<br />
+richard_szabo@nospam.invitel.hu (a nospam törlendő)<br />
+<!--This theme is free for distriubtion, so long as link to openwebdesing.org and florida-villa.com stay on the theme-->
+Courtesy <a href="http://www.openwebdesign.org">Open Web
+  Design</a> 
+<a href="http://www.dubaiapartments.biz"></a>Thanks to <a href="http://www.florida-villa.com">Florida Vacation Homes</a> <br class="doNotPrint" />
+<!-- BEGIN WebSTAT Activation Code -->
+<script type="text/javascript" src="http://hits.webstat.com/cgi-bin/wsv2.cgi?39877"></script>
+<!-- END WebSTAT Activation Code --></p>
+</div>
+
+</body></html>

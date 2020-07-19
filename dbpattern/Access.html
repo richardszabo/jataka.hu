@@ -1,0 +1,105 @@
+<HTML>
+<HEAD>
+<link rel="Stylesheet" title="Default Stylesheet" media="Screen"
+  href="../default.css">
+<TITLE>Accessing Relational Databases</TITLE>
+</HEAD>
+<body>
+<H1>Probléma</H1>
+
+Adatb&aacute;zisel&eacute;r&eacute;s. H&aacute;rom lehets&eacute;ges megold&aacute;s:
+
+<UL>
+<LI>Rel&aacute;ciós adatb&aacute;zis - nem OOP nyelv
+<LI>Rel&aacute;ciós adatb&aacute;zis - OOP nyelv
+<LI>OO adatb&aacute;zis - OOP nyelv
+</UL>
+
+<IMG SRC="18_1.jpg" WIDTH="750">
+
+<H2>C&eacute;lok:</H2>
+
+<UL>
+<LI>Alkalmaz&aacute;s programoz&aacute;s - Adatb&aacute;zis programoz&aacute;s sz&eacute;tv&aacute;laszt&aacute;sa <-> költs&eacute;g
+<LI>Teljesítm&eacute;ny
+<LI>Rugalmass&aacute;g <-> Bonyolults&aacute;g
+<LI>M&aacute;r l&eacute;tezõ adatb&aacute;zisok haszn&aacute;lata
+</UL>
+
+<H2>Egy p&eacute;lda</H2>
+
+<IMG SRC="18_2.jpg" WIDTH="750">
+
+<H2>Relational Database Access Layer Pattern</H2>
+
+<IMG SRC="18_4.jpg" WIDTH="750">
+
+<UL>
+<LI> <STRONG>Physical Access Layer:</STRONG> Adatb&aacute;zishoz közeli
+<LI> <STRONG>Logical Access Layer:</STRONG> Alkalmaz&aacute;shoz közeli
+<LI> <STRONG>Broker:</STRONG> A kettõt köti össze (elmaradhat)
+</UL>
+
+<IMG SRC="18_5.jpg" WIDTH="750">
+
+<UL>
+<LI> <CODE> HierarchicalView:</CODE> Absztrakt &ocirc;soszt&aacute;lya a
+ConcreteHierarchicalView-knak. A <CODE>requestDelete()</CODE> a
+destruktorhoz hasonl&oacute;, commit&aacute;l&aacute;l&aacute;skor
+t&ouml;rl&ocirc;dik val&oacute;j&aacute;ban.
+<LI> <CODE> ConcreteHierarchicalView: </CODE> Az alkalmaz&aacute;s egy-egy
+adatt&iacute;pus&aacute;t reprezent&aacute;lj&aacute;k. Tudja hogyan kell
+ki&iacute;rni/beolvasni mag&aacute;t az adatb&aacute;zisba/b&oacute;l.
+<LI> <CODE> PhysicalView: </CODE> Absztrakt &ocirc;soszt&aacute;lya a
+ConcretePhysicalView-knak.
+<LI> <CODE> ConcretePhysicalView: </CODE> Egy
+adatb&aacute;zist&aacute;bl&aacute;t reprezent&aacute;l.
+Denormaliz&aacute;ci&oacute; eset&eacute;n esetleg t&ouml;bbet. Automatikusan
+gener&aacute;lhat&oacute;ak ezek az oszt&aacute;lyok.
+<LI> <CODE> Transaction:</CODE> Tranzakci&oacute;t kezel.
+<LI> <CODE> ViewFactory:</CODE> ConcreteHierarchicalViewkat gy&aacute;rt, ha
+m&aacute;r l&eacute;tezik, akkor azt adja vissza.
+<LI> <CODE> ViewCache:</CODE> Tartalmazza a bet&ouml;lt&ouml;tt Viewkat.
+<LI> <CODE> Database:</CODE> Adatb&aacute;zikkezel&ocirc; rendszert kezeli.
+</UL>
+
+<H2> K&ouml;vetkezm&eacute;nyek </H2>
+
+<UL>
+<LI> Alkalmaz&oacute;i programnak nem kell ismernie az adatb&aacute;zis
+szerkezet&eacute;t.
+<LI> Megval&oacute;s&iacute;t&aacute;s: 0.5 - 30 ember&eacute;v.
+<LI> Egyszer&ucirc;en haszn&aacute;lhat&oacute.
+<LI> &Ouml;r&ouml;kl&ocirc;d&eacute;s, t&ouml;bbalak&uacute;s&aacute;g
+nincs.
+<LI> Rugalmas (f&ocirc;leg ha can QueryBroker).
+<LI> Bonyolults&aacute;g: van-e QueryBroker.
+<LI> Teljse&iacute;tm&eacute;ny: Alig lassabb a szinetk miatt.
+<LI> Megl&eacute;v&ocirc; adatb&aacute;zis haszn&aacute;lhat&oacute;.
+ 
+</UL>
+
+<H2>Implement&aacute;ci&oacute:</H2>
+<UL>
+<LI> T&ouml;meges <CODE>update</CODE>?
+<LI> K&ouml;tegelt adatb&aacute;zis el&eacute;r&eacute;s (vannak ilyen
+cikkek).
+<LI> Multiple Read Patterns?
+<LI> Cursor Stability?
+<LI> Dinamikus SQL : Query Broker, statikus SQL: ConcretePhysicalView.
+<LI> &Aacute;lland&oacute; adatb&aacute;zis kapcsolat.
+<LI> Triggerek, t&aacute;rolt elj&aacute;r&aacute;sok nem
+haszn&aacute;lhat&oacute;ak.
+</UL>
+
+<H2> V&aacute;ltozatok</H2>
+
+<UL>
+<LI> ViewCache nem kell ha nincsenek hossz&uacute; tranzakci&oacute;k.
+<LI> Traditical transaction monitors?
+<LI> Haszn&aacute;lhat&oacute; nem-rel&aacute;ci&oacute;s
+adatb&aacute;zisn&aacute;l is.
+</UL>
+
+</BODY>
+</HTML>

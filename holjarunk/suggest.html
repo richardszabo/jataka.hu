@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Magyarország játékos megismerése a Google Street View-n keresztül." />
+    <meta name="keywords" content="Magyarország, térkép, földrajz, játék, keresés, tanulás, kvíz, Google Street View" />
+    <meta name="copyright" content="Szabó Richárd 2016." />
+    <meta name="country" content="Hungary">
+    <meta name="content-language" content="hu, hun, hungarian">
+
+    <title>Tudok egy jó helyet!</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="suggest.css">
+  </head>
+  <script>
+function sendMail() {
+    var str = ['holjarunk','jataka.hu'].join('@');
+    var link = "mailto:" + str
+             + "?&subject=" + encodeURI("Hol járunk ajánlás")
+             + "&body=" + encodeURI(document.getElementById("place").value);
+    window.location.href = link;
+}
+    </script>
+  <body>
+    <iframe class="background" id="parlament" src="https://www.google.com/maps/embed?pb=!1m0!3m2!1shu!2shu!4v1453794692887!6m8!1m7!1sE_1ikCCEmwMh4iNkk8eUwg!2m2!1d47.50718112326422!2d19.04798513180858!3f274!4f-1.4699999999999989!5f0.7820865974627469" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+    <div class="input_panel" id="suggest">
+      <div class="title">Tudok egy jó helyet!</div>
+      <div id="suggest_text">
+        <p>Ha tudsz egy olyan magyarországi helyet, melyet szeretnél viszontlátni az oldalon és a Google Street View készített róla képet, akkor kérlek küldjed el a hely címét!</p>
+   	    <p>Ehhez a <a href="http://maps.google.com">Google Maps</a>-en töltsd be a helyet, majd válts át Street View-ba. A Street View-módot a jobb alsó sarokban lévő emberke megfogásával és az útra "dobásával" lehet bekapcsolni. Másik megoldás az <a href="https://www.instantstreetview.com/">Instant Street View</a> használata.
+        A címet a böngésző (Chrome, Firefox stb.) címsorából másold ki! Például egy a Parlamenthez közeli hely címe a következő:</p>
+        <input type="text" id="sample" value="https://www.google.hu/maps/@47.5071811,19.0479851,3a,75y,274h,88.53t/data=!3m7!1e1!3m5!1sE_1ikCCEmwMh4iNkk8eUwg!2e0!6s%2F%2Fgeo1.ggpht.com%2Fcbk%3Fpanoid%3DE_1ikCCEmwMh4iNkk8eUwg%26output%3Dthumbnail%26cb_client%3Dmaps_sv.tactile.gps%26thumb%3D2%26w%3D203%26h%3D100%26yaw%3D18.637053%26pitch%3D0!7i13312!8i6656?hl=hu" readonly="readonly">
+      </div>
+        <p>Az ajánlott hely címe:</p>
+        <input type="text" id="place" placeholder="A hely címe, ahogy a Google Street View-ban látszik.">
+        <button onclick="sendMail()">Küld</button>
+        <a id="back_link" href="index.html">Újrakezdés</a>
+    </div>
+</body>
+</html>

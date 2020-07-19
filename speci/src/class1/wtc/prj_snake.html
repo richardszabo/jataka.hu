@@ -1,0 +1,246 @@
+<html>
+
+<head>
+
+<title>Design of Snake Robots | Projects | Sensor Based Planning Lab</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+</head>
+
+
+
+<body bgcolor="#FFFFFF">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+
+  <tr>
+
+    <td width="55%"><a href="http://voronoi.sbp.ri.cmu.edu"><img src="../images/sbplogo_small.jpg" width="56" height="50" border="0"></a><a href="http://voronoi.sbp.ri.cmu.edu"><img src="../images/sbptitlesmall.jpg" width="300" height="50" border="0"></a></td>
+
+    <td width="45%"> 
+
+      <div align="right"><a href="http://www.cmu.edu"><img src="../images/cmulogosmall.jpg" width="67" height="50" border="0"></a></div>
+
+    </td>
+
+  </tr>
+
+</table>
+
+<p align="left"><b><font face="Verdana, Arial, Helvetica, sans-serif" size="+2">Design 
+  of Snake Robots:</font></b></p>
+
+<table width="83%" border="0" cellspacing="0" cellpadding="0">
+  <tr> 
+    <td width="28%" height="264"><img src="../prj_images/proto2.jpg" height="185"></td>
+    <td width="21%" height="264">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td><a href="../movies/Joint_Proto_I.mpg"><img src="../prj_images/movies/top.jpg" width="281" height="44" border="0"></a></td>
+        </tr>
+        <tr> 
+          <td> 
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr> 
+                <td width="3%"><a href="../movies/Joint_Proto_I.mpg"><img src="../prj_images/movies/left.jpg" width="15" height="180" border="0"></a></td>
+                <td width="30%"><a href="../movies/Joint_Proto_I.mpg"><img src="../prj_images/movies/proto1.gif" width="240" height="180" border="0"></a></td>
+                <td width="67%"><a href="../movies/Joint_Proto_I.mpg"><img src="../prj_images/movies/right.jpg" width="26" height="180" border="0"></a></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr> 
+          <td><a href="../movies/Joint_Proto_I.mpg"><img src="../prj_images/movies/bottom.jpg" width="281" height="53" border="0"></a></td>
+        </tr>
+      </table>
+    </td>
+    <td width="51%" height="264"> 
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td><a href="../movies/proto_2.avi"><img src="../prj_images/movies/top.jpg" width="281" height="44" border="0"></a></td>
+        </tr>
+        <tr> 
+          <td> 
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr> 
+                <td width="3%"><a href="../movies/proto_2.avi"><img src="../prj_images/movies/left.jpg" width="15" height="180" border="0"></a></td>
+                <td width="30%"><a href="../movies/proto_2.avi"><img src="../prj_images/movies/proto.gif" width="240" height="180" border="0"></a></td>
+                <td width="67%"><a href="../movies/proto_2.avi"><img src="../prj_images/movies/right.jpg" width="26" height="180" border="0"></a></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr> 
+          <td><a href="../movies/proto_2.avi"><img src="../prj_images/movies/bottom.jpg" width="281" height="53" border="0"></a></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr> 
+    <td width="28%" height="23">&nbsp;</td>
+    <td width="21%" height="23"> 
+      <div align="center"><b><font size="4"><a href="../movies/Joint_Proto_I.mpg">Click 
+        to download movie.</a></font></b><font size="4"><font size="2"><i><a href="../movies/snake_motion.mpg">(10Mb)</a></i></font></font></div>
+    </td>
+    <td width="51%" height="23"> 
+      <div align="center"><b><font size="4"><a href="../movies/proto_2.avi">Click 
+        to download movie.</a></font></b><font size="4"><font size="2"><i><a href="../movies/snake_motion.mpg">(1.6Mb)</a></i></font></font></div>
+    </td>
+  </tr>
+</table>
+<p align="left">&nbsp;</p>
+
+<table width="90%" border="0" cellpadding="2" cellspacing="0">
+  <tr bgcolor="#99CCFF"> 
+    <td> 
+      <p><font face="Arial, Helvetica, sans-serif"><b>Task Description:</b></font></p>
+    </td>
+  </tr>
+  <tr> 
+    <td> 
+      <p>&nbsp;</p>
+      <p><font face="Arial, Helvetica, sans-serif">Snake robots are a new type 
+        of robots, known also as serpentine robots. As the name suggests, these 
+        robots possess multiple actuated joints thus mulitple degrees of freedom. 
+        This gives them superior ability to flex, reach, and approach a huge volume 
+        in its workspace with infinte number of configurations. This redundance 
+        in configurations gives them the technical name: hyper redundant robots. 
+        </font><font face="Arial, Helvetica, sans-serif"> Here we develop new 
+        snake robot designs. Ideally, the future snake design will consist of 
+        three degree of freedom stages --- roll, pitch, and extension. Sometimes 
+        stages are called bays.</font></p>
+      <p><font face="Arial, Helvetica, sans-serif">For the applications that we 
+        are interested in, the main challenge in designing these robots deals 
+        with putting actuated joints in a tight volume where we minize the length 
+        of the stages and their cross sectional areas. For the next design iteration, 
+        we will omit the extension degree of freedom in favor of having a shorter 
+        bay length. Therefore, the main concept of our design, as well as many 
+        others, is </font><font face="Arial, Helvetica, sans-serif">to stack two 
+        degree-of-freedom joints on top of each other, forming a serpentine robot. 
+        There are three main schools of designs for these kinds of robots: actuated 
+        universal joint, angular swivel joints and angular bevel joint.</font></p>
+      <p><font face="Arial, Helvetica, sans-serif">The simplest design that first 
+        comes to mind is stacking simple revolute joints as close as possible 
+        to each other and this led to the actuated universal joint design. However 
+        these kinds of designs are bulky and not appropriate of lots of serpentine 
+        robos applications. </font><font face="Arial, Helvetica, sans-serif">Another 
+        kind of bulky two DOF joints are pnuematic snakes.</font></p>
+      <div align="center">
+<table width="64%" border="0" cellspacing="10" cellpadding="0">
+          <tr> 
+            <td width="45%" height="200"> 
+              <div align="center"><font face="Arial, Helvetica, sans-serif"><img src="../prj_images/pumpkin5.jpg" width="400" height="200"></font></div>
+            </td>
+            <td width="55%" height="200"> 
+              <div align="center"><font face="Arial, Helvetica, sans-serif"><img src="../prj_images/universaljoint.jpg"></font></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <p>&nbsp;</p>
+      <p><font face="Arial, Helvetica, sans-serif">The second design that evolved 
+        was the angular swivel joints, which is present in the JPL Serpentine 
+        Robot. These are much more compact two DOF joints. The design is simple: 
+        starting with a sphere, then slicing the sphere into two parts such that 
+        the slice plane is transverse to the south-north pole axis of the sphere. 
+        Now rotate one half sphere with respect to the other and notice the motion 
+        of the poles. Putting the snake bays orthognal to the sphere at the poles 
+        and coordinating the motors that rotate those hemispheres leads to a two 
+        DOF joint.</font></p>
+      <div align="center">
+        <table width="64%" border="0" cellspacing="10" cellpadding="0">
+          <tr> 
+            <td width="45%" height="200"> 
+              <div align="center"><img src="../prj_images/swiveljoint.jpg" width="155" height="250"></div>
+            </td>
+            <td width="55%" height="200"> 
+              <div align="center"><img src="../prj_images/snake_medium.jpg" width="255" height="200"></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div align="left"></div>
+      <p align="center">&nbsp;</p>
+      <p><font face="Arial, Helvetica, sans-serif">This is the most compact joint 
+        design till now. However here we are trying to develop a new compact two 
+        DOF joint. We work on optimizing the size, strenght, reachability and 
+        flexibility of these joint. so far we have designed three new types of 
+        joints. The first prototype was designed and built using of the shelf 
+        componnents and using simple manufacturing machinary. </font></p>
+      <div align="center">
+        <table width="64%" border="0" cellspacing="10" cellpadding="0">
+          <tr> 
+            <td width="45%" height="200"> 
+              <div align="center"><img src="../prj_images/prototype1.jpg" width="300" height="194"></div>
+            </td>
+            <td width="55%" height="200"> 
+              <div align="center"><img src="../prj_images/actualjoint.jpg" width="333" height="200"></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <p align="center">&nbsp;</p>
+      <p align="left"><font face="Arial, Helvetica, sans-serif">We are also designing 
+        another two types of joints, what are more compact and yet stronger. We 
+        can not display our designs due to disclosre issues (sorry).</font></p>
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+
+<p>&nbsp;</p><table width="90%" border="0" cellpadding="2" cellspacing="0">
+  <tr bgcolor="#99CCFF"> 
+    <td><font face="Arial, Helvetica, sans-serif"><b>Personnel:</b></font></td>
+  </tr>
+  <tr>
+    <td>
+      <p align="left"><a href="http://voronoi.sbp.ri.cmu.edu/%7Echoset"><font face="Arial, Helvetica, sans-serif">Howie 
+        Choset</font></a> <a href="http://voronoi.sbp.ri.cmu.edu/%7Eeshammas"><font face="Arial, Helvetica, sans-serif"><br>
+        Elie Shammas </font></a></p>
+      </td>
+  </tr>
+</table>
+
+<p>&nbsp;</p><table width="90%" border="0" cellpadding="2" cellspacing="0">
+  <tr bgcolor="#99CCFF"> 
+    <td><font face="Arial, Helvetica, sans-serif"><b>Publications:</b></font></td>
+  </tr>
+  <tr>
+    <td><font face="Arial, Helvetica, sans-serif"><a href="http://voronoi.sbp.ri.cmu.edu/paper.english.html#snake">Hyper-redundant 
+      Robotics</a> </font></td>
+  </tr>
+</table>
+
+<p align="left"><font face="Arial, Helvetica, sans-serif"> </font><font face="Arial, Helvetica, sans-serif"> 
+  </font></p>
+
+<table width="90%" border="0" cellpadding="2" cellspacing="0">
+  <tr bgcolor="#99CCFF"> 
+    <td><font face="Arial, Helvetica, sans-serif"><b>Related Topics:</b></font></td>
+  </tr>
+  <tr>
+    <td><font face="Arial, Helvetica, sans-serif"><a href="prj_snake_motion.html">Motion 
+      Planning For Snake Robot</a><br>
+      <a href="prj_search_rescue.html">Search and Rescue</a><br>
+      <a href="prj_bridgeinspection.html">Bridge Inspection with Serpentine 
+      Robots</a></font></td>
+  </tr>
+</table>
+
+<p align="left"><font face="Arial, Helvetica, sans-serif"><b>Jump to: </b><a href="../people.english.html">People</a> 
+  | <a href="../robots.english.html">Robots</a> | <a href="../research.english.html">Research</a> 
+  | <a href="../events.english.html">Events</a> | <a href="../projects.english.html">Projects</a> 
+  | <a href="../ed_act.english.html">Education</a> | <a href="../papers.english.html">Papers</a> 
+  | <a href="../software.english.html">Software</a> | <a href="../links.english.html#sr">Links</a></font></p>
+
+<p align="center"><b><font size="1" face="Arial, Helvetica, sans-serif">&copy; 
+  Copyright 2000 Sensor Based Planning Lab, Carnegie Mellon University. All Rights 
+  Reserved.s</font></b></p>
+
+</body>
+
+</html>
+

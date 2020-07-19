@@ -1,0 +1,35 @@
+#stadion {
+    width: 35%;
+}
+#start {
+    left: 40%;
+    right: 40%;
+}
+.input_panel {
+    top: 35%;
+}
+@media only screen and (max-width: 900px) {
+    #stadion {
+        width: 95%;
+    }
+    #start {
+        left: 10%;
+        right: 10%;
+    }
+    .input_panel {
+        top: 5%;
+    }
+}
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+#footer p {
+    font-size: 75%;
+    font-style: italic;
+    float: left;
+}
+#footer div {
+    float: right;
+}

@@ -1,0 +1,76 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    color: #001133;
+}
+@media only screen and (max-width: 900px) {
+    .background {
+        display: none;
+    }
+}
+.background {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    left: 0;
+    right: 0;
+    opacity: 0.7;
+}
+input[type="submit"], a.button, button {
+    text-decoration: none;
+    border: 2px solid #333333;
+    text-align: center;
+    background-color: #889977;
+    color: #001133;
+    padding: 0.2em;
+    width: 100%;
+    border-radius: 5px;
+    margin-top: 0.4em;
+}
+input[type="submit"]:hover, a.button:hover, button:hover {
+    background-color: #667755;
+    color: black;
+    border: 2px solid black;
+}
+.input_panel {
+    background-color: #bbaa99;
+    border: 2px solid #333333;
+    border-radius: 15px;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0.5em 1.5em 1.5em 1.5em;
+    text-weight: bold;
+    font-size: 120%;
+    min-width: 20%;
+    width: inherit;
+}
+.title {
+    padding: 0.2em;
+    text-align: center;
+    font-weight: bold;
+}
+
+#restart {
+    width: inherit;
+    display: block;
+}
+#back_link, #help_link {
+    text-decoration: none;
+    margin-top: 0.5em;
+    font-size: 90%;
+    color: black;
+    font-style: italic;
+    float: right;
+    clear: both;
+}
+
+#back_link:hover, #help_link:hover {
+    font-weight: bold;
+}
+#Népstadion {
+    width: 100%;
+    height: 100%;
+}

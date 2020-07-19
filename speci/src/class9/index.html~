@@ -1,0 +1,464 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+                      "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+<h1>Mobil robotok szimulációja speci 9. óra</h1>
+
+
+<h2>A verseny kiírása</h2>
+
+<ul>
+<li>1. Artificial Life Creators Contest Online változata 1999. áprilisától
+1999. júliusáig
+<li>két webot, energiájuk csökken
+<li>négy energiaforrás
+<li>források újratöltõdése lassul -> egy idõ után csak egy webotnak elegendõ energia
+<li>a cél tovább bírni
+<li>a környezet 2 négyzetméteres, tárgyakkal teli, 
+mérkõzésenként átrendezett szoba -> az energiaforrások
+felhasználására nem lehetett elõre elkészített útvonalat tervezni
+  <p><img src="pict/contest.jpg" alt="contest"></p>
+<li>nevezés a kontroller kódjának beküldésével
+<li>hetente új forduló a kontrollerek legutolsó változataival
+<li>gyõzelem két pont, döntetlen egy (egyszerre fogynak ki)
+<li>Mzperx
+<li>2000-ben 2. Artificial Life Creators Contest Online
+<li>a feladat az elsõ versennyel egyezõ 
+<li>C helyett Java
+<li>körmérkõzés helyett az aktuális rangsor alapján
+<li>buborék módjára lehetett haladni fölfelé
+<li>Samux
+</ul>
+
+<h2>A Webots versenykörnyezet tulajdonságai</h2>
+
+<ul>
+<li>felügyelõ program az energia tárolására, gyõztes meghatározására
+  <p><img src="pict/supervisor.jpg" alt="supervisor"></p>
+<li>SAVE, LOAD gombokkal mérkõzések felvétele, lejátszása
+<li>terep: fix méretû és alakú, sík terep, két robottal
+<li>a tárgyak, a falak és az ellenfél áthatolhatatlanok
+<li>tárgyak tereprôl terepre nagyjából megegyeznek: kb. 20 egyszerre, 
+mindig pontosan 4 energiaforrás és van egy fényforrás a terep fölött
+<li>színek nem változnak, de fény-árnyék hatások miatt nem
+  használhatók fel közvetlenül
+<li>színeltolódás világos-sötét irányokba
+<li>az ég világoskék, a falak sötétkékek, a padló sárgásbarna, 
+az energiaforrások szürkék, az energiamezôk zöldek és pirosak
+<li>a környezet zajos, érzékelés és motorikus válasz szempontjából is,
+5-10% zaj 
+<li>webot aktuális pozíciója nem ismert (ego- és allocentrikus koordináták)
+<li>pozíció meghatározásához nem lehet felhasználni fix helyû, 
+állandóan látható tárgyat, fényforrás sem ilyen
+<li>a robotnak nincs "nyaka", vagyis körülnézéskor testének irányát is
+meg kell változtatnia
+<li>a weboton kívül egyetlen mozgó elem a terepen az ellenfél, mely
+mindenféle szenzoros érzékelésben zavart okozhat: ütközés, képek 
+tanulása, energiaforrás felismerése
+<li>ütközés kiszámíthatatlan
+<li>a webotok nem fix idõszeletekre kapják meg a vezérlést, a vezérlés
+annál sûrûbben jut a webothoz, minél gyorsabban lefut az új lépést
+meghatározó algoritmus (khepera_fair_step)
+</ul>
+
+<h2>Mzperx és Samux</h2> 
+
+<ul>
+<li>Mzperx: egy elõre kialakított, idõben változatlan moduláris
+felépítés, egyszerûség hatékonyság
+<li>környezet eléggé egyszerû, zajokkal nem túlságosan 
+terhelt
+<li>fáradságos finomhangolási folyamat, komplexitás áttekinthetetlen növekedése
+<li>Braitenberg-jármû formájú modulokból, központi modullal
+  <p><img src="pict/modules.jpg" alt="modules"></p>
+<li>központi modul döntése az érzékelt környezet és az eddigi mûködés
+alapján 
+<li>tevékenységek a szimuláció több iterációján keresztül
+<li>nyolc taktilis szenzor, kereken mért elfordulás, színes kamera
+képe, kép elõfeldolgozása
+<li>tárgydetektálás: a színes kamera szemmagasságú sorában lévõ
+képpontokról kellõen hibatûrõ módon eldönti, hogy energiaforráshoz 
+tartoznak-e vagy sem
+<li>a robusztus kódrészlet
+<pre>
+  simil = propRGB(red,green,blue,goal);
+  diff = min(100,fabs(red - green) + fabs(red - blue) + 
+                 fabs(green - blue));
+  margin = TOLERANCE * ((2 - diff/100) + simil);        
+  resp = (fabs(red - goal[0])&lt margin) && 
+         (fabs(green - goal[1])&lt margin) && 
+         (fabs(blue - goal[2])&lt margin); 
+</pre>
+<li>nem véletlen az egy képsor és az egy szín választása
+<li>így nincs lehetõség összetettebb navigációra, útvonaltervezésre,
+de gyorsabb a mûködés
+<li>a látvány és a hozzá tartozó szûrt kép
+  <p><img src="pict/feederview.jpg" alt="feederview"></p>
+  <p><img src="pict/feederfilter.jpg" alt="feederfilter"></p>
+<li>központi egység: energiaforrás, közeli akadály helye, melyik
+modulé legyen az irányítás
+<li>számlálók a modulok végrehajtásához kapcsolódóan (hormon, hangulat)
+<li>a többi modul a webot mozgását irányítja
+<li>alapmozgás az egyenes vonalú haladás és Braitenberg-szerû
+felfedezõ típusú akadálykikerülõ mozgás nyolc taktilis szenzor alapján
+<li>idõnként az energiaforrások keresése, 360 fokos körbefordulás, a
+kerekeken elhelyezett szenzorok segítségével
+<li><code>start_pos</code> kezdeti kerékszámláló-érték, a
+<code>FULL_TURN</code> elõre meghatározott konstans
+<pre>
+    if((side == LEFT && (my_khepera_get_position(LEFT) > 
+	                 start_pos - FULL_TURN) || 
+        side == RIGHT && (my_khepera_get_position(LEFT) < 
+                         start_pos + FULL_TURN)) && 
+        (left_food_stimuli + right_food_stimuli == 0)) {
+        return true;
+    } else {
+        return false;
+    }
+</pre>
+<li>energiaforrás látványa esetén Braitenberg-jellegû szeretetteli megközelítés, 
+a kép széle felõl jelentkezõ stimulust súlyozottabban veszi figyelembe
+<li>az eddigi modulok segítségével elvileg minden energiaforrást
+meglelhet és megközelíthet a webot
+<li>DE pattogó viselkedés, szobákban rekedés, energiaforrás
+megközelítése, webot és a forrás közötti akadály
+<li>falkövetõ modul: akadály energiaforrás megközelítése közben, régóta 
+nincs energiaforrás (hormon), fal közelsége -> kivezetés üres szobából
+<li>mûködése fix távolságtartás alapján (taktilis)
+<li>menekülés szûk falak közül
+<li><a href="peldak/mzperx/user/ecal1.c">Mzperx kódja</a>
+<LI>viszonylag kevés, többségében egyetemista nevezõk</LI>
+<LI>második helyezés a mzperx 3. változatával</LI>
+<LI>mérkõzések 70%-a gyõzelem</LI>
+<LI>egyszerû, nem túl zajos környezet, meglepetésekkel</LI>
+<LI>szenzomotorikus problémák:
+<UL>
+<LI>kanyarvétel: elakadás, szûk folyosók</LI>
+<LI>energiaforrás megközelítése</LI>
+<LI>elakadást elõidézõ helyek: átjárók, oszlopok</LI>
+<LI>rejtett energiaforrások</LI>
+<LI>tereptõl függõ erõs fluktuáció -> több pálya</LI>
+</UL>
+</LI>
+<LI>algoritmikus problémák:
+<UL>
+<LI>akadálykerülés irányának kiválasztása</LI>
+<LI>elakadás, végtelen ciklikus mozgás -> memória</LI>
+<LI>elakadás, mint a vereségek egyik legfõbb okozója</LI>
+<LI>energiaforrások közelítésének felcserélése</LI>
+<LI>mind a lokális döntések hátrányai -> kognitív térkép</LI>
+</UL>
+</LI>
+<LI>ennek ellenére 5 energiaforrás átlagosan, szemben a többiek 2-jével</LI>
+<LI>tapogatózó, majdnem vak ember</LI>
+<li>Samux, Mzperx Javás változata
+<li>új finomhangolás -> elakadások megszûnése
+<li>8 nevezõ, de volt térképépítés
+<li>Samux fél évig vezetett, végül a rájátszásban nyert 1000$-t és
+egy Webots licenszet
+<li><a href="peldak/samux/alife_yellow.java">Samux kódja</a>
+</ul>
+
+<h2>Az ellenfelek</h2>
+
+<ul>
+<li>Toxic Oreo forráskódja Mzperx kódjának nyolcszorosa
+<li>a szerzõ valószínûleg kísérletezett a látvány-távolság
+összefüggések meghatározásával
+<li><a href="peldak/Toxic_Oreo/toxic_oreo.cc">Toxic Oreo kódja</a>
+<pre>
+ main() {
+   // inicializálás, képnagyság-távolság tábla tárgyankénti 
+   // feltöltése
+   CalculateOneStep() {
+     GetStepData() {
+        CreateFilteredImages() { 
+          // energiaforrás, ég, föld színének érzékelése
+          // másik Khepera kiszûrése az energiaforrás színébõl
+          // több energiaforrás szétválasztása
+          // közelebbi forrás meghatározása magasság alapján
+          LookUpDistance(); // forrás távolságának meghatározása
+          // az eddigi eljárás megismétlése a még nem 
+          // érintett színekre
+          // töltõdõ energiaforrás meghatározása és 
+          // közelében maradás, ha szükséges
+          // távolmaradás kevés földpixelt és/vagy sok 
+          // falat tartalmazó oldaltól
+          IdentifyImmediateLandmarks();  // képen látható 
+          // tereptárgyak azonosítása
+          // ha nincs használható energiaforrás és régóta nem 
+          // volt a robot egy tereptárgynál, akkor az az új cél
+        }
+     }
+     SetGoalAndthePresentLandmark() // cél kiválasztása 
+     // hangulat alapján
+     UpdateLandmarkDistanceRelationships() // tereptárgyak 
+     // egymáshoz viszonyított távolságának eltárolása
+     RunAMood {
+        // egy viselkedés kiválasztása és futtatása 
+     }
+   }
+ }
+</pre>
+<li>Zkouskovka: akadálykikerülés és energiaforrás-követés
+<p><a href="peldak/zkouskovka/alife_yellow.java">Zkouskovka kódja</a></p>
+<li>Eeyore: foglaltsági háló a tárgyak által elfoglalt
+helyek jelzésére
+<li>a raszter felhasználása képfeldolgozási módszerben, majd
+gráfkeresõ algoritmusok
+<li>a szerzõ valószínûleg az utóbbival nem készült el
+<li>miként lehet a látvány alapján a foglaltsági hálózatot elkészíteni?
+<li>JammyDodger Toxic Oreo alapjaira épült
+<li>az emberi agy architektúrájának modellezzése
+<li>vizuális információ párhuzamos feldolgozása
+<p><img src="pict/interfaces.jpg" alt="interfaces"></p>
+<p><a href="peldak/JammyDodger">JammyDodger kódja</a></p>
+<li>a komplexitás és a méret nem feltétlenül ér gyõzelmet 
+</ul>
+
+<h2>Egy webot szükséges tulajdonságai</h2>
+
+<ul>
+<li>verseny alapján végzett megfigyelések eredménye az alábbi lista:
+<li>gyors lépések (szenzorolvasás, kalkuláció és motorértékállítás) szükségesek
+    a vezérlés idõfüggõ kiosztása miatt
+<li>az energiaforrások megtalálásához térkép építése szükséges, ami
+  tartalmazza az energiaforrásokat és/vagy az akadályokat, vagy az
+  energiaforrások között járható utat
+<li>a térkép elõállításának (a tanulásnak) gyorsnak kell lennie, hogy 
+  a robot ne merüljön le, mielõtt a térkép létrejönne, illetve 
+  a térkép elõállítása nem szabad, hogy gátja legyen az
+  energiaforrások felhasználásának
+<li>nem kell tökéletesen pontos térkép, csupán energiaforrások és szobák
+    közötti navigáció szkséges
+<li>kamera látószöge kicsi (látványgráf), több kép 
+  összekapcsolása vagy irányinformáció tárolása szükséges
+<li>nincs radar távolságmeghatározáshoz, ami térképépítéshez nagyon
+hasznos távolság meghatározása kép alapján (Toxic Oreo)
+<li>minden tárgy tereptárgy, kiemelt jelentõsége 
+lehet a falaknak és az egyedileg színezett sarkoknak, falak irány- és 
+távolságérzékeléshez
+<li>energia fogyása idõben állandó, ezért kalkulálható
+<li>lassuló energiaforrás-feltöltôdés, kiszámítható
+<li>fix energianyerés, kiszámítható
+<li>a webot kerekein mûködõ fordulatszámlálók felhasználásával a robot
+  elmozdulása és elfordulása követhetõ, zaj miatt pontosság csökken,
+  de késõbb szinkronizálható
+<li>két jó kontroller sokáig küszködhet egymással, véletlen gyõzelem
+az utolsó energiaforrás miatt -> az energiaforrások és a webot 
+energiaszintjének becslése kulcsfontosságú
+</ul>
+
+<h2>További lehetõségek</h2>
+
+<ul>
+<li>teljes színes kamera képének felhasználása
+<li>teljes színpaletta felhasználása a tárgyak azonosításához
+<li>fal aktuális szögének meghatározása az ég és a fal színének
+találkozási pixelei alapján
+<li>falmagasság-követés
+<li>színes kamera képének feldolgozása egyedi jellemzõk kereséséhez,
+melyek a pozíciókat egyértelmûen beazonosítják
+<li>irány- és pozíciótanulás 
+<li>adatgyûjtés pozíció és haladási irány változásáról,
+elõfeldolgozás, Backpropagációs tanulás, hálózat visszahelyettesítése
+a webotba
+<li>problémák fal mellett, ütközéskor, lépés idejének változásakor
+</ul>
+
+<h2>Webots 3.0</h2>
+
+<ul>
+<li>újítások: robotok építhetõk, gtk felület</li>
+<li>egy kísérleti robot:
+  <p><img src="pict/kiki_camera.png" alt="kiki"></p></li>
+<li>a VRML objektumfa:
+  <p><img src="pict/tree.jpg" alt="tree"></p></li>
+<li>Koala robot:
+  <p><img src="pict/koala.png" alt="koala"></p></li>
+<li>Magellan robot:
+  <p><img src="pict/magellan.png" alt="magellan"></p></li>
+<li>Pioneer robot:
+  <p><img src="pict/pioneer.png" alt="pioneer"></p></li>
+<li>Khepera sok kamerával:
+  <p><img src="pict/webots3.png" alt="webots3">
+<img src="pict/webots3enlarged.png" alt="webots3enlarged">
+<img src="pict/webots3cameras.png" alt="webots3cameras">
+</p></li>
+</ul>
+
+<h2>Navigáció foglaltsági hálózattal</h2>
+
+<h3>Navigációs módszerek</h3>
+<ul>
+<li>A cél kognitív térkép létrehozása (térbeli kapcsolatok,
+távolságok, szögek, jellegzetességek, tereptárgyak).</li>
+<li>Metrikus és topológikus navigáció.</li>
+</ul>
+
+<h4>Topológikus navigáció</h4>
+
+Példa: navigáció nézetgráffal.
+<ul>
+<li>nehéz létrehozni és karbantartani</li>
+<li>érzékeny a szenzorok hibájára</li>
+<li>alkalmazkodás a környezethez</li>
+<li>kis memóriaigény</li>
+<li>navigációhoz hatékony</li>
+<li>hozzávetõleges pozíció elég</li>
+</ul>
+
+<h4>Metrikus navigáció</h4>
+
+<ul>
+<li>könnyû létrehozni és karbantartani</li>
+<li>robusztus a szenzorok hibájával szemben</li>
+<li>nem alkalmazkodik a környezethez</li>
+<li>nagy memóriaigény</li>
+<li>navigációhoz nem hatékony</li>
+<li>pontos pozíció kell</li>
+</ul>
+
+<h3>A kísérlet összetevõi</h3>
+<ul>
+<li>Khepera robot a Webots szimulátorban.</li>
+<li>8 IR szenzor helyett 24 távolabb látó szonar.<br />
+<img src="pict/kheperasonar.png" alt="kheperasonar"></li>
+<li>Foglaltási háló létrehozása: a sík sztochasztikus
+parkettázása.</li>
+<li>Fõbb lépések:
+<ul>
+<li>szenzor-kiértékelés</li>
+<li>idõbeli integráció</li>
+<li>pozícióbecslés</li>
+<li>globális hálóépítés</li>
+<li>exploráció</li>
+</ul>
+</li>
+</ul>
+
+<h3>Szenzor-kiértékelés</h3>
+<ul>
+<li>Foglaltsági értékek kiszámítása egy kis környezetben.</li>
+<li>Mérések hálópozíciókká alakítása.</li>
+<li><img src="pict/occ1.png" alt="occ1"> egy pozíció értéke egy
+mérésre alapozva.</li>
+<li>A szenzor irányában elõször kicsi valószínûség (epszilon), aztán
+a mérésnél nagy (1 - epszilon), majd
+teljes bizonytalanságba fordul (0.5). </li>
+<li>
+<p><img src="pict/local_grid_small.png" alt="local-small">
+<img src="pict/local_grid_large.png" alt="local-large"></p></li>
+</ul>
+
+
+<h3>Idõbeli integráció</h3>
+<ul>
+<li>Sok mérés tartozik egy hálópozícióhoz, a valószínûséget ezekbõl
+kell kalkulálni.</li>
+<li>A <img src="pict/occ2.png" alt="occ2"> kifejezés kiszámítása az
+<img src="pict/occ3.png" alt="occ3"> értékekre alapozva.</li>
+<li>Feltétel: adott foglaltság mellett a mérések függetlenek a
+mérési idõtõl.</li>
+<li>Tétel: <img src="pict/occ4.png" alt="occ4"><img
+src="pict/occ5.png" alt="occ5"></li>
+<li>Vagyis a foglaltsági értékeket inkrementális módon lehet kiszámolni.</li>
+</ul>
+
+<h3>Pozícióbecslés</h3>
+<ul>
+<li>A lokális foglaltsági hálóról a globálisra áttéréshez ismerni kell
+a robot pozícióját és irányát.</li>
+<li>Ennek becslése az odometria.</li>
+<li>A környezet ismeretében ez egyszerû koordináta-geometria.</li>
+<li>Azonban szisztematikus és véletlen odometria hibák jelentkezhetnek.
+<table border="1">
+<thead>
+<td>
+szisztematikus
+</td>
+<td>
+véletlen
+</td>
+</thead
+<tr>
+<td>
+nem egyforma méretû kerekek
+</td>
+<td>
+egyenetlen padló
+</td>
+</tr>
+<tr>
+<td>
+szabálytalan kerekek
+</td>
+<td>
+kerekek csúszása
+</td>
+</tr>
+<tr>
+<td>
+mintavételezés ritkasága
+</td>
+<td>
+ütközések
+</td>
+</tr>
+<tr>
+<td>
+mintavételezés felbontásának gyengesége
+</td>
+<td>
+&nbsp;
+</td>
+</tr>
+</table>
+</li>
+<li><img src="pict/odometry_error_path_small.png" alt="odometry_error_path_small">
+<img src="pict/odometry_error_graph.png" alt="odometry_error_graph"></li></ul>
+
+<h3>Globális hálóépítés</h3>
+<ul>
+
+<li>Pozícióbecslés után lokális térkép globálisba kerülhet.</li>
+<li>Polárkoordináták transzformációja karteziánusra.</li>
+<li>Szenzorintegráció.</li>
+<li><img src="pict/occ_grid1.png" alt="occ_grid1">
+<img src="pict/occ_grid2.png" alt="occ_grid2">
+</li>
+</ul>
+
+<h3>Exploráció</h3>
+<ul>
+<li>A robot mozgásához hajtóerõ kell.</li>
+<li>A megerõsítéses tanulás értékiterációjához hasonlóan egy
+költségmátrixot számolunk ki.</li>
+<li>A be nem járt területekre jutás kumulatív költsége.</li>
+<li>Inicializálás:<img src="pict/occ6.png" alt="occ6"></li>
+<li>Fõ ciklus:<img src="pict/occ7.png" alt="occ7"></li>
+<li>Finomítások:csak a robot körül, szelektív reset a túl kicsikre,
+ritka teljes számítás, kombináció akadálykikerüléssel.</li>
+<li>Az eredmények:<img src="pict/occ_grid_control1.png" alt="occ_grid_control1">
+<img src="pict/occ_grid_control2.png" alt="occ_grid_control2">
+</li>
+</ul>
+
+<h3>További lehetõségek</h3>
+<ul>
+<li>Pontos pozícióbecslés.</li>
+<li>Magasszintû viselkedések.</li>
+<li>Dinamikus elemek bevezetése: ajtók, emberek.</li>
+<li>Metrikus és topológikus navigáció kombinálása.</li>
+<li>Új szenzorok bevezetése.</li>
+</ul>
+
+</body>
+</html>
+
+
+

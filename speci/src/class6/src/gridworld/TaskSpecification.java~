@@ -1,0 +1,4 @@
+package gridworld;
+
+public class TaskSpecification extends rl.TaskSpecification {
+}

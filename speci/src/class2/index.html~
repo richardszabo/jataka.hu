@@ -1,0 +1,427 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+                      "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+<h1>Mobil robotok szimulációja speci 2. óra</h1>
+
+<h2>Bevezetés</h2>
+<ul>
+  <li>bõséges és sokféle irodalom, nehéz válogatni</li>
+  <li>komoly eltérések a világról alkotott modellben</li>
+  <li>különbségek: mi fontos a kutatónak a világból, dimenziók száma, fizikai
+    törvények pontossága</li>
+  <li>szenzorok száma, felbontása</li>
+  <li>jóság: mennyire felel meg a valóságnak, ugyanakkor mennyire kezelhetõ a
+    jelenkor tudományos módszereivel</li>
+  <li>a módszerek egyfajta csoportosítása:
+
+    <table border="1">
+      <tbody>
+        <tr>
+          <td><b>idõ</b></td>
+          <td><b>állapottér</b></td>
+          <td><b>állapotátmenet</b></td>
+        </tr>
+        <tr>
+          <td>diszkrét</td>
+          <td>diszkrét</td>
+          <td>determinisztikus</td>
+        </tr>
+        <tr>
+          <td>folytonos</td>
+          <td>folytonos</td>
+          <td>sztochasztikus</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>most olyan laboratóriumban készült eredményekrõl lesz szó, melyek az
+    elmúlt 20 év eredményeit nem használják</li>
+</ul>
+
+<h2>Navigáció</h2>
+<ul>
+  <li>rengeteg lehetséges feladat, a közös a mozgás és a tájékozódás</li>
+  <li>a robot a környezet jeleit és saját memóriáját használja</li>
+  <li>kitûntetett helyek felismerése (kiindulás, energiaforrás, feladatvégzés
+    helye)</li>
+  <li>helyek közötti útvonalak ismerete</li>
+  <li>topológikus és metrikus megközelítés</li>
+  <li>topológikus: helyek közötti relációk<br />
+  <img src="pict/volgy.png" alt="volgy"></li>
+  <li>metrikus: számszerû mérések összegzése, kincs rejtekhelyének
+  térképe<br />
+  <img src="pict/metrikus.png" alt="metrikus"></li>
+  <li>tengerészet: part mentén, running down the lattitudes, deducted
+  reckoning</li>
+  <li>kognitív térkép a fejlett élõlényeknél</li>
+</ul>
+
+<h2>Mazebots</h2>
+<ul>
+  <li>oktatási célú, egyszerû környezet</li>
+  <li>a feladat a különféle labirintusokban elhelyezett robot startból célba
+    juttatása egy saját szabályozó programkód segítségével</li>
+  <li>négyzetes alaprajzú, kétdimenziós tetszõleges labirintus, körökkel és
+    zsákutcákkal</li>
+</ul>
+<img src="pict/mazebots.jpg" alt="Mazebots képe">
+<ul>
+  <li>népszerû feladat rágcsálókísérletekben</li>
+  <li>utasítások: <code>Go Forward</code>,<code> Go Backward</code>, <code>
+    Turn Left</code>,<code> Turn Right</code></li>
+  <li>szenzorok: <code>FrontWall</code>, <code>LeftWall</code>,
+    <code>RightWall</code>,<code> BackWall</code></li>
+  <li>programkonstrukciók (<code>if</code>, <code>while</code>), <code>Long
+    integer</code> változók és tömbök</li>
+  <li>egy egyszerû program ezen a nyelven
+    <pre>Main 
+|---Turn Right
+|---Call FwdUntilWall
+|---Turn Left
+|---Go Forward
+|---Turn Left
+|---Call FwdUntilWall
+|---Turn Right
+|---Call FwdUntilWall
+|---Call Main
+FwdUntilWall
+|---While( NoFrontWall )
+|---Do
+|---|---Go Forward</pre>
+  </li>
+  <li>bal-jobb szlalompályán jól mûködik, de máshol nem</li>
+  <li>néhány száz sorban elkészíthetõ a falkövetés programja is</li>
+  <li>teljes térkép felépítése is elképzelhetõ</li>
+</ul>
+
+<h2>Automata porszívó</h2>
+<ul>
+  <li>Ulrich, Mondada és Nicoud cikke komplex, valódi robottal</li>
+  <li>alulról fölfelé építkezés, egyszerû módszerek</li>
+  <li>30 cm x 30 cm-es Koala robot, Motorola 68331 processzorral 1MBájt
+    RAM-mal 128 KBájt ROM-mal, három órára elegendõ akkuval
+    <p><img src="pict/koala.jpg" alt="Koala robot"></p>
+  </li>
+  <li>A robot szerkezete
+    <ul>
+      <li>a forma nagyban meghatározza a takarítandó terep bejárhatóságát</li>
+      <li>a legtöbb esetben komplex mozgássorok szükségesek, ez befolyásolja
+        az algoritmust és az energiaigényt</li>
+      <li>szívófej változatossága</li>
+      <li>négyzet vagy kör alakú robot, peremén a szívófejjel: akadályok körül
+        vagy sarkokban nehézkes
+        <p><img src="pict/formak.jpg" alt="Lehetséges formák"></p>
+      </li>
+      <li>önálló szívófej elõnyei, hátrányai:
+        <ul>
+          <li>mozgás és takarítás függetlenítése</li>
+          <li>energiamegtakarítás</li>
+          <li>a robot fixpont a kar mozgásakor a tájékozódásban </li>
+          <li>de külön vezérlés szükséges</li>
+        </ul>
+      </li>
+      <li>külön energiaforrás kell a takarításhoz, kéziporszívó felszerelése a
+        robotra
+        <p><img src="pict/koalawarm.jpg" alt="Koala porszívóval"></p>
+      </li>
+    </ul>
+  </li>
+  <li>Szenzorok
+    <ul>
+      <li>robot helymeghatározása és tárgyak felismerése</li>
+      <li>tapintásérzékelõk a szívófejen, viszonylag nagy sûrûségben, 54 darab
+        6 mm-enként</li>
+      <li>szükséges az érintkezés, de csak finoman (erõelosztó védõgyûrû)</li>
+      <li>iránytû a tájékozódáshoz</li>
+      <li>falak esetében a legkisebb és a legnagyobb szög eltárolása a
+        késõbbiekre</li>
+      <li>porszenzor: meddig kell még az adott helyen takarítani</li>
+      <li>valószínûleg van távolságmérés is, a kerekek elfordulásának
+        mérésével
+        <p><img src="pict/arm.jpg" alt="Robotkar"></p>
+      </li>
+    </ul>
+  </li>
+  <li>Tárgyfelismerés
+    <ul>
+      <li>a tárgyfelismerésre azért van szükség, hogy az ismeretek ne
+        egyszerûen foglalt és üres mezõk egymásutánját jelentsék</li>
+      <li>ezen kívül az azonosított tárgyak természetes tájékozódási pontok
+        <ul>
+          <li>Láb - kör alakú, és 15 cm-nél kisebb átmérõjû</li>
+          <li>Fal - egyenes oldalvonal, akár könyvespolc vagy konyhaszekrény
+            is lehet</li>
+          <li>Sarok - két fal konvex vagy konkáv találkozása</li>
+          <li>Azonosíthatatlan objektumok - minden egyéb</li>
+        </ul>
+      </li>
+      <li>tárgyfelismerés takarítás közben: a robot helyben áll, a szívófej
+        körbejárja a tárgyat és osztályozza, amit késõbb még javíthat</li>
+      <li>helyi bittérkép-reprezentáció</li>
+      <li>plusz információ a tárgyak távolságáról és méretérõl</li>
+      <li>csökkentlátók bottal való tájékozódásához hasonló</li>
+      <li>hipotézisek használata az egyszerûség érdekében: minden egyenes fal,
+        amíg túlságosan nem görbül, minden 80 és 100 fok közötti sarok
+        derékszögû</li>
+    </ul>
+  </li>
+  <li>Térképépítés
+    <ul>
+      <li>lényeges a terep és a már bejárt részek ismerete, a pontos hely
+        másodrendû</li>
+      <li>két lépéses megoldás: a körvonal bejárása, a belsõ lefedése</li>
+      <li>így csak a kezdõpontot kell felismerni, és eltévedéskor az
+        oldalfalhoz vissza lehet térni tájékozódni</li>
+      <li>az adatok bittérképen tárolódnak: nem kell komplex alakzatokat
+        poligonként tárolni, fej lokális adatai könnyen beilleszthetõk</li>
+      <li>a térkép pontjai a következõket tartalmazhatják:
+
+        <table border="1">
+          <tbody>
+            <tr>
+              <td>Érték</td>
+              <td>Osztály</td>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>ismeretlen</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>üres, takarítva</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>üres, nem takarítva</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>fal</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>konkáv sarok</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>konvex sarok</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>láb</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>azonosíthatatlan objektum</td>
+            </tr>
+          </tbody>
+        </table>
+      </li>
+      <li>egy-egy pont 2 négyzetcentiméter, így 100 négyzetméter csak 250
+        KBájt</li>
+      <li>tárgyak keresésének gyorsítása listareprezentációval</li>
+      <li>a körvonal bejárásakor a megtett utak vektoriális összege nulla, ami
+        a kezdõpont felismerését segíti (kétszeri mérés, nagyobb
+      biztonság)</li>
+    </ul>
+  </li>
+  <li>A takarítás folyamata
+    <ul>
+      <li>körbejárás, majd szoba belsejének bejárása</li>
+      <li>legrövidebb útkeresés nem hatékony a nem ismert akadályok miatt</li>
+      <li>viszont fontos szempont a pozíció becslésének újrahangolása</li>
+      <li>egyenes vonalú mozgás falig, ekkor újrahangolható az irányzék és az
+        egyik koordináta</li>
+      <li>ezután következõ merõleges falnál az irányzék és a másik
+      koordináta</li>
+      <li>saroknál mindhárom paraméter hangolható</li>
+      <li>a navigáció irányát pedig a robot a nem takarított pixelek számának
+        irányonkénti összegébõl határozza meg
+        <p><img src="pict/bejaras.jpg" alt="Bejárás"></p>
+      </li>
+    </ul>
+  </li>
+  <li>Eredmények
+    <ul>
+      <li>2-3 négyzetméteres helyiség 90%-os kitakarítása, térképépítéssel és
+        95%-os bejárással, 12 perc alatt</li>
+      <li>látványos eredmény, de kereskedelmi forgalomba még nem való</li>
+      <li>a térkép igazából egy üres helyiséget mutat, egy valós szoba ennél
+        sokkal összetettebb</li>
+      <li>érzékelt tárgyak nagy része az azonosítatlan kategóriába
+      kerülne</li>
+      <li>problémás tárgyak: állólámpa, szõnyeg, alacsony szék, padlóváza</li>
+      <li>külön térkép kellene a robotnak és a karnak</li>
+      <li>a 90%-os teljesítmény valószínûleg pont a problémás részeket hagyja
+        ki</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Navigálás nézet gráffal</h2>
+<ul>
+  <li>Franz, Schölkopf, Mallot és Bülthoff cikke</li>
+  <li>A feladat
+    <ul>
+      <li>tisztán topológiai megközelítés a kognitív térkép elkészítéséhez
+        vizuális információk alapján</li>
+      <li>a rendszer autonóm módon felméri környezetét mesterséges
+        tereptárgyak nélkül</li>
+      <li>a robot a lokális képekbõl és térbeli relációkból nézetgráfot
+      készít</li>
+      <li>korábban labirintusban a nézetgráf alapján már tudott navigálni a
+        robot (diszkrét állapottér, illetve állapottér diszkrétizáció)</li>
+      <li>ez egy új kísérlet nyílt terepen</li>
+    </ul>
+  </li>
+  <li>A környezet
+    <ul>
+      <li>körülbelül 1m x 1m-es vízszintes terület, modellházakkal
+        <p><img src="pict/terep_web.jpg" alt="A szoba"></p>
+      </li>
+      <li>Khepera robot a tetején kamerával, mely egy kúp alakú tükörre néz,
+        így teljes 360 fokos kép látható 10-10 fokos vertikális látószögben
+        <p><img src="pict/khepera.jpg" alt="Khepera kamerával"></p>
+      </li>
+    </ul>
+  </li>
+</ul>
+<ul>
+  <li><ul>
+      <li>a keletkezõ képbõl szûrés után kivonják az állandó hátteret,
+        hisztogram kiegyenlítéssel kiemelik a kontrasztot</li>
+      <li>szimulációs környezetben hasonló világ sugárkövetéses technikával
+        elõállítva</li>
+    </ul>
+  </li>
+  <li>A folytonos tér diszkrét reprezentációja
+    <ul>
+      <li>a robot irányítására alkalmazható vizuális információ: a térbõl
+        folytonos leképezés létezik a lehetséges nézetek terébe</li>
+      <li>sajnos a nézetek nem biztos, hogy egyediek, ezért a környezet
+        segíthet a döntésben, szomszédos képek felhasználásakor</li>
+      <li>véges számítási kapacitás: nem lehet minden képet eltárolni</li>
+      <li>az útvonalak szempontjából lényeges képek tárolása és gráfként
+        összekapcsolása</li>
+      <li>a korábbi labirintusos kísérletben a térdiszkretizáció egyszerû
+        volt: a labirintus csomópontjaiban kellett a képeket eltárolni</li>
+    </ul>
+  </li>
+  <li>Nézetek közötti navigáció
+    <ul>
+      <li>miként lehet egy helyet felismerni?</li>
+      <li>ha a hely jól megkülönböztethetõ távolról, akkor a helyrõl készített
+        kép megfelelõ</li>
+      <li>ha a hely nem különleges, akkor az onnan a környezetrõl készített
+        képet kell felhasználni</li>
+      <li>vagyis a képen lévõ tereptárgyak használata azonosításképpen</li>
+      <li>a kép létrehozásából adódóan a haladási irányban a tárgyak
+        távolodnak, az ellentétes irányban közelednek
+        <p><img src="pict/kep_web.jpg" alt="Kép"></p>
+      </li>
+      <li>a kép és a valóság közötti legnagyobb egyezés keresése biológiailag
+        is megalapozott (például méhek, hangyák)</li>
+      <li>bizonyítható, hogy a cél tetszõleges pontossággal megközelíthetõ
+        ezzel a módszerrel (zajfüggés)</li>
+      <li>a kísérletekben 15 cm-rõl 95 %-os valószínûséggel, 25 cm-rõl már
+        csak 50 %-os valószínûséggel talált vissza a robot egy korábbi
+      képhez</li>
+    </ul>
+  </li>
+  <li>Képek begyûjtése
+    <ul>
+      <li>a 360 fokban készülõ képek egydimenziósak, szürkefokozatosak, és
+        mindössze 78 képpontból állnak</li>
+      <li>az egyszerûség ellenére ez a megoldás jól használható
+        <ul>
+          az elõnyök
+          <ul>
+            <li>valós idejû feldolgozás</li>
+            <li>a távolódó tereptárgyak nem tûnnek el a horizonton, csak
+              takaráskor</li>
+            <li>az elforgatásból és eltolásból adódó minimális eltérés könnyen
+              kiszûrhetõ</li>
+            <li>robusztus képérzékelés, a kép egy kis részének megváltozása
+              nem olyan súlyos probléma (például mozgó ember)</li>
+            <li>a helyek képének eltárolásához elég egy nézetet készíteni,
+              nincs szükség több részleges kép integrálására</li>
+          </ul>
+        </ul>
+      </li>
+      <li>a képek használata
+        <ul>
+          a megfelelõ navigációhoz az alábbi feltételek teljesülése szükséges
+          <ul>
+            <li>a képeknek megkülönböztethetõeknek kell lenniük</li>
+            <li>kevés képpel is a terep nagy részét le kell tudni fedni</li>
+            <li>a szomszédos képek térbeli távolságának elég kicsinek kell
+              lenni ahhoz, hogy egyikbõl a másikba megbízhatóan el lehessen
+              jutni</li>
+          </ul>
+        </ul>
+      </li>
+      <li>a hasonlóság mérése egy osztályozási probléma: a küszöböt úgy kell
+        megállapítani, hogy se túl sok, se túl kevés kép ne keletkezzen
+        <p><img src="pict/grafikon.jpg" alt="Grafikon"></p>
+      </li>
+      <li>ehhez a kutatók teszt futattáskor sok képet készítenek, melyek
+        között a távolságot és az átjárhatóságot mérik, így állapítják meg a
+        küszöb értékét</li>
+      <li>ezzel a módszerrel nagyjából 25-40 kép különböztethetõ meg
+        <p><img src="pict/tavolsag_web.jpg" alt="Szoba"></p>
+      </li>
+    </ul>
+  </li>
+  <li>A nézet gráf létrehozása
+    <ul>
+      <li>az elõbbi két mechanizmus az alapvetõ építõkövei a teljes eljárásnak
+        <p><img src="pict/alg.jpg" alt="Algoritmus"></p>
+      </li>
+      <li>a gráf csúcspontjaiban nézetek vannak, az élek a robot számára
+        megtehetõ útvonalakat jelentik</li>
+      <li>útvonalkészítés: a robot halad és ha a látott kép komolyan eltér a
+        csúcspontokban tároltaktól, akkor új csúcsot készít</li>
+      <li>így a gráf fedése függ a terep változásától: változékonyabb terep,
+        sûrûbb csúcsok, homogén terep, ritkább csúcsok</li>
+      <li>a láncszerû gráf elkerülésére egy bizonyos távolság megtétele után
+        mindenképp új él keletkezik: ha a kép nem tér el a korábbiaktól
+        lényegesen, akkor a hasonlóság alapján egy korábbi csúcsot kapcsol
+        össze a megelõzõvel</li>
+      <li>ha a robot eltéved új gráf kezdõdik, ami jó esetben majd a
+        korábbihoz kapcsolódik</li>
+      <li>ezzel a módszerrel metszõ élek sem nagyon keletkeznek</li>
+      <li>lokális felfedezési stratégiák
+        <ul>
+          <li>ahhoz, hogy a gráf jól fedje a terepet a felfedezés új irányát
+            úgy kell megválasztani, hogy az a legtöbb információszerzéssel
+            járjon</li>
+          <li>véletlen irányválasztás, Brown mozgás</li>
+          <li>keresés a legnagyobb felfedezetlen terület irányába</li>
+          <li>csúcshoz tartozó élek számának, élek szögének limitálása</li>
+          <li>hibás élkeresések megjegyzése (például ütközéskor)</li>
+          <li>tárgyakhoz közeli képkészítés letiltása a töredezettség
+            csökkentése érdekében
+            <p><img src="pict/lepesek_web.jpg" alt="Lépések"></p>
+          </li>
+        </ul>
+      </li>
+      <li>ábrák a készülõ gráfokról
+        <p><img src="pict/graf1_web.jpg" alt="Gráf 1."></p>
+        <p><img src="pict/graf2_web.jpg" alt="Gráf 2."></p>
+      </li>
+    </ul>
+    <ul>
+      <li>összefüggés a topológikus és a metrikus navigáció között</li>
+      <li>hátrány, hogy a nem egyértelmû képek miatt csak kis terepen
+        alkalmazható</li>
+      <li>kombinálva metrikus módszerekkel nagyon eredményes lehet</li>
+    </ul>
+  </li>
+</ul>
+</body>
+</html>

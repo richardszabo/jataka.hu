@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<link rel="Stylesheet" title="Default Stylesheet" media="Screen"
+  href="../default.css">
+<TITLE>Hierarchical View Pattern</TITLE>
+</HEAD>
+<body>
+
+
+<H1>Hierarchical View Pattern</H1>
+
+<h2>Környezet</h2>
+A Relational Database Access Layer használata, a logikai és a fizikai
+réteg szétválasztása.
+<h2>Probléma</h2>
+Milyen interfészt kell az adatbázisnak az alkalmazás felé mutatnia?
+<h2>Befolyásoló tényezõk</h2>
+A tervezésnél és a megvalósításnál az alábbi döntéseket kell hozni.
+<ul>
+<li>Komplexitás és hatóerõ a költségek ellenében<BR>
+    ...
+<li>Komplexitás a könnyed használhatóság ellenében<BR>
+    ...
+<li>Tömeges használat problémája<BR>
+Nagy adatmodell esetén kézzel megírni ezeket a becsomagoló
+osztályokat fáradságos és hibalehetõségekkel teli. Általános 
+megoldás szükséges, hogy a tömeges gyártás megvalósulhasson: makró,
+generátor, templát.
+</ul>
+<h2>Megoldás</h2>
+<P><IMG SRC="db1.gif"><P>
+<P><IMG SRC="db2.gif"><P>
+<ol>
+<li>Induljunk ki a relációs adatmodellbõl! Egy entitástól elindulva
+idegen kulcsok mentén navigáljunk! A navigáció során egy aciklikus 
+irányított gráfot építsünk, amelyet címkézzünk fel!
+<li>Az aciklikus irányított gráf minden csúcsához rendeljünk 
+egy osztályt!
+<li>Használjunk aggregációt az egy-egy típusú kapcsolatoknál, és 
+konténert az egy-sok típusú kapcsolatoknál.
+</ol>
+<h2>Példa</h2>
+<P><IMG SRC="db3.gif"><P>
+A korábban elkezdett példa osztályszerkezetének megvalósítása 
+a gráf alapján az alábbiak szerint fog kinézni.
+<pre>
+struct Customer {
+    CustomerKeyType iCustNumber;
+};
+struct Article {
+    ArticleNumberType iArticleNumber;
+};
+struct OrderItem {
+    Article iArticle;
+    QuantityType iQuantity;
+};
+
+classOrderInvoiceView : public HierarchicalView {
+  public:
+    OrderInvoiceView(OrderKeyType anOrder);
+
+    OrderKeyType iOrder;
+    Customer iCustomer;
+    Vector&lt;OrderItem> iTems;
+    Money iSumOfInvoice;
+  protected:
+    virtual void update(void);
+    virtual void insert(void);
+    virtual void remove(void);
+    virtual void read(void);
+};
+</pre>
+
+Ezek után a kód mentes lesz adatbázisfüggõ dolgoktól, és
+a logikai adatmodellt követi.
+<pre>
+void Order::processInvoice(OrderKeyType anOrder) {
+    OrderInvoiceView *pInvoice = 
+       (OrderInvoiceView) ViewFactory::getView(anOrder);
+
+    ItemIterator itemIter = pInvoice->iItems.begin();
+    for(;itemIter != iItems.end(); itemIter++) {
+        pInvoice->iSumOfInvoice+=
+            (itemIter->iQuantity *
+	     itemIter->iArticle.iArticlePrice);
+    }
+    pInvoice->markModified();
+}
+</pre>
+<h2>Következmények</h2>
+<ul>
+<li>Öröklõdés és többalakúság
+A minta ezeket nem támogatja. Ez megfelelõ a legtöbb üzleti 
+alkalmazás esetében. :)
+<li>Interfész komplexitása
+Az interfész eddig vázolt állapotában minimális. Generálási
+lehetõség bevezetése újabb erõfeszítéseket igények, de ez
+igen hamar megtérül.
+<li>Interfész stílusa
+A logikai adatmodell határozza meg az interfész stílusát,
+szemben az objektumrelációs modellel, ahol az objektummodell
+követi a belsõ struktúrát.
+<li>Egyszerû használat és az alkalmazásoldali igények
+Könnyû lesz használni, hiszen az alkalmazásoldali igényeknek 
+megfelelõen készült.
+<li>Szétválasztás
+Az alkalmazási és az adatbázisréteg teljes szétválasztását
+végzi.
+</ul>
+<h2>Variációk</h2>
+A minta környezetében minden elhagyható. Ez azonban csak 
+egyszerûbb alkalmazásnál igaz.
+</BODY>
+</HTML>

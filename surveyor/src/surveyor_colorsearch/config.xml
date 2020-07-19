@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<surveyor_configuration>
+
+    <hue-lower-limit>80</hue-lower-limit> <!-- hue is [0,360] -->
+    <hue-upper-limit>250</hue-upper-limit>
+    <saturation-lower-limit>10</saturation-lower-limit> <!-- saturation is [0,255] -->
+    <saturation-upper-limit>100</saturation-upper-limit>
+    <value-lower-limit>60</value-lower-limit> <!-- value is [0,255] -->
+    <value-upper-limit>255</value-upper-limit>
+
+    <dilate_erode_number>10</dilate_erode_number> <!-- number of iteration of delatation and erosion -->
+
+</surveyor_configuration>

@@ -1,0 +1,6 @@
+JAVAC = javac
+JAVA = java
+CP=-classpath $(CLASSPATH)
+
+%.class:%.java
+	$(JAVAC) $(JAVAC_OPTS) $(CP) $<

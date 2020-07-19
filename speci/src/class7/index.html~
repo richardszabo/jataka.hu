@@ -1,0 +1,385 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+                      "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+<h1>Mobil robotok szimulációja speci 7. óra</h1>
+
+<h2>Az evolúciós algoritmusok jelentõsége</h2>
+<ul>
+  <li>az eddigi algoritmusok többsége biológiai alapokra épül</li>
+  <li>evolúció esetén a kapcsolat nyilvánvaló: a 
+    C. Darwin által felfedezett modell matematikai
+    absztrakciója</li>
+  <li>az evolúcióban részt vevõ egyedek valamilyen módon a feladat megoldásait
+    reprezentálják</li>
+  <li>eljárás kiszelektálja a jobb egyedeket (gazda haszonállatokkal)</li>
+  <li>jellemzõi: bonyolult eljárástér, melyben kis hatósugarú,
+    lokális szabályok mûködnek; nagyfokú párhuzamosság</li>
+  <li>lehetséges megoldások egész halmazával dolgoznak az eddigi egy
+  megoldás folyamatos javítása helyett</li>
+  <li>evolúciós eljárással meghatározható egy robot felépítése és
+  viselkedése is</li>
+  <li>evolúció és a tanulás kapcsolata</li>
+  <li>evolúció: napszakok, évszakok változása, éghajlat, fajtársak,
+    ellenségek, táplálékok alakja és viselkedése</li>
+  <li>tanulás: egyed szempontjából fontos események, tárgyak, élõlények
+    felismerése, élõhelyének megismerése</li>
+</ul>
+
+<h2>Az alapok</h2>
+ötvenes évektõl létezik, matematikai alapok: J. Holland séma-elmélete
+
+<h3>Az általános eljárás</h3>
+<ul>
+  <li>egyedek állandóan változó populációja, 
+      melyek a feladat szempontjainak megfelelõ megoldásokat 
+      reprezentálják</li>
+  <li>sikeresség mérõje: fitneszfüggvény</li>
+  <li>sikeres egyedek szaporodhatnak, kevésbé sikeresek elpusztulnak</li>
+  <li>szaporodás során történhetnek változások, ez javít(hat)ja 
+  a populációt</li>
+  <li>az általános algoritmus
+<pre>
+Algoritmus EA {
+    t := 0
+    initpopuláció(P(t))
+    fitneszszámítás(P(t))
+    Ciklus(amíg nincs kész) {
+        P'(t) := szülõválasztás(P(t))
+        keresztezés(P'(t))
+        mutáció(P'(t))
+        fitneszszámítás(P'(t))
+        P(t+1) := túlélõ(P(t),P'(t))
+        t := t + 1
+    }
+}</pre>
+  </li>
+  <li>kezdõ populáció, ciklus, fitnesz, genetikai operátorok (keresztezés,
+    mutáció), halál</li>
+</ul>
+
+<h3>Az algoritmus típusai</h3>
+<ul>
+  <li>vázolt általános végrehajtási forma specializációi</li>
+  <li>genetikus algoritmus
+    <ul>
+      <li>minden egyed a megoldandó probléma egy lehetséges megoldása</li>
+      <li>génkészletre, kromoszómára képezõdés</li>
+      <li>gyakran nullákból és egyesekbõl álló bitvektor</li>
+      <li>genetikai operátorok a kromoszómán dolgoznak</li>
+      <li>fitnesz megállapításához, a gyõztes felhasználásához 
+        a génkészletet
+        vissza kell transzformálni a feladat terébe</li>
+      <li>generációváltás: feleannyi szülõpár alakul ki, mint a populáció
+        mérete</li>
+      <li>minden pár két egyedet hoz létre</li>
+      <li>az elõálló új egyedek alkotják a következõ generációt</li>
+    </ul>
+  </li>
+  <li>evolúciós stratégia
+    <ul>
+      <li>egyedek nem a megoldásokat reprezentálják</li>
+      <li>számszerû, valós értékû paraméterek</li>
+      <li>a paraméterek helyettesítõdnek</li>
+      <li>lineáris függvény együtthatói, neurális háló súlyai</li>
+    </ul>
+  </li>
+  <li>evolúciós programozás
+    <ul>
+      <li>populáció egyedei a probléma megoldásait elõállító programok</li>
+      <li>kifejezésfa, LISP-szerû nyelv</li>
+      <li>robotika</li>
+    </ul>
+  </li>
+</ul>
+
+<h3>A reprezentáció</h3>
+<ul>
+  <li>reprezentáció megválasztása meghatározza a keresési teret</li>
+  <li>genetikus algoritmus</li>
+  <li>háromjegyû Fibonacci-számok, 1000 hosszú bitvektorok az egyedek,
+    sorszámnak megfelelõ szám a Fibonacci számsor eleme-e</li>
+  <li>evolúciós programozás: kifejezésfák
+    <p><img src="pict/k1.jpg" alt="k1"></p>
+    <p><img src="pict/kiffa.jpg" alt="kiffa"></p>
+  </li>
+</ul>
+
+<h3>Genetikai operátorok</h3>
+<ul>
+  <li>mutáció: új egyedek elõállítása</li>
+  <li>génkészlet véletlenszerû megváltozása</li>
+  <li>0.01 és 0.001 körüli érték (általában hátrányos)</li>
+  <li>bitvektorokon a nullák és egyesek ellentétes értékbe billentése</li>
+  <li>távolság-eltérés: 8 (1000), 0 (0000), 7 (0111)</li>
+  <li>+/- epszilon módszer</li>
+  <li>fáknál a fában szereplõ értékek módosítása vagy egy részfa cseréje</li>
+  <li>keresztezés bitvektorokon legegyszerûbb esetben azt jelenti, hogy egy
+    meghatározott ponttól kezdve a két kromoszóma felcserélõdik
+    <p><img src="pict/kereszt.jpg" alt="kereszt"></p>
+  </li>
+  <li>többpontos és uniform keresztezés</li>
+  <li>kifejezésfáknál két részfa cseréje
+    <p><img src="pict/kiffaker.jpg" alt="kiffaker"></p>
+  </li>
+</ul>
+
+<h3>A fitneszfüggvény</h3>
+<ul>
+  <li>mely egyedek és leszármazottaik kerülnek a következõ populációba</li>
+  <li>jól számítható függvény maximalizálásakor a közelítendõ függvény a
+    fitneszfüggvény</li>
+  <li>függvény-approximáció: mintavételi pontokban mért különbségek összege
+    alkotja a fitneszfüggvényt</li>
+  <li>idõigény miatt esetleg közelítõ függvény: trigonometrikus függvény
+    közelítésekor Taylor-polinomja</li>
+  <li>evolúciós programozásnál a fitnesz közvetlen meghatározására nincsen
+    lehetõség</li>
+  <li>a kialakult programot mindig le kell futtatni, és az elõállt eredményt
+    kell megítélni</li>
+  <li>büntetõfüggvény</li>
+  <li>egyedek kiválasztása módjai</li>
+  <li>fitnesz arányában</li>
+  <li>a sikeresek túl gyors vagy túl lassú eluralkodása -&gt; rangsor</li>
+  <li>bajnokság: könnyen összehasonlítható egyedeknél</li>
+</ul>
+
+<h2>Robotirányítás evolúciós programozással</h2>
+<ul>
+  <li>W. Lee, J. Hallam, H. Lund cikkükben evolúciós algoritmust használnak
+    egy Khepera robotot irányító program elõállítására</li>
+  <li>a robotnak egy tárgyat kell a környezetben felfüggesztett fényforrás alá
+    tolnia</li>
+  <li>három irányító modul</li>
+  <li>elsõ modul: a tárgy megközelítése és mozgatása</li>
+  <li>második: tárgy körül haladás</li>
+  <li>harmadik: koordinál</li>
+  <li>reaktív kontroller</li>
+  <li>Khepera 55 milliméter átmérõjû, 3 centiméter magas kétkerû robot</li>
+  <li>infravörös szenzorokkal akadályok és fény érzékelésére</li>
+</ul>
+
+<h3>A genetikai kód felépítése</h3>
+<ul>
+  <li>adott környezet, modulonként meghatározott fitneszfüggvény, kezdeti
+    véletlen populáció</li>
+  <li>fitnesz, genetikai operátorok, bajnokság</li>
+  <li>mutáció: részfa törlése és létrehozása</li>
+  <li>keresztezés: kompatibilis részfák cseréje, átlagolás</li>
+  <li>populáció szigetekre osztása</li>
+  <li>a programok logikai kifejezések</li>
+  <li>szenzorok és értékeik, AND, OR, NOT, XOR, &gt;=</li>
+  <li>részfák a szenzorok értékeire alapozva gyökerüknél nulla vagy egy
+    értéket adnak vissza</li>
+  <li>a részfa a motor bekapcsolási irányát és a motor hatóerejét definiálja
+    200 ms-onként</li>
+  <li>egy jellemzõ program
+    <pre>(PROG
+  (NOT (&gt;= IR6 IR1))
+  (&gt;=IR1 0.78)
+  (OR (&gt;= IR5 IR1) (&gt;= IR3 IR3))
+  (OR (&gt;= 0.32 IR3) (&gt;= IR5 IR4))
+  (&gt;=IR4 IR3)
+  (OR (&gt;= IR5 IR1) (&gt;= IR6 IR3))
+)</pre>
+  </li>
+</ul>
+
+<h3>A viselkedésmodulok létrehozása</h3>
+<ul>
+  <li>a három részfeladat megoldása három teljesen különálló evolúciós
+    programozási eljárás eredménye</li>
+  <li>véletlenszerûen kiválasztott tesztelési feladatok a
+  tesztkörnyezetben</li>
+  <li>a fitnesz büntetõfüggvény alapján</li>
+  <li>az utolsó generáció legjobb egyede a gyõztes</li>
+  <li>dobozeltolás: elülsõ akadályszenzorok értéke folyamatosan magas, nagy
+    sebesség, kicsi sebességkülönbség
+    <p><img src="pict/k2.jpg" alt="k2"></p>
+  </li>
+  <li>a futás során két, 50 egyedbõl álló populáció minden példánya tehetett
+    meg 150 lépést 50 generáción keresztül
+    <p><img src="pict/boxpush.jpg" alt="boxpush"></p>
+  </li>
+  <li>doboz körvonalának követése: sebesség tartása, a robot bal oldalától a
+    doboz fix távol tartása (IR1)
+    <p><img src="pict/k3.jpg" alt="k3"></p>
+  </li>
+  <li>a futás hasonló, és itt is van eredmény (program)
+    <p><img src="pict/boxcircle.jpg" alt="boxcircle"></p>
+  </li>
+  <li>harmadik modul: a fényforrás irányára és helyzetére alapozva el tudja
+    dönteni, hogy a két alprogram közül melyiket kell érvényre juttatni</li>
+  <li>a fitneszfüggvény a doboz és a fényforrás távolságát összegzi
+    <p><img src="pict/k4.jpg" alt="k4"></p>
+  </li>
+  <li>4 populáció változott 40 egyeddel összesen 600 lépésnyi ideig
+    <p><img src="pict/boxres.jpg" alt="boxres"></p>
+  </li>
+</ul>
+
+<h2>Evolúciós algoritmusok neuronhálóval</h2>
+J. Kodjabachian és J-A. Meyer: robot viselkedését létrehozó mesterséges
+neurális háló evolúciós módszerekkel
+
+<h3>A háló kódolása</h3>
+<ul>
+  <li>csótány-animat járásmódjának megvalósítása</li>
+  <li>sejtkódolás és axonnövelés kombinációja</li>
+  <li>minden egyes neuron egy fix, meghatározott pozíciót foglal el egy
+    kétdimenziós szubtrátban</li>
+  <li>neuronok axonokat, kimeneteket növeszthetnek más neuronok irányába és
+    más neuronoktól fogadhatnak bejövõ axonokat</li>
+  <li>szenzorok és az aktorok helyet foglalnak a kétdimenziós térben</li>
+  <li>inden sejt tartalmazza a kromoszómába kódolt fastruktúrájú
+  programot</li>
+  <li>a csúcsok a háló kialakulását befolyásoló paraméteres utasítások</li>
+  <li>lehetséges utasítások
+    <p><img src="pict/k5.jpg" alt="k5"></p>
+  </li>
+  <li>kezdetben szubsztrát méretének meghatározása, szenzorok és motorneuronok
+    elhelyezése</li>
+  <li>minden lábhoz tartozik egy prekurzor sejt, amiben az evolúciós program
+    fut</li>
+  <li>a DIVIDE utasítás hatására létrejön egy új sejt, ami örökli az eredeti
+    programot és futtatni kezdi a DIVIDE alatti jobb oldali csúcson, a szülõ
+    sejt a bal ágon folytatja a futást.</li>
+  <li>a GROW vagy a DRAW hatására új kapcsolat keletkezik a megadott irányban
+    <p><img src="pict/devel.jpg" alt="devel"></p>
+  </li>
+  <li>a SETBIAS és a SETTAU utasítások a neuron funkcionális paramétereit
+    határozzák meg</li>
+  <li>neurondinamika: szivárgó összegzés modell (leaky integrator)
+    <p><img src="pict/k6.jpg" alt="k6"></p>
+    <p><img src="pict/k7.jpg" alt="k7"></p>
+  </li>
+  <li>bemenetek folyamatosan növelik, saját potenciájával arányosan
+    folyamatosan veszít értékébõl</li>
+  <li>a folyamat eléggé idõigényes: szintaktikai megszorítások, csak a
+    nyelvtannak megfelelõ programok alakulhatnak ki, lábanként nyolc neuron és
+    harminckét kapcsolat, a hat lábhoz ugyanaz a program tartozik</li>
+</ul>
+
+<h3>Az evolúciós folyamat</h3>
+<ul>
+  <li>szintaktikailag helyes programok gyûrûje</li>
+  <li>tetszõleges pozíció kiválasztása, kettõ méretû környezetbõl a legjobb
+    egyedet egy bajnokság során határozták meg</li>
+  <li>60 százalék a valószínûsége a keresztezõdésnek egy szomszéddal</li>
+  <li>20 százalék a valószínûsége a részfa elhagyásának és generálásának</li>
+  <li>konstansok módosítása binomiális eloszlás alapján</li>
+  <li>új egyed fitnesze a környezetbe helyezve derül ki</li>
+  <li>populációba illesztéshez egy negatív bajnokság nyújt segítséget</li>
+</ul>
+
+<h3>Eredmények</h3>
+<ul>
+  <li>a láb mozgásának paraméterei
+    <p><img src="pict/leg.jpg" alt="leg"></p>
+  </li>
+  <li>fitneszfüggvény a megtett úttól és a láb mozgásának frekvenciájától
+    függ, elesés nincs explicit módon büntetve
+    <p><img src="pict/k8.jpg" alt="k8"></p>
+  </li>
+  <li>a kísérlet: 100 ezer egyed kicserélése, 200 egyedet tartalmazó
+    populációban</li>
+  <li>öt futtatás, az egyik esetben a már ismert háromlábú járásmód alakult ki
+    <p><img src="pict/tripod.jpg" alt="tripod"></p>
+  </li>
+  <li>bal oldalán lévõ öt neuron a láb ritmikus felemelését végzi</li>
+  <li>jobb oldal a hat láb egyesített mûködésének egy részletet tárja fel</li>
+  <li>kiterjesztés egy újabb szubsztrát bevezetésével, mely serkenti és
+    gátolja  az eddigi neuronokat</li>
+  <li>feladatok: elindulás, megállás, célkövetés, akadálykikerülés</li>
+</ul>
+
+<h2>Fejlõdõ ideghálózat</h2>
+S. Nolfi és D. Parisi cikke, a háló kialakulása alatt, azzal egyidõben a robot
+már a környezetbe van helyezve és funkcionál
+
+<h3>A hálózat kialakulása</h3>
+<ul>
+  <li>hagyományos és fejlõdõ hálózat</li>
+  <li>genetikus kód mindkét esetben a neuronok fizikai elhelyezkedését és a
+    kapcsolódások létrejöttét specifikálja</li>
+  <li>fejlõdés során minden neuron meghatározott szögben, meghatározott
+    mennyiségû axont növeszt
+    <p><img src="pict/novekedes.jpg" alt="novekedes"></p>
+  </li>
+  <li>az axonok nem minden esetben találnak neuronra
+    <p><img src="pict/halo.jpg" alt="halo"></p>
+  </li>
+  <li>hálónak lehetnek olyan neuronjai, melyek sem közvetve, sem közvetlenül
+    nem kapcsolódnak szenzor- és motorneuronokhoz, ezek elhagyhatók
+    <p><img src="pict/elim.jpg" alt="elim"></p>
+  </li>
+  <li>érdekesség: a kromoszóma közvetlen vizsgálatával a kódolt egyed
+    tulajdonságait nem lehet megállapítani</li>
+</ul>
+
+<h3>Az evolúciós eljárás</h3>
+<ul>
+  <li>a feladat 10 ételegység megtalálása egy kétdimenziós négyzetrácson</li>
+  <li>szenzorok: legközelebbi étel iránya és távolsága</li>
+  <li>motorok elfordulás szöge (-90,90), haladás sebessége (0-5)</li>
+  <li>három neurontípus: szenzor, belsõ, motor</li>
+  <li>A genotípus:
+    <ul>
+      <li>neuron kifejezõdése</li>
+      <li>neuron x koordinátája</li>
+      <li>neuron y koordinátája</li>
+      <li>elágazások szöge</li>
+      <li>szegmensek hossza</li>
+      <li>szinaptikus súlyok az axonokra (egységes)</li>
+      <li>küszöb</li>
+      <li>neuron típusa (irány/távolság, szenzor/motor)</li>
+    </ul>
+  </li>
+  <li>a futás során 100 egyed, 20 életciklus 250 lépéssel, 5 különbözõ
+    környezetben</li>
+  <li>a legjobb 20 szaporodhat, 5 utódot létrehozva</li>
+  <li>összesen 25000 lépés 150 generáción át</li>
+</ul>
+
+<h3>A kontroller tulajdonságai</h3>
+<ul>
+  <li>a generációk legjobb egyedei:
+    <p><img src="pict/gyoztes1.jpg" alt="gyoztes1"></p>
+  </li>
+  <li>egyszerûek</li>
+  <li>eleinte csak az étel és a haladás iránya számít, késõbb belép a haladási
+    sebesség, majd az étel távolságának érzékelése</li>
+  <li>logikus a szelekciós elõnyök ismeretében</li>
+  <li>modulok felbukkanása szintén evolúciós elõny</li>
+</ul>
+
+<h3>Az egyedfejlõdés hatása</h3>
+<ul>
+  <li>génstruktúra módosítása: kifejezõdés helyett aktiválódási idõ</li>
+  <li>a futtatás paraméterei változatlanok, kivéve, hogy csak 10 életciklus
+    élhetnek az egyedek</li>
+  <li>a generációk legjobb egyedei az elõzõhöz hasonlóak:
+    <p><img src="pict/gyoztes2.jpg" alt="gyoztes2"></p>
+  </li>
+  <li>moduláris felépítés, irány és sebesség csak késõbbi generációkban válik
+    fontossá</li>
+  <li>ismert biológiai szabály alátámasztása: az egyedek fejlõdése a faj
+    fejlõdéséhez hasonlóan zajlik</li>
+  <li>modulok jelentkeznek, az elõzõeknek megfelelõ módon és sorrendben</li>
+  <li>minden komponensnek helyt kell állnia magában és a rendszer részeként
+  is</li>
+  <li>az ételek megtalálásának képessége az egyedfejlõdés során nõ</li>
+  <li>az egyedek átlagosan az ötödik generációig változnak</li>
+  <li>miért nem születnek rögtön felnõtt egyedek?</li>
+  <li>az új hálózati elemek megjelenése egyformán jó és rossz lehet, az
+    egyednek születéskor életképesnek kell lennie, kísérletezni szaporodás
+    után kevésbé veszélyes</li>
+  <li>az eredmények igazán látványosak, de a nagyon egyszerû neurális hálókból
+    levont következtetések kissé nagyratörõek</li>
+</ul>
+</body>
+</html>

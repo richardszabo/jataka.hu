@@ -1,0 +1,849 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="content-type" content="application/xhtml+xml; charset=utf-8" />
+    <meta name="author" content="haran" />
+    <meta name="generator" content="haran" />
+
+    <!-- Navigational metadata for large websites (an accessibility feature): -->
+    <link rel="top"      href="./index.html" title="Homepage" />
+    <link rel="up"       href="./index.html" title="Up" />
+    <link rel="first"    href="./index.html" title="First page" />
+    <link rel="previous" href="./index.html" title="Previous page" />
+    <link rel="next"     href="./index.html" title="Next page" />
+    <link rel="last"     href="./index.html" title="Last page" />
+    <link rel="toc"      href="./index.html" title="Table of contents" />
+    <link rel="index"    href="./index.html" title="Site map" />
+
+    <link rel="stylesheet" type="text/css" href="./tierraverde-screen.css" media="screen" title="Tierra Verde (screen)" />
+    <link rel="stylesheet" type="text/css" href="./tierraverde-print.css" media="print" />
+    <link rel="stylesheet" type="text/css" href="./nxt_android_opencv.css" media="screen" />
+
+    <title>Controlling LEGO Mindstorms NXT using OpenCV on Android</title>
+    <style type="text/css">
+<!--
+.style1 {color: #C1FF64}
+-->
+    </style>
+</head>
+
+  <body>
+    <!-- For non-visual user agents: -->
+      <div id="top"><a href="#main-copy" class="doNotDisplay doNotPrint">Skip to main content.</a></div>
+
+    <!-- ##### Header ##### -->
+
+    <div id="header">
+      <h1 class="headerTitle">
+        <a href="./index.html" title="Browse to homepage">Controlling
+        LEGO Mindstorms NXT using OpenCV on Android</a>
+      </h1>
+
+       <!--<div class="headerLinks">
+        <span class="doNotDisplay">Useful Links: </span>
+        <a href="./index_hu.html">Magyar zÃ¡szlÃ³</a>
+        <a href="./index.html">Angol zÃ¡szlÃ³</a>
+      </div>-->
+    </div>
+
+    <!-- ##### Side Bar ##### -->
+
+    <div id="side-bar">
+      <p class="sideBarTitle"><a href="#components">Components</a></p>
+      <ul>
+	<li><a href="#NXT">The LEGO Mindstorms NXT kit</a></li>
+	<li><a href="#android">Android</a></li>
+	<li><a href="#opencv">OpenCV</a></li>
+      </ul>
+      <p class="sideBarTitle"><a href="#integration">Putting it altogether</a></p>
+      <ul>
+	<li><a href="#compiling">Compiling an OpenCV application for Android</a></li>
+	<li><a href="#minddroidcv">MINDdroidCV: Extending MINDdroid with OpenCV code</a></li>
+      </ul>
+      <p class="sideBarTitle"><a href="#results">Results</a></p>
+    </div>
+
+    <!-- ##### Main Copy ##### -->
+
+    <div id="main-copy">
+      <div id="introduction" class="lighterBox">
+<h2>
+<a name="components">Components</a>
+</h2>
+
+<p>
+Integrating useful things to develop some new stuff is a fun. As robot technology and
+do-it-yourself tools are booming there are several good possibilities to
+do that.
+What I have chosen is to connect 3 stand-alone tools together: a LEGO
+Mindstorms NXT robot, Android programming, and OpenCV computer vision
+library.
+This way the NXT robot packed with the mobile phone becomes autonomous as it
+is driven by the camera images.
+Let's see these elements one-by-one and then what they are good for together.</p>
+
+<table class="image largefont">
+<tr>
+<td><img src="images/TriBot_th.jpg" width="255" height="188"></td>
+<td>+</td>
+<td><img src="images/android-logo-white.png" height="188"></td>
+<td>+</td>
+<td><img src="images/opencv-logo2.jpg"  height="188"></td>
+<tr>
+<td colspan="5">&nbsp;</td>
+</tr>
+<tr>
+<td colspan="5" style="text-align:center">=</td>
+</tr>
+<tr>
+<td colspan="5">&nbsp;</td>
+</tr>
+<tr>
+<td colspan="5" style="text-align:center">MINDdroidCV</td>
+</tr>
+</table>
+
+<h3>
+<a name="NXT">The LEGO Mindstorms NXT kit</a>
+</h3>
+
+<p>LEGO Mindstorms NXT is more than a decade old toy for kids (and for their
+  fathers) love to build electronic and (semi-)automatic gadgets. The NXT
+  kit is the top predator in the LEGO family that includes common
+  Technics elements and central brick with some motors and some
+  sensors in different modalities. A good overview of the kit can be
+  found
+  at <a href="http://mindstorms.lego.com/en-us/Default.aspx">LEGO
+  pages</a> and here are my former
+  <a href="../lego/index.html">experiences</a> (in
+  Hungarian).
+</p>
+
+<p>Although NXT has its own weaknesses there are fantastic things that
+  can be done with it. The internet is full of nice NXT projects, some
+  of them are extremely professional. Just to name a
+  few: an amusement
+  park, <a href="http://tinkernology.blogspot.com/2011/04/four-lego-delta-robots.html">Delta
+  robots</a>, <a href="http://tiltedtwister.com/sudokusolver.html">a
+  sudoku
+  solver</a>,
+  and <a href="http://nxtprograms.com/NXT2/segway/steps.html">a
+  Segway</a> can be seen on the videos below.</p>
+<p>
+
+<table class="image">
+<tr>
+<td>
+<object style="height: 195; width: 320"><param name="movie" value="http://www.youtube.com/v/rWd3vgLaA_M?version=3"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="http://www.youtube.com/v/rWd3vgLaA_M?version=3" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="320" height="195"></object>
+</td>
+<td>
+<iframe width="320" height="195" src="http://www.youtube.com/embed/7VxCl6w3HS0" frameborder="0" allowfullscreen></iframe>
+</td>
+</tr>
+<tr>
+<td>
+<object width="320" height="195"><param name="movie" value="http://www.youtube.com/v/Mp8Y2yjV4fU&rel=0&hl=sv_SE&feature=player_embedded&version=3"></param><param name="allowFullScreen" value="true"></param><param name="allowScriptAccess" value="always"></param><embed src="http://www.youtube.com/v/Mp8Y2yjV4fU&rel=0&hl=sv_SE&feature=player_embedded&version=3" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="320" height="195"></embed></object>
+</td>
+<td>
+<object style="height: 195px; width: 320px"><param name="movie" value="http://www.youtube.com/v/q9ZONn3p1LI?version=3"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="http://www.youtube.com/v/q9ZONn3p1LI?version=3" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="320" height="195"></object>
+</td>
+</tr>
+</table>
+</p>
+
+
+<h3>
+<a name="android">Android programming environment</a>
+</h3>
+
+<p>
+Android is all around the tech news so I do not think that a long
+introduction of it is necessary. Google's operating system for mobile
+devices has started to monopolize the market: powerful, android-based
+mobile phones and tablets are affordable for the masses. Being an open
+platform, Android is ideal for developers as well, nice applications
+can be implemented using cute elements of mobile devices like GPS,
+compass, accelerometer, gyroscope, and what is more the camera.
+</p>
+
+<p>
+For a robot enthusiast buying these sensors one by one can be
+expensive and integrating them to the main system is generally more
+complex than using a feature-rich, programmable mobile phone for the
+task at hand.
+Since a smartphone has much more computational power than a simple
+embedded processor it can even be the central unit of our robot.
+Some example robots using an Android phone for sensing or control can
+be found here: <a href="http://robots.allthingsgeek.com/">TRRSTAN,
+the cellbot</a>, <a href="http://uzzors2k.4hv.org/index.php?page=blucar">a
+bluetooth controlled model car</a>.
+</p>
+
+<table class="image">
+<tr>
+<td>
+<object style="height: 195px; width: 320px"><param name="movie" value="http://www.youtube.com/v/EPhAD0m1zvo?version=3"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="http://www.youtube.com/v/EPhAD0m1zvo?version=3" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="320" height="195"></object>
+</td>
+<td>
+<object width="320" height="195"><param name="movie" value="http://www.youtube.com/v/tIx2ihZ7728&hl=en_US&feature=player_embedded&version=3"></param><param name="allowFullScreen" value="true"></param><param name="allowScriptAccess" value="always"></param><embed src="http://www.youtube.com/v/tIx2ihZ7728&hl=en_US&feature=player_embedded&version=3" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="320" height="195"></embed></object>
+</td>
+</tr>
+</table>
+
+<p>
+Naturally NXT can also be controlled via an Android phone. LEGO has
+created an application for this reason: MINDdroid, that works well with some
+example robots like Shooterbot, Tribot, Robogator.
+Playing with this program is a fun because instead of a joystick you
+can tilt and turn your phone to make the robot move forward and turn to the side.
+Source code of the program is downloadable from 
+<a href="http://mindstorms.lego.com/en-us/News/ReadMore/Default.aspx?id=227417">here</a>.
+</p>
+
+<img class="standalone" alt="minddroid"
+     src="images/logo_splash_minddroid.png" width="300" />
+
+
+<h3><a name="opencv">The OpenCV computer vision library</a>
+</h3>
+
+<p>The popularity of image processing is continuously increasing as more and more digital cameras are available to the general public and
+the computational power behind cameras is becoming larger. There are several computer
+vision and digital image processing libraries for lots of modern
+  languages. A list of them with short explanations can be found <a href="http://www.roborealm.com/links/vision_software.php">here</a>.
+</p>
+
+<p><a href="http://opencv.willowgarage.com/wiki/">OpenCV</a> is just one of such libraries written for C by Intel and
+  then supported and rewritten for C++ since
+  version 2  by <a href="http://www.willowgarage.com/">WillowGarage</a>.
+The library has more than 500 complex functions including
+  segmentation, tracking, image transformations, feature detection, and
+  machine learning. It is available for development for Unix and
+  Windows.<br />
+  A nice example of ball detection in OpenCV can be
+  found <a href="http://www.lirtex.com/robotics/fast-object-tracking-robot-computer-vision/">here</a>. The
+  tutorial contains the full source code, the results can be seen in
+  the left video.</p>
+
+<p>
+  Luckily, in connection with the scope of our description OpenCV can be
+used for Android as well. 
+The following video on the right has been created with a previous OpenCV version.
+</p>
+
+<table class="image">
+<tr>
+<td>
+<object width="320" height="195"><param name="movie" value="http://www.youtube.com/v/CigGvt3DXIw&rel=0&hl=en_US&feature=player_embedded&version=3"></param><param name="allowFullScreen" value="true"></param><param name="allowScriptAccess" value="always"></param><embed src="http://www.youtube.com/v/CigGvt3DXIw&rel=0&hl=en_US&feature=player_embedded&version=3" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="320" height="195"></embed></object>
+</td>
+<td>
+<object style="height: 195px; width: 320px"><param name="movie" value="http://www.youtube.com/v/XNGwlXIYZIc?version=3"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="http://www.youtube.com/v/XNGwlXIYZIc?version=3" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="320" height="195"></object>
+</td>
+</tr>
+</table>
+
+</div>
+
+      <div id="stylesheets" class="darkerBox">
+<h2>
+<a name="integration">Putting it altogether</a>
+</h2>
+
+<p>
+So far we saw that Android can work with LEGO Mindstorms NXT and
+image processing algorithms using OpenCV can be deployed to an Android
+environment.<br />
+My idea was to connect these three components together to let the NXT robot
+"see" the world around. So I just wanted to create an Android
+program that processes camera images with OpenCV and commands the
+moves of the robot using the results of the procession.</p>
+
+<table class="image">
+<tr>
+<td>
+<img alt="nxt_with_android1" src="images/nxt_with_android1.jpg" width="320" />
+</td>
+<td>
+<img alt="nxt_with_android2" src="images/nxt_with_android2.jpg" width="320" />
+</td>
+</tr>
+</table>
+
+<p>
+My first application is relatively simple the primary goal was to make
+the toolchain work. In this case a Samsung Galaxy 3 mobile phone is
+placed on a two-wheeled simple robot derived
+from <a href="http://mindstorms.lego.com/en-us/support/buildinginstructions/8527-/Tribot.aspx">TriBot</a>. The
+robot is searching for light in the environment and is turning to
+directions of brighter blobs. This behavior resembles a light
+following <a href="http://en.wikipedia.org/wiki/Braitenberg_vehicle">Braitenberg
+    vehicle</a>.<br />
+</p>
+
+<p>
+To connect the robot with the phone I have used the Bluetooth
+capabilities of the NXT brick. For this reason the Bluetooth has to be
+switched on on the robot side and no other program needs to be run. In
+this remote mode the robot receives direct movement commands from the
+phone's MINDdroid application.
+</p>
+
+<h3><a name="compiling">Compiling an OpenCV application for Android</a></h3>
+
+<h4>Java</h4>
+
+<p>
+Although the process of building and deploying OpenCV programs to Android
+becomes simpler related
+to <a href="http://opencv.willowgarage.com/wiki/Android2.2">previous
+    versions</a> it still involves many steps.
+The first part of the building instructions can be
+found <a href="http://opencv.itseez.com/doc/tutorials/introduction/android_binary_package/android_binary_package.html">here</a>. 
+<ul>
+<li>Without
+going into the details first of all we have to install a Java Development Kit (JDK)
+version 6.</li>
+<li>JDK 6 is needed by the Android SDK, the development environment
+  for Android programs.</li>
+<li>It is important to note that the whole process is working from
+  Android 2.2 (Froyo). My Galaxy 3 was shipped with Android 2.1
+  (Eclair), so I upgraded to 2.2 first. <br />From the software
+  side we need to install Android SDK tools and SDK Platform Android
+  2.2 as well.</li>
+<li>Although it is possible to work without Eclipse and connect
+  Android and OpenCV, this is not the recommended way. So I have used
+  the latest Eclipse version, 3.7 a.k.a Indigo.</li>
+<li>The next step is to enable Android development in Eclipse with the
+  Android Development tools (ADT) plug-in.
+</li>
+<li>Since <a href="http://sourceforge.net/projects/opencvlibrary/files/opencv-android/2.3.1/">OpenCV 2.3.1</a> is packed as a ready-for-use Android Library
+  Project. It means that after the configurations above basic samples
+  from the project can be built and deployed to an Android 2.2 phone.</li>
+</ul>
+</p>
+
+<h4>C++</h4>
+<p>
+Now are we ready to develop OpenCV applications on Android?
+Partly.<br /> 
+It is possible to use OpenCV's Java classes and implement image
+processing in Java. However if we do not want to rewrite our older C/C++
+code in Java and/or we want to go to native level for performance
+reasons then we should continue the configuration
+with <a href="http://opencv.itseez.com/doc/tutorials/introduction/android_binary_package/android_binary_package_using_with_NDK.html#android-binary-package-with-ndk">this
+    tutorial</a>.<br />
+Although I do not want to reuse huge files of existing algorithms but it
+seems natural to have my own C++ code base of image processing that
+could be used on different platforms in the future. Consequently I have
+configured Eclipse to build C++ code to Android. 
+
+<ul><li>First of all Android Native Development Kit (NDK) needs to be
+    installed.</li>
+<li>Then it has to be connected to Eclipse by adding a new Builder to
+  our project that uses the NDK. Not surprisingly the location of our C++ codes  
+  and build directories has to be set in advance.</li></ul>
+
+We can build and deploy C/C++ OpenCV code on Android from now on ->
+see the <b>update</b> below.
+</p>
+
+<p>
+The tutorials are accurate and detailed but I still do not say that the whole configuration is simple, I must admit that
+I have also stuck at some points. One problem was that in
+the <code>Application.mk</code> file the value of <code>APP_ABI</code>
+(the processor type of my phone)
+was <code>armeabi-v7a</code> instead of the
+necessary <code>armeabi</code>. Fortunately I have got quick help from
+<a href="https://groups.google.com/group/android-opencv/browse_thread/thread/93436de9bf10cbb?pli=1">OpenCV's
+  Google group</a>. <br />
+Anyway the current OpenCV version came out in August 2011 so the
+  configuration process may become simpler with newer versions.
+</p>
+
+<p>
+<b>Update:</b><br/>
+
+Android Library project handling has been changed with the Android SDK
+revision 14 since October 2011.
+So after an update of the SDK to newer version than revision 13 the
+Android Development Tool plug-in needs to be updated in Eclipse as
+well.
+</p>
+<p>
+After that the compilation does not work as before because it requires
+OpenCV-2.3.1.jar in the OpenCV Library Project folder.
+During the recompilation of OpenCV this jar is generated however
+building the application is still not possible.
+So in the application project I had to check for the linked source
+folders pointing to the OpenCV Library Projects (named to
+"OpenCV-2.3.1_src" as I remember well). Then after a right click I had to
+remove it ("Build Path"->"Remove from Build Path") with the option
+"Also unlink the folder from the project".</p>
+<p>
+The compilation is possible from now on.
+</p>
+
+<h3><a name="minddroidcv">MINDdroidCV: Extending MINDdroid with OpenCV code</a></h3>
+
+<h4>Embedding</h4>
+
+<p>Since I can build native OpenCV Android applications and NXT Android
+  application, I could connect these two together.
+My starting point was the MINDdroid program and I have added the
+  necessary elements from OpenCV sample 3 to include native OpenCV
+  code. The name of the new project is MINDdroidCV (the name of the
+  main class and references to it has been modified accordingly).</p>
+
+<p>MINDdroid - the original LEGO program - can command different robot types. As I wanted to keep
+  original functionality I have included a new robot type, named
+  <code>OpenCV vehicle</code> that do not interfere with the original code. It
+  means the modification of options.xml and Options.java as
+  well.<br />
+  I have added <code>android.library.reference.1</code>
+  to <code>build.properties</code> (in the project's root folder)
+  referring to the location of OpenCV-2.3.1. I also modified
+  AndroidManifest.xml to request permission from the hosting phone for
+  camera usage: <code>&lt;uses-permission android:name="android.permission.CAMERA"/&gt;</code>.
+</p>
+
+<p>
+Here comes the inclusion of the C++ code. I have followed the steps of
+the tutorials in the MINDdroidCV project and then I have added the jni
+directory from sample 3. 
+In <code>Application.mk</code> I have changed the value
+of <code>APP_ABI</code> as above. In <code>Android.mk</code> I have
+included <code>OpenCV-2.3.1/share/OpenCV/OpenCV.mk</code>.</p>
+
+<p>Up to this point native OpenCV is added to MINDdroidCV. What we have
+  left is to write an appropriate OpenCV function in <code>jni_part.cpp</code> and
+  to refer it from Java. For the latter task I have copied
+  <code>SampleViewBase.java</code> and <code>Sample3View.java</code> from sample 3 project (I
+  have renamed Sample3View to SampleView to avoid confusions).
+  To make <code>SampleView</code> and its
+parent <code>SampleViewBase</code>  reachable from the main
+program the <code>onCreate</code> method
+of <code>MINDdroidCV</code> is extended with the first part of the
+following condition.
+</p>
+
+<p>
+<div class="code">if( mRobotType == R.id.robot_type_5 ) { // OpenCV vehicle
+      setContentView(new SampleView(getApplicationContext(), this));        	
+   } else {
+      mView = new GameView(getApplicationContext(), this);
+      setContentView(mView);
+   }
+</div>
+</p>
+
+
+<p>It means that after choosing <code>OpenCV vehicle</code> robot
+  type <code>SampleView</code> gets in command. It can
+  handle the display and it can call <code>updateMotorControl(int
+  left, int right)</code> from <code>MINDdroidCV</code> to control
+  the robot's movement. (All other references to <code>mView</code> became
+  protected with a null pointer check.)</p>
+<p>
+  To avoid the screen sleep after a certain timeout
+  the <code>FLAG_KEEP_SCREEN_ON</code> flag is added to the window.
+</p>
+
+<p>
+<div class="code">getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+</div>
+</p>
+
+<p>I have also changed the <code>MINDdroidCV</code> activity
+  in <code>AndroidManifest.xml</code>. The phone will be installed on
+  the robot in a standing pose but the image is rotated with 90
+  degrees (I could not figure out why) so the following lines are important if we want to
+  see the resulting image oriented correctly.</p>
+<p>
+
+<div class="code">&lt;activity android:label="@string/app_name"
+           android:screenOrientation="landscape" android:name=".MINDdroidCV"
+           android:configChanges="orientation"&gt;
+</div>
+</p>
+
+<p>
+  Calling C++ code from Java is fairly straightforward. In SampleView I have modified the native reference to this code:
+</p>
+
+<p>
+<div class="code">public native void FindLight(int width, int height, byte yuv[], int[] rgba,double[] array);
+
+static {
+  System.loadLibrary("mixed_sample");
+}
+</div>
+</p>
+
+<p>The <code>static</code> part means that the program
+  loads <code>mixed_sample</code> library (this name must appear as
+  <code>LOCAL_MODULE</code> in <code>Android.mk</code>) during the
+  load of <code>SampleView</code>.
+  The <code>FindLight</code> method is defined as native (since it is
+  written in C++) and has the following parameters: image width and
+  height, the input image as <code>byte</code> array
+  (<code>yuv</code>), the output image as <code>int</code>
+  array (<code>rgba</code>) and a <code>double</code> array that will
+  be used to determine color direction.<br />
+  From the C++ side in <code>jni_part.cpp</code> the function
+  definition is the following:
+</p>
+
+<p>
+<div class="code">JNIEXPORT void JNICALL Java_com_lego_minddroid_SampleView_FindLight(
+                  JNIEnv* env, 
+                  jobject thiz, 
+                  jint width, 
+                  jint height, 
+                  jbyteArray yuv, 
+                  jintArray bgra, 
+                  jdoubleArray array)
+</div>
+</p>
+
+<p>
+The function declaration is in accordance
+with <a href="http://en.wikipedia.org/wiki/Java_Native_Interface">Java
+    Native Interface definitions</a>.
+The name reflects that it will be called
+from <code>com.lego.minddroid.SampleView</code> class and our
+parameters preceded by two mandatory parameters: <code>env</code>
+and <code>thiz</code>. Java types are mapped to appropriate C++ types
+(ARGB stored in java as int array becomes BGRA at native level).
+</p>
+
+<p>
+Now we are ready to write the <code>FindLight</code> function in C++
+using the OpenCV library.
+</p>
+
+<h4>The OpenCV code</h4>
+
+<p>What is the task of the image processing?<br />
+To determine if image pixels are as bright as the light of a torch.
+This problem is solved with a few lines of code.
+</p>
+
+<p>
+First of all the C++ code will convert the YUV image to BGRA and then
+to HSV because this color space is more practical in case of color
+detection then other color spaces. (May be it can be done in one step but I have not found any
+references on YUV to HSV conversion.) Each
+pixel of the HSV image will be checked if it is inside a certain
+color range that matches the color of the torchlight. All pixels in the
+resulting image will be set to 1 if there is a light at that
+location and to 0 otherwise.
+The position of the light area inside the image is reported as well.</p>
+
+<p>
+According to the function call above the C++ code receives a <code>byte</code>
+array that contains the current camera image
+in <a href="http://en.wikipedia.org/wiki/YUV">YUV420</a>
+format, an <code>int</code> array for the resulting image
+  in <a href="http://en.wikipedia.org/wiki/RGBA_color_space">BGRA</a>
+  format, and finally a <code>double</code> array for light location values. The first
+  step is to use these parameters from the C++ appropriately. This
+  is done by the following code:</p>
+
+<p>
+<div class="code">    jbyte* _yuv  = env->GetByteArrayElements(yuv, 0);
+    jint*  _bgra = env->GetIntArrayElements(bgra, 0);
+    jdouble*  _array = env->GetDoubleArrayElements(array, 0);
+</div>
+</p>
+
+<p>Now the image arrays can be converted to <code>Mat</code> matrices what is the most important
+  datatype in OpenCV. For this reason the width and the height
+  parameters determine the dimensions of the images.</p>
+
+<p>
+<div class="code">    Mat myuv(height + height/2, width, CV_8UC1, (unsigned char *)_yuv);
+    Mat mbgra(height, width, CV_8UC4, (unsigned char *)_bgra);
+</div>
+</p>
+
+<p>Using <code>height + height/2</code> for image height in case of
+  YUV seems a bit strange but this is how it has to be done with
+  the  <a href="http://en.wikipedia.org/wiki/YUV">YUV420</a>
+  compression.
+</p>
+
+<p>The YUV image is converted to <a href="http://en.wikipedia.org/wiki/HSL_and_HSV">HSV color space</a> in two steps
+  using <code>cvtColor</code> OpenCV function and then the <code>mhsv</code> matrix holds the new
+  image.</p>
+
+<p>
+<div class="code">    cvtColor(myuv, mbgra, CV_YUV420sp2BGR, 4);
+    Mat mhsv = Mat(mbgra.rows,mbgra.cols,CV_8UC4);
+    cvtColor(mbgra, mhsv, CV_BGR2HSV, 4);
+</div>
+</p>
+
+<p>Here comes the color calculation. <br />
+  The <code>inRange</code> OpenCV function can determine if the pixels
+  of an image are between two scalars. The result is stored in a
+  one-channel matrix with the same size as the input image.
+  The new one-channel matrix (<code>mdetect</code>) is
+  created to store the 1s and the 0s of torch light
+  locations. <code>lightLower</code> and <code>lightUpper</code> are
+  the limiting 3 dimensional scalars for the range checking. 
+  Since this scalars are used on <code>mhsv</code> (a HSV image) the 3 channels are
+  interpreted as hue, saturation, and value.  Each
+  channel in <code>mhsv</code> are stored on 1 byte
+  (see <code>CV_8UC4</code> in the definition) so constant values can
+  be in the 0 and 255 range.<br />
+  How to define bright light using these three channels?<br /> 
+  The predefined numbers in the following code mean that hue of the pixel is unimportant as all possible values
+  between 0 and 255 are in range so white, red, and blue bright lights
+  are all acceptable. However small saturation (between 0
+  and 10) and high value (between 220 and 255) are
+  requested which means that the color intensity of the checked pixel
+  is low while its brightness is high so pale, bright light pixels are
+  searched for. 
+  Then <code>inRange</code> uses these scalars to
+  store torchlight pixels in <code>mdetect</code>. Finally this
+  1-channel image is converted back to 4-channel BGRA image and the
+  result is stored in the <code>mbgra</code> function parameter for
+  further usage on the Java side.</p>
+
+<p>
+<div class="code">    vector<Mat> planes;
+    Mat mdetect = Mat(mbgra.rows,mbgra.cols,CV_8UC1);
+
+    Scalar lightLower = Scalar(0, 0, 220);
+    Scalar lightUpper = Scalar(255, 10, 255);
+
+    inRange(mhsv, lightLower, lightUpper, mdetect);
+
+    cvtColor(mdetect, mbgra, CV_GRAY2BGRA, 4);
+</div>
+</p>
+
+<p>It is not enough to know that there is a certain light patch on
+  the scene but the patch location related to the robot is also
+  important. This calculation can be done
+  using <a href="http://en.wikipedia.org/wiki/Image_moment">image
+  moments</a> that is behind the <code>moments</code> OpenCV function.
+  Although the definition of moments may look frightening, it is enough
+  to know that <code>m00</code> is the whole area of nonzero pixels in an image
+  and <code>m10/m00</code> and <code>m01/m00</code> gives the mean of
+  nonzero pixels in x and y directions. Hence moment calculation and
+  returning its results in the parameter array is the following:</p>
+
+<p>
+<div class="code">    Moments mm = moments(mdetect,true);
+
+    _array[0] = mm.m00;
+    _array[1] = mm.m10/mm.m00;
+    _array[2] = mm.m01/mm.m00;
+</div>
+</p>
+
+<p>
+What is left here is to clean up the scene: allocated matrices and
+    function parameters are released:</p>
+
+<p>
+<div class="code">    mhsv.release();
+    mdetect.release();
+
+    env->ReleaseIntArrayElements(bgra, _bgra, 0);
+    env->ReleaseByteArrayElements(yuv, _yuv, 0);
+    env->ReleaseDoubleArrayElements(array, _array, 0);
+</div>
+</p>
+
+<p>
+The <code>FindLight</code> function is ready for use on the Java
+side. Running the code on the following images (upper row) the Sun shining through
+the window is visibly detected as light (lower row).
+</p>
+
+<table class="image">
+<tr>
+<td>
+<img alt="opencvtest1" src="images/opencvtest1.jpg" width="320" />
+</td>
+<td>
+<img alt="opencvtest2" src="images/opencvtest2.jpg" width="320" />
+</td>
+</tr>
+<tr>
+<td>
+<img alt="opencvtest1.out" src="images/opencvtest1.out.jpg" width="320" />
+</td>
+<td>
+<img alt="opencvtest2.out" src="images/opencvtest2.out.jpg" width="320" />
+</td>
+</tr>
+</table>
+
+<h4>Using image data and robot control</h4>
+
+<p>
+Turning back to the Java side let's see how the image processing can
+be used to let the robot follow the light.
+</p>
+
+<p>
+The <code>FindLight</code> function is called
+ 		from <code>SampleView</code> in the following way:
+<p>
+<div class="code">    FindLight(getFrameWidth(), getFrameHeight(), data, rgba,buffer);
+</div>
+</p>
+
+<p>
+After each call <code>rgba</code> stores the calculated light image and first three
+elements of <code>buffer</code> contain light location information.
+It is not necessary to show the calculated light image but it is useful to know why the robot moves into
+a certain direction. So <code>rgba</code> is converted to
+a <code>Bitmap</code> in <code>SampleView</code> (see below) and then the
+bitmap is drawn on the canvas of the surfaceholder in the <code>run</code> method
+of <code>SampleViewBase</code>.
+</p>
+
+<p>
+<div class="code">    Bitmap bmp = Bitmap.createBitmap(getFrameWidth(), getFrameHeight(), Bitmap.Config.ARGB_8888);
+    bmp.setPixels(rgba, 0/*offset*/, getFrameWidth() /*stride*/, 0, 0, getFrameWidth(), getFrameHeight());	
+</div>
+</p>
+
+<p>The navigation of the robot is performed
+  in <code>calculateMove</code> of <code>SampleViewBase</code>. If
+  there is not enough light (the 0th buffer value is below 100) then
+  the robot stops. Otherwise the second coordinate of light blob is
+  used to calculate horizontal <code>direction</code> based on the patch distance from the central line what is
+  the current heading of the robot. Then two simple linear equations
+  determine the <code>left</code> and the <code>right</code> motor
+  speeds. Finally <code>updateMotorControl</code> is called with these
+  intensity values.
+</p>
+
+<p>
+<div class="code">   void calculateMove() {
+    	// buffer[1] holds the light direction info if the phone is in landscape format
+    	// small values -> turn left
+    	// large values -> turn right
+    	// in portrait mode buffer[2] should be used 
+    	// large values -> turn right 
+    	// small values -> turn left
+    	if( buffer[0] > 100 ) { // light is visible
+    		int forwardSpeed = 50;
+    		double upScale = 40; 
+    		//double direction = (buffer[1] - getFrameWidth()/2)/getFrameWidth();
+    		double direction = -1.0 * (buffer[2] - getFrameHeight()/2)/getFrameHeight();
+    		left = (int)(upScale * direction) + forwardSpeed;
+    		right = (int)(-1.0 * upScale * direction) + forwardSpeed;
+    	} else {
+    		left = 0;
+    		right = 0;
+    	}
+    	left = Math.min(Math.max(left,0),100);
+    	right = Math.min(Math.max(right,0),100);
+    	
+    	mActivity.updateMotorControl(left,right);
+    }
+</div>
+</p>
+
+<p>
+We are ready!<br />
+The <code>calculateMove</code> method is called from <code>run</code> method
+of <code>SampleViewBase</code> and continuously updates the robot
+position based on the light in the environment.
+</p>
+
+
+</div>
+      <div id="stylesheets" class="lighterBox">
+<h2>
+<a name="results">Results</a>
+</h2>
+
+<p>
+As you can see in the following video the robot is running
+appropriately. It turns into the direction of the light and stops in
+case of dark.
+</p>
+
+<object class="standalone" style="height: 390px; width: 640px"><param name="movie" value="http://www.youtube.com/v/IfPAgxtQtfI?version=3"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="http://www.youtube.com/v/IfPAgxtQtfI?version=3" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="640" height="360"></object>
+
+<p>
+It is useful to note that the image processing presented here cannot be used in real world
+applications since the model is oversimplified. I have changed the
+lighting conditions to not let the robot disturbed by direct sunlight
+from the window or by bright blobs reflected on the floor. In the
+first part of the video you can see that once the robot did not
+respond to the torch light because sun was shining through the window
+and it was more interesting.
+</p>
+
+<p>
+At some points the code or the integration can be simpler but this is
+how it worked for me so I have stayed with that. 
+The most problematic part was to call the <code>FindLight</code> with
+appropriate matrices and to handle them correctly on both
+sides. Furthermore I still have issues with the image orientation.
+Other elements were working quite quickly.
+</p>
+
+<p>
+In summary I encourage you to use my results and build on top of it.
+Project source can be downloaded
+from <a href="src/MINDdroidCV.zip">here</a> or
+from <a href="https://github.com/richardszabo/MINDdroidCV">this
+    github repository</a>. If
+you want to try the program without browsing the source you can
+download <a href="src/MINDdroidCV_MINDSTORMS.ARM6.apk">the binary version</a> that was working on my Galaxy 3 (ARM6
+processor) and the one that hopefully works on <a href="src/MINDdroidCV_MINDSTORMS.ARM7.apk">ARM7 processors</a> (If you
+try the latter one please let me know the results). <br />
+All constructive comments are welcome at
+richard_szabo@nospam.invitel.hu (delete nospam).
+My other robotics pages can be
+found <a href="http://www.jataka.hu/rics">here</a>. They are mostly in
+Hungarian but I am trying to be multi-lingual.
+</p>
+
+<p>
+I thank <a href="http://quasar.inf.elte.hu/">Zoltán Istenes</a> for lending me the NXT brick for this project.<br />  
+</p>
+
+</div>
+
+      <div id="stylesheets" class="lighterBox">
+
+    <!-- ##### Footer ##### -->
+
+    <div id="footer">
+
+      <div class="right">
+        Last modification: 9 October 2012 <!--|
+        Designer: <a href="http://www.oswd.org/email.phtml?user=haran" title="Email designer">haran</a>-->
+      </div>
+
+      <br class="doNotDisplay doNotPrint" />
+    </div>
+
+    
+<div class="subFooter"> 
+  <p>Copyright &copy; Szabó Richárd<br />
+  <!--This theme is free for distriubtion,  so long as  link to openwebdesing.org and florida-villa.com  stay on the theme-->
+    Courtesy <a href="http://www.openwebdesign.org" target="_blank">Open Web Design</a><a href="http://www.dubaiapartments.biz" target="_blank"><img src="spacer.gif" width="5" height="5" border="0"/></a>Thanks 
+    to <a href="http://www.florida-villa.com" target="_blank">Florida Vacation Homes</a> <br class="doNotPrint" />
+<!-- BEGIN WebSTAT Activation Code -->
+<script type="text/javascript" language="JavaScript" src="http://hits.webstat.com/cgi-bin/wsv2.cgi?39877"></script>
+<noscript>
+<a href="http://www.webstat.com">
+<img src="http://hits.webstat.com/scripts/wsb.php?ac=39877" border="0" alt="WebSTAT - Free Web Statistics" /></a>
+</noscript>
+<!-- END WebSTAT Activation Code -->
+    </div>
+  </body>
+</html>

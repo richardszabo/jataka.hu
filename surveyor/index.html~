@@ -1,0 +1,1074 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head>
+  
+  <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+
+  
+  <meta name="author" content="haran" />
+
+<!-- Navigational metadata for large websites (an accessibility feature): -->
+  <title>A Surveyor robot</title>
+
+  
+  
+  <link rel="top" href="./index.html" title="Homepage" />
+
+  
+  <link rel="up" href="./index.html" title="Up" />
+
+  
+  <link rel="first" href="./index.html" title="First page" />
+
+  
+  <link rel="previous" href="./index.html" title="Previous page" />
+
+  
+  <link rel="next" href="./index.html" title="Next page" />
+
+  
+  <link rel="last" href="./index.html" title="Last page" />
+
+  
+  <link rel="toc" href="./index.html" title="Table of contents" />
+
+  
+  <link rel="index" href="./index.html" title="Site map" />
+
+  
+  <link rel="stylesheet" type="text/css" href="tierraverde-yellow-screen.css" media="screen" title="Tierra Verde (screen)" />
+
+  
+  <link rel="stylesheet" type="text/css" href="tierraverde-print.css" media="print" />
+
+  
+  <link rel="stylesheet" type="text/css" href="surveyor.css" media="screen" />
+  
+</head><body>
+<!-- For non-visual user agents: -->
+<div id="top"><a href="#main-copy" class="doNotDisplay doNotPrint">Skip
+to main
+content.</a></div>
+
+<!-- ##### Header ##### -->
+<div id="header">
+<h1 class="headerTitle"><a href="./index.html" title="Browse to homepage">A Surveyor robot</a> </h1>
+</div>
+
+<!-- ##### Side Bar ##### -->
+<div id="side-bar">
+<p class="sideBarTitle"><a href="#intro">Bevezetés</a></p>
+<p class="sideBarTitle"><a href="#therobot">A robot bemutatása</a></p>
+<ul>
+  <li><a href="#wares">Hardver és szoftver</a></li>
+  <li><a href="#connection">Kapcsolat létrehozása a robot és a számítógép között</a></li>
+  <li><a href="#directmove">Közvetlen működtetés</a></li>
+  <li><a href="#picoc">Programozás PicoC-ben</a></li>
+</ul>
+<p class="sideBarTitle"><a href="#controlling">Irányítás vezeték nélküli kapcsolaton át</a></p>
+<ul>
+  <li><a href="#surveyorlib">A Blackfin robot eljárások</a></li>
+  <li><a href="#remote">Távirányítás</a></li>
+  <li><a href="#opencv">Az openCV</a></li>
+  <li><a href="#agent">Az ügynökrobot</a></li>
+  <li><a href="#lightsearch">Fénykeresés</a></li>
+  <li><a href="#colorsearch">Színkeresés</a></li>
+</ul>
+<p class="sideBarTitle"><a href="#experiences">Tapasztalatok, folytatás</a></p>
+<p class="sideBarTitle"><a href="#links">További hasznos oldalak</a></p>
+<p class="sideBarTitle"><a href="#acknowledgement">Köszönet</a></p>
+</div>
+
+<!-- ##### Main Copy ##### -->
+<div id="main-copy">
+<div class="lighterBox">
+<h1><a name="intro">Bevezetés</a></h1>
+
+<!-- TODO angolul -->
+
+<p><img alt="surveyor" src="images/surveyor.gif"	/></p>
+
+<p>Ezen az oldalon
+  az <a href="http://www.surveyor.com/SRV_info.html">SRV1 Blackfin</a>
+  robotról fogok írni, mely a
+  <a href="http://www.surveyor.com/">Surveyor cég
+  terméke</a>. 
+<br /> 
+  Az alapfunkciók kipróbálása mellett az volt a célom,
+  hogy a kamera képének egyszerű továbbításán kívül, a képek alapján a
+  robot valamilyen elemi feladatot elvégezzen. Ezért a távirányítás
+  megvalósítása után fény- és színkeresést végeztettem vele.<br />
+  Mivel viszonylag kevés ideig volt lehetőségem a robottal
+  foglalkozni, ezért inkább a programok befejezését tartottam
+  fontosnak, mint azt, hogy a kódok valódi működő környezetben is
+  kipróbáltak legyenek. Ebből következően a bemutatott megoldások
+  csupán továbbfejlesztést igénylő kiinduló pontoknak tekinthetőek.
+</p>
+</div>
+<div class="darkerBox">
+<h1><a name="therobot">A robot bemutatása</a></h1>
+<p>  
+Ez a robot önálló mozgásra képes lánctalpas szerkezet, melynek
+  legfontosabb tulajdonsága, hogy lézeres távolságmérővel és egy
+  kamerával van felszerelve. 
+  Ára 495 dollár, mintegy 100 ezer forint, szóval nem
+  kifejezetten a kezdő hobbi robotosoknak vagy a gyerekeknek
+  szánták. </p>
+<p>A következő képeken a robot látható:</p>
+
+<table class="image">
+<tr>
+<td>
+<img alt="surveyor1" src="images/dsc_0388.jpg" height="300" width="400"
+	/>
+</td>
+<td><img alt="surveyor2" src="images//bfboards1.jpg" height="300" width="400"
+	/>
+</td></tr>
+<tr>
+<td>
+<img alt="surveyor3" src="images/dsc_0390.jpg" height="300"
+	width="400" /></td>
+<td>
+<img alt="surveyor4" src="images/dsc_0391.jpg" height="300" width="400" />
+</td>
+</tr>
+</table>
+
+</div>
+<div class="lighterBox">
+<h2><a name="wares">Hardver és szoftver</a></h2>
+<p>A Surveyor Blackfin robot többféle kiszerelésben is létezik,
+  különféle kiegészítők rendelhetők hozzá.
+  Az alaptípus egy nagyobb tenyérben elfér, ennek megfelelően a súlya a
+  masszív szerkezet ellenére sem
+  számottevő. A jármű fémkazetta formájú alsó részében helyezkednek el
+  a lítium-polimer
+  akkumulátorok, melyek nagyjából 4 órás használatot bírnak ki. 
+A töltést hálózati feszültségről egy külön táppal
+  lehet megoldani.<br />
+  A fémdoboz két oldalán két-két tengelyen elől és hátul, fogazott,
+  oldalanként független meghajtású kerekek
+  helyezkednek el, amik gumi lánctalpakat hordanak. <br />
+  A robot elején két oldalt található a két lézeres távolságmérő, mely
+  mintegy két méter távolságig képes érzékelni.<br />
+  A fémdoboz fölött az elektronika egymásra épített nyomtatott
+  áramkörökből áll. A legfelső elemhez tartozik a kamera, melynek
+  fókusza kézzel állítható.<br />
+  A robot hátulján a kommunikációhoz szükséges antenna látható.</p>
+<p>
+Bővítési lehetőségként fölmerül
+egy <a href="http://surveyor-corporation.stores.yahoo.net/srnabo.html">navigációs
+    áramkör</a> használata, mely GPS-t, iránytűt és gyorsulásmérőt is
+tartalmaz (bal oldali kép). A robot
+fölszerelhető <a href="http://surveyor-corporation.stores.yahoo.net/srblstup.html">sztereó
+    kamerával</a> is (jobb oldali kép).
+</p>
+
+<table class="image">
+<tr>
+<td>
+<img alt="navigation" src="images/srv-navigation.jpg" height="300" width="400" />
+</td>
+<td>
+<img alt="stereo" src="images/srv1-stereo-upgrade550a.jpg" height="300" width="400" />
+</td>
+</tr>
+</table>
+
+<p> 
+A robotot egy java nyelven írott <a href="http://www.surveyor.com/blackfin/#blackfin5">konzol programmal</a> lehet elérni
+különféle operációs rendszerekről (Windows, Linux, Mac).<br />
+Íme a konzol felülete:
+</p>
+<img class="standalone" alt="console" src="images/SRV1Console.jpg" height="400"   />
+
+<p>Valamint a robot futás közben:</p>
+
+<table class="image">
+<tr>
+<td>
+<object type="application/x-shockwave-flash" data="http://www.youtube.com/v/xxo4j4V2SVk" width="425" height="344"><param name="movie" value="http://www.youtube.com/v/xxo4j4V2SVk" /><param name="FlashVars" value="playerMode=embedded" /></object>
+</td>
+<td>
+<object type="application/x-shockwave-flash" data="http://www.youtube.com/v/EDM1oqzhOzs" width="425" height="344"><param name="movie" value="http://www.youtube.com/v/EDM1oqzhOzs" /><param name="FlashVars" value="playerMode=embedded" /></object>
+</td>
+</tr>
+</table>
+<p>A robot iPhone-nal és Google Androiddal is irányítható, ahogy az az alábbi videókból
+kiderül.</p>
+
+<table class="image">
+<tr>
+<td>
+<object type="application/x-shockwave-flash" data="http://www.youtube.com/v/yBh73fU-xF4" width="425" height="344"><param name="movie" value="http://www.youtube.com/v/yBh73fU-xF4" /><param name="FlashVars" value="playerMode=embedded" /></object>
+</td>
+<td>
+<object type="application/x-shockwave-flash" data="http://www.youtube.com/v/MmzeTcKvmjE" width="425" height="344"><param name="movie" value="http://www.youtube.com/v/MmzeTcKvmjE" /><param name="FlashVars" value="playerMode=embedded" /></object>
+</td>
+</tr>
+</table>
+
+<p>Az Androidhoz használt
+  szoftver <a href="http://code.google.com/p/srv1console/">innen</a>
+  tölthető le.</p>
+<p>
+Ezen kívül általános célű, fizetős robotcsomagok is képesek kezelni az
+SRV1-et: <a href="http://www.roborealm.com/help/Surveyor_SRV1.php">Roborealm</a>,
+<a href="http://www.cyberbotics.com/">Cyberbotics Webots</a>
+<a href="http://www.surveyor.com/MSRS.html">Microsoft Robotic Studio</a>
+</p>
+</div>
+<div class="darkerBox">
+<h2><a name="connection">Kapcsolat létrehozása a robot és a számítógép között</a> </h2>
+<p>A wi-fi modullal rendelkező robot <a href="http://www.paginata.com/paginata/mycomputer/hu-wireless-halozat-ket-szamitogep-kozott">ad-hoc wireless kommunikációval</a> képes számítógéphez
+  csatlakozni. Erre azért van szükség, mert semmilyen kezelőszerv
+  nincs a roboton az On/Off/Charge kapcsolón kívül, vagyis a beépített
+  parancsokat, a feltöltött programot is csak külső számítógépről
+  lehet elindítani. 
+<br />
+ A kapcsolat kiépítéséhez a számítógépnek vezeték nélküli
+  kommunikációra alkalmasnak kell lennie, akár egy beépített, akár egy
+  bővítőkártya segítségével. Más szóval wi-fi eszközt kell
+  tartalmaznia. Az ad-hoc wireless kapcsolat beállítása nem különbözik
+  lényegesen a wi-fi routerekkel való, már megszokott
+  kapcsolatépítéstől, a különbség csupán az, hogy a router helyett
+  ezúttal két számítógép eseti (ad-hoc) közvetlen kommunikációját
+  valósítjuk meg. Ugyanakkor mivel ez egy lényegesen ritkábban
+  használt funkció az operációs rendszerek kevésbé támogatják. Nekem
+  is nem várt kellemetlenségeket okozott a beállítása.<br />
+  Mivel linuxot használok (Mandriva 2010), ezért az ehhez szükséges lépéseket írom le.
+  A Windows-os
+  beállításokról <a href="http://www.paginata.com/paginata/mycomputer/hu-wireless-halozat-ket-szamitogep-kozott">itt</a>
+  és <a href="http://www.microsoft.com/windowsxp/using/networking/setup/adhoc.mspx">itt</a> lehet többet megtudni.
+</p>
+<p>A vezeték nélküli kapcsolódáshoz be kell állítani a kapcsolódási
+  módot, a hálózat azonosítóját és a gép IP címét. 
+  Ehhez <code>root</code> jogokra van szükség, mivel a gép hálózati
+  beállításait kell megváltoztatni a <code>network</code>,
+  az <code>iwconfig</code>, és az <code>ifconfig</code> parancsokkal.<br />
+  Nem feltétlenül szükséges, de mivel nekem így vált be, ezért első
+  lépésként lekapcsoltam a teljes hálózatot.</p>
+
+  <pre><code>/etc/init.d/network stop</code></pre>
+
+  <p>Ezután az <code>iwconfig</code>-gal megadtam az ad-hoc kapcsolódási
+  módot, és a hálózat azonosítóját, mely a robot
+  esetében <code>SRV1</code>. Mivel a wireless interfész az én
+  gépemen <code>wlan0</code> névre hallgat, ezért a parancs az alábbiak szerint
+  nézett ki:</p>
+  
+<pre><code>iwconfig wlan0 mode Ad-Hoc essid SRV1</code></pre>
+
+<p>Következő lépésként meg kell adni a gép IP címét
+az <code>ifconfig</code> paranccsal. Célszerű (ellenkezőjét nem is
+próbáltam) a robot IP címével azonos tartományból választani IP címet
+a vezeték nélküli interfésznek. Mivel a robot IP címe
+<code>169.254.0.10</code>, ezért ez a parancs így nézett ki:</p>
+
+<pre><code>ifconfig wlan0 169.254.0.12</code></pre>
+
+<p>Végül ha már be van kapcsolva a robot érdemes megpróbálni csatlakozni
+hozzá. Ezt a <code>telnet</code> paranccsal lehet megtenni az általam használt
+robotnál a <code>10001</code>-es porton keresztül. Ehhez már elég egy
+hagyományos felhasználó is, vagyis nincs szükség <code>root</code>-ra.</p>
+ 
+<pre><code>telnet 169.254.0.10 10001</code></pre>
+
+<p>Ezután én többnyire visszakapcsoltam a vezetékes hálózatot az <code>ifup</code> paranccsal.</p>
+
+<pre><code>ifup eth0</code></pre>
+
+<p>Ha minden jól ment és a <code>telnet</code> parancs sikeres volt, akkor a robot a
+következőket írja ki a képernyőre:</p>
+
+<pre><code>##Version - SRV-1 Blackfin w/picoC 0.91 13:12:45 - Jan 20 2010</code></pre>
+
+<p>A megjelenő promptnál V betűt írva pedig kiírja a verziószámot.<br />
+Ha ezt megtörtént, akkor a csatlakozással sikerrel jártunk.
+(A <code>telnet</code> programból a kilépést egy <code>kill</code>
+  paranccsal oldottam meg, mivel ilyen értelmű robotutasítást nem találtam.)</p>
+
+<p>Nehézséget okozhat, hogy ha a robot flash memóriájába korábban programot töltöttünk, akkor a
+csatlakozás előtt az fut le. A futás befejezése előtt nem lehet a
+  robottal kommunikálni. Néha úgy tűnik, hogy a robot megáll, mert
+  elkészült a betöltött program futtatásával, de amikor 
+  kapcsolódni próbálunk, akkor ismét elkezd dolgozni. Egy idő után
+  azért befejezi a futást, és végre használhatjuk.</p>
+</div>
+<div class="lighterBox">
+<h2><a name="directmove">Közvetlen működtetés</a></h2>
+<p>Ha a robothoz a fent leírt módon csatlakoztunk, akkor lehetőségünk
+  van a beépített parancsok futtatására. Ezek listája <a href="http://www.surveyor.com/SRV_protocol.html">ezen</a> az oldalon
+  nézhető meg.</p>
+<p>Néhány érdekesebb parancs: </p>
+<p>Az <code>1</code>-<code>9</code> billentyűk hatására a robot mozogni
+  kezd, a billentyű elhelyezkedésének megfelelően. Tehát a <code>8</code> az előre, a
+  <code>2</code> a hátra, a <code>4</code> a fordulás balra, a <code>6</code> a fordulás jobbra, az <code>5</code> a
+  megállás. Mivel a parancsok a következő parancsig mozgatják a
+  robotot, ezért először ezt az utóbbit jegyezzük meg! A <code>7</code>, <code>9</code>, <code>1</code>, <code>3</code>
+  billentyűk mindkét tengely mentén elmozdítják az SRV1-et, vagyis
+  a meghatározott irányba ír le egy kört a robot.</p>
+<p>
+Az <code>l</code>-lel be-, az <code>L</code>-lel ki lehet kapcsolni a lézert. Az <code>R</code>-rel a
+legközelebbi tárgy távolságát lehet megmérni. Ehhez a robot mindkét
+oldalon be és kikapcsolja a lézert, egymás után. Az <code>I</code> billentyűvel a
+robot elkészít egy fényképet, amit JPEG formátumban küld vissza.
+</p>
+<p>
+A parancsok között egészen összetettek is vannak, melyek neurális
+hálót használnak vagy például egy szín követését végzik, ahogy az
+alábbi videón is látható:
+</p>
+
+<object class="standalone" type="application/x-shockwave-flash" data="http://www.youtube.com/v/XKkPCOrEiEY" width="425" height="344"><param name="movie" value="http://www.youtube.com/v/XKkPCOrEiEY" /><param name="FlashVars" value="playerMode=embedded" /></object>
+</div>
+<div class="darkerBox">
+<h2><a name="picoc">Programozás PicoC-ben</a></h2>
+<p>
+Amellett, hogy egy-egy parancsot interaktív módon végre lehet hajtani,
+a PicoC nevű, C-szerű beépített nyelven kisebb-nagyobb programokat is
+meg lehet írni és futtatni. Ezáltal robotunk önállóvá válhat.
+ A nyelv egy referenciája <a href="http://www.surveyor.com/C.html">itt</a>
+  található.</p>
+<p>
+Az ELTÉ-n, ahonnan ez a robot is származik már többféle PicoC program
+készült el,
+amiről <a href="http://psztsrv.inf.elte.hu/mediawiki/index.php/SRV1_Blackfin">ezen</a> 
+az oldalon lehet olvasni.<br />
+Az alábbi példa a lézeres távolságmérő helyett ultrahangos robotot
+feltételez. Ezen új szenzorok visszaadott értékeitől függően a robot
+megváltoztatja haladási irányát.
+</p>
+
+<div class="code">int t1;
+int t2;
+int i;
+for(i=0;i&lt;100;i++) {
+   t1=sonar(1);
+   t2=sonar(4);
+   if (t1&gt;t2)
+      motors(0,30);
+   else
+      motors(30,0);
+   delay(500);
+}
+motors(0,0);
+exit();
+</div>
+
+</div>
+<div class="lighterBox">
+<h1><a name="controlling">Irányítás vezeték nélküli kapcsolaton át</a></h1>
+<p>Mivel a célom az volt, hogy a robot által készített kamera képét a
+  számítógépen dolgozzam fel és ez alapján adjak utasításokat a
+  robotnak, azaz a teljes irányító program a számítógépen fusson,
+  ezért a PicoC nyelvű programok írása helyett inkább a robot-gép
+  kommunikáció megvalósítására koncentráltam. <br />
+  Ennek érdekében olyan
+  eljáráskönyvtárt kerestem, amely C/C++ nyelven függvényhívások
+  formájában képes a robotnak utasításokat átadni, a kamera képét
+  visszakapni. Ezen kívül a robot által készített képek
+  feldolgozására egy általános célú képfeldolgozó könyvtárat
+  szerettem volna alkalmazni.</p>
+</div>
+<div class="darkerBox">
+<h2><a name="surveyorlib">A Surveyor Blackfin robot szoftver</a></h2>
+<p>A robot és a számítógép között kapcsolat
+kiépítésére egy olyan eljárásgyűjteményre van szükség, mely a
+  socketen, azaz hálózati csatlakozáson
+keresztül képes a robotnak a közvetlen működésnél felsorolt
+parancsokat elküldeni és az érkező válaszokat fogadni,
+feldolgozni. (<a href="http://nimrud.eet.bme.hu/mk/socket_programozas/">Itt</a> egy leírás socket programozásról magyar nyelven.)<br />
+Ehhez épp megfelelőnek tűnt a City University of New York Brooklyn
+  College-ában
+  készített <a href="http://agents.sci.brooklyn.cuny.edu/robotics.edu/bcsoftware.php">Surveyor
+ Blackfin szoftvercsomagja</a>, mely <a href="http://agents.sci.brooklyn.cuny.edu/robotics.edu/software/svr/Blackfin.zip">innen</a>
+tölthető le. A néhány forrásfájl könnyen illeszthető már létező
+projekthez, akár úgy is, hogy egy önálló könyvtárat csinálunk
+  belőle. Én ez utóbbit választottam.<br />
+Az eljárások ugyan nem fedik le az összes lehetséges robotfunkciót, de
+  ez is bővíthető, a távolságmérés eljárását például én írtam
+  meg. A bővített
+  forrásfájl <a href="src/surveyorlib/surveyor.cpp">itt</a>, a header
+  <a href="src/surveyorlib/surveyor.h">itt</a> nézhető meg.<br />
+A használathoz mindössze arra van szükség, hogy a robot IP címét és az
+  eléréshez használt portot megadjuk a forráskódunkban az alábbi módon:
+</p>
+  
+<pre><code>#define ADDRESS 169.254.0.10:10001</code></pre>
+
+<p>
+Ha itt a a valódi cím helyett <code>NULL</code>-t használunk, akkor a
+  robot címét az <code>SVR_ADDRESS</code> környezeti változóban keresi a
+  program. Ezt pedig így lehet beállítani (én ezt a módot használtam):</p>
+
+<pre><code>export SVR_ADDRESS=169.254.0.10:10001</code></pre>
+
+<p>
+Íme egy példaprogram, ami a robot eljárások működését mutatja.
+</p>
+
+<div class="code">Surveyor	robot(ADDRESS);
+
+int main( int argc, char *argv[])
+{
+	char	buf[256];
+	int	arg = 0;
+
+	robot.setDebuging(0);
+	robot.getVersion(buf);
+	printf("surveyor_photo: SVR-1 version %s\n", buf);
+
+	robot.drive(50,-50,100);
+
+	robot.setVideoMode(MODE320x240);
+	robot.takePhoto();
+	robot.savePhoto("test.jpg");
+	
+    	return 0;   
+}
+</div>
+
+<p>
+Először létre kell hozni a <code>Surveyor</code> osztály egy példányt, ezúttal
+<code>robot</code> néven. Ezután a robotkommunikáció debugolásának
+szintjét alacsonyra állítjuk, majd lekérjük a verzióinformációt, amit
+kiírunk a képernyőre. Majd a robot kap egy mozgási parancsot, ami a
+bal és a jobb lánctalp sebességét határozza meg, valamint a
+mozgás idejét, 10 milliszekundumos egységekben. Mindhárom értéket egy
+bájton lehet meghatározni, emiatt a sebesség -128 és 127 között
+változhat (értelemszerűen a negatív számok hátrafelé mozgást
+jelentenek), míg az idő 0 és 255 között. A 0 érték esetén mindaddig
+fut a parancs, amíg új mozgási parancs nem érkezik.<br /> 
+A fenti példában a robot
+egy másodpercig fog félgőzzel helyben jobbra fordulni.
+</p>
+<p>
+Ezután beállítjuk a videó módot, vagyis a robot kamerájának a
+felbontását. A fent szereplő 320*240-es képméret igazából 640*480,
+mivel a konstans által küldött parancs, ezt az értéket határozza
+meg. Bár könnyű lenne azt mondani, hogy hibás a Blackfin csomag,
+valószínű, hogy egy korábbi változatban a konstans értékek mást
+jelentettek.<br />
+A képméret beállítása után a robot készít egy fényképet, majd elmenti
+a munkakönyvtárban <code>test.jpg</code> néven.
+Érdekes módon a robot bekapcsolása utáni első futáskor rossz a kép, az
+eredmény elkenődött, mintha gyorsan pörgött volna
+a robot az elkészítés közben. A második hívástól azonban javul a helyzet.
+A kép minősége ekkor sem kiemelkedő, egy egyszerű webkamera képének felel
+meg.<br />
+</p>
+</div>
+<div class="lighterBox">
+<h2><a name="remote">Távirányítás</a></h2>
+<p>Az eddigi ismeretek felhasználásával már egyszerűen készíthető egy
+olyan program, amellyel a robotot távirányítással lehet
+vezérelni. Ehhez csupán a billentyűzetről kell beolvasni a következő
+mozgási parancsot, amit én a <a href="http://wiki.hup.hu/index.php/Programoz%C3%A1s_Linux_alatt_az_NCurses_f%C3%BCggv%C3%A9nyk%C3%B6nyvt%C3%A1r_haszn%C3%A1lat%C3%A1val"><code>curses</code> standard
+    eljárásaival</a> oldottam
+meg. A feladatot elvégző kód lényegi része így néz ki:
+</p>
+<div class="code">#define MOVE_SPEED    100 // [-128 - 127]
+#define MOVE_DURATION 0 // [   0 - 255], 0 is infinite
+#define TURN_DURATION 20 // [   0 - 255], 0 is infinite
+
+...
+
+initscr();
+keypad(stdscr,TRUE);
+
+do {
+    key = getch();
+    switch (key) {
+        case 'q':
+            left_speed = 0;
+            right_speed = 0;
+            break;
+        case KEY_UP:
+            left_speed = 1;
+            right_speed = 1;
+            break;
+        case KEY_DOWN:
+            left_speed = -1;
+            right_speed = -1;
+            break;
+        case KEY_LEFT:
+            left_speed = -1;
+            right_speed = 1;
+            break;
+        case KEY_RIGHT:
+            left_speed = 1;
+            right_speed = -1;
+            break;
+        case 'r':
+            printw("\ndistance: %d\n",robot.getDistanceFromLasers());
+            break;
+        case 'l':
+            robot.setLasers(++laser_mode % 2);
+            break;
+        case 'p':
+            robot.takePhoto();
+            robot.savePhoto("test.jpg");
+            break;
+        case 'x':
+            finish = 1;
+            break;
+    }
+    robot.drive(
+            left_speed * MOVE_SPEED,
+            right_speed * MOVE_SPEED,
+            left_speed == right_speed ? MOVE_DURATION : TURN_DURATION);
+} while (!finish);
+
+endwin();
+</div>
+<p>
+A curses eljárások inicializálása után ciklikusan várja a robot
+a következő parancsot. Az iránybillentyűk lenyomásakor megfelelően
+beállítja a lánctalpak mozgásának irányát, ami a
+<code>robot.drive</code> eljárás meghívásakor jut szerephez. A mozgás
+ideje attól függ, hogy a robot egyenesen halad-e vagy fordul. Az
+utóbbi esetben a robot csak rövid ideig mozog, hogy ne forduljon túl
+nagy szögben, legyen idő más mozgási parancsot kiadni.<br />
+A sebesség változóit csupán a <code>q</code> billentyű lenyomása
+állítja vissza 0-ra, enélkül a robot folytatja a megkezdett
+mozgást.<br />
+Ha a beállított 100-nál kisebb, 50-es sebességértékkel próbálkoztam,
+akkor a robot nem mindig tudott haladni. Volt olyan nem túl mély padlószőnyegű
+szoba, ahol csak a motor hangját lehetett hallani, de a robot
+minimálisat mozdult.
+</p>
+<p>
+A <code>p</code> billentyű hatására a robot a korábban ismertetett
+módon készít egy fényképet. 
+Az <code>l</code> segítségével lehet a lézert be- és
+kikapcsolni.<br />
+Végül az <code>r</code> hatására a robot az általam a Blackfin
+bővítéseként írt <code>getDistanceFromLasers</code> eljárást hívja
+meg, és az eredményt kiírja a
+képernyőre. A <code>getDistanceFromLasers</code> nagyon hasonló a
+csomag többi eljárásához: elküldi a lézeres távolságmérés parancsát a
+robotnak és a választ némi hibakezeléssel után feldolgozza.<br />
+Sajnos akadálykikerülésre, pláne térképkészítésre a lézer kevéssé
+használható, mert lassú és pontatlan. A mérés során a robot 
+felvillantja a két lámpát, majd számol. Ez másodpercekig is
+eltart. Emiatt a méréshez célszerű a robotnak megállnia. Ezen kívül az
+eredmény még ideális körülmények között, azaz nem túl távoli, merőleges, egyszínű fal
+esetében, álló pozícióban is túl nagy szórást mutat ahhoz, hogy
+használható lehessen. Íme egy mérési sorozat ennek igazolására, centiméterekben: 37,
+38, 28, 38, 28. Ráadásul a robot többször is sikertelen mérést jelez vissza.
+</p>
+<p>
+A program teljes forráskódja megnézhető <a href="src/surveyor_remote.cpp">itt</a>.
+</p>
+</div>
+
+<div class="darkerBox">
+<h2><a name="opencv">Az openCV</a> </h2>
+<p>
+Miután sikerült a robotot irányítani, és a legfontosabb parancsokat a
+Blackfin csomagból kipróbálni, érdemes kibővíteni a robotot a kamera
+képének feldolgozásával. Ehhez a robot direkt parancsai és erre építve
+a Blackfin csomag is lehetőséget nyújt, de én valami általánosabb
+célút szerettem volna használni/fejleszteni, ami nem függ az éppen
+használt robottól. (Ettől még persze alkalomadtán érdemes lesz a robot
+saját képfeldolgozási lehetőségeit is kipróbálni.)
+</p>
+<p>
+<img class="floatLeft" alt="opencv" src="images/opencv-logo2.png"/>
+Ennek érdekében
+az <a href="http://opencv.willowgarage.com/wiki/">openCV</a> 
+általános célú képfeldolgozási eljáráscsomagot
+használtam. Az OpenCV nevében szereplő CV a computer vision-re, azaz a
+gépi látásra utal, az open, pedig arra, hogy nyílt forráskódú. Ezen kívül
+érdemes tudni, hogy ingyenesen hozzáférhető. A
+csomagot több mint egy évtizede az Intel kezdte el fejleszteni, majd
+pár éve a Willow Garage nevű robotfejlesztő cég vette a
+gondozásába.<br />
+Ennek a változásnak az a jótékony hatása, hogy a csomag ismét
+fejlődésnek indult, ami abból is lemérhető, hogy több millióan
+letöltötték, és
+egy <a href="http://www.amazon.com/Learning-OpenCV-Computer-Vision-Library/dp/0596516134">
+O'Reilly könyv</a> is megjelent róla.
+A Willow Garage feltett szándéka, hogy az OpenCV-t minél inkább
+alkalmassá tegye robotos projektben való használatra, vagyis jelenleg
+úgy tűnik, hogy érdemes ezzel a könyvtárral foglalkozni.
+</p>
+<p>
+Itt most nem célom az OpenCV részletes bemutatása, hiszen</p>
+<ul>
+<li>arról majd remélhetőleg egy másik oldal fog szólni,</li>
+<li>én sem ismerem kellően részletesen.</li>
+</ul>
+<p>Nem, a két pont között nincsen ellentmondás, hanem a csomag
+rendkívül összetett. </p>
+<p>
+Itt csupán a továbblépéshez szükséges egyszerű, "robotmentes" példát mutatok be, az
+openCV környezetben értelmezhető "Helló, világ!" programot, ami egy
+kép betöltése és megjelenítése.
+Az első openCV programunk tehát így nézhet ki:
+</p>
+
+
+<div class="code">#include "highgui.h"
+
+int main( int argc, char** argv )
+{
+  IplImage* img = cvLoadImage( argv[1] );
+  cvNamedWindow("Example1", CV_WINDOW_AUTOSIZE );
+  cvShowImage("Example1", img );
+  cvWaitKey(0);
+  cvReleaseImage( &amp;img );
+  cvDestroyWindow("Example1");
+}
+</div>
+
+<p>Első lépésként a paraméterként megadott képet tölti be a
+program (<code>cvLoadImage</code>), amennyiben a sok kezelt formátum
+  egyikeként ismeri föl.
+Ezután létrehoz egy <code>Example1</code> nevű ablakot
+  (<code>cvNamedWindow</code>), melyben a <code>cvShowImage</code>
+  függvénnyel megjeleníti az előbb betöltött 
+<code>IplImage</code>-et.
+A <code>cvWaitKey(0)</code> utasítás hatására végtelen ideig vár
+billentyűleütésre a program és ha ez megtörténik, akkor
+a <code>cvReleaseImage</code> megszünteti a képet,
+a <code>cvDestroyWindow</code> az ablakot.
+</p>
+<p>
+A program lefordításához nem túl meglepő módon szükséges az, hogy az <code>include</code> könyvtárak
+között szerepeljen a <code>highgui.h</code> header fájlt
+tartalmazó könyvtár.<br />
+Ezen kívül az OpenCV-t használó programok futtatható változatának
+összeállításához a <code>cv</code>,
+a <code>cvaux</code>, a <code>cxcore</code> és a <code>highgui</code>
+könyvtárak linkelése szükséges.
+</p>
+</div>
+<div class="lighterBox">
+<h2><a name="agent">Az ügynökrobot</a> </h2>
+<p>Az eddigiek alapján a távirányító program viszonylag kis módosításával
+megoldható, hogy a robot mozgása közben a kamera képét is folyamatosan
+mutassa. Ezáltal a robot nevének megfelelően egy valódi felderítő
+ügynökrobothoz jutunk.
+</p>
+
+<p>
+Ehhez a korábbi eseti fényképmentés helyett a ciklus minden futása
+során elkészítjük és elmentjük a fényképet és az előző részben megmutatott
+eljáráshoz hasonló módon megjelenítjük azt.<br />
+Ha az elkészített képeket különböző fájlnévvel látjuk el, akkor az
+eredményből később film is készíthető.
+</p>
+
+<p>
+Egy ilyen futás eredménye tekinthető meg a két alábbi videóban, külső
+és belső nézetből egyaránt. Sajnos a roboton eléggé alacsony
+másodpercenkénti képfrissítéssel.
+</p>
+
+<table class="image">
+<tr>
+<td>
+<object type="application/x-shockwave-flash" data="http://www.youtube.com/v/N-QNiT7ISS4" width="425" height="385"><param name="movie" value="http://www.youtube.com/v/N-QNiT7ISS4" /><param name="FlashVars" value="playerMode=embedded" /></object>
+</td>
+<td>
+<object type="application/x-shockwave-flash" data="http://www.youtube.com/v/x93CLocG450" width="425" height="385"><param name="movie" value="http://www.youtube.com/v/x93CLocG450" /><param name="FlashVars" value="playerMode=embedded" /></object>
+</td>
+</tr>
+</table>
+
+<p>
+A program forráskódja <a href="src/surveyor_camera.cpp">itt</a> érhető el.
+</p>
+
+<p>Ismét érdemes megjegyezni, hogy a Blackfin robot eljárások között
+  szereplő <code>setVideoMode</code>-hoz tartozó konstansnevek
+  félrevezetőek. A <code>MODE160x128</code> érték megadásával
+  valójában a 320*240-es alapértelmezett képméretet használjuk. Ehhez
+  hasonlóan eggyel nagyobbat jelent a több konstans is. Valószínűleg
+  az idők során megváltozott a robot kamerájának felbontása, és a
+  beállításhoz használt parancsok, amit az eljáráskönyvtár nem követett.</p>
+</div>
+<div class="darkerBox">
+<h2><a name="lightsearch">Fénykeresés</a></h2>
+
+<p>
+Mivel a távlati cél egy teljesen autonóm robot elkészítése, ezért
+  a távirányításhoz képest továbblépés, ha a robot maga hoz
+  döntéseket mozgásával kapcsolatban. <br />
+Ennek egy egyszerű példája a következő fénykereső robot.</p>
+
+<p>A fénykeresés természetesen a képek feldolgozásával valósul meg, és
+  igazából megfelelő tulajdonságú képpontok kiválasztásával működik.
+A használat során a <code>findColor</code> eljárás egy zseblámpa fényének
+  megfelelő színű képpontokat keres a képen, és visszaadja, hogy a
+  robot középvonalától, vagyis aktuális haladási irányától balra és
+  jobbra mennyi "fényszínű" képpont látható.
+</p>
+
+<img  alt="torch" src="images/dsc_0499.jpg" width="100"/>
+
+<p> 
+A képfeldolgozó eljárás lényegi része így néz ki:
+</p>
+
+<div class="code">...
+cvCvtColor(imageHSV, imageHSV, CV_BGR2HSV); 
+
+cvZero(resultImage);
+
+cp->left = 0;
+cp->right = 0;
+for (i = 0; i &lt; imageHSV->height; i++) {
+    for (j = 0; j &lt; imageHSV->width; j++) {
+        if ( (2 * H_PIXEL(i, j, imageHSV) - hlower + MAXHUE) % MAXHUE &lt;= (hupper - hlower + MAXHUE) % MAXHUE
+                &amp;&amp; S_PIXEL(i, j, imageHSV) >= slower &amp;&amp; S_PIXEL(i, j, imageHSV) &lt;= supper
+                &amp;&amp; V_PIXEL(i, j, imageHSV) >= vlower &amp;&amp; V_PIXEL(i, j, imageHSV) &lt;= vupper ) {
+            SET_PIXEL_V1(i, j, resultImage, 255);
+            if( j &lt; imageHSV->width/2 ) {
+                ++cp->left;
+            } else {
+                ++cp->right;
+            }
+        }
+    }
+}
+</div>
+
+<p>A fényes képpontok meghatározásához az eljárás az előzetesen
+  imageHSV-be másolt képet a hagyományos RGB (vörös-zöld-kék) színtérből HSV (hue-saturation-value, azaz szín-telítettség-érték)
+  színtérbe konvertálja a <code>cvCvtColor</code> függvénnyel (helyben
+  dolgozva). Ezt a konverziót nagyon gyakran
+  alkalmazzák képfeldolgozás esetén, mert a fényviszonyok
+  változásának ez az új reprezentáció jobban ellenáll, mint a
+  megszokott RGB hármas. </p>
+
+<p>A HSV színtérről <a href="http://www.knt.vein.hu/Tantargyak/MultimediaAlk/2-2-ToldiZsolt.doc">itt</a>  lehet bővebben
+  olvasni. Dióhéjban annyit érdemes tudni, hogy az első komponens
+  felel a szín értékéért, az összes létező színárnyalat ebben az egy
+  számban jelenik meg, szemben az RGB reprezentációval. Az S-sel
+  jelölt telítettség a szín élénkségét határozza meg. Az érték a
+  fényerőt adja meg, azaz hogy milyen világos az adott képpont.
+</p>
+
+<p>
+  Ezután az eredményül előálló kép pontjait mind feketére
+  állítja a <code>cvZero</code> függvény, majd a fő eljárás ciklusban végiglépked a
+  képpontokon, és ahol az előre meghatározott HSV értéktartományokon
+  belül eső képpontot talál ott az eredményképet fehérre állítja.
+  A képpontok olvasásához használt függvényekről
+  (<code>H_PIXEL</code>, <code>S_PIXEL</code>, <code>V_PIXEL</code>) annyit érdemes tudni,
+  hogy az <code>i</code>, <code>j</code> koordinátán lévő képpont <code>H</code>, <code>S</code>, <code>V</code> értékeit adják vissza.
+  A program megvizsgálja, hogy ezek az értékek a konfigurációs fájlban előzetesen
+  megadott tartományonkénti alsó és felső határok közé esnek-e. Ha
+  igen, akkor a képpontot fényesnek ítéli és az eredményképen a <code>SET_PIXEL_V1</code>
+  függvénnyel fehérre állítja a  megfelelő képpontot.
+  A rajzolással egy időben az eljárás a <code>Colorpixels</code> típusú paraméter
+  <code>left</code> és <code>right</code> mezőjét is módosítja, hogy befejezéskor
+  a két érték a kép bal és jobb széléhez közelebb lévő fényes
+  képpontok számát adja vissza.
+</p>
+
+<p>
+A fő eljárásnak ezután könnyű dolga van. Ciklikusan meghívja a
+fénykereső eljárást, és a visszakapott <code>Colorpixels</code>
+értékek alapján, ha elégséges képpontot érzékel, akkor a fényt követve balra vagy jobbra fordul, mint egy
+<a href="http://jataka.hu/rics/speci/src/class3/index.html">Braitenberg-jármű</a>. (Az
+elégséges képpontok számát egy konfigurációs fájlból olvassa be a program.)
+</p>
+
+
+<div class="code">Colorpixels cp;
+findColor(img, res, configuration, &amp;cp);
+...
+
+if (cp.left + cp.right > configuration->getIntParam("light-lower-limit") &amp;&amp;
+        cp.left + cp.right &lt; configuration->getIntParam("light-upper-limit")) {
+    double turn = (double) (cp.left - cp.right) / max(cp.left, cp.right);
+    robot.drive(
+            max(min(MOVE_SPEED - 0.5 * turn * MOVE_SPEED,100.0),-100.0),
+            max(min(MOVE_SPEED + 0.5 * turn * MOVE_SPEED,100.0),-100.0),
+            MOVE_DURATION);
+} else {
+    robot.drive(
+            0,
+            0,
+            MOVE_DURATION);
+}
+</div>
+
+<p>
+Ennél persze a valóságban összetettebb irányításra lenne
+szükség. Lehetne például egy összefüggő, körszerű foltot keresni a
+képen, ami a zseblámpát kiemelné a környezetéből, és egyúttal
+csökkentené annak az esélyét, hogy az ablakból bejövő vagy a padlón
+tükröződő fény megzavarja
+a robotot, ami bizony előfordulhat. Ezen kívül a robot mozgása
+egyáltalán nem függ a fény képbeli elhelyezkedésétől, mennyiségétől.
+Ezek figyelembe vétele finomabb mozgást eredményezne.</p>
+
+<p>
+A kész robot futása, ismét külső és belső nézetből, alant látható. A
+belső nézet a kamera képe mellett egyúttal a képfeldolgozás eredményét is mutatja.
+</p>
+
+<table class="image">
+<tr>
+<td>
+<object type="application/x-shockwave-flash" data="http://www.youtube.com/v/52l4xQ-n8ww" width="425" height="385"><param name="movie" value="http://www.youtube.com/v/52l4xQ-n8ww" /><param name="FlashVars" value="playerMode=embedded" /></object>
+</td>
+<td>
+<object type="application/x-shockwave-flash" data="http://www.youtube.com/v/x2ZonUgkO2Q" width="425" height="385"><param name="movie" value="http://www.youtube.com/v/x2ZonUgkO2Q" /><param name="FlashVars" value="playerMode=embedded" /></object>
+</td>
+</tr>
+</table>
+
+<p>
+A videókon látható az is, hogy a szőnyeget fölszedtem ehhez a
+feladathoz. Ennek az az oka, hogy a bal hátsó kerék rögzítése idővel
+kicsit kilazult, emiatt a lánc hajlamossá vált lecsúszni a kerékről,
+amikor nagy súrlódás érte. Ez forduláskor nagy tapadású talajon, így
+például szőnyegen következett be leggyakrabban.<br />
+Mindenesetre meglepő, hogy kevés használat után is ilyen probléma
+jelentkezhet, bár lehet, hogy egy egyszerű csavarozással a jelenség megszüntethető.
+</p>
+
+<p>
+A robot működésének kulcsa a <code>H</code>, <code>S</code>, <code>V</code> alsó és felső korlátok megfelelő
+megválasztása. Jelen esetben a konfigurációs fájl a következő értékeket tartalmazza:</p>
+
+<div class="code">&lt;hue-lower-limit&gt;0&lt;/hue-lower-limit&gt; 
+&lt;hue-upper-limit>360&lt;/hue-upper-limit&gt;
+&lt;saturation-lower-limit>0&lt;/saturation-lower-limit&gt; 
+&lt;saturation-upper-limit>10&lt;/saturation-upper-limit&gt;
+&lt;value-lower-limit>220&lt;/value-lower-limit&gt; 
+&lt;value-upper-limit>255&lt;/value-upper-limit&gt;
+</div>
+
+<p>
+Ez annyit jelent, hogy tetszőleges színű (a 0-360 terjedő tartomány
+minden értéke megengedett), alacsony telítettségű (maximum 10 a
+lehetséges 255-ből), és világos (minimum 220 a lehetséges
+255-ből) képpontokat talál jónak a program.<br />
+
+A használt megoldás nem általános célú, ha változik a környezet, a
+fényviszonyok, akkor az értékeket módosítani kell. Egy valódi, ipari
+környezetben alkalmazott robot esetén ez nem lenne elég. <br />
+A fénykereső főprogramja 
+<a href="src/surveyor_lightsearch/main.cpp">itt</a> a képfeldolgozás
+pedig <a href="src/surveyor_lightsearch/imageprocessing.cpp">itt</a>
+nézhető meg. A teljes kód letölthető <a href="src/surveyor_lightsearch.tar.gz">innen</a>.
+</p>
+
+</div>
+<div class="lighterBox">
+<h2><a name="colorsearch">Színkeresés</a> </h2>
+<p>
+Az utolsó feladat során a Surveyor Blackfin robotnak egy nagyjából
+egyszínű, a környezetétől elütő színű szőnyegen kellett maradnia,
+miközben folyamatosan mozog.
+Ehhez az előbb megismert színkeresést volt célszerű használni egy új
+HSV paraméterezéssel.<br />
+Ezúttal a szín értékek nem lehetnek bármilyenek, bár a használt
+[80,250], zöldeskék közepű színtartomány még mindig nagyon tág.
+A telítettség és az érték az előzőhöz képest megengedőbb lett:
+</p>
+
+
+<div class="code">&lt;hue-lower-limit&gt;80&lt;/hue-lower-limit&gt; 
+&lt;hue-upper-limit>250&lt;/hue-upper-limit&gt;
+&lt;saturation-lower-limit>10&lt;/saturation-lower-limit&gt; 
+&lt;saturation-upper-limit>100&lt;/saturation-upper-limit&gt;
+&lt;value-lower-limit>60&lt;/value-lower-limit&gt; 
+&lt;value-upper-limit>255&lt;/value-upper-limit&gt;
+</div>
+
+<p>
+Ez a fajta szűrés nem csak a szőnyeget találja meg, hanem sok minden
+mást is. Mivel a szőnyeg színét felhasználó eljárás összesen annyit
+tesz, hogy a színkeresés eredményeként kapott képen alulról elkezdi
+megszámolni a találatokat, ezért nem okoz problémát, hogy a kép felső
+részében is sok helyen "lát" szőnyeget a robot. <br />
+A találatok alulról
+felfelé számolása mögött az az ötlet rejlik, hogy ha a robot sok
+szőnyegszínű képpontot lát, akkor még mehet előre, ha pedig keveset,
+akkor hamarosan fordulnia kell. A megtehető távolságot ily módon
+becsülő eljárás így néz ki:
+</p>
+
+<div class="code">int calculateDistance(IplImage* image) {
+    int i;
+    int sum = 0;
+
+    for (i = image->height - 1; i >= image->height / 2; --i) {
+        if( H_PIXEL(i,image->width/2,image) != 0 ) {
+           ++sum;
+        }
+    }
+    return sum;
+}
+</div>
+
+<p>
+A visszaadott értékek alapján a robot az alábbi kódnak megfelelően
+dönt, és megy tovább előre vagy elfordul balra:
+</p>
+
+<div class="code">int limit_from_move_edge = calculateDistance(res);
+if (limit_from_move_edge &lt; MOVE_LIMIT) {
+    robot.drive(
+            -1 * MOVE_SPEED,
+            MOVE_SPEED,
+            TURN_DURATION);
+} else {
+    robot.drive(
+            MOVE_SPEED,
+            MOVE_SPEED,
+            MOVE_DURATION);
+}
+</div>
+
+<p>
+A program kódja
+letölthető <a href="src/surveyor_colorsearch.tar.gz">innen</a>.<br />
+A kész robot futása külső és belső nézetből lejjebb látható. A
+belső nézethez ismét hozzá tartozik az előfeldolgozás eredménye, amin
+jól látható, hogy a szőnyegen kívül sok más helyen is találatot jelez
+az algoritmus. Ettől függetlenül a robot viszonylag megbízhatóan működik.
+</p>
+
+<table class="image">
+<tr>
+<td>
+<object type="application/x-shockwave-flash" data="http://www.youtube.com/v/T4vmqsDBrMI" width="425" height="385"><param name="movie" value="http://www.youtube.com/v/T4vmqsDBrMI" /><param name="FlashVars" value="playerMode=embedded" /></object>
+</td>
+<td>
+<object type="application/x-shockwave-flash" data="http://www.youtube.com/v/URKIf9otHnE" width="425" height="385"><param name="movie" value="http://www.youtube.com/v/URKIf9otHnE" /><param name="FlashVars" value="playerMode=embedded" /></object>
+</td>
+</tr>
+</table>
+
+</div>
+<div class="darkerBox">
+<h1><a name="experiences">Tapasztalatok, folytatás</a> </h1>
+<p>
+Bár elég kevés időm volt a Surveyor Blackfin-nel kísérletezni,
+úgy érzem, hogy sok érdekes dologra sikerült rávennem a robotot.
+A használat során észlelt furcsaságok (lejáró lánc, hibás nyitókép,
+sokáig tartó inicializálás) némi gyakorlás után szerintem
+kiküszöbölhetőek.<br />
+A Blackfin eljárások jelen formájukban már elégségesek a robot
+irányításához, de tovább csiszolhatók.
+</p>
+<p>
+A robot megfelelő megoldás lehet bejárási és térképezési
+feladatokhoz, különösen a sztereó kamerával kiegészítve. Az általános
+használatot azonban nehezíti, hogy a robot két szempontból sem túl gyors.
+Egyrészt a lánctalpon való haladás többnyire kisebb sebességekre
+képes, mintha kerekeket alkalmaznánk.<br />
+A komolyabb problémát azonban a processzor és a kommunikáció sebessége
+okozza. A fényképezés és az eredmény továbbítása leköti annyira a robotot,
+hogy csupán néhány kép készülhet el másodpercenként, ami behatárolja
+az alkalmazási lehetőségeket. Elképzelhető persze, hogy a képméretet
+állítva, a kép továbbítását optimalizálva ezen még lehet javítani.
+</p>
+<p>
+A lassabb haladás ellenére a lánc előnye, hogy a robot kisebb
+akadályokon át tud mászni.
+Szabad térben nem próbáltam ki a robotot, de valószínűnek tartom, hogy
+egyszerűbb tereppel is elboldogulna. Nyilván ekkor a fokozódó
+piszkolódás jelenthet gondot.<br />
+Mivel a jármű eléggé erős, ezért passzív szemlélőből aktívvá
+válhat, kisebb tárgyakat el tud tolni, így rendezési feladatokra
+alkalmas lehet. Ettől függetlenül jó volna, ha tartozna hozzá egy
+robotkar, mellyel többféle probléma megoldására lehetne
+használni.
+</p>
+<p>
+Érdekes lenne, ha a robot repülhetne. Ez nem csak fikció, a
+Surveyornak van
+egy <a href="http://www.surveyor.com/YARB.html">YARB</a> (Yet Another
+Robotic Blimp, azaz Egy
+Újabb Robot Léghajó) nevű robotja, ami így néz ki:
+</p>
+
+<img class="standalone" alt="blimp" src="images/blimp.jpg"/>
+
+<p>
+A látványos szerkezetet egyelőre csak beltérben lehet kipróbálni, amiről a
+<a href="http://robotika.blog.hu/2010/02/18/surveyor_yarb">robotika.blog.hu</a>-n is említett
+videó alapján az elefánt és a
+porcelánbolt jut az ember eszébe. 
+</p>
+
+<p>
+Általános tapasztalat az is, hogy a képkezelő eljárásokat érdemes
+felkészíteni arra, hogy a robot által korábban fölvett képen vagy 
+képfolyamon is működjenek. Ezáltal a robot hiányában is lehetne fejleszteni,
+tesztelni, a tanuló algoritmusokat behangolni.
+</p>
+</div>
+<div class="lighterBox">
+<h2><a name="links">További hasznos oldalak</a> </h2>
+<ul>
+  <li>Az oldalon szereplő összes saját forráskód
+  egyben <a href="src/src.tar.gz">innen</a> tölthető le.</li>
+  <li><a href="http://www.jataka.hu/rics">Egyéb robotos oldalaim</a></li>
+<li><a href="http://www.robotika.njszt.hu/index.php?title=Kezd%C5%91lap">NJSZT
+  Robotika szakosztály</a>, ahol többen segíthetnek, ha valamilyen
+  robotot szeretnél építeni. </li>
+<li><a href="http://psztsrv.inf.elte.hu/mediawiki/index.php/SRV1_Blackfin">ELTE Surveyor Blackfin oldala</a></li>
+</ul>
+Néhány további robotos videó: tesztelés az ELTÉ-n, falkövetés,
+csoportos viselkedés, tanulás.
+
+<table class="image">
+<tr>
+<td>
+<object type="application/x-shockwave-flash" data="http://www.youtube.com/v/0uHVDnkzm-o" width="425" height="344"><param name="movie" value="http://www.youtube.com/v/0uHVDnkzm-o" /><param name="FlashVars" value="playerMode=embedded" /></object>
+</td>
+<td>
+<object type="application/x-shockwave-flash" data="http://www.youtube.com/v/kQeoYymMjRU" width="425" height="344"><param name="movie" value="http://www.youtube.com/v/kQeoYymMjRU" /><param name="FlashVars" value="playerMode=embedded" /></object>
+</td>
+</tr>
+<tr>
+<td>
+<object type="application/x-shockwave-flash" data="http://www.youtube.com/v/0GJdoOkiwsA" width="425" height="344"><param name="movie" value="http://www.youtube.com/v/0GJdoOkiwsA" /><param name="FlashVars" value="playerMode=embedded" /></object>
+</td>
+<td>
+<object type="application/x-shockwave-flash" data="http://www.youtube.com/v/mJ8LMMHsUf8" width="425" height="344"><param name="movie" value="http://www.youtube.com/v/mJ8LMMHsUf8" /><param name="FlashVars" value="playerMode=embedded" /></object>
+</td>
+</tr>
+</table>
+
+<p>Ha ismersz még ide tartozó érdekes oldalt, különösen magyar robotikai
+eredményeket, kérlek, írd meg! Természetesen építő jellegű kritikát is
+  szívesen fogadok.</p>
+</div>
+<div class="darkerBox">
+<h2><a name="acknowledgement">Köszönetnyilvánítás</a> </h2>
+Köszönöm Istenes Zoltánnak, hogy rendelkezésemre bocsátotta a robotot és
+Salamon Andrásnak a vezeték nélküli kommunikáció létrehozásában nyújtott segítséget.
+</div>
+</div>
+
+<!-- ##### Footer ##### -->
+<div id="footer">
+<div class="right">Utolsó módosítás: 2010-Feb-24 </div>
+<br class="doNotDisplay doNotPrint" />
+</div>
+
+<div class="subFooter">
+<p>Copyright © 2010, Szabó Richárd<br />
+richard_szabo@nospam.invitel.hu (a nospam törlendő)<br />
+<!--This theme is free for distriubtion, so long as link to openwebdesing.org and florida-villa.com stay on the theme-->
+Courtesy <a href="http://www.openwebdesign.org">Open Web
+  Design</a> 
+<a href="http://www.dubaiapartments.biz"></a>Thanks to <a href="http://www.florida-villa.com">Florida Vacation Homes</a> <br class="doNotPrint" />
+<!-- BEGIN WebSTAT Activation Code -->
+<script type="text/javascript" src="http://hits.webstat.com/cgi-bin/wsv2.cgi?39877"></script>
+<!-- END WebSTAT Activation Code --></p>
+</div>
+
+</body></html>

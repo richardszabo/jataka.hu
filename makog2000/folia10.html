@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta3 (July 4th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>A Webots kontroller felépítése</TITLE>
+<META NAME="description" CONTENT="A Webots kontroller felépítése">
+<META NAME="keywords" CONTENT="ea">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="ea.css">
+<LINK REL="next" HREF="node6.html">
+<LINK REL="previous" HREF="node4.html">
+<LINK REL="up" HREF="ea.html">
+<LINK REL="next" HREF="node6.html">
+</HEAD>
+<BODY >
+<H2>A program</H2>
+<UL>
+<LI>Megközelítés módok: tanuló, önszervezõ neurális hálózat, evolúciós algoritmus,
+osztályozó rendszer</LI>
+<LI>Elõre felépített, nem tanuló, moduláris architektúra</LI>
+<LI>Fáradságos finomhangolás</LI>
+<LI>Braitenberg-szerû modulok egy összehangoló központtal</LI>
+<LI>Taktilis szenzorok és színes kamera -> képfeldolgozás</LI>
+<LI>Robot szemmagasságában lévõ képpontok
+<UL>
+<LI>Csak az energiaforrás felismerése</LI>
+<LI>Az egy sor nem tesz lehetõvé összetett navigációt,
+útvonaltervezést, kognitív térképet</LI>
+<LI>Számításigénytõl függõ idõszelet (pislogás) -> reagensebb robot</LI>
+<LI>
+<P>
+<IMG ALIGN="bottom" BORDER=0 ALT="Kép" 
+  SRC="screenshots/feederview.gif">
+<IMG ALIGN="bottom" BORDER=0 ALT="Feldolgozott kép" 
+  SRC="screenshots/feederfilter.gif">
+</LI>
+</UL>
+</LI>
+<LI>Mozgásirányító modulok</LI>
+<LI>Egyenes vonalú haladás, felfedezõ akadálykikerüléssel</LI>
+<LI>Energiaforráskeresés 360 fokosnak mért fordulatokkal</LI>
+<LI>Energiaforrásközelítés nemlineáris, szeretetteli módon</LI>
+<LI>Problémák:
+<UL> 
+<LI>Pattogó viselkedés</LI>
+<LI>Térrészben rekedés</LI>
+<LI>Ötszög felülnézetû energiaforrás megközelítése</LI>
+<LI>Útban lévõ tárgy</LI>
+</UL>
+</LI>
+<LI>Falkövetés a fentiek leküzdésére: fix távolság egy faltól elõre
+kiválasztott oldalon a taktilis érzékelõkkel, forduláskor is</LI>
+<LI>Menekülõ modul: tolatás sok fal között</LI>
+</UL>
+</BODY>
+</HTML>

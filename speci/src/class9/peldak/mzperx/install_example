@@ -1,0 +1,8 @@
+echo -n "Installing example in Webots directory"
+rm -r $WEBOTS_HOME/controllers/ecal1.khepera/*
+cp -r USER/* $WEBOTS_HOME/controllers/ecal1.khepera
+echo " done."
+echo
+echo "To run example, type:"
+echo
+echo ">" $WEBOTS_HOME"/webots "

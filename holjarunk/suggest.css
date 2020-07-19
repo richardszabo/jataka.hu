@@ -1,0 +1,34 @@
+#parlament, #duna {
+    width: 100%;
+    height: 100%;
+}
+#suggest {
+    opacity: 0.9;
+    left: 30%;
+    right: 30%;
+}
+.input_panel {
+    top: 12%;
+}
+@media only screen and (max-width: 900px) {
+    #suggest {
+        left: 5%;
+        right: 5%;
+    }
+    .input_panel {
+        top: 5%;
+    }
+}
+#suggest_text {
+    margin-bottom: 1em;
+    text-align: justify;
+}
+#sample {
+    background-color: #bbaa99;
+}
+#suggest input[type="text"] {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+}

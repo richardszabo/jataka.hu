@@ -1,0 +1,274 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="ant-ropy.css">
+
+    <!--<link rel="stylesheet" type="text/css" href="ant-ropy.css">
+    <link rel="stylesheet" type="text/css" href="tab.css">-->
+    <title>Ant-ropy</title>
+<script src="bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/seedrandom/2.3.10/seedrandom.min.js" type="text/javascript"></script>
+<script src="particle.js" type="text/javascript"></script>
+<script src="ant-ropy.js" type="text/javascript"></script>
+<script src="antspace.js" type="text/javascript"></script>
+<script src="hive.js" type="text/javascript"></script>
+<script src="food.js" type="text/javascript"></script>
+<script src="ant.js" type="text/javascript"></script>
+<script src="pheromone.js" type="text/javascript"></script>
+<script src="canvasdata.js" type="text/javascript"></script>
+<script src="helper.js" type="text/javascript"></script>
+<script src="entropy.js" type="text/javascript"></script>
+<script src="Graph.js" type="text/javascript"></script>
+<script src="GraphHandler.js" type="text/javascript"></script>
+<script>
+var antropy = new Antropy();
+$( document ).ready(function() {
+antropy.setWindow(window);
+antropy.setButton(document.getElementById("toggle"));
+antropy.setCanvases("canvas","pheromone_canvas");
+antropy.setEntropyCanvases("entropy_canvas","plot_canvas");
+$("#toggle").click(function toggle(){
+    antropy.toggle();
+});
+$("#step").click(function step(){
+    antropy.step();
+});
+$("#reset").click(function reset(){
+    antropy.reset();
+});
+$("#reset").click();
+$("#last_modified").text(document.lastModified);
+});
+</script>
+  </head>
+  <body>
+    <h1>Playground for ants</h1>
+    <div class="container">
+        <div class="row row-content button-row">
+            <div class="col-xs-12 col-sm-6">
+                <a class="btn btn-success" id="toggle">Run</a>
+                <a class="btn btn-success" id="step">Step</a>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <a id="help" href="help.html" target="_blank">What is this?</a>
+            </div>
+        </div>
+        <div class="row row-content">
+            <div id="canvas_column" class="col-xs-12 col-sm-7">
+                <div id="ant_canvases">
+                    <canvas id="canvas" width="600" height="600"></canvas>
+                    <canvas id="pheromone_canvas" width="600" height="600"></canvas>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-5">
+                <ul class="nav nav-tabs">
+                    <li role="presentation" class="active">
+                        <a href="#configuration" aria-controls="configuration"
+                        role="tab" data-toggle="tab">Configuration</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#results" aria-controls="results"
+                        role="tab" data-toggle="tab">Results</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#selected_ant" aria-controls="selected_ant"
+                        role="tab" data-toggle="tab">Selected ant</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#entropy" aria-controls="entropy"
+                        role="tab" data-toggle="tab">Entropy</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active" id="configuration">
+                        <p>
+                            <div class="row row-content">
+                                <div class="col-xs-12 col-sm-4">
+                                    <label for="seed">Seed:</label>
+                                </div>
+                                <div class="col-xs-12 col-sm-8">
+                                    <input type="text" id="seed" name="seed" value="1"><br />
+                                </div>
+                            </div>
+                            <div class="row row-content">
+                                <div class="col-xs-12 col-sm-4">
+                                    <label for="foodsource">Food sources:</label>
+                                </div>
+                                <div class="col-xs-12 col-sm-8">
+                                    <input type="text" id="foodsource" name="foodsource" value="1"><br />
+                                </div>
+                            </div>
+                            <div class="row row-content">
+                                <div class="col-xs-12 col-sm-4">
+                                    <label for="foodnum">Food:</label>
+                                </div>
+                                <div class="col-xs-12 col-sm-8">
+                                    <input type="text" id="foodnum" name="foodnum" value="100"><br />
+                                </div>
+                            </div>
+                            <div class="row row-content">
+                                <div class="col-xs-12 col-sm-4">
+                                    <label for="antnum">Ants:</label>
+                                </div>
+                                <div class="col-xs-12 col-sm-8">
+                                    <input type="text" id="antnum" name="antnum" value="100">
+                                </div>
+                            </div>
+                            <div class="row row-content">
+                                <div class="col-xs-12 col-sm-4">
+                                    <img class="ant" src="ant.png" alt="ant" />
+                                </div>
+                                <div class="col-xs-12 col-sm-8">
+                                    <a class="btn btn-default" id="reset">Reset</a>
+                                </div>
+                            </div>
+                        </p>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="results">
+                        <p>
+                            <div class="row row-content">
+                                <div class="col-xs-12 col-sm-4">
+                                    <label for="stepnum">Step:</label>
+                                </div>
+                                <div class="col-xs-12 col-sm-8">
+                                    <input type="text" id="stepnum" value="0" disabled /><br />
+                                </div>
+                            </div>
+                            <div class="row row-content">
+                                <div class="col-xs-12 col-sm-4">
+                                    <label for="ant_food">Ants carrying:</label>
+                                </div>
+                                <div class="col-xs-12 col-sm-8">
+                                    <input type="text" id="ant_food" value="0" disabled /><br />
+                                </div>
+                            </div>
+                            <div class="row row-content">
+                                <div class="col-xs-12 col-sm-4">
+                                    <label for="ant_search">Ants searching:</label>
+                                </div>
+                                <div class="col-xs-12 col-sm-8">
+                                    <input type="text" id="ant_search" value="0" disabled /><br />
+                                </div>
+                            </div>
+                            <div class="row row-content">
+                                <div class="col-xs-12 col-sm-4">
+                                    <label for="food">Food collected:</label>
+                                </div>
+                                <div class="col-xs-12 col-sm-8">
+                                    <input type="text" id="food" value="0" disabled /><br />
+                                </div>
+                            </div>
+                            <div class="row row-content">
+                                <div class="col-xs-12 col-sm-4">
+                                    <label for="food_entropy">Food entropy:</label>
+                                </div>
+                                <div class="col-xs-12 col-sm-8">
+                                    <input type="text" id="food_entropy" value="0" disabled /><br />
+                                </div>
+                            </div>
+                            <div class="row row-content">
+                                <div class="col-xs-12 col-sm-4">
+                                    <label for="ant_entropy">Ant entropy:</label>
+                                </div>
+                                <div class="col-xs-12 col-sm-8">
+                                    <input type="text" id="ant_entropy" value="0" disabled /><br />
+                                </div>
+                            </div>
+                            <div class="row row-content">
+                                <div class="col-xs-12 col-sm-4">
+                                    <label for="speed">Step cycle:</label>
+                                </div>
+                                <div class="col-xs-12 col-sm-8">
+                                    <input type="text" id="speed" value="0" disabled /><br />
+                                </div>
+                            </div>
+                            <img class="ant" src="ant2.png" alt="ant" />
+                        </p>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="selected_ant">
+                        <p>
+                            <div class="row row-content">
+                                <div class="col-xs-12 col-sm-4">
+                                    <label for="ant_id">Id:</label>
+                                </div>
+                                <div class="col-xs-12 col-sm-8">
+                                    <input type="text" id="ant_id" value="0" disabled /><br />
+                                </div>
+                            </div>
+                            <div class="row row-content">
+                                <div class="col-xs-12 col-sm-4">
+                                    <label for="ant_x">Position (x/y):</label>
+                                </div>
+                                <div class="col-xs-12 col-sm-8">
+                                    <input type="text" id="ant_x" value="0" disabled /><input type="text" id="ant_y" value="0" disabled /><br />
+                                </div>
+                            </div>
+                            <div class="row row-content">
+                                <div class="col-xs-12 col-sm-4">
+                                    <label for="ant_heading">Heading:</label>
+                                </div>
+                                <div class="col-xs-12 col-sm-8">
+                                    <input type="text" id="ant_heading" value="0" disabled /><br />
+                                </div>
+                            </div>
+                            <div class="row row-content">
+                                <div class="col-xs-12 col-sm-4">
+                                    <label for="ant_mode">Mode:</label>
+                                </div>
+                                <div class="col-xs-12 col-sm-8">
+                                    <input type="text" id="ant_mode" value="0" disabled /><br />
+                                </div>
+                            </div>
+                            <img class="ant" src="ant.gif" alt="ant" />
+                            <!--<div>Food:<div id="food_pheromone">0</div></div>
+                            <div>Hive:<div id="hive_pheromone">0</div></div>-->
+                        </p>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="entropy">
+                        <p>
+                            <div id="entropy_canvases">
+                                <canvas id="plot_canvas" width="600" height="600"></canvas>
+                                <canvas id="entropy_canvas" width="600" height="600"></canvas>
+                            </div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row row-footer">
+                <div class="col-xs-6">
+                    <p>Copyright &copy; 2015, Richárd Szabó</p>
+                </div>
+                <div class="col-xs-6">
+                    Last modification: <span id="last_modified">abc</span>
+                </div>
+            </div>
+            <div class="row row-footer">
+                <div class="col-xs-12">
+                    <!-- BEGIN WebSTAT Activation Code -->
+                    <script type="text/javascript" language="JavaScript" src="http://hits.webstat.com/cgi-bin/wsv2.cgi?39877"></script>
+                    <noscript>
+                        <!--<a href="http://www.webstat.com">
+                        <img src="http://hits.webstat.com/scripts/wsb.php?ac=39877" border="0" alt="WebSTAT - Free Web Statistics" /></a>-->
+                    </noscript>
+                    <!-- END WebSTAT Activation Code -->
+                </div>
+            </div>
+    </footer>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,39 @@
+package rl;
+
+import java.util.Random;
+
+//pi
+public class DecisionFunction {
+    private State states[];
+    private Probability probs[][];
+    private Random random;
+
+    public DecisionFunction(State s[]) {
+	states = s;
+	random = new Random();
+	
+	Probability p0 = new Probability(0.0);
+	Probability p1 = new Probability(1.0);
+	probs = new Probability[s.length][];
+	for( int i=0; i < s.length; ++i ) {
+	    int alen = s[i].getActions().length;
+	    probs[i] = new Probability[alen];
+	    probs[i][0] = p1;     // sum of probs must be 1
+	    for( int j=1; j < alen; ++j ) {
+		probs[i][0] = p0;
+	    }
+	}
+    }
+
+    /**
+     * Returns the next action according to the decision function.
+     */
+    public int getNextAction(int actState) {
+	double bet = random.nextDouble();
+	double d;
+	int i;
+	for( d = probs[actState][0], i = 0 ; i < probs[actState].length && d < bet; 
+	     d += probs[actState][i], ++i);
+	return i;
+    }
+}

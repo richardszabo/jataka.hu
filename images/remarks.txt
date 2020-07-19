@@ -1,0 +1,18 @@
+Background creation
+-------------------
+
+Unfortunately, I do not remember well:
+- Script-fu/Decor/Old photo with default parameters,
+- Script-fu/Alchemy/Clothify,
+- and something to make he result lighter and yellower.
+
+Text on the background
+----------------------
+
+- Use the already created back.tif,
+- Use Charter font with 25 pixels,
+- Script-fu/Shadow/Drop-shadow,
+- Crop back to its original size,
+- Layers/Anchor layers,
+- Layers/Merge visible layers with clipped to image,
+- save with 100% quality.

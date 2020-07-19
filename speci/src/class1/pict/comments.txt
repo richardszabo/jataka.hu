@@ -1,0 +1,12 @@
+aiboul.jpg - Sony Aibo
+copter.jpg - Cargnegie Mellon University Autonom helikopter projekt
+littlerobot.jpg - Randall Beer autonom ugynokok kutatasi csoport, biologiai inspiracioju robotok
+tbug.jpg - R. B. robotjanak felepitese
+open20.jpg - Nomad robot meteoritot talalt az Antarktiszon 2000. februar 1. (CMU)
+Pio2side.jpg - Pioneer 2 robot (Real World Interface Inc.),  Pentium/Linux, 16 hangszenzor, bovitheto
+prim.jpg - Primordial Life 3.16
+robocup.jpg - Robotfoci 2000-es EB donto 
+ROckyIV_2.jpg - NASA Rocky robotja
+TRCover98.jpg - NASA robotok kepei
+ilab_logo.jpg - Maja Mataric interakcios labor
+llab_log.jpg - Maja Mataric motor kontrol labor

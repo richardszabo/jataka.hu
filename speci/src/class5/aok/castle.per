@@ -1,0 +1,369 @@
+; This script tries to make the computer player 
+; to build a castle as fast as possible
+
+; Constants
+; *******************************
+
+; Numbers
+(defconst NUM-TOTAL-POPULATION 20)
+(defconst NUM-VILLAGERS 19)
+(defconst NUM-FARMS 8)
+(defconst NUM-HOUSES 3)
+
+; Timeouts
+(defconst TIMEOUT-MILL 120)
+(defconst TIMEOUT-LUMBER-CAMP 90)
+(defconst TIMEOUT-FARMS 420)
+
+; Min distances
+(defconst MIN-DISTANCE-STONE 5)
+
+; Percentages
+(defconst PERCENT-FOOD-GATHERER 60)
+(defconst PERCENT-WOOD-GATHERER 40)
+(defconst PERCENT-WOOD-GATHERER-1 30)
+(defconst PERCENT-GOLD-GATHERER 10)
+
+; Goals
+(defconst GOAL-READY-FOR-CASTLE 1)
+(defconst GOAL-FEUDAL-AGE-RESEARCHING 2)
+(defconst GOAL-CASTLE-AGE-RESEARCHING 3)
+(defconst GOAL-PHASE 4)
+
+; Timers
+(defconst T-AGEUP 1)
+
+; Initialization
+; *******************************
+
+; Goals
+(defrule
+	(true)
+=>
+	(set-goal GOAL-READY-FOR-CASTLE 0)
+	(set-goal GOAL-FEUDAL-AGE-RESEARCHING 0)
+	(set-goal GOAL-CASTLE-AGE-RESEARCHING 0)
+	(set-goal GOAL-PHASE 0)
+	(disable-self)
+)
+
+; Strategic numbers
+(defrule
+	(true)
+=>
+	(set-strategic-number sn-number-explore-groups 1)
+	(set-strategic-number sn-minimum-explore-group-size 1)
+	(set-strategic-number sn-maximum-explore-group-size 1)
+	(set-strategic-number sn-number-defend-groups 0)
+	(set-strategic-number sn-number-attack-groups 0)
+	(set-strategic-number sn-percentage-explore-exterminators 0)
+	(set-strategic-number sn-retask-gather-amount 0)
+	(set-strategic-number sn-food-dropsite-distance 5)
+	(set-strategic-number sn-wood-dropsite-distance 5)
+	(set-strategic-number sn-maximum-food-drop-distance 7)
+	(set-strategic-number sn-maximum-wood-drop-distance 7)
+	(disable-self)
+)
+
+; Escrow amounts
+(defrule
+	(true)
+=>
+	(set-escrow-percentage food 0)
+	(set-escrow-percentage wood 0)
+	(set-escrow-percentage gold 0)
+	(set-escrow-percentage stone 0)
+	(disable-self)
+)
+
+; Training and Building
+; *******************************
+
+; Villager training
+(defrule
+	(current-age == dark-age)
+	(unit-type-count-total villager < NUM-VILLAGERS)
+	(can-train villager)
+=>
+	(chat-to-all "train villager")
+	(train villager)
+)
+
+; House building
+(defrule
+	(current-age == dark-age)
+	(housing-headroom < 5)
+	(building-type-count-total house < NUM-HOUSES)
+	(can-build house)
+=>
+	(chat-to-all "build house")
+	(build house)
+)
+
+; Farm building
+(defrule
+	(goal GOAL-CASTLE-AGE-RESEARCHING 0)
+	(goal GOAL-READY-FOR-CASTLE 0)
+	(building-type-count-total lumber-camp > 0)
+	(building-type-count-total mill > 0)
+	(idle-farm-count < 1)
+	(or
+		(sheep-and-forage-too-far)
+		(game-time > TIMEOUT-FARMS)
+	)
+	(building-type-count-total farm < NUM-FARMS)
+	(can-build farm)
+=>
+	(chat-to-all "build farm")
+	(build farm)
+)
+
+; Mill building
+; Build a mill when we find food
+(defrule
+	(building-type-count-total house > 0)
+	(building-type-count-total mill == 0)
+	(or
+		(resource-found food)
+		(game-time > TIMEOUT-MILL)
+	)
+	(can-build mill)
+=>
+	(chat-to-all "build mill")
+	(build mill)
+)
+
+; Lumber camp building
+(defrule
+	(game-time > TIMEOUT-LUMBER-CAMP)
+	(resource-found wood)
+	(building-type-count-total house > 0)
+	(building-type-count-total lumber-camp == 0)
+	(can-build lumber-camp)
+=>
+	(chat-to-all "build lumber-camp")
+	(build lumber-camp)
+)
+
+; Mining camp building (gold)
+(defrule
+	(goal GOAL-FEUDAL-AGE-RESEARCHING 1)
+	(resource-found gold)
+	(building-type-count-total mining-camp == 0)
+	(can-build mining-camp)
+=>
+	(chat-to-all "build mining-camp ; gold")
+	(build mining-camp)
+)
+
+; Mining camp building (stone)
+(defrule
+	(current-age >= feudal-age)
+	(goal GOAL-CASTLE-AGE-RESEARCHING 1)
+	(resource-found stone)
+	(building-type-count-total mining-camp == 1)
+	(dropsite-min-distance stone > MIN-DISTANCE-STONE)
+	(can-build mining-camp)
+=>
+	(chat-to-all "build mining-camp ; stone")
+	(build mining-camp)
+)
+
+; Blacksmith building
+(defrule
+	(current-age == feudal-age)
+	(building-type-count-total blacksmith == 0)
+	(can-build blacksmith)
+=>
+	(chat-to-all "build blacksmith")
+	(build blacksmith)
+)
+
+; Market building
+(defrule
+	(current-age == feudal-age)
+	(building-type-count-total market == 0)
+	(can-build market)
+=>
+	(chat-to-all "build market")
+	(build market)
+)
+
+; Castle building
+(defrule
+	(current-age == castle-age)
+	(building-type-count-total castle == 0)
+	(can-build-with-escrow castle)
+=>
+	(chat-to-all "set-goal GOAL-READY-FOR-CASTLE 1")
+	(set-goal GOAL-READY-FOR-CASTLE 1)
+	(release-escrow stone)
+	(chat-to-all "build castle")
+	(build castle)
+)
+
+; Phase Rules
+; *******************************
+
+; Phase 0 - initial dark age food gathering 
+(defrule
+	(goal GOAL-PHASE 0)
+=>
+	(set-strategic-number sn-percent-civilian-gatherers 65)
+	(set-strategic-number sn-percent-civilian-builders 35)
+	(set-strategic-number sn-percent-civilian-explorers 0)
+	(set-strategic-number sn-cap-civilian-gatherers NUM-TOTAL-POPULATION)
+	(set-strategic-number sn-cap-civilian-builders 1)
+	(set-strategic-number sn-cap-civilian-explorers 0)
+	(set-strategic-number sn-food-gatherer-percentage 100)
+	(set-strategic-number sn-wood-gatherer-percentage 0)
+	(set-strategic-number sn-gold-gatherer-percentage 0)
+	(set-strategic-number sn-stone-gatherer-percentage 0)
+)
+
+; Phase 1 - dark age food and wood gathering
+(defrule
+	(goal GOAL-PHASE 1)
+=>
+	(set-strategic-number sn-percent-civilian-gatherers 65)
+	(set-strategic-number sn-percent-civilian-builders 35)
+	(set-strategic-number sn-percent-civilian-explorers 0)
+	(set-strategic-number sn-cap-civilian-gatherers NUM-TOTAL-POPULATION)
+	(set-strategic-number sn-cap-civilian-builders 2)
+	(set-strategic-number sn-cap-civilian-explorers 0)
+	(set-strategic-number sn-food-gatherer-percentage PERCENT-FOOD-GATHERER)
+	(set-strategic-number sn-wood-gatherer-percentage PERCENT-WOOD-GATHERER)
+	(set-strategic-number sn-gold-gatherer-percentage 0)
+	(set-strategic-number sn-stone-gatherer-percentage 0)
+)
+
+; Phase 2 - dark and feudal age food, wood, and gold gathering
+(defrule
+	(goal GOAL-PHASE 2)
+=>
+	(set-strategic-number sn-percent-civilian-gatherers 65)
+	(set-strategic-number sn-percent-civilian-builders 35)
+	(set-strategic-number sn-percent-civilian-explorers 0)
+	(set-strategic-number sn-cap-civilian-gatherers NUM-TOTAL-POPULATION)
+	(set-strategic-number sn-cap-civilian-builders 2)
+	(set-strategic-number sn-cap-civilian-explorers 0)
+	(set-strategic-number sn-food-gatherer-percentage PERCENT-FOOD-GATHERER)
+	(set-strategic-number sn-wood-gatherer-percentage PERCENT-WOOD-GATHERER-1)
+	(set-strategic-number sn-gold-gatherer-percentage PERCENT-GOLD-GATHERER)
+	(set-strategic-number sn-stone-gatherer-percentage 0)
+)
+
+; Phase 3 - stone gathering
+(defrule
+	(goal GOAL-PHASE 3)
+=>
+	(set-strategic-number sn-percent-civilian-gatherers 65)
+	(set-strategic-number sn-percent-civilian-builders 35)
+	(set-strategic-number sn-percent-civilian-explorers 0)
+	(set-strategic-number sn-cap-civilian-gatherers NUM-TOTAL-POPULATION)
+	(set-strategic-number sn-cap-civilian-builders 2)
+	(set-strategic-number sn-cap-civilian-explorers 0)
+	(set-strategic-number sn-food-gatherer-percentage 0)
+	(set-strategic-number sn-wood-gatherer-percentage 0)
+	(set-strategic-number sn-gold-gatherer-percentage 0)
+	(set-strategic-number sn-stone-gatherer-percentage 100)
+)
+
+; Phase 4 - castle building
+(defrule
+	(goal GOAL-PHASE 4)
+=>
+	(set-strategic-number sn-percent-civilian-gatherers 5)
+	(set-strategic-number sn-percent-civilian-builders 95)
+	(set-strategic-number sn-percent-civilian-explorers 0)
+	(set-strategic-number sn-cap-civilian-gatherers 0)
+	(set-strategic-number sn-cap-civilian-builders NUM-TOTAL-POPULATION)
+	(set-strategic-number sn-cap-civilian-explorers 0)
+	(set-strategic-number sn-food-gatherer-percentage 100)
+	(set-strategic-number sn-wood-gatherer-percentage 0)
+	(set-strategic-number sn-gold-gatherer-percentage 0)
+	(set-strategic-number sn-stone-gatherer-percentage 0)
+)
+
+; Switching through phases
+; *******************************
+
+; 0 -> 1
+(defrule
+	(goal GOAL-PHASE 0)
+	(unit-type-count villager >= 8)
+	(wood-amount < 80)
+=>
+	(chat-to-all "set-goal GOAL-PHASE 1")
+	(set-goal GOAL-PHASE 1)	
+)
+
+; 1 -> 2
+(defrule
+	(goal GOAL-PHASE 1)
+	(building-type-count-total mining-camp > 0)
+	(gold-amount < 200)
+=>
+	(chat-to-all "set-goal GOAL-PHASE 2")
+	(set-goal GOAL-PHASE 2)	
+)
+
+; 2 -> 1 (do this if we have collected enough gold)
+(defrule
+	(goal GOAL-PHASE 2)
+	(gold-amount >= 200)
+=>
+	(chat-to-all "set-goal GOAL-PHASE 1")
+	(set-goal GOAL-PHASE 1)	
+)
+
+; 1, 2 -> 3
+(defrule
+	(or 
+		(goal GOAL-PHASE 1)
+		(goal GOAL-PHASE 2)
+	)
+	(goal GOAL-CASTLE-AGE-RESEARCHING 1)
+	(building-type-count-total mining-camp > 0)
+	(stone-amount < 650)
+=>
+	(chat-to-all "set-goal GOAL-PHASE 3")
+	(set-goal GOAL-PHASE 3)	
+)
+
+; 3 -> 4
+(defrule
+	(goal GOAL-PHASE 3)
+	(goal GOAL-READY-FOR-CASTLE 1)
+=>
+	(chat-to-all "set-goal GOAL-PHASE 4")
+	(set-goal GOAL-PHASE 4)	
+)
+
+; Age advancement
+; *******************************
+
+; Advance to feudal age
+(defrule
+	(can-research-with-escrow feudal-age)
+=>
+	(release-escrow food)
+	(chat-to-all "research feudal-age")
+	(research feudal-age)
+	(set-goal GOAL-FEUDAL-AGE-RESEARCHING 1)
+	(disable-timer T-AGEUP)
+	(enable-timer T-AGEUP 140)
+)
+
+; Advance to castle age
+(defrule
+	(can-research-with-escrow castle-age)
+=>
+	(release-escrow food)
+	(release-escrow gold)
+	(chat-to-all "research castle-age")
+	(research castle-age)
+	(set-goal GOAL-CASTLE-AGE-RESEARCHING 1)
+	(disable-timer T-AGEUP)
+	(enable-timer T-AGEUP 170)
+)

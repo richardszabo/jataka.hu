@@ -1,0 +1,16 @@
+package gridworld;
+
+import rl.*;
+
+public class GridWorld extends TaskSpecification {
+
+    public GridWorld(int size) {
+	super();
+	states = new GridState[size*size];
+	for(int i = 0; i < size*size; ++i ) {
+	    states[i] = new GridState(size,i/size,i%size);
+	}
+	states[2] = new SpecGridState(size,1/size,1%size,(GridState)states[1],40.0);
+	//states[28] = new SpecGridState(size,3/size,3%size,(GridState)states[48],20.0);
+    }
+}

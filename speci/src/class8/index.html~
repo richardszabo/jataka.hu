@@ -1,0 +1,421 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+                      "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+<h1>Mobil robotok szimulációja speci 8. óra</h1>
+
+<h2>A Khepera robot</h2>
+
+<h3>Az alapfelépítés</h3>
+
+<ul>
+<li>55 mm átmérõjû, 3 cm magas, kör alakú, kétkerekû szerkezet
+<li>két áramköri lap, néhány szenzor, két motor
+    <p><img src="pict/K.jpg" alt="K"></p>
+<li>bõvíthetõ újabb áramkörök, szenzorok és aktorok bevezetésével
+<li>gyakori tudományos szereplõ: egyszerû, kicsi, könnyen programozható
+<li>a felépítés részletei
+    <p><img src="pict/khepstruct.jpg" alt="khepstruct"></p>
+<li>bal: felülnézet, közép: oldalnézet, jobb: alulnézet
+<li>felsõ lap: MC68331 Motorola mikroprocesszort, 16 MHz, 32 bit.
+<li>alapmemória 512 KByte RAM és EPROM 
+<li>RS-232-es soros csatlakozás: nyomkövetés és irányítás, kódletöltés (2)
+<li>alsó lap: szenzorok, motorok, kerekek,  energiaforrás
+<li>4 NiCd akkumulátor, melyek újratölthetõek (6), 40 perc üzemidõ
+<li>két kereket irányító két váltóáramú motor elõre és hátra mûködik
+<li>elfordulásérzékelõ, melyek 600 impulzus per fordulatonként érzékelnek
+<li>kétfunkciós szenzorok: fényerõsség és tárgyak távolságának érzékelése (5)
+<li>8 darab, 6 a robot elülsõ felén, 2 hátrafele néz
+<li>egy infravörös jelkibocsátó és egy fogadó áll
+<li>eltérõ hatótávolság: fényt - 15 cm, tárgyak - 2-4 cm anyagfüggõ (tapintás)
+<li>energiaforrás kapcsolója: ON - akku, OFF - ki vagy soros
+    kapcsolaton keresztül (7)
+<li>három jumper (4)
+<table>
+<tr>
+<td>000 </td><td> akadálykikerülést végzõ Braitenberg-jármû demonstrációja </td>
+</tr>
+<tr>
+<td>001 </td><td> kommunikáció a soros csatlakozáson keresztül 9600 baudon </td>
+</tr>
+<tr>
+<td>010 </td><td> kommunikáció a soros csatlakozáson keresztül 19200 baudon </td>
+</tr>
+<tr>
+<td>011 </td><td> kommunikáció a soros csatlakozáson keresztül 38400 baudon </td>
+</tr>
+<tr>
+<td>100 </td><td> felhasználó által betöltött program futtatása </td>
+</tr>
+<tr>
+<td>101 </td><td> programletöltés 9600 baudon </td>
+</tr>
+<tr>
+<td>110 </td><td> programletöltés 38400 baudon </td>
+</tr>
+<tr>
+<td>111 </td><td> robot funkcionalitási tesztje </td>
+</tr>
+</table>
+<li>reset a jumperek új beállítására (3) és (8)
+</ul>
+
+<h3>Kiegészítések</h3>
+
+<ul>
+<li>további modulokkal bõvíthetõ
+    <p><img src="pict/khepmods.jpg" alt="khepmods"></p>
+<li>egyszerûbb kiegészítések (memóriabõvítés): bal oldali párhuzamos processzorbusz
+<li>összetettebb alkatrészek önálló processzorral: a jobb oldalon
+<li>kis helyi hálózat, központja az MC68331, a bõvítések a kiszolgálói
+<li>biológiából ismert osztott irányító rendszer megvalósítása
+<li>a robot tetejére csatlakoztatás, akár többet is egyszerre, megfelelõ sorrendben
+<li>64x1 pixel méretben, 36 fokban látó, 256 szürkefokozatos kamera
+    <p><img src="pict/K213.jpg" alt="K213"></p>
+<li>80x60-as kétdimenziós, színes képet nyújtó 60-60 fokos látószögben mûködõ kamera
+    <p><img src="pict/K6300.jpg" alt="K6300"></p>
+<li>240 fokban látó 150x1 pixeles panoráma kamera, 64 szürkefokozaton, cilinder tükörrel
+    <p><img src="pict/KPanoramic.jpg" alt="KPanoramic"></p>
+<li>új aktor: robotkar egy új áramköri lapból, egy emelõbõl és két párhuzamos ujjból áll
+    <p><img src="pict/KGripper.jpg" alt="KGripper"></p>
+</ul>
+
+<h3>A robot mûködése</h3>
+
+<ul>
+<li>részek összehangolása nem egyszerû feladat
+<li>a magasszintû központi program mellett minden egyes modulnak
+    önálló magasszintû vezérlése van
+<li>az elemi alkatrészek mûködését alacsonyszintû programkód végzi,
+    ami mintegy eltakarja az algoritmus és a programozó elõl az
+    összetett részleteket
+<li>függvényhívások hardvertõl távoli (C, Java) nyelven 
+<li>miként lehet felhasználni?
+<li>számítógépen elõállított és lefordított programkód letölthetõ a
+    robotba
+<li>a számítógépen futva a robottal folyamatosan kommunikáló program
+<li>folytonos analízis lehetõsége
+    <p><img src="pict/khepconf.jpg" alt="khepconf"></p>
+<li>léteznek más szimulációs környezetek is, mint az itt bemutatásra kerülõk
+</ul>
+
+<h2>A Khepera szimulátor</h2>
+
+<h3>A szimulátor felépítése</h3>
+<ul>
+<li>szabad forráskódú programozási környezet (O. Michel doktori
+    munkájának része)
+<li>C nyelven íródott, Unix operációs rendszeren mûködik, X11 grafikus
+    könyvtár
+<li>C vagy C++ nyelven programozható
+<li>bõvítések nincsenek benne
+<li>fordítás az eredeti részekkel együtt, közös makefile
+    <p><img src="pict/sim.jpg" alt="sim"></p>
+<li>kép bal oldalán az aktuális kísérleti környezet felülnézetben
+<li>a robot, tereptárgyak (fal, téglák, pálcák, lámpák)
+<li>alsó gombsor: környezet változtatása, töltés,  ADD, REMOVE, TURN,
+    +, -
+<li>SET ROBOT a robot elhelyezéséhez, SCAN és !
+<li>jobb oldal teteje: robottal kapcsolatos információk
+<li>motorok alatt nyomatékutasítások (-10,10), szenzorok: fényerõ (50-500),
+    távolság (0-1023)
+<li>három kis nyíl szerepe
+<li>sokoldalas szabad terület a felhasználónak
+<li>jobb oldal alsó sora: a robot manipulációjára
+<li>programozó által megírandó függvények meghívása
+<li>LOAD, SAVE: adatok elmentésére és visszatöltésére 
+<li>a NEW induláskor, a RESET gomb inicializáláskor 
+<li>STEP: a szimuláció egy lépése, szenzorok, felhasználói kód,
+    motorok
+<li>RUN: végtelen ciklusban STEP
+<li>COMMAND: parancsok adhatók át közvetlenül a robotnak
+
+<li>zaj a motorok és szenzorok értékeiben: robusztus kód szükséges
+<li>10 % távolság, 5 % irány, 10 % akadály, 5 % fény
+</ul>
+
+<h3>A szimulátor programozása</h3>
+
+<ul>
+<li>C vagy C++ nyelven megírt kódrészletekbõl meg az eredeti kódból 
+    áll elõ a végrehajtható fájl
+<li>módosításkor újrafordítás
+<li>elõre nem megírt felhasználói függvényeket elkészítése
+<li>hivatkozás a robot szenzoraira és motorjaira
+<li>a függvények gombokra rákötve:
+    <code>NewRobot</code>, <code>LoadRobot</code>, <code>SaveRobot</code>, 
+    <code>ResetRobot</code>, <code>UserCommand</code>,
+    <code>StepRobot</code>
+<li><code>FastStepRobot</code>: kirajzolás nincs, számításigényes
+    algoritmushoz
+<li><code>UserInit</code>, <code>UserClose</code>
+    a program indulásakor és befejezõdésekor
+<li>Braitenberg-jármû: szenzorok lekérdezése, küszöb fölött fordulás
+<pre>
+boolean StepRobot(struct Robot *robot)
+{
+  if ((robot->IRSensor[0].DistanceValue > COLLISION_TH) ||
+      (robot->IRSensor[1].DistanceValue > COLLISION_TH) ||
+      (robot->IRSensor[2].DistanceValue > COLLISION_TH)) {
+
+    robot->Motor[LEFT].Value  =  TURN_SPEED;
+    robot->Motor[RIGHT].Value = -TURN_SPEED;          
+
+  } else if ((robot->IRSensor[3].DistanceValue > COLLISION_TH) ||
+           (robot->IRSensor[4].DistanceValue > COLLISION_TH) ||
+           (robot->IRSensor[5].DistanceValue > COLLISION_TH)) {
+
+    robot->Motor[LEFT].Value  = -TURN_SPEED;
+    robot->Motor[RIGHT].Value =  TURN_SPEED;          
+
+  } else {
+
+    robot->Motor[LEFT].Value  = FORWARD_SPEED;
+    robot->Motor[RIGHT].Value = FORWARD_SPEED; 
+  }
+  return(TRUE);
+}
+</pre>
+<li>elemi falkövetés: fal oldalán szenzorokat kell figyelni, motorokat
+    eszerint beállítani
+<li>idõigényes finomhangolás
+<pre>
+boolean StepRobot(struct Robot *robot)
+{
+  double sense;
+
+  sense = ((double)robot->IRSensor[4].DistanceValue+
+	   (double)robot->IRSensor[5].DistanceValue)/2;
+  robot->Motor[LEFT].Value  = (int)(-0.01 * sense + 5.0);
+  robot->Motor[RIGHT].Value = (int)(0.02 * sense - 4.0);
+}
+</pre>
+<li>teljes falkövetés: moduláris program,
+    egyoldali falkövetés, fal felé fordulás, egyenes vonalú mozgás, 
+    koordináló modul együttmûkõdése
+<li><a href="wallfollow.html">A falkövetés</a></li>
+<li>összetettebb feladatokhoz nem elegendõ az elõre huzalozott
+    architektúra
+<ul>
+  <li>lámpa megközelítéséhez neuronháló evolúciós algoritmussal
+  <li>neurális háló leírása, populációt kezelõ függvények, robot
+    neuronhálójának az adott környezetre való alkalmazása és az összes
+    modul összhangját megvalósító eljárások
+  <li>az elsõ két modul független a feladattól és a Khepera környezettõl
+  <li>a robot leírásában konkretizálódik a feladat és a neurális háló
+    struktúrája
+  <li>paraméterek meghatározása a negyedik modulban az evolúció során 
+  <li>evolúciós algoritmus mûködése a COMMAND gomb lenyomásakor
+<pre>
+void UserCommand(struct Robot *r,char *text)
+{
+    for( int i = 0; i < Population::Number_of_iterations; ++i ) {  
+        light->switch_on();	    
+        for( int j = 0; j < Population::Population_size; ++j ) {
+             actual = population->element(j);   
+             actual->setRobot(r);
+             population->startFitness(j);	    	    	
+             for( int k = 0; 
+                  k < Population::Number_of_tests; ++k ) {
+                // robot elhelyezése
+                for( int l = 0; 
+                     l < Population::Number_of_teststeps; ++l ) {
+                    FastRunRobot(r);	    
+                }
+                population->calcFitness(j);
+             }
+        }
+        population->dropWorsts();
+        population->duplicateBests();
+        population->mutate();
+        light->switch_off();
+    }	    
+    population->showBest();    
+}
+</pre>
+  <li>hagyományos evolúciós eljárás: iterációkon keresztül az aktuális 
+    populáció összes egyede többször próbálkozhat a környezetben az
+    aktuális kontrollerjével megközelíteni a lámpát
+  <li>egyedek fitnesszének kiszámításával a populáció generációnként
+    változik, míg a legjobb egyed elõ nem áll
+</ul>
+<ul>
+  <li>tanuló neurális háló
+  <li>tanulás több lépésbõl áll: több ezer jól megválasztott példa ->
+      offline
+  <li>adatgyûjtés
+  <li>szimulátor-független elõfeldolgozás, kiemelés, sorbarendezés
+  <li>példák a mesterséges neurális hálózatban (pl. Backpropagáció)
+  <li>háló tesztelése a robotba helyezve
+</ul>
+
+</ul>
+
+<h2>A Webots szimulátor</h2>
+<ul>
+<li>Cyberbotics cég, a Khepera Szimulátor folytatása (O. Michel)
+<li>Unix mellett Windowsokon is fut
+<li>bõvebb lehetõségek
+<li>a környezet háromdimenziós: robot síkban közlekedik, de a
+    tárgyaknak van magasságuk
+<li>textúrákkal 
+<li>fény-árnyék: nincs vetett árnyék és tükrözõdés, de van önárnyék
+<li>környezet sokfélesége: falak, lámpák, pálcák, robotok, labdák
+<li>tárgyak elhelyezése, formája és mérete tetszõleges, futás közben
+    is szerkeszthetõ
+<li>a világ leírása VRML97 nyelv egy részhalmazán, robottal kiegészítve
+    <p><img src="pict/homeworld.jpg" alt="homeworld"></p>
+<li>kiegészítések a szimulátorban
+<li>a fekete-fehér, a színes és a panoráma kamera, valamint a fogókar
+<li>háromdimenziós térben háromdimenziós érzékelés alakul ki
+<li>önálló ablak a robot paramétereinek
+<li>kamerák képe, fogókar állása ebben az ablakban
+    <p><img src="pict/vision.jpg" alt="vision"></p>
+<li>nézet változtatása az ablak keretein látható görgõkkel
+<li>felügyelõ program: robotok egymás közötti kommunikációja, adatgyûjtés
+    a környezetrõl és a robot mozgásáról, megjelenítés
+<li>például a robot aktuális energiája
+<li>Alice robot, 3.0 verziótól tetszõleges robot építése 
+</ul>
+
+<h3>Egyszerû Webots alkalmazások</h3>
+
+<ul>
+<li>simple.wbt
+  <ul>
+  <li>alapértelmezés
+  <li>falakkal körülvett környezetben Braitenberg-jármû 
+      akadálykikerülõ mozgása
+  <li><a href="peldak/braiten.c">a kód</a>
+  </ul>
+
+<li>five.wbt
+  <ul>
+  <li>öt robot Braitenberg mozgást végez egy labirintusban 
+  <li>ROBOT VIEW kiválasztása, nézõpont csere
+      <p><img src="pict/five.jpg" alt="five"></p>
+  </ul>
+
+<li>phototaxy.wbt
+  <ul>
+  <li>szoba közepén egy pálca tetején elhelyezett lámpa követése,
+      akadálykikerüléssel
+  <li>mozgó lámpát megpróbálja követni
+  <li>fényerõsség méréséhez <code>khepera_get_light</code> 
+      <p><img src="pict/phototaxy.jpg" alt="phototaxy"></p>
+  <li><a href="peldak/phototaxy.c">a kód</a>
+  </ul>
+
+<li>jumper.wbt
+  <ul>
+  <li>a robot mozdulatlan
+  <li>jumperek átállítása - LED-ek világítanak  
+  <li>nem teljesen valósághû  
+  <li><code>khepera_get_jumper</code>, <code>khepera_set_led</code> 
+    <p><img src="pict/jumper.jpg" alt="jumper"></p>
+  <li><a href="peldak/jumper.c">a kód</a>
+  </ul>
+
+<li>finder.wbt
+
+  <ul>
+  <li>pálca megközelítése, panoráma kamerával
+  <li><code>panoramic_get_raw</code> a sötét oszlop sötét képének
+  irányába elmozduláshoz
+  <li>szûrt adathalmaz: <code>panoramic_get_lowpass1</code>, 
+      <code>panoramic_get_lowpass2</code>, 
+      <code>panoramic_get_highpass</code>,
+      <code>panoramic_get_odd</code> 
+    <p><img src="pict/finder.jpg" alt="finder"></p>
+  <li><a href="peldak/finder.c">a kód</a>
+  </ul>
+
+<li>can.wbt
+
+  <ul>
+  <li>két Khepera robot fogókarral fölszerelkezve 
+  <li>pálcákat emelgetése  
+  <li>két elülsõ távolságszenzor értékei alapján
+  <li>kar- és ujjmozgatás, új pálca keresése
+  <li><code>grip_set_arm</code>, <code>grip_set_grip</code> 
+    <p><img src="pict/can.jpg" alt="can"></p>
+  <li><a href="peldak/can.c">a kód</a>
+  </ul>
+
+<li>soccer.wbt
+
+  <ul>
+  <li>foci két robot között
+  <li>színes kamera képfeldolgozása, a labda irányába haladás,
+  <li>felügyelõprogram az eredményhez
+    <p><img src="pict/attacker.jpg" alt="attacker"></p>
+  </ul>
+
+<li>buffer.wbt
+
+  <ul>
+  <li>a felügyelõ és a robot között információcsere
+  <li><code>khepera_send_serial</code> sztring küldése
+  <li><code>khepera_receive_serial</code> utasítás fogadása sztringként
+    <p><img src="pict/buffer.jpg" alt="buffer"></p>
+  <li><a href="peldak/buffer.c">a kód</a>
+  </ul>
+
+<li>town.wbt
+
+  <ul>
+  <li>gazdag környezet
+  <li>város: épületek, utcák, folyók, parkok és fák
+  <li>navigáció
+    <p><img src="pict/town.jpg" alt="town"></p>
+  </ul>
+
+<li>house.wbt
+
+  <ul>
+  <li>gazdag környezet
+  <li>lakás: szobák, ajtók, folyosók
+  <li>VRML97 szerkesztõ
+    <p><img src="pict/house.jpg" alt="house"></p>
+  </ul>
+
+<li>chase.wbt
+
+  <ul>
+  <li>ragadozó-préda típusú kísérlet
+  <li>szürkefokozatos kamerával rendelkezõ robot utoléri a
+      panoráma kamerásat 
+  <li>evolúciós algoritmussal létrehozott neurális háló
+    <p><img src="pict/chase.jpg" alt="chase"></p>
+  <li><a href="peldak/predator.c">a ragadozó kódja</a>
+  <li><a href="peldak/prey.c">a préda kódja</a>
+  </ul>
+
+<li>stick pulling.wbt
+
+  <ul>
+  <li>öt robot együttmûködése
+  <li>lyukakba elhelyezett pálcák fölemelése
+  <li>a pálcák túl hosszúak ahhoz, hogy egy robot kiemelhesse õket
+    <p><img src="pict/stick_pulling.jpg" alt="stick_pulling"></p>
+  <li><a href="peldak/sticks_pulling.c">a kód</a>
+  </ul>
+
+<li>alice.wbt
+
+  <ul>
+  <li>Alice mûködése felügyelõvel  
+  <li>három robot mozgatása a labirintusban
+    <p><img src="pict/alice.jpg" alt="alice"></p>
+  <li><a href="peldak/alice.c">a kód</a>
+  </ul>
+</ul>
+
+</body>
+</html>
+
+

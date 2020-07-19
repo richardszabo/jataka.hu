@@ -1,0 +1,388 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+                      "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+<h1>Mobil robotok szimulációja speci 5. óra</h1>
+
+<h2>Többrétegû hálók használata</h2>
+<ul>
+  <li>általános függvényapproximáció szükséges</li>
+  <li>biológiai megoldások</li>
+  <li>egyenlet kontra egyenletrendszer</li>
+  <li>Perceptron és Adaline elõnyeinek egyesítése: nem lináris kimenet,
+    továbbfejleszthetõ tanulási szabály</li>
+  <li>módosított neuron
+    <p><img src="pict/k14.jpg" alt="k14"></p>
+    <p></p>
+    <p><img src="pict/sigmoid.png" alt="sigmoid"></p>
+    <p></p>
+    <p><img src="pict/k15.jpg" alt="k15"></p>
+  </li>
+  <li>könnyen deriválható, folytonos, összehúzó függvény</li>
+  <li>paraméterezés, hõmérséklet</li>
+  <li>tanh</li>
+</ul>
+
+<h2>A Backpropagáció algoritmusa</h2>
+<ul>
+  <li>McClelland, Rumelhart a nyolcvanas években</li>
+  <li>gradiens módszer kiterjesztése</li>
+  <li>több kimenet, az új hibafüggvény
+    <p><img src="pict/k16.jpg" alt="k16"></p>
+  </li>
+  <li>komolyabb kihívás, keresés az összes neuron összes súlyának terében</li>
+  <li>összetett hibafüggvény, lokális minimumok</li>
+  <li>neuronok tetszõleges, körmentes hálózata</li>
+  <li>elõször háromrétegû struktúra, bemenet, rejtett réteg, kimenet
+    <p><img src="pict/network.png" alt="network"></p>
+  </li>
+  <li>teljes kapcsolat lineáris-szigmoid-szigmoid formában</li>
+  <li>BackPropagation(példák,eta,n_in,n_out,n_hidden) {
+    <p>Itt a példák a tanítást elõsegítõ vektorpárok, n_in az inputneuronok,
+    n_hidden a rejtett rétegbeli neuronok n_out a kimeneti neuronok száma, és
+    eta a tanulási sebesség.</p>
+    <ul>
+      <li>Elsõ lépés a körmentes háló létrehozása a megadott paramétereknek
+        megfelelõen.</li>
+      <li>Ezután a háló súlyainak inicializálása következik kis, véletlen
+        értékekkel (pl. -0.05 és 0.05 között).</li>
+      <li>Majd, amíg a háló hibája nem elég kicsi a következõket kell
+        végrehajtani:
+        <ul>
+          <li>Minden egyes példára végrehajtandó:
+            <ul>
+              <li>A bemenet propagálása a teljes hálón elõre a kimenet
+                létrejöttéig.</li>
+              <li>A hiba propagálása a teljes hálón visszafele a
+              kezdetekig.</li>
+              <li>Hiba kiszámítása a kimeneti neuronokra: 
+                <p><img src="pict/k17.jpg" alt="k17"></p>
+              </li>
+              <li>Hiba kiszámítása a rejtett réteg neuronjaira: 
+                <p><img src="pict/k18.jpg" alt="k18"></p>
+              </li>
+              <li>Hálósúlyok módosítása: 
+                <p><img src="pict/k19.jpg" alt="k19"></p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>indexek: k - kimenet, h - rejtett réteg, ji - i-bõl j-be</li>
+  <li>súlymódosítás magyarázata: delta - korábbi különbség vagy a
+    rákövetkezõ réteg hibájából a neuronra vonatkozó hiba</li>
+  <li>bizonyíthatóan gradiens módszert végez</li>
+  <li>kiterjesztés több rétegre 
+    <p><img src="pict/k20.jpg" alt="k20"></p>
+  </li>
+  <li>kiterjesztés tetszõleges körmentes hálóra 
+    <p><img src="pict/k21.jpg" alt="k21"></p>
+  </li>
+</ul>
+
+<h2>A tanulási szabály levezetése</h2>
+<ul>
+  <li>hibafüggvény minimalizálása súlyok szerint 
+    <p><img src="pict/k22.jpg" alt="k22"></p>
+  </li>
+  <li>hibafüggvény egy példára 
+    <p><img src="pict/k23.jpg" alt="k23"></p>
+  </li>
+  <li>jelölések 
+    <p><img src="pict/k24.jpg" alt="k24"></p>
+  </li>
+  <li>levezetés elsõ lépése, összetett függvény deriválási szabályának
+    alkalmazása 
+    <p><img src="pict/k25.jpg" alt="k25"></p>
+  </li>
+  <li>két eset megkülönböztetése</li>
+  <li>1. eset: kimeneti réteg neuronja</li>
+  <li>kimenet használata 
+    <p><img src="pict/k26.jpg" alt="k26"></p>
+  </li>
+  <li>a szorzat elsõ tényezõjének egyszerûsítése egy tagra 
+    <p><img src="pict/k27.jpg" alt="k27"></p>
+  </li>
+  <li>az egy tag levezetése 
+    <p><img src="pict/k28.jpg" alt="k28"></p>
+  </li>
+  <li>a második tényezõ egyszerûsítése 
+    <p><img src="pict/k29.jpg" alt="k29"></p>
+  </li>
+  <li>egyesítve 
+    <p><img src="pict/k30.jpg" alt="k30"></p>
+  </li>
+  <li>visszahelyettesítve 
+    <p><img src="pict/k31.jpg" alt="k31"></p>
+  </li>
+  <li>2.eset: rejtett réteg neuronja</li>
+  <li>levezetés az összetett függvény deriválási szabályával 
+    <p><img src="pict/k32.jpg" alt="k32"></p>
+  </li>
+  <li>a megjelenõ delták a visszafele haladás miatt már ismertek</li>
+  <li>összegezve 
+    <p><img src="pict/k33.jpg" alt="k33"></p>
+  </li>
+  <li>visszahelyettesítve 
+    <p><img src="pict/k34.jpg" alt="k34"></p>
+  </li>
+</ul>
+
+<h2>Konvergencia és lokális minimum</h2>
+<ul>
+  <li>a bonyolult felület miatt nem garantált a globális minimum
+  megtalálása</li>
+  <li>mégis általában jól teljesít</li>
+  <li>összes neuron összes súlya által alkotott tér</li>
+  <li>minimum az egyik súly szerint, másik szerint még elmozdulhat
+  => több súly, kevesebb elakadás</li>
+  <li>szigmoid függvény alakja, inicializálás</li>
+  <li>kis súlyok, kis összeg, nagyjából lineáris, lokális minimumok
+  nélkül</li>
+  <li>a lokális minimumok elkerülésére léteznek módszerek</li>
+  <li>momentum: elõnyös síkon és gödörben, 
+    <p><img src="pict/k35.jpg" alt="k35"></p>
+    <p>guruló labda</p>
+  </li>
+  <li>standard és inkrementális Widrow-Hoff</li>
+  <li>eta csökkentése
+    <p><img src="pict/oszcillacio.png" alt="oszcillacio"></p>
+  </li>
+  <li>egyszerre több neurális háló futtatása</li>
+  <li>több számítás, de közös döntés vagy a legjobb háló döntése</li>
+</ul>
+
+<h2>Reprezentációs lehetõségek</h2>
+<ul>
+  <li>lényeges függvényosztályok reprezentálhatók körmentes neurális
+  hálóval</li>
+  <li>logikai függvényekhez kétrétegû Perceptron már elég volt</li>
+  <li>most háromrétegû szigmoid neuronos hálózat</li>
+  <li>rejtett réteg az összes lehetséges input-kombinációt egy neuronnal
+  jelzi</li>
+  <li>kimeneti réteg VAGY kapcsolatot valósít meg a megfelelõ bemenetekre</li>
+  <li>exponenciálisan nõ a méret</li>
+  <li>korlátos, folytonos függvények három réteggel közelíthetõek</li>
+  <li>a kimeneti réteg lineáris</li>
+  <li>méret a közelítendõ függvénytõl függ</li>
+  <li>tetszõleges fügvény közelítése négy rétegen</li>
+  <li>minden függvény jól közelíthetõ 0 tartójú függvények lineáris
+    kombinációjával</li>
+  <li>a két rejtett réteg ezeket a függvényeket állítja elõ</li>
+</ul>
+
+<h2>Rejtett réteg kimenete</h2>
+<ul>
+  <li>a kimenet és a bemenet kötött, a rejtett rétegek szabadon
+  mozoghatnak</li>
+  <li>8 bemenet, 8 kimenet, 3 rejtett neuron -&gt; hatékony reprezentáció
+    kényszere</li>
+  <li>identitásfüggvény, 1 közeli érték igaz, 0 közeli érték hamis
+
+    <table>
+      <tbody>
+        <tr>
+          <td>10000000</td>
+          <td>-&gt;</td>
+          <td>.89</td>
+          <td>.04</td>
+          <td>.08</td>
+          <td>+--</td>
+          <td>-&gt;</td>
+          <td>10000000</td>
+        </tr>
+        <tr>
+          <td>01000000</td>
+          <td>-&gt;</td>
+          <td>.15</td>
+          <td>.99</td>
+          <td>.99</td>
+          <td>-++</td>
+          <td>-&gt;</td>
+          <td>01000000</td>
+        </tr>
+        <tr>
+          <td>00100000</td>
+          <td>-&gt;</td>
+          <td>.01</td>
+          <td>.97</td>
+          <td>.27</td>
+          <td>-+-</td>
+          <td>-&gt;</td>
+          <td>00100000</td>
+        </tr>
+        <tr>
+          <td>00010000</td>
+          <td>-&gt;</td>
+          <td>.99</td>
+          <td>.97</td>
+          <td>.71</td>
+          <td>+++</td>
+          <td>-&gt;</td>
+          <td>00010000</td>
+        </tr>
+        <tr>
+          <td>00001000</td>
+          <td>-&gt;</td>
+          <td>.03</td>
+          <td>.05</td>
+          <td>.02</td>
+          <td>---</td>
+          <td>-&gt;</td>
+          <td>00001000</td>
+        </tr>
+        <tr>
+          <td>00000100</td>
+          <td>-&gt;</td>
+          <td>.01</td>
+          <td>.11</td>
+          <td>.88</td>
+          <td>--+</td>
+          <td>-&gt;</td>
+          <td>00000100</td>
+        </tr>
+        <tr>
+          <td>00000010</td>
+          <td>-&gt;</td>
+          <td>.80</td>
+          <td>.01</td>
+          <td>.98</td>
+          <td>+-+</td>
+          <td>-&gt;</td>
+          <td>00000010</td>
+        </tr>
+        <tr>
+          <td>00000001</td>
+          <td>-&gt;</td>
+          <td>.60</td>
+          <td>.94</td>
+          <td>.01</td>
+          <td>++-</td>
+          <td>-&gt;</td>
+          <td>00000001</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>feladat szempontjából lényeges tulajdonságok megtalálásának
+  képessége</li>
+</ul>
+
+<h2>Általánosítás, specializálódás, megállás</h2>
+<ul>
+  <li>mikor kell az algoritmus futását befejezni?</li>
+  <li>kézenfekvõ egy alkalmas küszöbérték, de túl korán, túl késõn is
+  lehet</li>
+  <li>overfitting: túlzott specializáció, általánosítás képességének elvesztése</li>
+  <li>térkitöltõ luftballon, ami a legkisebb résekbe is belenyomakszik</li>
+  <li>a probléma tanulás során felismerhetõ, folyamatos javulás, 
+    de ellenõrzõ halmazon rosszabb
+    eredmények, mint korábban <br />
+  <img src="pict/errordin1.png" alt="errordin1"></li>
+  <li>az overfitting felismerése nem egyszerû 
+    <p><img src="pict/errordin2.png" alt="errordin2"></p>
+  </li>
+  <li>a tanulás kései fázisában jelentkezik, ahogy a döntési felületek
+    bonyolódnak</li>
+  <li>megoldások: súlyok fokozatos csökkentése, büntetõ tag a
+    hibafüggvényben (Occam borotvája),
+    ellenõrzõ halmaz folyamatos használata</li>
+</ul>
+
+<h2>Backpropagáció használata szimulációkban</h2>
+<ul>
+  <li>sokféle feladatra befogható</li>
+  <li>elemi Braitenberg jármûvek kiterjesztése</li>
+  <li>Wyeth akadálykikerülés és teniszlabdák keresése összetettebb
+  hálóval</li>
+  <li>rétegelt, körmentes neurális háló a kép elõfeldolgozására</li>
+  <li>a háló kimenete: akadály bal vagy jobb oldalon, teniszlabda bal vagy jobb
+    oldalon</li>
+  <li>ez a bemenete a korábban látott, tanított Braitenberg jármûnek 
+    <p><img src="pict/corgivis.jpg" alt="corgivis"></p>
+  </li>
+  <li>kamera képe: 64x64, hisztogram-kiegyenlítés</li>
+  <li>tanításra alkalmas képek kiválasztása: Consistent Mean Output, kötegbõl
+    egyes elemek használata, sorrend, szoba fedése</li>
+  <li>háromrétegû, tíz rejtett neuronnal</li>
+  <li>tanulási sebesség 0.05, momentum 0.95, súlyok -0.1 és 0.1 között, 0.125
+    lapító szorzó a szigmoidban</li>
+  <li>akadálykikerülés 5000 kép, begyûjtés egy óra, elõfeldolgozás kettõ,
+    tanulás 10.5,</li>
+  <li>3000 tanításra, 2000 ellenõrzésre</li>
+  <li>150 ciklus, legjobb teljesítmény 120-nál, 89%-os eredmény</li>
+  <li>teniszlabda keresése hasonlóan</li>
+  <li>megbízható mûködés itt és sok más területen is</li>
+</ul>
+
+<h2>BackPropagáció Javában</h2>
+<ul>
+  <li>az Interneten sokféle implementációt lehet találni</li>
+  <li>saját Javás megoldás, ami a felsorolt kiegészítések többségét
+    tartalmazza</li>
+  <li><a
+  href="BackPropagation/BackPropagation.java">BackPropagation.java</a></li>
+  <li><a href="BackPropagation/Neuron.java">Neuron.java</a></li>
+  <li><a href="BackPropagation/BPtest.java">1. példa</a> <a
+    href="BackPropagation/bptest.txt">1. példa eredménye</a></li>
+  <li><a href="BackPropagation/BPtest2.java">2. példa</a> <a
+    href="BackPropagation/bptest2.txt">2. példa eredménye</a></li>
+  <li><a href="BackPropagation/BPtest5.java">3. példa</a> <a
+    href="BackPropagation/bptest5.txt">3. példa eredménye</a></li>
+</ul>
+
+<h3>Képfeldolgozás</h3>
+
+<table>
+<tr>
+<td><img src="BackPropagation/pics256/ll/1.jpg" alt=""></td>
+<td><img src="BackPropagation/pics256/ll/2.jpg" alt=""></td>
+</tr>
+<tr>
+<td><img src="BackPropagation/pics256/ll/3.jpg" alt=""></td>
+<td><img src="BackPropagation/pics256/ll/4.jpg" alt=""></td>
+</tr>
+<tr>
+<td><img src="BackPropagation/pics256/ll/5.jpg" alt=""></td>
+<td><img src="BackPropagation/pics256/ll/6.jpg" alt=""></td>
+</tr>
+<tr>
+<td><img src="BackPropagation/pics256/ll/7.jpg" alt=""></td>
+<td><img src="BackPropagation/pics256/ll/8.jpg" alt=""></td>
+</tr>
+<tr>
+<td><img src="BackPropagation/pics256/ll/9.jpg" alt=""></td>
+<td><img src="BackPropagation/pics256/ll/10.jpg" alt=""></td>
+</tr>
+</table>
+<ul>
+</ul>
+
+<ul>
+<li>256x256 méretû képek, jellemzõen egyik sarokban sötét folt</li>
+<li>a feladat a sarok megtanulása és megadása</li>
+  <li><a href="BackPropagation/corner_learning/CornerLearning.java">CornerLearning.java</a></li>
+  <li><a href="BackPropagation/corner_learning/CornerTesting.java">CornerTesting.java</a></li>
+  <li><a href="BackPropagation/corner_learning/result256.txt">100 példa,
+  6 perc tanulás után a hiba 10 a -5-en</a></li>
+  <li><a href="BackPropagation/corner_learning/corner_learning256.bps">a hálózat</a></li>
+<li>eredmények: <br />
+<code>
+output - ul:-0.9999654247133428, ur:-0.9993022974027022,ll:0.9998592802048032,lr:-0.9679824598074586
+</code><br />
+<code>
+output - ul:-0.9999486108550013, ur:-0.9997663629641741,ll:-0.999956824657347,lr:0.9999982890882304
+</code></li>
+<li>túl nagy háló, emiatt lassú a Java kód</li>
+<li>valódi képek feldolgozására, ennél ügyesebb megoldás kell</li>
+</ul>
+
+
+</body>
+</html>

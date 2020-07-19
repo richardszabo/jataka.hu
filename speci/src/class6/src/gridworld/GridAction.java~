@@ -1,0 +1,20 @@
+package gridworld;
+
+import rl.*;
+
+public class Action extends rl.Action {
+
+    public getType() {
+    }
+
+    public Probability a(State act,State next) {
+	if( act instanceof gridworld.State && next instanceof gridworld.State ) {
+	    if( act.getX()
+	} else {
+	    throw new ClassCastException();
+	}
+    }
+
+    public Reward r(State act,State next) {
+    }
+}

@@ -1,0 +1,138 @@
+/* SOMNet - Decompiled by JODE
+ * http://www.informatik.uni-oldenburg.de/~delwi/jode/jode.html
+ * Send comments or bug reports to jochen@gnu.org
+ */
+package SOM;
+
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.util.Vector;
+
+public class SOMNet
+{
+    private Unit[] net;
+    private int netsize;
+    private double learning_rate;
+    private double decay_rate;
+    private Block[] blocks;
+    private int blocksize;
+    private int neighbourhood;
+    public static final int MAXNUMBEROFBLOCKS = 3;
+    public static final int NEIGHBOURS0 = 0;
+    public static final int NEIGHBOURS4 = 4;
+    public static final int NEIGHBOURS8 = 8;
+    
+    public SOMNet(int i_1_1_, double d_2_2_, double d_4_3_, int i_6_4_, int i_7_5_)
+    throws BadInitializerException {
+	if (i_1_1_ <= 0)
+	    throw new BadInitializerException();
+	learning_rate = d_2_2_;
+	decay_rate = d_4_3_;
+	netsize = i_1_1_;
+	net = new Unit[i_1_1_];
+	for (int i_8_6_ = 0; i_8_6_ < i_1_1_; i_8_6_++)
+	    net[i_8_6_] = new Unit(i_6_4_);
+	blocksize = 0;
+	blocks = new Block[3];
+	for( int i = 0; i < 3; ++i ) {
+	    blocks[i] = new Block(i);
+	}
+	neighbourhood = i_7_5_;
+    }
+    
+    protected Vector getNeighbours(int i_1_8_) {
+	Vector vector_2_9_ = new Vector();
+	int i_3_10_ = (int) Math.sqrt((double) netsize);
+	if (neighbourhood != 0) {
+	    if (neighbourhood == 4) {
+		if (i_1_8_ >= i_3_10_)
+		    vector_2_9_.addElement(net[i_1_8_ - i_3_10_]);
+		if ((double) i_1_8_ / (double) i_3_10_ != (double) (i_1_8_ / i_3_10_))
+		    vector_2_9_.addElement(net[i_1_8_ - 1]);
+		if ((double) (i_1_8_ + 1) / (double) i_3_10_ != (double) ((i_1_8_ + 1) / i_3_10_) && i_1_8_ != netsize - 1)
+		    vector_2_9_.addElement(net[i_1_8_ + 1]);
+		if (netsize - i_3_10_ > i_1_8_)
+		    vector_2_9_.addElement(net[i_1_8_ + i_3_10_]);
+	    } else if (neighbourhood == 8) {
+		if (i_1_8_ >= i_3_10_) {
+		    vector_2_9_.addElement(net[i_1_8_ - i_3_10_]);
+		    if ((double) i_1_8_ / (double) i_3_10_ != (double) (i_1_8_ / i_3_10_))
+			vector_2_9_.addElement(net[i_1_8_ - i_3_10_ - 1]);
+		    if ((double) (i_1_8_ + 1) / (double) i_3_10_ != (double) ((i_1_8_ + 1) / i_3_10_))
+			vector_2_9_.addElement(net[i_1_8_ - i_3_10_ + 1]);
+		}
+		if ((double) i_1_8_ / (double) i_3_10_ != (double) (i_1_8_ / i_3_10_))
+		    vector_2_9_.addElement(net[i_1_8_ - 1]);
+		if ((double) (i_1_8_ + 1) / (double) i_3_10_ != (double) ((i_1_8_ + 1) / i_3_10_) && i_1_8_ != netsize - 1)
+		    vector_2_9_.addElement(net[i_1_8_ + 1]);
+		if (netsize - i_3_10_ > i_1_8_) {
+		    vector_2_9_.addElement(net[i_1_8_ + i_3_10_]);
+		    if ((double) i_1_8_ / (double) i_3_10_ != (double) (i_1_8_ / i_3_10_))
+			vector_2_9_.addElement(net[i_1_8_ + i_3_10_ - 1]);
+		    if ((double) (i_1_8_ + 1) / (double) i_3_10_ != (double) ((i_1_8_ + 1) / i_3_10_) && i_1_8_ + i_3_10_ < netsize - 1)
+			vector_2_9_.addElement(net[i_1_8_ + i_3_10_ + 1]);
+		}
+	    }
+	}
+	return vector_2_9_;
+    }
+    
+    public double iterateNet(Input input_1_12_)
+    throws TypeMismatchException {
+	double d_2_13_ = 0.0;
+	int i_4_14_ = 0;
+	try {
+	    d_2_13_ = net[0].distance(input_1_12_);
+	    i_4_14_ = 0;
+	    for (int i_5_15_ = 1; i_5_15_ < netsize; i_5_15_++) {
+		double d_6_16_ = net[i_5_15_].distance(input_1_12_);
+		if (d_6_16_ < d_2_13_) {
+		    d_2_13_ = d_6_16_;
+		    i_4_14_ = i_5_15_;
+		}
+	    }
+	} catch (TypeMismatchException typemismatchexception_17_) {
+	    System.out.println("Bad network configuration!");
+	}
+	Vector vector_5_18_ = getNeighbours(i_4_14_);
+	net[i_4_14_].learn(learning_rate, input_1_12_);
+	for (int i_6_19_ = 0; i_6_19_ < vector_5_18_.size(); i_6_19_++)
+	    ((Unit) vector_5_18_.elementAt(i_6_19_)).learn(learning_rate, input_1_12_);
+	learning_rate *= 1.0 - decay_rate;
+	return d_2_13_;
+    }
+    
+    public void drawNet(Graphics graphics_1_21_, Dimension dimension_2_22_) {
+	for (int i_3_23_ = 0; i_3_23_ < blocksize; i_3_23_++)
+	    blocks[i_3_23_].drawBlock(graphics_1_21_, dimension_2_22_);
+	for (int i_4_24_ = 0; i_4_24_ < netsize; i_4_24_++) {
+	    Vector vector_5_25_ = getNeighbours(i_4_24_);
+	    for (int i_6_26_ = 0; i_6_26_ < vector_5_25_.size(); i_6_26_++)
+		net[i_4_24_].drawLink(graphics_1_21_, dimension_2_22_, (Unit) vector_5_25_.elementAt(i_6_26_));
+	}
+	for (int i_5_27_ = 0; i_5_27_ < netsize; i_5_27_++)
+	    net[i_5_27_].drawUnit(graphics_1_21_, dimension_2_22_);
+    }
+    
+    public boolean validInput(Input input_1_29_) {
+	for (int i_2_30_ = 0; i_2_30_ < blocksize; i_2_30_++) {
+	    if (blocks[i_2_30_].isInBlock(input_1_29_))
+		return false;
+	}
+	return true;
+    }
+    
+    public void setBlock(int i_1_32_) {
+	blocks[i].isShown = true;
+    }
+    
+    public void deleteBlock(int i_1_32_) {
+	blocks[i].isShown = false;
+    }
+
+    public double getLearningRate() {
+	return learning_rate;
+    }
+}
+
+

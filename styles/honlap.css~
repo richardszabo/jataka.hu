@@ -1,0 +1,30 @@
+body {
+  background-color: #e9e1ce;
+  background-image: url("../images/background.jpg");
+}
+
+.own-photo {
+  text-align: center;
+}
+
+h1 {
+  text-align: center;
+}
+
+.address {
+    text-align: center;
+}
+
+.title {
+    text-align: center;
+    font-weight: bold;
+    font-style: italic;
+    padding-bottom: 1em;
+
+}
+
+table#projects {
+    width: 100%;
+    text-align: center;
+
+}

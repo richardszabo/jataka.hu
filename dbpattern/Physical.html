@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<link rel="Stylesheet" title="Default Stylesheet" media="Screen"
+  href="../default.css">
+<TITLE>Physical View Pattern</TITLE>
+</HEAD>
+<body>
+
+<H1>Physical View Pattern</H1>
+
+<h2>Környezet</h2>
+A Relational Database Access Layer használata, a logikai és a fizikai
+réteg szétválasztása.
+<h2>Probléma</h2>
+Milyen könnyen kezelhetõ interfész
+ kell az adatbázishoz?
+<h2>Befolyásoló tényezõk</h2>
+<ul>
+<li>Egyszerûség a hatékonyság ellenében
+Hatékonyan használható adatbázisstruktúra általában nem
+normálformájú, ez a fizikai réteg felépítését bonyolítja.
+<li>Flexibilitás
+Az adatbázisszerkezet és a logikai réteg függetlenedésével
+azt is el szeretnénk érni, hogy az adatbázis által nyújtott
+eszközöket jobban kihasználhassuk: statikus és dinamikus SQL,
+egyéb API-k. Ezekrõl magasabb szintû rétegeknek nem kell
+tudniuk. 
+</ul>
+<h2>Megoldás</h2>
+Minden táblát és nézetet egy <code>ConcretePhysicalView</code>-ba
+kell ágyazni. Az egységes felület kedvéért ezek a
+<code>ConcretePhysicalView</code>-k a <code>PhysicalView</code>-ból
+származzanak. Ezek az objektumok az adattagokat SQL utasítások 
+segítségével érik el.
+<h2>Példa</h2>
+<P><IMG SRC="db4.gif"><P>
+<P><IMG SRC="db5.gif"><P>
+Az <code>OrderPhysicalView</code> nézet módosíthatja az 
+<code>Order</code>-t és az <code>OrderItem</code>-et, de 
+az <code>Article</code> módosítására egy másik 
+<code>ConcretePhysicalView</code> szolgál.
+<h2>Következmények</h2>
+<ul>
+<li>Egyszerûség<BR>
+A minta elrejti az optimalizációt és az adatbázisprogramozást.
+Más feladatuk nem lévén könnyen implementálhatók. 
+A <code>QueryBroker</code> elhagyásával olyan mértékben 
+kapcsolódhat a <code>HierarchicalView</code> osztályokhoz,
+hogy esetleg azok is elláthatják e minta feladatát.
+<li>Flexibilitás<BR>
+Az adatbázikód beágyazása miatt ezen osztályok dönthetik el,
+hogy milyen adatbázi API-t használnak. Ez a különbözõ 
+módszerek hatékonyságának teszteléséhez hasznos, és esetleg
+futás közbeni APi cserét is lehetõvé tesz.
+<li>Hatékonyság<BR>
+Az optimalizálás lehetõsége növeli a hatékonyságot.
+<li>Tömeges használat problémája<BR>
+Generátor használatával az osztályok tömeges létrehozása
+megoldható.
+</ul>
+<h2>Implementáció</h2>
+<ul>
+<li>Mit kell becsomagolni?<br>
+Minden <code>ConcretePhysicalView</code> osztály 
+egy fizikai táblán végzendõ 
+<code>read/write/update/delete</code> SQL utasításokat 
+csomagol be. Már ezen a szinten össze lehet kapcsolni két
+táblát, ami mindig együtt kezelendõ. Kiindulásképp minden
+gyökérbeli táblához létrehozható egy osztály 
+(<code>Customer</code>, <code>Article</code>). Az összetett
+objektumokat szintén egy osztály reprezentálhatja 
+(<code>Order/OrderItem</code>).
+<li>Csak olvasható nézetek becsomagolása<br>
+Általában a nézetek írására nincs lehetõség. Mivel egy táblát
+több <code>ConcretePhysicalView</code> is láthat kiindulásnál
+érdemes táblánként egy osztálynak engedélyezni az írást.
+<li>Programozási eszközök<br>
+A <code>ConcretePhysicalView</code> osztályok általánosak, 
+generátorral, makróval, templáttal létrehozhatóak.
+<li>Tárolt eljárások és egyéb API-k használata<br>
+A szétválasztás miatt ezek az eszközök is bevethetõek.
+</ul>
+<h2>Variációk</h2>
+A minta környezetében minden elhagyható. Ez azonban csak 
+egyszerûbb alkalmazásnál igaz.
+</BODY>
+</HTML>

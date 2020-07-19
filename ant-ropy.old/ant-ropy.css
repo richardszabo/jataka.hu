@@ -1,0 +1,124 @@
+@import url("http://fonts.googleapis.com/css?family=Lato");
+body {
+    background-color: #44aa66;
+    background-image: url("green_nature.jpg");
+    font-family: Lato;
+    padding-bottom: 70px;
+}
+.button-row {
+    padding-bottom: 10px;
+}
+#ant_canvases, #entropy_canvases {
+    position: relative;
+}
+#ant_canvases canvas {
+    width: 100%;
+    height: auto;
+}
+#canvas {
+    position: absolute;
+}
+
+#entropy_canvases canvas {
+    width: 100%;
+    height: auto;
+}
+#plot_canvas {
+    position: absolute;
+}
+
+#canvas, #plot_canvas {
+    z-index: 2;
+}
+/*#entropy {
+    min-width: 310px;
+    min-height: 310px;
+}*/
+#pheromone_canvas, #entropy_canvas {
+    z-index: 1;
+}
+.nav-tabs{
+    background-color: #888888;
+    text-transform: uppercase;
+    font-size: 80%;
+}
+a {
+    color: black;
+}
+.tab-content{
+    background-color:#dddddd;
+    padding:5px;
+    //min-height: 500px;
+    //min-width: 500px;
+}
+h1 {
+    text-align: center;
+    color: #333333;
+    font-size: 40px;
+    text-transform: uppercase;
+}
+/*#page {
+    width: 1280px;
+    margin-left: auto ;
+    margin-right: auto ;
+}
+#ant_canvases {
+    margin-left: 1em;
+    margin-top: 1em;
+}
+h1 {
+    text-align: center;
+    color: #333333;
+}
+a {
+    background-color: grey;
+    color: white;
+    width: 2.5em;
+    padding: 0.2em 1.5em;
+    margin: 0.5em;
+}
+a:hover {
+    color: blue;
+}
+a#reset {
+    display: block;
+}
+a#help, a#paper {
+    border-style: none;
+    background-color: transparent;
+    color: black;
+    text-decoration: none;
+}
+a#help:hover, a#paper:hover {
+    color: blue;
+}
+a#help {
+    margin-left: 25px;
+}
+a:active {
+    background-color: black;
+}
+.tabs input {
+}
+p {
+    margin-top: 2em;
+}
+
+img.ant {
+    float: right;
+}
+
+#footer {
+     margin-left: auto ;
+    margin-right: auto ;
+  width: 1000px;
+  bottom: 0px;
+}
+
+br {
+clear: both;
+}
+
+.right {
+    float: right;
+}*/

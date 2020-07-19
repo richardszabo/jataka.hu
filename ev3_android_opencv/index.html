@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../bower_components/jquery.gifplayer/dist/gifplayer.css">    
+    <link rel="stylesheet" type="text/css" href="own.css">
+    
+    <title>Lego EV3 + Android + OpenCV</title>
+</head>
+
+  <body data-spy="scroll" data-target="#myScrollspy" data-offset="90">      
+    <div class="container">
+        <div class="navbar navbar-default navbar-fixed-top">
+            <div class="navbar-header">
+                <h1>
+                    <a href="#top"><img src="images/TRACK3R.png" alt="tracker lego"> Lego EV3  + 
+                        <img src="images/android-logo-white.png" alt="android logo"> Android + 
+                        <img src="images/opencv_logo.png" alt="opencv logo"> OpenCV = 
+                        <img src="images/EV3DroidCVLogo.png" alt="ev3droidcv logo"> EV3DroidCV</a>
+                </h1>
+            </div>
+        </div>
+        <div class="row row-content">
+            <nav class="col-sm-2 hidden-xs" id="myScrollspy">
+                <ul class="nav nav-pills nav-stacked" data-spy="affix">
+                    <li role="presentation"><a href="#task">The task</a></li>
+                    <li role="presentation"><a href="#robot">The robot hardware</a></li>
+                    <li role="presentation"><a href="#Lejos">The robot OS</a></li>
+                    <li role="presentation"><a href="#robotsoftware">The robot software</a></li>
+                    <li role="presentation"><a href="#Android">Android</a></li>
+                    <li role="presentation"><a href="#OpenCV">OpenCV</a></li>
+                    <li role="presentation"><a href="#altogether">Putting it altogether</a></li>
+                </ul>
+            </nav>
+            <div class="col-sm-10 col-xs-12">
+            
+            <div id="task" class="row row-content mydata">
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                           <h3 class="panel-title"><a>The task</a></h3></div>
+                        <div class="panel-body">
+                            <p>A few years ago I have connected a <a href="https://en.wikipedia.org/wiki/Lego_Mindstorms_NXT">Lego NXT</a> 
+                                robot with an Android mobile and used the phone to navigate the wheeled robot in the direction of light.
+                            For light detection I used <a href="http://opencv.org">OpenCV</a> functions.
+                            The original project is called MINDdroidCV and can be found <a href="../nxt_android_opencv/index.html">here</a>
+                            </p>
+                            <div class="iframe_container">
+                                <iframe class="video" src="https://www.youtube.com/embed/IfPAgxtQtfI?ecver=1" allowfullscreen></iframe>
+                            </div>                            
+                            <p>
+                            Since that time all components have changed significantly so I decided to renew the project:
+                            </p>
+                            <ul>
+                                <li>A new version of the programmable robot is out: 
+                                    <a href="https://en.wikipedia.org/wiki/Lego_Mindstorms_EV3">LEGO EV3</a>. 
+                                The programming of EV3 is different from that of NXT so I had to find another communication method.</li>
+                                <li>The supported environment for Android development is Android Studio. I changed to this IDE from Eclipse. 
+                                    The Android OS has also <a href="https://en.wikipedia.org/wiki/Android_version_history">changed significantly</a>.</li>
+                                <li>OpenCV has a new main version, 3, with better support for Android development. 
+                                    This time instead of C++ native functions I tried to use Java wrappers.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="robot" class="row row-content mydata">                                    
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                           <h3 class="panel-title"><img src="images/TRACK3R.png" alt="tracker"> <a> The robot hardware</a></h3></div>
+                        <div class="panel-body">
+                            <p><a href="https://www.lego.com/en-us/mindstorms/about-ev3">Lego EV3</a> is the next generation of the Lego Mindstorms' intelligent brick series. It differs from NXT in a lot of aspects. 
+                                A good comparison can be found <a href="http://robotsquare.com/2013/07/16/ev3-nxt-compatibility/">here</a>.
+                                The set contains similar plastic components, motors, and sensors but the Linux-based brick is faster, 
+                                has an SD card slot, and a USB connector.                                
+                             </p>
+                            <figure>
+                                <img class="img-responsive" src="images/InTheBox_Bricks_Landscape.jpg" alt="InTheBox_Bricks_Landscape">
+                            </figure>                             
+                             <p>The robot is able to boot from an appropriate card in the SD card slot. 
+                                 It gives the opportunity to temporarily change the OS of the brick without touching the original software components.</p>
+                             <p>The USB connector may host a Wi-Fi dongle.</p>
+                             <h4>Let's build</h4>
+                             <p>Formerly I used Tribot, one of the sample robots from the NXT set. I slightly modified it to contain a slot for the mobile phone. 
+                                I follow the same route here: as our demo is mainly focusing on software the exact structure of the robot is still not important.
+                                We have built the <a href="https://www.lego.com/en-us/mindstorms/build-a-robot/track3r">TRACK3R robot</a> (my son did it to be accurate) 
+                                and I changed the tool in the front to a simple phone holder.
+                             </p>
+                            <div class="row row-content">
+                                <div class="col-sm-4 col-xs-12">                             
+                                    <figure>
+                                        <img class="img-responsive" src="images/robot1.jpg" alt="robot1">
+                                    </figure>
+                                </div>
+                                <div class="col-sm-4 col-xs-12">                             
+                                    <figure>
+                                        <img class="img-responsive" src="images/robot2.jpg" alt="robot2">
+                                    </figure>
+                                </div>
+                                <div class="col-sm-4 col-xs-12">                             
+                                    <figure>
+                                        <img class="img-responsive" src="images/robot3.jpg" alt="robot3">
+                                    </figure>
+                                </div>
+                            </div>                             
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="Lejos" class="row row-content mydata">                                    
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                          <h2 class="panel-title"><img src="images/lejosLogo.jpg" alt="lejos logo"><a> The robot OS</a></h2></div>
+                        <div class="panel-body">
+                        <p>If someone wants to interact with EV3 then she needs to communicate with the robot via USB cable, Wi-Fi, or Bluetooth.
+                           EV3 has its own language of commands, these commands should be sent over the communication channel to the robot. 
+                           In case of NXT I used an Android application, <a href="https://github.com/NXT/LEGO-MINDSTORMS-MINDdroid">MINDdroid</a> 
+                           developed by LEGO to communicate. MINDdroid contains all those direct commands that are necessary to move my robot.</p>
+                        <p>The problem with MINDdroid is that it has no newer version so it does not support EV3. Furthermore 
+                           I have not found any suitable application for EV3 direct command handling for Android. 
+                           Anders from Denmark has done a good job with his <a href="http://www.monobrick.dk/">MonoBrick</a> and <a href="https://github.com/BrianPeek/legoev3">Brian Peek's work</a> 
+                           is also worth to mention LEGO MINDSTORMS EV3 API
+                           but both are written in C# and I prefer a Java solution. 
+                           Although it is possible to develop a module in Java for 
+                           <a href="http://ev3directcommands.blogspot.hu/2016/01/no-title-specified-page-table-border_94.html">EV3 direct commands</a> 
+                           using <a href="https://mi-od-live-s.legocdn.com/r/www/r/mindstorms/-/media/franchises/mindstorms%202014/downloads/firmware%20and%20software/advanced/lego%20mindstorms%20ev3%20communication%20developer%20kit.pdf?l.r2=1239680513">the specification</a> given by LEGO
+                           but I did not want to build from scratch. </p>    
+                        <h4>LeJOS</h4>
+                        <p>So I decided to use <a href="http://www.lejos.org/">LeJOS</a>, Java for LEGO Mindstorms. This is a mature and continuously developed firmware 
+                           for Mindstorms, even for EV3. The drawback of the approach is that I had to replace the OS of the robot to the tiny Java Virtual Machine of LeJOS.
+                           Since I did not want to make irreversible changes on my brick it was fortunate that LeJOS is bootable from and SD card and after removing 
+                           the card and rebooting the robot behaves as before with its original software.</p>
+                        <p>I have installed LeJOS to a 2GB SD card using <a href="https://sourceforge.net/p/lejos/wiki/Installing%20leJOS/">this tutorial</a> under Ubuntu 16.04
+                            using </p>
+                            <ul>
+                                <li>the <a href="https://sourceforge.net/projects/ev3.lejos.p/files/">latest LeJOS</a> (0.9.1-beta), and</li>
+                                <li><a href="http://www.oracle.com/technetwork/java/embedded/downloads/javase/javaseemeddedev3-1982511.html">Java for LEGO® Mindstorms® EV3</a> (version 7 Update 60).</li>
+                            </ul>
+                        <p>and the following commands (assuming that the SD card is /dev/mmcblk0 and mounted as /media/rics/SD500):</p>
+                        <pre>
+&lt;LeJOS unzip folder&gt;$ sudo dd if=sd500.img of=/dev/mmcblk0
+&lt;LeJOS unzip folder&gt;$ sudo unzip lejosimage.zip -d /media/rics/SD500
+&lt;LeJOS unzip folder&gt;$ sudo cp ~/lego_ev3/downloads/ejre-7u60-fcs-b19-linux-arm-sflt-headless-07_may_2014.tar.gz /media/rics/SD500
+                        </pre>
+                        <p>After the above configuration and booting the SD card in EV3 LeJOS started to configure itself and it froze. 
+                            I have tried several different ways without success. The only thing that helped is to change the SD card to another one (SanDisk 8GB).
+                            The above process worked for the first time with the new card. The original 2GB card is still working correctly 
+                            in another device so it was not a hardware but the sensibility of LeJOS instead.
+                        </p>
+                        <figure>
+                            <img class="img-responsive" src="images/lejosMenu.png" alt="lejos menu">
+                        </figure>                                                                             
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
+            <div id="robotsoftware" class="row row-content mydata">                                    
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                           <h2 class="panel-title"><img src="images/brick.jpg" alt="the robot display"><a> The robot software</a></h2></div>
+                        <div class="panel-body">
+                            <p>Given that the LeJOS has been installed on EV3 I needed a program running on the robot that receives 
+                                movement commands from an Android phone and directs the robot accordingly. 
+                                First of all the robot needs to communicate over a network with its peer.
+                                There are several ways to this with LeJOS as it is described 
+                                <a href="https://lejosnews.wordpress.com/2015/02/11/new-communication-modes-allow-your-ev3s-to-talk/">here</a>.
+                                This network could be created using direct cable (with the desktop), Wi-Fi, Bluetooth.
+                                For Wi-Fi we need a dongle but Bluetooth is a built-in capability.
+                                The most promising way is Bluetooth in this project because I did not want an extra cable or component. 
+                            </p>
+                            <p>
+                                Although the main goal is phone-robot communication but during development it is good to have a functional desktop-robot connection. 
+                                The first two methods worked with the desktop but I cannot make 
+                                <a href="http://bricks.stackexchange.com/q/8306/7957">Bluetooth work with Ubuntu 16.04</a> 
+                                because of - I guess - some Bluetooth version incompatibility.
+                                On the other hand both Wi-Fi and Bluetooth are working with Android.
+                            </p>
+                            <p>    
+                                For this program
+                                I have followed Peter Mitrano's approach from his 
+                                <a href="https://github.com/PeterMitrano/EV3-Grid-Navigation">EV3 grid navigation project</a>.
+                                The program communicates with the phone via a socket, the server is on the phone. 
+                                To connect the two devices they must be on the same network. The network could be served by the Wi-Fi router of the house 
+                                or the <a href="https://lejosnews.wordpress.com/2015/02/11/pan-configuration/">Bluetooth PAN</a> 
+                                created by LeJOS itself running on the brick. 
+                            </p>
+                            <p>After the socket communication has been established with the other party the robot receives <code>double</code> values 
+                                via the <code>DataInputStream</code> of the <code>Socket</code>. The values are in the [-0.5,0.5] interval. 
+                                <code>0</code> means that the robot needs to move straight while <code>-0.5</code> and <code>0.5</code> are 
+                                the biggest possible turn to the left and the right, respectively. 
+                                An extreme value (below -50) is sent when there is now blue patch found in the vision of the camera to make the robot stop.
+                            </p>
+                            <p>Interesting to note that left and right motor movements are synchronized otherwise the motors 
+                                start and stop in different phases that would result invalid direction selection. Motor synchronization is described 
+                                <a href="https://lejosnews.wordpress.com/2014/10/06/motor-synchronization-problems-part-2/">here</a> in detail.</p>
+                            <p>This is the relevant code the governs the movement of the robot:</p>                            
+                        <button class="btn btn-info btn-xs" data-clipboard-target="#RobotMoveCode">Copy</button>
+                        <div id="RobotMoveCode" class="codeblock">void run() throws IOException {
+    leftMotor.synchronizeWith(new RegulatedMotor[]{rightMotor});
+    boolean finish = false;
+    while (!finish) {
+        double x = in.readDouble();            
+        leftMotor.startSynchronization();
+        drawRow("dir: " + String.format("%6.2f", x), STATUS_ROW+1);
+        if( x &lt; - 50 ) {
+            leftMotor.stop(); 
+            rightMotor.stop(); 
+        } else {
+            leftMotor.setSpeed((int)(BASE_SPEED * (1 + 0.8 * x))); 
+            leftMotor.forward();
+            rightMotor.setSpeed((int)(BASE_SPEED * (1 - 0.8 * x)));
+            rightMotor.forward();
+        }
+        leftMotor.endSynchronization();
+        if( Button.readButtons() != 0 ) {
+            leftMotor.startSynchronization();
+            leftMotor.stop(); 
+            rightMotor.stop(); 
+            leftMotor.endSynchronization();
+            disconnect();
+            finish = true;
+        }
+    }
+}</div>                            
+                                
+                        <p>The complete program developed in Netbeans can be found <a href="https://github.com/richardszabo/EV3DroidCVClient">here</a>.</p>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>                
+                
+            <div id="Android" class="row row-content mydata">                                    
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                           <h2 class="panel-title"><img src="images/android-logo-white.png" alt="android logo"><a> Android</a></h2></div>
+                        <div class="panel-body">
+                            <p>The phone side of the application follows the way 
+                                <a href="https://github.com/PeterMitrano/EV3-Android-Controller/tree/master/src/com/example/romotecontroller">Mitrano</a> 
+                                connects to his LeJOS. 
+                            </p>
+                            <p>
+                                The program does not know anything about LeJOS. It only 
+                                opens the <code>ServerSocket</code> in a background thread waiting for the robot to connect and then sends 
+                                the <code>double</code> directing values based on the observed image.
+                            The current IP address of the phone is also displayed because this IP has to be set on the robot's side.
+                            </p>
+                            <p>
+                            It is good to know that for network communication the program must have 
+                            <a href="https://developer.android.com/reference/android/Manifest.permission.html#INTERNET">INTERNET</a> 
+                            permission and for image handling it must have
+                            <a href="https://developer.android.com/reference/android/Manifest.permission.html#CAMERA">CAMERA</a> 
+                            permission as well. 
+                            So far I did not implement the <a href="https://developer.android.com/guide/topics/permissions/requesting.html">new permission handling</a> 
+                            introduced with Android 6 because my phone is an older version.                            
+                            The complete program - including OpenCV components described below - can be downloaded from <a href="https://github.com/richardszabo/EV3DroidCV">here</a>.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>                
+
+            <div id="OpenCV" class="row row-content mydata">                                    
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                           <h2 class="panel-title"><img src="images/opencv_logo.png" alt="opencv logo" ><a> OpenCV</a></h2></div>
+                        <div class="panel-body">
+                            <p>Determining the direction to follow is based on the central point of a blue ball as recognized my the camera of the phone.
+                            For processing the image I used OpenCV.</p>                            
+                            <h4>OpenCV configuration</h4>
+                            <p>Installing OpenCV is a <a href="../opencv_samples/index.html#install">complex process</a> in general.
+                                In case of Android development with OpenCV in Android Studio we need to follow a 
+                                <a href="http://stackoverflow.com/a/35135495/21047">different path</a> but it is still not simple. 
+                                The main steps are the following:
+                            </p>
+                            <ul>
+                                <li>Downloading <a href="https://sourceforge.net/projects/opencvlibrary/files/opencv-android/3.2.0/opencv-3.2.0-android-sdk.zip/download">OpenCV for Android</a></li>
+                                <li>Importing OpenCV as a module to an existing application.</li>
+                                <li>Adding OpenCV as a dependency.</li>
+                                <li>A special step: Eliminating <code>Camera2Renderer</code> code and references because it uses 
+                                    <a href="https://developer.android.com/reference/android/hardware/camera2/package-summary.html">Camera2 API</a> introduced 
+                                    in Android 5.0 what is not supported by my phone.</li>
+                            </ul>
+                            <p>Then it is up to the developer to decide whether to link all OpenCV code to the application or to use OpenCV Manager application                                  
+                                to the dynamic OpenCV loading during the execution.
+                                In the former case it is necessary to copy the content of native OpenCV directory (<code>/sdk/native/libs</code>) 
+                                to the project's OpenCVLibrary under <code>src/main</code>
+                                and then to rename the copy from libs to jniLibs.
+                                In the latter case OpenCV Manager downloads/refreshes every necessary OpenCV component on the fly. Furthermore if there are more than 
+                                one installed OpenCV application then these components are stored in one copy only.
+                            </p>
+                            <p>The application is much larger  with statically linked OpenCV (~40 MB plus) and 
+                                the build folder grows enormously, be prepared for gigabytes! 
+                                On the other hand the application does not depend on other programs to be installed on the device.
+                            </p>
+                            <p>Using OpenCV Manager is better in this case as the result is smaller and the build process is much quicker. 
+                                However at this moment OpenCV Manager at Google Play is obsolete and contains OpenCV 3.0. 
+                                As I use OpenCV 3.2.0 I need the latest OpenCV Manager that can be found in the OpenCV for Android package above. 
+                                A drawback is that you have to choose the appropriate apk file that suits your device.
+                            </p>                            
+                            <h4>OpenCV usage</h4>
+                            <p>Either use OpenCV Manager or not both cases can be handled programmatically with the following code. The <code>onResume</code> method loads 
+                                OpenCV either from the application or via <code>OpenCVLoader</code>. The <code>LoaderCallbackInterface.SUCCESS</code> branch
+                                of the <code>onManagerConnected</code> is where we can start using OpenCV functions. 
+                            </p>
+                            
+                        <button class="btn btn-info btn-xs" data-clipboard-target="#OpenCVInitCode">Copy</button>
+<div id="OpenCVInitCode" class="codeblock">private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
+    @Override
+    public void onManagerConnected(int status) {
+        switch(status) {
+            case LoaderCallbackInterface.SUCCESS:
+                Log.i(TAG,"OpenCV Manager Connected");
+                break;
+            default:
+                Log.i(TAG,"OpenCV Manager Install");
+                super.onManagerConnected(status);
+                break;
+        }
+    }
+};
+
+@Override
+protected void onResume() {
+    super.onResume();
+    //initialize OpenCV manager
+    if (!OpenCVLoader.initDebug()) {
+        Log.d(TAG, "Internal OpenCV library not found. Using OpenCV Manager for initialization");
+        OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_2_0, this, mLoaderCallback);
+    } else {
+        Log.d(TAG, "OpenCV library found inside package. Using it!");
+        mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
+    }
+}</div>                            
+                        <p>After initializing OpenCV we can use it. For this task I wanted to find the 
+                            center of mass of the pixels belonging to a blue ball on the image of the camera. 
+                            I have based my code on the 
+                        <a href="https://github.com/opencv/opencv/tree/master/samples/android/color-blob-detection">color blob detector sample</a> 
+                        included in the OpenCV for Android installation. The main part of the detection can be seen below. The <code>rgbaImage</code> 
+                        is first downsampled with image pyramid and then converted to HSV color space. After that <code>inRange</code> detects 
+                        the appropriate colored pixels based on the bound constants. Then <code>findContours</code> create a list of detected contour 
+                        and <code>contourArea</code> finds the largest one. Finally <code>getCenterOfMaxContour</code> returns 
+                        the center of mass of the maximal contour using moments.</p>
+                        <p>Turning direction is then determined from the <code>x</code> coordinates of the center related to the central point of the image.</p>
+                        
+                        <button class="btn btn-info btn-xs" data-clipboard-target="#ColorBlobDetectorCode">Copy</button>
+<div id="ColorBlobDetectorCode" class="codeblock">public void process(Mat rgbaImage) {
+    Imgproc.pyrDown(rgbaImage, mPyrDownMat);
+    Imgproc.pyrDown(mPyrDownMat, mPyrDownMat);
+
+    Imgproc.cvtColor(mPyrDownMat, mHsvMat, Imgproc.COLOR_RGB2HSV_FULL);
+
+    Core.inRange(mHsvMat, mLowerBound, mUpperBound, mMask);
+    Imgproc.dilate(mMask, mDilatedMask, new Mat());
+
+    List&lt;MatOfPoint&gt; contours = new ArrayList&lt;MatOfPoint&gt;();
+
+    Imgproc.findContours(mDilatedMask, contours, mHierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
+
+    // Find max contour area
+    maxContour = null;
+    double maxArea = 0;
+    Iterator&lt;MatOfPoint&gt; each = contours.iterator();
+    int i = 0;
+    while (each.hasNext()) {
+        MatOfPoint wrapper = each.next();
+        double area = Imgproc.contourArea(wrapper);
+        if (area > maxArea) {
+            maxArea = area;
+            maxContour = wrapper;
+        }
+    }
+    
+    // Filter contours by area and resize to fit the original image size
+    mContours.clear();
+    each = contours.iterator();
+    while (each.hasNext()) {
+        MatOfPoint contour = each.next();
+        if (Imgproc.contourArea(contour) > mMinContourArea*maxArea) {
+            Core.multiply(contour, new Scalar(4,4), contour);
+            mContours.add(contour);
+        }
+    }
+}
+
+public Point getCenterOfMaxContour() {
+    Point center = null;
+    if( maxContour != null ) {
+        Moments moments = Imgproc.moments(maxContour);
+        center = new Point(moments.get_m10() / moments.get_m00(), moments.get_m01() / moments.get_m00());
+    }
+    return center;
+}</div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>                
+                
+            <div id="altogether" class="row row-content mydata">                                    
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                           <h2 class="panel-title"><img src="images/EV3DroidCVLogo.png" alt="ev3droidcv logo"><a> Putting it altogether</a></h2></div>
+                        <div class="panel-body">
+                            <p>As every component is ready I start the EV3 with LeJOS and execute the EV3DroidCVClient program on the robot.
+                                The IP address of the phone that the robot will look for can be set on the configuration display.
+                                Left and right buttons choose between the Bluetooth and the Wi-Fi domain (10.0.1.* and 192.168.0.* addresses respectively)
+                                while up and down buttons select an address from the given domain. 
+                                Usually I connect my phone via Bluetooth to the robot, which means the EV3 has the IP address 10.0.1.1 
+                                and gives 10.0.1.2 to the phone. 
+                            </p>
+                            <p>
+                               Then I start the EV3DroidCV application on the phone, finally click Enter on the robot to start communicating and moving. 
+                               The following video shows how the robot works.</p>  
+                            <div class="iframe_container">
+                            <iframe class="video" src="https://www.youtube.com/embed/UkZKk1xPP34?ecver=1" allowfullscreen></iframe>
+                            </div>                            
+                            <p>This is what the camera sees from inside. (The video was generated from a set of images taken during run.)</p>
+                            <figure>
+                                <img class="img-responsive gif" src="images/EV3DroidCVRobotAndOutsideView.jpg" alt="EV3DroidCVRobotAndOutsideView">
+                            </figure>
+                            <p>I know that it is still a simple demo but there is a lot of work getting all the components work together. 
+                                This project can be a good starting point for similar robot+phone applications.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>                
+        </div>            
+        </div>            
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row row-footer">
+                <div class="col-xs-6">
+                    <div>Copyright &copy; 2017, Richárd Szabó</div>
+                </div>
+                <div class="col-xs-6">
+                    <div id="modification">Last modification: <span id="last_modified">abc</span></div>
+                </div>
+            </div>
+            <div class="row row-footer">
+                <div class="col-xs-12">
+                    <!-- BEGIN WebSTAT Activation Code -->
+                    <script type="text/javascript" src="http://hits.webstat.com/cgi-bin/wsv2.cgi?39877"></script>
+                    <noscript>
+                        <!--<a href="http://www.webstat.com">
+                        <img src="http://hits.webstat.com/scripts/wsb.php?ac=39877" border="0" alt="WebSTAT - Free Web Statistics" /></a>-->
+                    </noscript>
+                    <!-- END WebSTAT Activation Code -->
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>    
+    <script src="../bower_components/clipboard/dist/clipboard.min.js"></script>
+    <script src="../bower_components/jquery.gifplayer/dist/jquery.gifplayer.js"></script>
+    <script>
+        var gifplayer;
+        $( document ).ready(function() {
+            $("#last_modified").text(document.lastModified);
+            var btns = document.querySelectorAll('button');
+            var clipboard = new Clipboard(btns);
+            clipboard.on('success', function(e) {  
+                e.clearSelection();
+            });
+            gifplayer = $('.gif').gifplayer();
+        });        
+        $( window ).resize(function() {
+            console.log("resize");
+            $('.gif').gifplayer('stop');//first stop the playing gifs,videos
+            $('.gif,.gif *').unbind().removeData();//remove all the things added by the plugin
+            $(".gif").unwrap();//remove the parent class (this parent is the source of the problem)
+            $( ".play-gif" ).remove();//remove the play button
+            $(".gif").css("display","block");//for the videos
+            $( ".gp-video-element" ).remove();//for the videos
+            $('.gif').gifplayer();//reattach the plugin (don't worry it is fast )
+        });        
+    </script>
+  </body>
+</html>

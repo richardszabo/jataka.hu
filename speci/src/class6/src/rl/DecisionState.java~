@@ -1,0 +1,6 @@
+package rl;
+
+public abstract class DecisionState {
+    protected Probabiliy actions[];    
+    
+}

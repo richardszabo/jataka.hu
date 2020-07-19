@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.0b2 (X11; I; SunOS 5.4 sun4m) [Netscape]">
+</HEAD>
+<BODY>
+
+<H2>
+Az algoritmusok</H2>
+A ponthalmaz konvex burk&aacute;t s&iacute;kban &eacute;s t&eacute;rben
+kisz&aacute;m&iacute;t&oacute; algoritmusok csak r&eacute;szben illeszkednek
+a Preparata-Shamos k&ouml;nyvben le&iacute;rtakhoz. Ennek az az oka, hogy
+az algoritmus elk&eacute;sz&iacute;t&eacute;se sor&aacute;n n&eacute;h&aacute;ny
+hi&aacute;nyoss&aacute;gra der&uuml;lt f&eacute;ny.
+<BR>A javasolt m&oacute;dszer &aacute;ttanulm&aacute;nyoz&aacute;sa ut&aacute;n
+l&aacute;tszott, hogy az algoritmus hat&eacute;konys&aacute;g&aacute;&eacute;rt
+annak bonyolults&aacute;g&aacute;val kell fizetni. Ez m&eacute;g nem okozott
+volna probl&eacute;m&aacute;t, de voltak hib&aacute;s r&eacute;szelj&aacute;r&aacute;sok
+(p&eacute;ld&aacute;ul Graham's scan, ami a maga nyolc sor&aacute;val sem
+m&ucirc;k&ouml;dik), &eacute;s kidolgozatlan r&eacute;szek.&nbsp;
+<BR>A rekurz&iacute;v algoritmus f&ocirc; r&eacute;sze k&eacute;t ponthalmaz
+&aacute;ltal meghat&aacute;rozott konvex burok &ouml;sszefuttat&aacute;s&aacute;t
+jelentette egy konvex burokk&aacute;. Ennek kezdeti l&eacute;p&eacute;sek&eacute;nt
+a k&eacute;t ponthalmaz s&iacute;kbeli konvex burk&aacute;t is meg kellett
+hat&aacute;rozni, amir&ocirc;l az algoritmus eml&iacute;t&eacute;st sem
+tett. A s&iacute;kbeli konvex burok el&ocirc;&aacute;ll&iacute;t&aacute;s&aacute;t
+v&eacute;gz&ocirc; oszt&aacute;ly ezzel a c&eacute;llal k&eacute;sz&uuml;lt.&nbsp;
+<BR>K&ouml;vetkez&ocirc; probl&eacute;m&aacute;t az jelentette, hogy a k&eacute;t
+burok &ouml;sszefuttat&aacute;sakor keletkeznek bels&ocirc; cs&uacute;csok
+&eacute;s &eacute;lek, amelyek k&ouml;z&uuml;l az algoritmus csak a pal&aacute;st
+&eacute;p&iacute;t&eacute;s&eacute;ben r&eacute;sztvev&ocirc; cs&uacute;csokat
+dobja el, a bels&ocirc;ket nem.&nbsp;
+<BR>Ezen a ponton felhagytam az algoritmus tov&aacute;bbi implement&aacute;l&aacute;s&aacute;val,
+mivel tov&aacute;bbi probl&eacute;m&aacute;kat is l&aacute;ttam, melyek
+lassan oda fajultak, hogy az algoritmust teljesen nekem kell kital&aacute;lnom.
+A feladat megold&aacute;s&aacute;hoz kital&aacute;ltam egy kev&eacute;sb&eacute;
+hat&eacute;kony, de k&ouml;nnyen &eacute;rthet&ocirc; t&eacute;rbeli algoritmust,
+ami l&aacute;that&oacute;an m&ucirc;k&ouml;dik, &eacute;s el&ocirc;&aacute;ll&iacute;t&aacute;sa
+m&eacute;g a f&eacute;lk&eacute;sz algoritmushoz k&eacute;pest is kevesebb
+vesz&ocirc;ds&eacute;ggel j&aacute;rt.&nbsp;
+
+<H3>
+Ponthalmaz konvex burk&aacute;nak kisz&aacute;m&iacute;t&aacute;sa
+k&eacute;t dimenzi&oacute;ban</H3>
+Ez a s&iacute;kbeli konvexburok elj&aacute;r&aacute;s hasonl&iacute;t a
+Preparata-Shamos-ban le&iacute;rtakhoz, de nem m&ucirc;k&ouml;dik h&aacute;rom
+dimenzi&oacute;ban.&nbsp; Els&ocirc;dleges c&eacute;lja az lett volna,
+hogy a h&aacute;romdimenzi&oacute;s elj&aacute;r&aacute;s r&eacute;sz&eacute;t
+k&eacute;pezze.
+<BR>Az algoritmus rekurz&iacute;v,&nbsp; egy l&eacute;p&eacute;sben mindig
+a ponthalmaz k&eacute;t r&eacute;szhalmaz&aacute;hoz el&ocirc;&aacute;ll&iacute;tott
+konvex burokb&oacute;l k&eacute;pez egyet, mely az eg&eacute;sz halmaz
+burk&aacute;t alkotja.
+<BR>Az algoritmus els&ocirc; l&eacute;p&eacute;sk&eacute;nt a kapott ponthalmazt
+rendezi x koordin&aacute;ta szerint. Erre az&eacute;rt van sz&uuml;ks&eacute;g,
+hogy az &ouml;sszefuttat&aacute;sra ker&uuml;l&ocirc; halmazaok ne fedhess&eacute;k
+&aacute;t egym&aacute;st. A  f&ocirc; elj&aacute;r&aacute;s a kapott ponthalmazhoz
+konvex burkot hoz l&eacute;tre. A z elj&aacute;r&aacute;s a halmazt el&ocirc;sz&ouml;r
+sz&aacute;moss&aacute;g szempontj&aacute;b&oacute;l vizsg&aacute;lja. N&eacute;gyn&eacute;l
+t&ouml;bb pont eset&eacute;n a ponthalmazt elfelezi, p&aacute;ratlan sz&aacute;mn&aacute;l
+az els&ocirc; r&eacute;szbe ker&uuml;l t&ouml;bb pont. A  k&eacute;t r&eacute;szhalmazzal
+rekurz&iacute;van megh&iacute;vja &ouml;nmag&aacute;t, v&eacute;g&uuml;l
+a visszakapott r&eacute;szburkokat &ouml;sszefuttatja. N&eacute;gyn&eacute;l
+kevesebb pont eset&eacute;n a konvex burok egy&eacute;rtelm&ucirc;, minden
+pont benne van. N&eacute;gy pontn&aacute;l a rekurz&iacute;v h&iacute;v&aacute;shoz
+k&eacute;pzett els&ocirc; vektor h&aacute;rom, a m&aacute;sodik egy elem&ucirc;.&nbsp;&nbsp;
+<BR>A  l&eacute;nyegi munk&aacute;t az &ouml;sszefuttat&oacute; elj&aacute;r&aacute;s
+v&eacute;gzi. Az els&ocirc; feladat a k&eacute;t konvex burokban tal&aacute;lhat&oacute;
+pontok rendez&eacute;se oly m&oacute;don, hogy egy k&ouml;z&ouml;s bels&ocirc; 
+pont k&ouml;r&uuml;l fix k&ouml;r&uuml;lj&aacute;r&aacute;ssal felsorolhat&oacute;k
+legyenek. Erre az &aacute;llapotra alkalmazva a Graham's scan jav&iacute;tott
+v&aacute;ltozat&aacute;t az egy k&ouml;r&uuml;lj&aacute;r&aacute;ssal kisz&ucirc;ri
+a burkot r&eacute;sz&eacute;t nem k&eacute;pez&ocirc; pontokat.
+
+<H3>
+Ponthalmaz konvex burk&aacute;nak kisz&aacute;m&iacute;t&aacute;sa
+h&aacute;rom dimenzi&oacute;ban</H3>
+A t&eacute;rbeli burok kisz&aacute;m&iacute;t&aacute;sa l&eacute;nyegesen
+elt&eacute;r a s&iacute;kbeli megold&aacute;st&oacute;l.&nbsp;
+<BR>Itt a feladat olyan h&aacute;romsz&ouml;gek megtal&aacute;l&aacute;sa,
+melyeknek csak egyik oldal&aacute;n tal&aacute;lhat&oacute;k pontok a halmazb&oacute;l.
+Az ilyen tulajdons&aacute;g&uacute; h&aacute;romsz&ouml;gek nyilv&aacute;nval&oacute;an
+a burok r&eacute;sz&eacute;t alkotj&aacute;k. Mivel a pontok koordin&aacute;t&aacute;i
+dupla pontoss&aacute;g&uacute; sz&aacute;mok, ez&eacute;rt annak a val&oacute;sz&iacute;n&ucirc;s&eacute;ge,
+hogy n&eacute;gy vagy t&ouml;bb pont is egy s&iacute;kba esik minim&aacute;lis.
+<BR>Az algoritmus kezdeti l&eacute;p&eacute;sek&eacute;nt a legnagyobb x koordin&aacute;t&aacute;j&uacute;
+pont meghat&aacute;roz&aacute;sa t&ouml;rt&eacute;nik, ez a pont biztosan
+r&eacute;sze a buroknak. Ezek ut&aacute;n egy kett&ocirc;s ciklusban a
+halmazb&oacute;l pontp&aacute;rokat kell hozz&aacute; kiv&aacute;lasztani
+&eacute;s megn&eacute;zni, hogy az &iacute;gy kialakult h&aacute;romsz&ouml;gnek
+csak az egyik oldal&aacute;n vannak-e pontok. Ha ez teljes&uuml;l, akkor
+a burok kezd&ocirc; h&aacute;romsz&ouml;ge megvan, a megtal&aacute;lt &eacute;lek
+&eacute;s a megtal&aacute;lt h&aacute;romsz&ouml;gek egy-egy vektorba ker&uuml;lnek
+a k&eacute;s&ocirc;bbi haszn&aacute;lathoz.&nbsp;
+<BR>Ezek ut&aacute;n az algoritmus tov&aacute;bbi ciklikus fut&aacute;sa sor&aacute;n
+az &eacute;leket alkot&oacute; vektorb&oacute;l mindig egy &uacute;jabb
+ker&uuml;l kiv&aacute;laszt&aacute;sra, melyhez a ponthalmazb&oacute;l
+egy harmadik pontot kell keresni, &eacute;s megn&eacute;zni, hogy ez a
+h&aacute;romsz&ouml;g a burok r&eacute;sze-e. Ha igen, akkor az &eacute;lek
+&eacute;s a h&aacute;romsz&ouml;g beker&uuml;l a neki megfelel&ocirc; vektorba.&nbsp;
+<BR>Ha egy olyan &eacute;l lesz kiv&aacute;lasztva, amelynek m&aacute;r mindk&eacute;t
+oldal&aacute;n meg lett hat&aacute;rozva a burkot alkot&oacute; h&aacute;romsz&ouml;g,
+akkor az &eacute;l kiker&uuml;l az &eacute;lvektorb&oacute;l. Mivel v&eacute;ges
+ponthalmazr&oacute;l van sz&oacute;, ez&eacute;rt ez a vektor el&ocirc;bb-ut&oacute;bb
+ki&uuml;r&uuml;l, a burok bez&aacute;rul.&nbsp;
+<BR>Az elj&aacute;r&aacute;s befejezt&eacute;vel a visszat&eacute;r&ocirc;
+&eacute;rt&eacute;k egy a h&aacute;romsz&ouml;gekhez tartoz&oacute; oldal&eacute;leket
+tartalmaz&oacute; vektor lesz, melyet a kirajzol&oacute; oszt&aacute;ly
+tud felhaszn&aacute;lni.&nbsp;
+<BR>L&eacute;nyeges elem m&eacute;g az elj&aacute;r&aacute;s meg&eacute;rt&eacute;s&eacute;hez,
+hogy az algoritmus mik&eacute;nt sz&aacute;m&iacute;tja ki mikor van egy
+pont egy h&aacute;romsz&ouml;g egyik oldal&aacute;n. Ehhez meg kell hat&aacute;rozni
+a h&aacute;romsz&ouml;get alkot&oacute; s&iacute;kot a norm&aacute;lvektor&aacute;val
+megadva, majd a norm&aacute;lvektor seg&iacute;ts&eacute;g&eacute;vel el&ocirc;jelesen
+meg lehet hat&aacute;rozni egy tetsz&ocirc;leges pont t&aacute;vols&aacute;g&aacute;t
+a s&iacute;kt&oacute;l. &Iacute;gy csup&aacute;n azt kell figyelni, hogy
+k&ouml;vetkezik-e be el&ocirc;jelv&aacute;lt&aacute;s a keres&eacute;s
+k&ouml;zben, mert ha igen, akkor a h&aacute;romsz&ouml;g nem r&eacute;sze
+a konvex buroknak, &eacute;s &uacute;j pontokat kell keresni.&nbsp;
+<BR>
+
+</BODY>
+</HTML>

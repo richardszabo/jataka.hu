@@ -1,0 +1,24 @@
+img.standalone {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+img.floatLeft { 
+    float: left; 
+    margin: 10px; 
+}
+img.floatRight { 
+    float: right; 
+    margin: 10px; 
+}
+
+table.image{
+    border-width: 0;
+    margin-left: auto;
+    margin-right: auto;    
+}
+
+#main-copy a {
+/*  text-decoration: none;*/
+}

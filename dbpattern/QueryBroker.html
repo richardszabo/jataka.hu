@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<link rel="Stylesheet" title="Default Stylesheet" media="Screen"
+  href="../default.css">
+<TITLE>Query Broker Pattern</TITLE>
+</HEAD>
+<body>
+
+<H1>Query Broker Pattern</H1>
+
+<h2>Környezet</h2>
+A Relational Database Access Layer használata, a logikai és a fizikai
+réteg szétválasztása. A <code>ConcretePhysicalView</code>-k
+<code>ConcreteHierarchicalView</code>-k szétválasztása.
+<h2>Probléma</h2>
+Hogyan kössük össze a fizikai és logikai réteget, ami alkalmas
+olvasásra és írásra is.
+<h2>Befolyásoló tényezõk</h2>
+<ul>
+<li>A költség a flexibilitás ellenében<br>
+Két réteg összekapcsolásának legegyszerûbb módja a függvényhívás.
+Ez megfelelõ, amíg a két réteg változatlan. Változó rétegek esetén,
+nagy méretû programnál ez a módszer nem tartható: egy-egy
+módosítással nagy mennyiségû kód terjesztésére van szükség
+(MS-Access <-> Java), hiszen annak ellenére, hogy a szétválasztás
+az elõbbi mintáknak megfelelõen megtörtént, az újrafordítás általában 
+szükséges.
+<li>Újrafelhasználhatóság<br>
+Ha különbözõ <code>HierarchicalView</code>-k különbözõ módon 
+érik el ugyanazt a <code>PhysicalView</code>-t, akkor a
+<code>PhysicalView</code> újrafelhasználása igazából nem
+túl hasznos.
+<li>Komplexitás<br>
+Mivel a huzalozott változatt nem eléggé flexibilis, ennél 
+bonyolultabb módszerre van szükség, ami költségesebb, és
+nehezebben kezelhetõ.
+</ul>
+<h2>Megoldás</h2>
+Használjunk <code>Broker</code>-t! A <code>HierarchicalView</code>
+osztályok képezik a kliens oldalt, a <code>PhysicalView</code>
+osztályok a szerver oldalt. Az igényeket aciklikus irányitott gráfok
+formájában kell megfogalmazni. Faillesztési algoritmus szükséges
+a legjobb egyezés megtalálásához. A <code>QueryBroker</code>
+állítja össze a <code>PhysicalView</code>-kat és szállítja
+az eredményt egy konténerben. A <code>Broker</code> és
+a <code>QueryBroker</code> között lesz egy lényeges eltérés:
+a <code>QueryBroker</code> több szervert használ, minden
+<code>PhysicalView</code> számára egy szerver.
+<P><IMG SRC="db6.gif"><P>
+<h2>Példa</h2>
+Az alábbi ábra a lopikai és a fizikai rétegekhez tartozó 
+aciklikus gráfok egymáshoz illesztését mutatja be.
+<P><IMG SRC="db7.gif"><P>
+Az elõbbi faillesztéshez tartozó lekérdezés folyamata.
+<P><IMG SRC="db8.gif"><P>
+<h2>Következmények</h2>
+<ul>
+<li>Flexibilitás<br>
+Logikai és fizikai réteg szétválasztása. A rétegek akár futási
+idõben is megváltozhatnak.
+<li>Komplexitás<br>
+Bonyolult a faillesztés megvalósítása. Mindez egy jól körülhatárolt,
+szeparált modulban zajlik.
+<li>Újrafelhasználhatóság<br>
+A <code>QueryBroker</code> független a fizikai és a logikai rétegtõl,
+ezét újrafelhasználható. Esetleg keretrendszerbe is építhetõ.
+<li>Költség<br>
+Bonyolultsága miatt megvalósítása költséges. Adatszótár használata
+még növeli a költségeket.
+</ul>
+<h2>Implementáció</h2>
+<ul>
+<li>Szerver regisztráció<br>
+A fizikai réteg osztályainak induláskor regisztrálnia kell magát a 
+<code>QueryBroker</code>-ben.
+<li>Adattípusok típuskényszerítése<br>
+Az adattípusok konvertálása az adatbázis és a programozási 
+nyelv típusai között valahol megtörténik. Erre megfelelõ
+lehet a <code>QueryBroker</code> az adatszótár használatával.
+<li>Faillesztés<br>
+A faillesztés algoritmusa a fordítóprogramok kódgenerálási 
+eljárásához hasonló. Érdemes a már sokat tanulmányozott 
+eljárást alkalmazni itt is.
+<li>Lekérdezések reprezentációja és eredménytárolók<br>
+Megfelelõ reprezentációt kell találni a gráfok leírására,
+ami támogatja az illesztési algoritmust is.
+</ul>
+<h2>Variációk</h2>
+Az adatbázishívások <code>QueryBroker</code>-be történõ 
+ágyazásával a <code>ConcretePhysicalView</code>-k megkerülhetõk.
+A fejlesztés elõrehaladtával a <code>ConcretePhysicalView</code>
+egyenként átvehetik az adatbázishívásokat a <code>QueryBroker</code>-tõl.
+</BODY>
+</HTML>
+

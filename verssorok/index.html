@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="own.css">
+    
+    <title>Verssorok</title>
+</head>
+
+  <body data-spy="scroll" data-target="#myScrollspy" data-offset="90">      
+    <div class="container">
+        <div class="navbar navbar-default navbar-fixed-top">
+            <div class="navbar-header">
+                <h1>Verssorok
+                </h1>
+            </div>
+        </div>
+        <div class="row row-content">
+            <nav class="col-sm-2 hidden-xs" id="myScrollspy">
+                <ul class="nav nav-pills nav-stacked" data-spy="affix">
+                    <li role="presentation"><a href="#task">1</a></li>
+                </ul>
+            </nav>
+            <div class="col-sm-10 col-xs-12">
+            
+            <div id="task" class="row row-content mydata">
+                <div class="col-xs-12 col-sm-6">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                           <h3 class="panel-title"><a>Kaszás Attila - A Dunánál</a></h3></div>
+                        <div class="panel-body">
+                            <div class="vers">
+                                <audio controls>
+                                  <source src="audio/kaszas_attila-a_dunanal.mp3" type="audio/mpeg">
+                                    Your browser does not support the audio element.
+                                </audio> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                           <h3 class="panel-title"><a>Kőszegi Ákos Nem mondhatom el senkinek</a></h3></div>
+                        <div class="panel-body">
+                            <div class="vers">
+                                <audio controls>
+                                  <source src="audio/koszegi_akos-nem_mondhatom_el_senkinek.mp3" type="audio/mpeg">
+                                    Your browser does not support the audio element.
+                                </audio> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>            
+        </div>            
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row row-footer">
+                <div class="col-xs-6">
+                    <div>Copyright &copy; 2017, Richárd Szabó</div>
+                </div>
+                <div class="col-xs-6">
+                    <div id="modification">Last modification: <span id="last_modified">abc</span></div>
+                </div>
+            </div>
+            <div class="row row-footer">
+                <div class="col-xs-12">
+                    <!-- BEGIN WebSTAT Activation Code -->
+                    <script type="text/javascript" src="http://hits.webstat.com/cgi-bin/wsv2.cgi?39877"></script>
+                    <noscript>
+                        <!--<a href="http://www.webstat.com">
+                        <img src="http://hits.webstat.com/scripts/wsb.php?ac=39877" border="0" alt="WebSTAT - Free Web Statistics" /></a>-->
+                    </noscript>
+                    <!-- END WebSTAT Activation Code -->
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>    
+    <script src="../bower_components/clipboard/dist/clipboard.min.js"></script>
+    <script src="vers.js"></script> 
+    <script>
+        $( document ).ready(function() {
+            $('.vers').embeddable();
+        });                
+    </script>
+  </body>
+</html>

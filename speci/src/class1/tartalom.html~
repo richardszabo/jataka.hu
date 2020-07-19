@@ -1,0 +1,49 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.51 [en] (X11; I; Linux 2.2.5-15 i586) [Netscape]">
+</head>
+<body>
+
+<h1>Tematika</h1>
+
+Az órák eléggé heterogén képet fognak mutatni.
+Szöveges ismertetés és akár bonyolultabb formalizmus mellett
+szeretnék kódrészleteket, szimulációkat is bemutatni, és esetleg 
+a hallgatókat is aktivizálni.<p>
+   
+<ul>
+<li>
+Robotika, a robotszimuláció jelentõsége
+
+<li>
+Különféle szimulációs környezetek - megvalósítandó feladatok
+
+<li>
+Hagyományos módszerek a robotikában és szimulációkban 
+
+<li>
+Elõre huzalozott architektúrák (Braitenberg, Beer, Brooks)
+
+<li>
+Tanulási formák (tanítóval, megerõsítéses, önálló)
+
+<li>
+Evolúciós algoritmusok, fejlõdõ ideghálózat (Meyer, Parisi)
+
+<li>
+A Khepera robot és a Webots szimulációs környezet
+
+<li>
+Robotfutball
+
+<li>
+Quake: bot-ok programozása Quake C nyelven
+
+<li>
+Biológiai kapcsolatok (etológia, neurobiológia, kognitív térkép)
+
+</ul>
+</body>
+</html>

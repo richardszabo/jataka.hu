@@ -1,0 +1,633 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../bower_components/jquery.gifplayer/dist/gifplayer.css">    
+    <link rel="stylesheet" type="text/css" href="own.css">
+    
+    <title>Android examples</title>
+</head>
+
+  <body data-spy="scroll" data-target="#myScrollspy" data-offset="90">      
+    <div class="container">
+        <div class="navbar navbar-default navbar-fixed-top">
+            <div class="navbar-header">
+                <h1>
+                    <a href="http://android.com"><img src="images/android-logo-white.png" alt="android logo" /></a> <a href="#top">Android examples</a>
+                </h1>
+            </div>
+        </div>
+<!--http://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_ref_js_scrollspy&stacked=h	-->
+        <div class="row row-content">
+            <nav class="col-sm-2 hidden-xs" id="myScrollspy">
+                <ul class="nav nav-pills nav-stacked" data-spy="affix">
+                    <li role="presentation"><a href="#top">Top</a></li>
+                    <li role="presentation"><a href="#intro">Introduction</a></li>
+                    <li role="presentation"><a href="#Ball">Rolling ball</a></li>
+                    <li role="presentation"><a href="#Camera1Test">Camera 1 API</a></li>
+                    <li role="presentation"><a href="#Library">Using library</a></li>
+                    <li role="presentation"><a href="#Permissions">Permissions</a></li>
+                    <li role="presentation"><a href="#Timelapse">Timelapse</a></li>
+                    <li role="presentation"><a href="#VideoStream">VideoStream</a></li>
+                </ul>
+            </nav>
+            <div class="col-sm-10 col-xs-12">
+            <div id="top" class="row row-content mydata">
+                <div class="col-xs-12">
+                    <p>This page contains some of my Android programs. It is not a tutorial page but a sort of inventory instead.                         
+                       Most of the projects handles the phone as a sensor - mainly a camera - as it can be used as an extension for a mobile robot. 
+                       For example <a href="../ev3_android_opencv/index.html">EV3DroidCV</a> uses LEGO EV3 kit, a mobile, and OpenCV library to follow a blue ball.</p>
+                </div>
+            </div>
+
+            <div id="intro" class="row row-content mydata">                                    
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                           <h3 class="panel-title"><a>Introduction</a></h3></div>
+                        <div class="panel-body">
+                            <p>Formerly I have used Eclipse because it had support for OpenCV for Android library but in the last few years 
+                                <a href="https://developer.android.com/studio/index.html">Android Studio</a>
+                                became the quasi-standard development tool for Android.</p>         
+                            <p>Android Studio works without problems:</p>
+                            <ul>
+                                <li>It could import Eclipse projects (of course, reorganization cannot be avoided which means some extra work using version control).</li>
+                                <li>Updates itself and its components. It means extra time and download bandwidth but almost automatic.</li>
+                                <li>I do not need to install virtual devices. Deploying to the phone itself was relatively quick (after installing the phone's Android API version, of course).</li>                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="Ball" class="row row-content mydata">                                    
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                          <h2 class="panel-title"><img src="images/ball.png" alt="ball"> <a>Rolling ball</a></h2></div>
+                        <div class="panel-body">
+                        <p>This demo shows a ball rolling on the surface of the device as response to pitch and roll 
+                            components of the rotation vector of the rotation sensor. This sensor is not available in every device my Samsung SM-T800 tab has it.</p> 
+                        <p>First of all it is necessary to register a listener in the sensor manager to receive values from the selected sensor type.</p>
+                        <button class="btn btn-info btn-xs" data-clipboard-target="#registerListener">Copy</button>
+                        <div id="registerListener" class="codeblock">private void registerListener() {
+    SensorManager mngr = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+    List<Sensor> list = getRotVectorSensors();
+    if (list != null) {
+        for (Sensor sensor : list) {
+            mngr.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI);
+        }
+    }
+}</div>
+                        
+                        <p>Then rotation vector components are received in a sensor event as described 
+                           <a href="https://developer.android.com/guide/topics/sensors/sensors_motion.html#sensors-motion-rotate">here</a>. 
+                           The <code>getRotationMatrixFromVector</code> function converts the rotation-vector to a 4x4 rotation matrix 
+                           and <code>getOrientation</code> determines the angle of rotation around the three main axis.</p>
+                        
+                        <button class="btn btn-info btn-xs" data-clipboard-target="#onSensorChanged">Copy</button>
+                        <div id="onSensorChanged" class="codeblock">public void onSensorChanged(SensorEvent event) {
+    float rotationMatrix[] = new float[9];
+    SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values);
+    float orientation[] = new float[3];
+    SensorManager.getOrientation(rotationMatrix, orientation);
+    ((TextView) findViewById(R.id.azimuthtext)).setText(String.format("Azimuth: %2.4f", orientation[0]));
+    ((TextView) findViewById(R.id.pitchtext)).setText(String.format("Pitch:   %2.4f", orientation[1]));
+    ((TextView) findViewById(R.id.rolltext)).setText(String.format("Roll:    %2.4f", orientation[2]));
+    ball.calculateForce(-1 * orientation[1], orientation[2]);
+}</div>
+                        <p>Response of the ball to device orientation changes are calculated using Newton's laws of motion.</p>
+                        
+                        <p>The complete source can be downloaded from <a href="https://github.com/richardszabo/androidBall">github</a>.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
+            <div id="Camera1Test" class="row row-content mydata">                                    
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                           <h2 class="panel-title"><img src="images/camera.png" alt="ball"> <a>Camera 1 API</a></h2></div>
+                        <div class="panel-body">
+                            <p>This program tries various possibilities using the camera from Android. It only handles 
+                                <a href="https://developer.android.com/guide/topics/media/camera.html">Camera 1 API</a> 
+                                what became obsolete with the introduction of 
+                                <a href="https://developer.android.com/reference/android/hardware/camera2/package-summary.html">Camera API 2</a> in API level 21.
+                                Unfortunately the APIs are incompatible, developers have to write separate code for both cases if they want to use both.
+                                As I still have devices that has lower API level than 21 I prefer to use API 1.</p>
+                            <p>So the program includes the following functions:</p>
+                            <figure>
+                                <img class="img-responsive" src="images/CameraTest_Menu.png" alt="CameraTest_Menu">
+                            </figure>
+                            <dl>
+                                <dt>Image intent (public)</dt>
+                                <dd><p>Calls the built-in camera intent of the device delegating photo shooting to an operating system-level program code. 
+                                    This choice is based on 
+                                    <a href="https://developer.android.com/training/camera/photobasics.html">the basic photo capturing tutorial</a>. </p>
+                                    <p>
+                                    Intents are good when the programmer does not want more than regular functionality. If certain extra processes need 
+                                    to be performed with each image then the own solution is preferable. 
+                                        For the intent usage we need to create it with appropriate action type, <code>ACTION_IMAGE_CAPTURE</code> in this case.
+                                        Here is how this intent looks like:
+                                    </p>
+                                    
+                                    <figure>
+                                        <img class="img-responsive" src="images/ImageIntent.png" alt="ImageIntent">
+                                    </figure>                                                                                                          
+                                    
+                                    <p>
+                                    Then a file has to be added as a parameter of the intent. We create a file in the public storage space 
+                                    whose location is determined by <code>getExternalStoragePublicDirectory</code> and add the file to the intent 
+                                    with the <code>putExtra(MediaStore.EXTRA_OUTPUT, photoURI)</code> method. 
+                                    The intent is started with <code>startActivityForResult</code> method 
+                                    including a request code parameter to uniquely identify the request later when we process the result 
+                                    in the <code>onActivityResult</code> method.</p>
+                                    
+                        <button class="btn btn-info btn-xs" data-clipboard-target="#pictureIntent">Copy</button>
+<div id="pictureIntent" class="codeblock">private void dispatchTakePictureIntent() {
+    Intent takeCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+    if (takeCameraIntent.resolveActivity(getPackageManager()) != null) {
+        photoFile = null;
+        try {
+            photoFile = createImageFile();
+        } catch (IOException ex) {
+            Log.e(CameraTest.TAG,"Photo file cannot be created:" + ex);
+        }
+        if (photoFile != null) {
+            Uri photoURI = FileProvider.getUriForFile(this,
+                    "hu.rics.cameratest.fileprovider",
+                    photoFile);
+            List&lt;ResolveInfo&gt; resInfoList = getPackageManager().queryIntentActivities(takeCameraIntent, PackageManager.MATCH_DEFAULT_ONLY);
+            for (ResolveInfo resolveInfo : resInfoList) {
+                String packageName = resolveInfo.activityInfo.packageName;
+                grantUriPermission(packageName, photoURI, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            }
+            takeCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+            startActivityForResult(takeCameraIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+}
+private File createImageFile() throws IOException {
+    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+    String imageFileName = "JPEG_" + timeStamp + "_";
+    String dirType = Environment.DIRECTORY_PICTURES;
+    File storageDir = getExternalStoragePublicDirectory(dirType);
+    if( !storageDir.exists() ) {
+        storageDir.mkdirs();
+    }
+    File image = File.createTempFile(
+            imageFileName,
+            ".jpg",
+            storageDir
+    );
+    return image;
+}
+</div>                                    
+                                    <p>
+                                    We do not simply give a file reference to the intent because - according to the documentation - it is better to use 
+                                    <a href="https://developer.android.com/reference/android/support/v4/content/FileProvider.html"><code>FileProvider.getUriForFile</code></a> 
+                                    for sharing access 
+                                    to a file from another program or intent. 
+                                    The former is insecure and will result an exception on future Android versions (with API level 24 and higher).                                    
+                                    For this reason we have to define a file provider in the <code>AndroidManifest.xml</code> like this: </p>
+                                    
+                        <button class="btn btn-info btn-xs" data-clipboard-target="#FileProvider">Copy</button>
+<div id="FileProvider" class="codeblock">&lt;provider
+    android:name="android.support.v4.content.FileProvider"
+    android:authorities="hu.rics.cameratest.fileprovider"
+    android:exported="false"
+    android:grantUriPermissions="true"&gt;
+    &lt;meta-data
+        android:name="android.support.FILE_PROVIDER_PATHS"
+        android:resource="@xml/file_paths">&lt;/meta-data&gt;
+&lt;/provider&gt;
+</div>                                    
+                                    <p>                                                 
+                                    Then the <code>file_paths.xml</code> should contain the paths that we intend to share with the clients of our program.
+                                    There are various ways paths can be set and each one means a different access level to the file.
+                                    For a publicly available file <code>external-path</code> is the right choice 
+                                    which represents directories relative to the root of the external storage directory.
+                                    So our <code>xml</code> should contain the following path:
+                                    </p>
+                                    
+                        <button class="btn btn-info btn-xs" data-clipboard-target="#FilePath">Copy</button>
+<div id="FilePath" class="codeblock">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;paths xmlns:android="http://schemas.android.com/apk/res/android"&gt;
+    &lt;external-path name="my_images_public" path="Pictures" /&gt;
+    ...
+&lt;/paths&gt;                             
+</div>    
+                                    <p>                         
+                                    After setting the path as above the all files in the <code>Pictures</code> directory will be accessible for the intent.
+                                    From the program itself the reference to this directory is <code>getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)</code>.<br />
+                                    One more problem is that using FileProvider from 
+                                    <a href="https://developer.android.com/topic/libraries/support-library/index.html">support library</a> 
+                                    requires extra call to <code>grantUriPermission</code> method as in the above code 
+                                    as <a href="http://stackoverflow.com/a/18332000/21047">Leszek points out</a> otherwise the intent cannot access the files.
+                                    This problem only raises on my Android API level 17 device but not on API level 23 one.
+                                    (Moreover I should also check if the external storage is mounted.)
+                                    </p>
+                                    </dd>
+                                <dt>Image intent (local)</dt>
+                                <dd><p>Using image intent locally does not differ significantly from the previous choice. 
+                                    The image is saved to a directory that is local to the project. It means that if the project is deleted the local directory is removed as well.
+                                    The <code>file_paths.xml</code> has to contain an <code>external-files-path</code> element. The path determined by 
+                                    <code>external-files-path</code> is relative to the root of the application's external storage area. 
+                                    It is <code>Android/data/hu.rics.cameratest/files</code> on my devices so 
+                                    setting <code>&lt;external-files-path name="my_images_private" path="Pictures" /&gt;</code> in the xml means that 
+                                    images will be saved to <code>Android/data/hu.rics.cameratest/files/Pictures</code>. </p>
+                                    <p>
+                                    It would also be possible to use 
+                                    <code>files-path</code> instead of the external but files stored there are so internal that the media viewer cannot access them.
+                                    </p>
+                                    <p>To refer this directory <code>getExternalFilesDir(Environment.DIRECTORY_PICTURES)</code> has to be used.</p>
+                                </dd>
+                                <dt>Video intent (public)</dt>
+                                <dd><p>Calls the built-in camera intent of the device 
+                                    <a href="https://developer.android.com/training/camera/videobasics.html">delegating video recording</a> to an already existing program code. 
+                                    After setting the path like this in the xml <code>&lt;external-path name="my_videos_public" path="Movies" /&gt;</code>
+                                    videos are saved to the <code>Movies</code> directory of the external storage and can be referred as 
+                                    <code>getExternalFilesDir(Environment.DIRECTORY_MOVIES)</code>.
+                                    The appropriate intent type in this case is <code>MediaStore.ACTION_VIDEO_CAPTURE</code>. 
+                                    All other elements of the program is the same 
+                                    as for the case of taking a picture.
+                                    </p>
+                                    <p>Another twist for video recording is that setting MediaStore.EXTRA_OUTPUT crashes in 
+                                       <a href="http://stackoverflow.com/questions/8997050/android-crashing-after-camera-intent">same cases</a>. 
+                                       It is the same for my API level 17 device. To make a workaround I save the video in <code>onActivityResult</code> method.                                
+                                    </p>
+                                </dd>
+   
+                                <dt>Video intent (local)</dt>
+                                <dd><p>The code is the same as above. Only <code>external-files-path</code> is set as 
+                                    <code>&lt;external-files-path name="my_videos_private" path="Movies" /&gt;</code>, the reference 
+                                    to this directory is <code>getExternalFilesDir(Environment.DIRECTORY_MOVIES)</code>, and 
+                                    the intent type is <code>MediaStore.ACTION_VIDEO_CAPTURE</code>.
+                                    </p
+                                </dd>
+                                <dt>Photo shoot</dt>
+                                <dd><p>It takes a photo after a button click and saves the image.<br/>
+                                    The solution is based on <a href="https://developer.android.com/reference/android/hardware/Camera.html">the Camera API description</a>.
+                                    First of all the camera has to be opened with the <code>Camera.open</code> function.
+                                    Then <code>setPreviewDisplay</code> sets the place where the camera preview will appear on a <code>SurfaceHolder</code>.
+                                    After that the preview can be started. During preview mode a picture can be taken with <code>takePicture</code>.                                     
+                                    A callback of this method ensures that the image is saved to the external storage.
+                                    The name of the file to be saved is given from the caller activity within a String intent parameter.
+                                    The following code shows the callback and file saving: </p>
+                                    
+                        <button class="btn btn-info btn-xs" data-clipboard-target="#pictureCallback">Copy</button>
+<div id="pictureCallback" class="codeblock">public void saveDataToSDFile(String filename, byte[] data) {
+    String ext = ".jpg";
+    FileOutputStream fOut = null;
+    try {
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+            File file = new File(filename + ext);
+            fOut = new FileOutputStream(file);
+            fOut.write(data);
+            fOut.flush();
+        }
+    } catch (FileNotFoundException ex) {
+        Log.e(CameraTest.TAG,ex.toString());
+    } catch (IOException ex) {
+        Log.e(CameraTest.TAG,ex.toString());
+    } finally {
+        if (fOut != null) {
+            try {
+                fOut.close();
+            } catch (IOException ex) {
+                Log.e(CameraTest.TAG,ex.toString());
+            }
+        }
+    }
+}
+
+Camera.PictureCallback mPictureCallback = new Camera.PictureCallback() {
+    public void onPictureTaken(byte[] imageData, Camera c) {
+        if (imageData != null) {
+            saveDataToSDFile(getIntent().getStringExtra(getString(R.string.INTENT_PARAM_FILENAME)),imageData);
+            setResult(FOTO_MODE);
+            finish();
+        }
+    }
+};</div>
+                                    <p>
+                                    There is one last problem with the preview: its 
+                                    <a href="http://stackoverflow.com/questions/3841122/android-camera-preview-is-sideways">orientation is not always upside down as expected</a>.
+                                    It depends on the specification of the device, in other words, how the front/back camera is mounted, 
+                                    and it also depends on the actual rotation of the device. The suggested solution can be found 
+                                    <a href="https://developer.android.com/reference/android/hardware/Camera.html#setDisplayOrientation(int)">in the Camera API reference</a> as follows.
+                                    </p>
+                                    
+                        <button class="btn btn-info btn-xs" data-clipboard-target="#setCameraDisplayOrientation">Copy</button>
+<div id="setCameraDisplayOrientation" class="codeblock">public static void setCameraDisplayOrientation(Activity activity,
+         int cameraId, android.hardware.Camera camera) {
+    android.hardware.Camera.CameraInfo info =
+        new android.hardware.Camera.CameraInfo();
+    android.hardware.Camera.getCameraInfo(cameraId, info);
+    int rotation = ((WindowManager)context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay()
+            .getRotation();
+    int degrees = 0;
+    switch (rotation) {
+        case Surface.ROTATION_0: degrees = 0; break;
+        case Surface.ROTATION_90: degrees = 90; break;
+        case Surface.ROTATION_180: degrees = 180; break;
+        case Surface.ROTATION_270: degrees = 270; break;
+    }
+    Log.i(LibraryInfo.TAG,"info orientation:" + info.orientation + " rotation:" + degrees + ":");
+    int result;
+    if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+        result = (info.orientation + degrees) % 360;
+        result = (360 - result) % 360;  // compensate the mirror
+    } else {  // back-facing
+        result = (info.orientation - degrees + 360) % 360;
+    }
+    return result;
+}</div>                           
+                                </dd>
+                                <dt>Video recording</dt>
+                                <dd>It records a video after a button click. <br />
+                                    The process is based on photo shoot and requires some more steps. After starting the preview 
+                                    the camera has to be <code>unlock</code>ed 
+                                    to allow the media process to access it. Then a <a href="https://developer.android.com/reference/android/media/MediaRecorder.html">
+                                    <code>MediaRecorder</code></a> object has to be created that will perform video recording. 
+                                    Before <code>MediaRecorder.prepare</code> and <code>start</code> various parameters have to be set according to the user's need. 
+                                    These parameters include the camera, the audio and video source, the output file, the profile containing video size 
+                                    and frame rate information. Orientation hint is also set at this point to ensure the video file will contain a hint 
+                                    for video player to rotate the stream accordingly. Calculation of correct rotation angle is the same as above.<br />
+                                    At the end of the recording <code>MediaRecorder</code> has to be stopped and released and then 
+                                    the camera has to be locked again.</dd>
+                            </dl>
+                            <p>The whole program can be downloaded from <a href="https://github.com/richardszabo/androidCameraTest">github</a>. 
+                                Media recording elements are organized into a separate library as described below.
+                                This library is <a href="https://github.com/richardszabo/androidCamera1Util">Camera1Util</a>.</p>                            
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
+            <div id="Library" class="row row-content mydata">                                    
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                           <h2 class="panel-title"><a>Using a library</a></h2></div>
+                        <div class="panel-body">
+                            <p>As with every other language and framework it is good to reuse code in Android. One way of avoiding code repetition  
+                               is the usage of libraries. As I wanted to handle camera preview and media recorder from various projects I created
+                               <a href="https://github.com/richardszabo/androidCamera1Util">Camera1Util</a>.
+                            </p>
+                            <p>Although Google has a <a href="http://tools.android.com/tech-docs/new-build-system/user-guide">recommendation</a> 
+                                on how to use libraries but according to philosophicalhacker this setup means that <q>you have to have copies of a library for every app that depends on it</q>.
+                                Since I want to avoid this "feature" I followed 
+                               <a href="https://www.philosophicalhacker.com/2014/10/03/an-alternative-multiproject-setup-for-android-studio/">his method</a>.
+                            </p>    
+                            <ol>
+                                <li>I have create the Camera1Util Android Studio project. I created a new library module, named camera1util in this new project. 
+                                    The project's app folder is empty, everything is defined in the <code>camera1util</code> folder.</li>
+                                <li>The <code>settings.gradle</code> file of the main program (the one that uses Camera1Util library) is extended with the following rows,
+                                    (Please note that <code>../Camera1Util/camera1util</code> is valid because Camera1Util and Camera1Test are placed 
+                                    in the same directory next to each other):
+                        <button class="btn btn-info btn-xs" data-clipboard-target="#Library">Copy</button>
+<div id="Library" class="codeblock">include ':camera1util'
+project(':camera1util').projectDir = new File('../Camera1Util/camera1util')
+</div>                                  
+                        After I refresh/reopen the main project <code>camera1util</code> appears in the Project tab.
+                                </li>
+                                <li>The <code>app/build.gradle</code> file of the main program is extended with an extra dependency:
+                        <button class="btn btn-info btn-xs" data-clipboard-target="#Dependency">Copy</button>
+<div id="Dependency" class="codeblock">dependencies {
+    ...
+    compile project(':camera1util')
+    ...
+}
+</div>                                                                  
+                        From this point it is possible to import classes from Camera1Util.
+                                </li>
+                            </ol>
+                            <p>Advantages of this solution is that: </p>                           
+                            <ul>
+                                <li>There is no code repetition, everything is in the module.</li>
+                                <li>The library is visible from the main program, it can be edited, compiled as well.</li>
+                                <li>The same library can be used in several programs simultaneously.</li>
+                            </ul>
+                        </div>
+                    </div>                
+                </div>
+            </div>
+
+            <div id="Permissions" class="row row-content mydata">                                    
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                           <h2 class="panel-title"><a>Permissions</a></h2></div>
+                        <div class="panel-body">
+                            <p>Beginning in Android 6.0 (API level 23), users grant permissions to applications while the 
+                               <a href="https://developer.android.com/training/permissions/requesting.html">app is running</a>, not when they install the app.
+                               Permissions can be granted at a specific point of the execution and they can be revoked when not needed.
+                               It means a more flexible and dynamic handling of permissions.  
+                               All required permissions have to be enumerated in <code>AndroidManifest.xml</code> like this:
+                            </p>
+                        <button class="btn btn-info btn-xs" data-clipboard-target="#Dependency">Copy</button>
+<div id="Dependency" class="codeblock">&lt;manifest ...&gt;
+    ...
+&lt;uses-permission android:name="android.permission.CAMERA" /&gt;                            
+    ...
+&lt;/manifest&gt;
+</div>                                                                  
+                            <p>There are <a href="https://developer.android.com/guide/topics/permissions/requesting.html#normal-dangerous">normal 
+                                and dangerous permissions</a> depending on the risk that the user's privacy is affected or not.
+                                Normal permissions are automatically granted.
+                            </p>
+                            <p>
+                                If the device's API level is below 23 then all required dangerous permissions need to be granted during installation 
+                                there is no way to postpone user interaction to the first usage of the permission.
+                                From API level 23 before the usage of a dangerous permission 
+                                it is necessary to check whether the permission has already been granted using <code>ContextCompat.checkSelfPermission</code>. 
+                                Given a negative response the programmer has to request the permission with <code>ActivityCompat.requestPermissions</code>.
+                                This function does not return with a yes-no value, in other words, there is no direct answer to the request: 
+                                the running program opens a dialog to the user and waits for the answer without blocking the execution 
+                                (e.g. screen orientation can change in the meantime).                                 
+                            </p>
+                            <p>
+                                The response to the request returns to the <code>onRequestPermissionsResult</code> event handler method of the running activity.                                
+                                If the user grants the permission then the execution can move using the permission. 
+                                If not then it is useful to show a rationale about the permission request to explain to the user why the permission is needed.
+                                After a denial when the user executes the program for the second time the permission request dialog appears again, 
+                                in this case the dialog includes a <code>Never ask again</code> checkbox. If the user clicks the checkbox then 
+                                the permission request dialog will never show up again for this permission. 
+                                To avoid user annoyance after that it is a good habit not to display the rationale again and again. The
+                                <code>ActivityCompat.shouldShowRequestPermissionRationale</code> method comes handy in this case because 
+                                it return false when the program should not show the description explaining the importance of the permission.                                
+                            </p>    
+                            <p>
+                               The program has to be prepared for the situation when a required request is not granted. For example the extra feature has to be disabled.
+                               In case of the Camera API 1 program there is nothing to do without camera permission so the program simply does not do anything.
+                            </p>
+                            
+                            <p>A thorough description of the permission handling can be found 
+                                <a href="https://inthecheesefactory.com/blog/things-you-need-to-know-about-android-m-permission-developer-edition/en">here</a>.
+                                This page also explains the handling of multiple permissions and the correct way to handle devices with API level below and above 23 with the same code.
+                            </p>
+                            <p>
+                                Based on the above I have created a library to handle permissions uniformly from all of my programs. The library can be found on
+                                <a href="https://github.com/richardszabo/androidPermissionHandler">github</a>.
+                            </p> 
+                           
+                        </div>
+                    </div>                
+                </div>
+            </div>
+
+            <div id="Timelapse" class="row row-content mydata">                                    
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                           <h2 class="panel-title"><img src="images/timelapse.png" alt="timelapse"><a>Timelapse</a></h2></div>
+                        <div class="panel-body">
+                            <p><a href="https://en.wikipedia.org/wiki/Time-lapse_photography">Time lapse</a> videos contains less frame per seconds 
+                               then classical videos and when played back at normal speed they seems like a fast motion movie.
+                               This nice effect is available in some devices but not in all. Moreover selection of recording speed can be limited.</p>
+                            <p>This small program tries to record a video in 720p resolution with a pre-selected frame rate. 
+                               The handling of <code>MediaRecorder</code> is similar to the case of Camera 1 API, only the profile i set to 
+                               <code>CamcorderProfile.QUALITY_TIME_LAPSE_720P</code>.</p>
+                               
+	                    <p>The complete source can be downloaded from <a href="https://github.com/richardszabo/Timelapse">github</a>.</p>
+                            <figure>
+                                <img class="img-responsive" src="images/TimeLapse_Menu.png" alt="TimeLapse_Menu">
+                            </figure>
+                            <p>A test video on <a href="https://youtu.be/a54p3TRX8W0">youtube</a>.</p>
+                        </div>
+                    </div>                
+                </div>
+            </div>
+                
+            <div id="VideoStream" class="row row-content mydata">                                    
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                           <h2 class="panel-title"><img src="images/videostream.png" alt="videostream"><a>VideoStream</a></h2></div>
+                        <div class="panel-body">
+                            <p>The aim of this project is to send video data online among devices, in other words to 
+                                <a href="https://en.wikipedia.org/wiki/Streaming_media">stream media</a>. The camera of the sending device is turned on and 
+                                the video is broadcasted to all clients.</p>
+                            <p>The same application can be used on broadcaster's and on receiver's side, roles have to be decided after program startup. 
+                                The only parameter of the broadcaster is the image size to be sent. Possible values are selectable from a device-dependent 
+                                list before clicking on the Send button as it can be seen in the image below.</p>
+                            <figure>
+                                <img class="img-responsive" src="images/VideoStream_Menu.png" alt="VideoStream_Menu">
+                            </figure>                                    
+                            <p>As the broadcaster starts the sending it shows a preview image of the selected size. Moreover it writes 
+                               the IP address of the device at the top of the screen. The receiver of the stream has 
+                               to know the broadcaster's IP address before connection. 
+                               So after clicking Receive the user has to set the IP address correctly and then pressing Connect establishes the connection 
+                               and the remote video becomes visible.                                
+                            </p>
+                            <figure>
+                                <img class="img-responsive" src="images/VideoStream_Receiver_Menu.png" alt="VideoStream_Receiver_Menu">
+                            </figure>                                    
+                            <p>Broadcaster and receivers must be on the same network. It either can be Wi-Fi or a Bluetooth PAN. 
+                               The latter function is a built-in feature of Android 4.0 or newer devices. 
+                               One of the phones share its internet connection with other phones and gives unique IP addresses to each connected device. 
+                               Proper setting of connection between Android and Windows desktop is described <a href="https://www.androidpit.com/share-wifi-over-bluetooth">here</a>, 
+                               connecting Android to Android is similar. The advantage of this method we do not need an internet connection at all. 
+                               Even the device that shares its network vie the Bluetooth PAN can work without Wi-Fi or mobile net 
+                               so the streaming can be performed even in the forest as long as the devices are within Bluetooth communication range.</p>
+                            <p>Communication is solved by sockets: the sending device creates a server socket and a receiver connects to the server via its socket. 
+                                Both processes are executed in the background with <code>AsyncTask</code> in <code>SenderCommunicator</code> 
+                                and in <code>ReceiverCommunicator</code> classes.                                
+                                When the connection has been established the <code>onPreviewFrame</code> method 
+                                in the <code>StreamingCameraPreview</code> class sends the selected image size to each receiver and then actual image byte array. 
+                                Without knowing the image width and height it would not be possible the decode the images in the receiver's side.
+                            </p>
+                            <p>The byte array representing the images in <code>onPreviewFrame</code> are encoded in 
+                                <a href="https://en.wikipedia.org/wiki/YUV#Y.E2.80.B2UV420p_.28and_Y.E2.80.B2V12_or_YV12.29_to_RGB888_conversion"><code>YUV420SP</code></a> format.
+                               Since <code>YUV420SP</code> requires less bytes to represent the image than the preferred <code>RGB888</code> format we do no change 
+                               the image format on the broadcaster's side. The only modification here is the rotation of the image by <code>rotateYUV420Degree90</code> method
+                               if the camera orientation and the current rotation of the device makes it necessary.</p>
+                            <p>Image is then transformed from <code>YUV420SP</code> to <code>RGB888</code> format on the receiver's side with <code>decodeYUV420SP</code> 
+                                to create a displayable bitmap. The conversion is a bit tricky - there are various invalid code snippets around 
+                                the web that confuses different YUV formats - 
+                                but using 
+                                <a href="https://en.wikipedia.org/wiki/YUV#Y.E2.80.B2UV420p_.28and_Y.E2.80.B2V12_or_YV12.29_to_RGB888_conversion">the above algorithm</a> 
+                                and <a href="https://en.wikipedia.org/wiki/YUV#Y.E2.80.B2UV420sp_.28NV21.29_to_RGB_conversion_.28Android.29">this pixel value transformation</a> 
+                                does the job.</p>
+                            <p>Although the program works nicely with the above structure one concern is the speed. Putting the broadcaster and 
+                                one receiver next to each other the delay between sending and receiving is clearly visible. 
+                                It could be seconds before the same image appears on the receiver. Of course in depends on the capabilities 
+                                of the used hardware but selecting large image sizes or adding too much receivers to the network signigicantly slows the the process.
+                                One possible speedup would the usage of the <a href="https://developer.android.com/guide/topics/renderscript/compute.html">Renderscript</a>
+                                framework designed for computationally intensive tasks utilizing parallel core possibilities. 
+                                Until now I could not use this sparsely documented library. 
+                            </p>
+	                    <p>The complete source can be downloaded from <a href="https://github.com/richardszabo/VideoStream">github</a>.</p>
+                            <p>It also contains a Java application in the VideoStreamReceiverDesktop directory that I used during testing 
+                               but this program is useful in its own right. 
+                               It is a Swing-based Netbeans project to receive the video on a non-Android device as well.</p>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+	    
+        </div>            
+        </div>            
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row row-footer">
+                <div class="col-xs-6">
+                    <div>Copyright &copy; 2017, Richárd Szabó</div>
+                </div>
+                <div class="col-xs-6">
+                    <div id="modification">Last modification: <span id="last_modified">abc</span></div>
+                </div>
+            </div>
+            <div class="row row-footer">
+                <div class="col-xs-12">
+                    <!-- BEGIN WebSTAT Activation Code -->
+                    <script type="text/javascript" src="http://hits.webstat.com/cgi-bin/wsv2.cgi?39877"></script>
+                    <noscript>
+                        <!--<a href="http://www.webstat.com">
+                        <img src="http://hits.webstat.com/scripts/wsb.php?ac=39877" border="0" alt="WebSTAT - Free Web Statistics" /></a>-->
+                    </noscript>
+                    <!-- END WebSTAT Activation Code -->
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>    
+    <script src="../bower_components/clipboard/dist/clipboard.min.js"></script>
+    <script src="../bower_components/jquery.gifplayer/dist/jquery.gifplayer.js"></script>
+    <script>
+        $( document ).ready(function() {
+            $("#last_modified").text(document.lastModified);
+            var btns = document.querySelectorAll('button');
+            var clipboard = new Clipboard(btns);
+            clipboard.on('success', function(e) {  
+                e.clearSelection();
+            });
+            $('.gif').gifplayer();
+        });        
+        $( window ).resize(function() {
+            console.log("resize");
+            $('.gif').gifplayer('stop');//first stop the playing gifs,videos
+            $('.gif,.gif *').unbind().removeData();//remove all the things added by the plugin
+            $(".gif").unwrap();//remove the parent class (this parent is the source of the problem)
+            $( ".play-gif" ).remove();//remove the play button
+            $(".gif").css("display","block");//for the videos
+            $( ".gp-video-element" ).remove();//for the videos
+            $('.gif').gifplayer();//reattach the plugin (don't worry it is fast )
+        });        
+    </script>
+  </body>
+</html>

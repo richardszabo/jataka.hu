@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<surveyor_configuration>
+
+    <hue-lower-limit>0</hue-lower-limit> <!-- hue is [0,360] -->
+    <hue-upper-limit>360</hue-upper-limit>
+    <saturation-lower-limit>0</saturation-lower-limit> <!-- saturation is [0,255] -->
+    <saturation-upper-limit>10</saturation-upper-limit>
+    <value-lower-limit>220</value-lower-limit> <!-- value is [0,255] -->
+    <value-upper-limit>255</value-upper-limit>
+
+    <dilate_erode_number>0</dilate_erode_number> <!-- number of iteration of delatation and erosion -->
+
+    <light-lower-limit>50</light-lower-limit>
+    <light-upper-limit>5000</light-upper-limit>
+
+</surveyor_configuration>

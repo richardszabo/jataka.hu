@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Futballstadionok játékos megismerése a Google Street View-n keresztül." />
+    <meta name="keywords" content="Stadion, térkép, földrajz, játék, keresés, tanulás, kvíz, Google Street View" />
+    <meta name="copyright" content="Szabó Richárd 2016." />
+    <meta name="country" content="Hungary">
+    <meta name="content-language" content="hu, hun, hungarian">
+
+    <title>Segítség</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="suggest.css">
+  </head>
+  <script>
+  function sendMail() {
+      var str = ['holjarunk','jataka.hu'].join('@');
+      var link = "mailto:" + str
+      + "?&subject=" + encodeURI("Hol járunk (stadionok) - vélemény");
+      window.location.href = link;
+  }
+  </script>
+
+  <body>
+    <iframe class="background" id="Népstadion" src="https://www.google.com/maps/embed?pb=!1m0!3m2!1shu!2shu!4v1459265770943!6m8!1m7!1srX3Q6U6nYLk5tKPCMT0_pg!2m2!1d47.5012010346517!2d19.0961190630678!3f32.73!4f2.980000000000004!5f0.7820865974627469" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+    <div class="input_panel" id="suggest">
+      <div class="title">Segítség</div>
+      <div id="suggest_text">
+        <p>Ez az oldal egy <a href="https://www.google.com/maps/streetview/">Google Street View</a>-ra épülő játék,
+            kvíz avagy tanulási lehetőség, amelynek segítségével futballstadionokat lehet megismerni.</p>
+        <p>A játék során megjelenő kép a jobb felső sarokban szereplő négy stadion közül az egyiknél vagy egyikben készült:
+            a helyes választ neked kell megadnod. A válasz kitalálásához érdemes a Street View-ban megszokott módon "közlekedni" (ha nem panorámaképről van szó).
+            Az egyszerűbb feladatoknál a kiinduló kép rögtön felismerhető, máskor körül kell nézni, esetleg rövidebb "gyaloglás"
+            is szükséges ahhoz, hogy egy ismertebb részhez érjünk.</p>
+        <p>Ha véleményed, ötleted van, kérlek <a href="" onclick="sendMail()">írjad meg</a>!</p>
+      </div>
+        <div><a id="back_link" href="index.html">Újrakezdés</a></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "name": "honlap",
+  "authors": [
+    "richardszabo <richard_szabo@jataka.hu>"
+  ],
+  "description": "My homepage.",
+  "main": "index.html",
+  "moduleType": [
+    "globals"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "clipboard": "^1.5.16",
+    "jquery.gifplayer": "^0.3.2"
+  }
+}

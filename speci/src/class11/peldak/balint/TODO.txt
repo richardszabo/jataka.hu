@@ -1,0 +1,4 @@
+- team play
+- think ahead when approaching moving ball
+- awareness of playing mode (e.g. do not move if out-of-play)
+- dedicated goalie

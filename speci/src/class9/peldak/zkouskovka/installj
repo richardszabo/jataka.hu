@@ -1,0 +1,5 @@
+rm -f $WEBOTS_HOME/controllers/alife_yellow.khepera/*
+cp *.java $WEBOTS_HOME/controllers/alife_yellow.khepera
+cp makej $WEBOTS_HOME/controllers/alife_yellow.khepera
+cd $WEBOTS_HOME/controllers/alife_yellow.khepera
+./makej

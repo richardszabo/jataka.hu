@@ -1,0 +1,436 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+                      "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+<h1>Mobil robotok szimulációja speci 10. óra</h1>
+
+<h2>A robotfutball és környéke</h2>
+
+<ul>
+<li>kilencvenes évek közepe versenyzés
+<li>szimulált és valóságos formában, több ligában is
+<li>izgalmas játék és mérnöki-tudományos munka
+<li>valódi: robotok és kontrollerjük megvalósítása
+<li>világcégek támogatása (Sony, SGI)
+<li>A kutatómunka nem titkolt célja: 2050-re olyan ember
+     formájú és emberien mûködõ robotcsapat létrehozása,
+     amely képes legyõzni a humanoid futball akkori
+     világbajnokát. 
+<li>szimuláció: még több érdeklõdõ (több, mint 40 csapat a Melbourne-2000-en)
+<li>mentõrobotok: katasztrófák esetén 
+további károk megakadályozása (tûzoltás, sérült villany- és vízvezetékek
+javítása), és a bajba jutottak megsegítése
+<p><img src="pict/roborescue.jpg" alt="roborescue"></p>
+<li>Robocup Junior létrehozása oktatási céllal
+<p><img src="pict/robjunior.jpg" alt="robjunior"></p>
+<li>P. Stone doktori munkája és a CMUnited
+</ul>
+
+<h2>A robotfutball jellemzõi</h2>
+
+<ul>
+<li>szimulált robotfoci
+<ul>
+<li>osztott, multi-ágens rendszer csapattársakkal és ellenfelekkel
+<li>rejtett állapot, a robot nem látja mindig az egész pályát
+<li>zajos szenzorok és aktorok
+<li>aszinkron érzékelés és cselekvés, eltérõen az eddigi környezetektõl
+<li>limitált kommunikációs lehetõségek
+<li>valós idejû döntéshozatal
+<li>más robotok cselekvésének kimenetele bizonytalan
+</ul>
+ 
+<li>valódi robotfoci
+<ul>
+<li>absztrakt érzékelés helyett valódi képek feldolgozása
+<li>egy központi kamera -> nem teljesen osztott érzékelés
+<li>nem rejtett az állapot
+<li>nincs kommunikáció
+<li>biztos kimenetelû cselekvések
+</ul> 
+
+<li>network routing hasonlósága a feladathoz, mintegy alátámasztásul, hogy
+a téma nem csak játék (osztott érzékelés és cselekvés, csapattársak,
+rejtett állapot, valós idejû, rejtett állapotátmenet)
+</ul>
+
+<h2>A szimulátor felépítése</h2>
+
+<ul>
+<li>4. változat bemutatása, 2000. õszén a 6. változat is megjelent
+<li>levelezési listán hosszas viták a a folytatásról 
+(alapok megváltoztathatósága, funkcióbõvítés, ligák létrehozása)
+<li>kliens-szerver architektúra
+<li>a szerverhez minden egyes játékos (22), mint kliens kapcsolódik, és egy
+LISP-szerû nyelven kap adatokat és küld utasításokat
+<li>UDP kapcsolat szerverrel
+<li>bíró, aki a játék szabályait kényszeríti ki (bedobás, gól, les, befejezés)
+<li>aszinkronitás a játékosok között is
+<li>a szerver és a kliensek aszinkron mûködése
+<p><img src="pict/timeline.png" alt="timeline"></p>
+<li><a href="peldak/server.conf">a szerver konfigurációs paraméterei</a>
+<li>a szimulált világ (zászlók mindenfelé)
+<p><img src="pict/FLAG.JPG" alt="timeline"></p>
+<li>az állapotteret a tárgyak pozíciója, iránya és sebessége alkotja
+<li>mérete jóval nagyobb, mint (680x1050x3600)^22 -> 10^198
+<li>minden állapotváltozást a paraméterekre alapozott
+egyenletrendszerek határoznak meg (pozíció, sebesség, gyorsulás,
+utóbbi hatóerõ függvényében)
+<li>ütközések: átlapolások elkerülése
+<li>energia: azért, hogy ne lehessen állandóan teljes sebességgel futni
+(fogyás, hatásfok, visszatöltõdés)
+</ul>
+
+<h3>Érzékelés</h3>
+
+
+<ul>
+<li>hallás, látás, fizikai jellemzõk megismerése
+<li>hallás <code>(hear Time Direction Message)</code> formában
+<li>csak egy bizonyos távolságon belül hat, kivéve bíróé
+<li>nem tudni ki küldte
+<li>2 ciklusonként egy üzenetet képes fogadni egy robot, a bírónak
+prioritása van
+<li>látás <code>(see Time ObjInfo ObjInfo ...)</code> formában
+<li>ahol <code>ObjInfo</code> név, távolság, irány, távolság- és irányváltozás
+adatokat tartalmaz, a két utolsóból lehet a sebességre következtetni
+<li>az objektum lehet játékos, labda, zászló (oldalvonal, kapu)
+<li>a látvány minõségén lehet változtatni információtartalom és
+szögfelbontás módosításával, jobb kép ritkább mintavétel
+<li>látás pontossága függ a tárgyak távolságától
+<p><img src="pict/robvision.jpg" alt="robvision"></p>
+<li>fizikai információk: játékos energiájának, sebességének,
+paramétereinek lekérdezése
+<code>(sense_body 95 (view_mode high normal) (stamina 1280 1) (effort 1.0)
+(recovery 1.0) (speed 0.39)</code>
+</ul>
+
+<h3>Cselekvések</h3> 
+<ul>
+<li>kommunikáció, mozgás, fizikai paraméterek változtatása
+<li>kommunikáció (<code>say</code>): 512 bájt hosszú ASCII sztringek, amit mindkét csapat
+meghall
+<li>fordulás (<code>turn</code>): max 180 fok, nagyobb sebességnél kisebb szög lehetséges (lendület)
+<li>futás (<code>dash</code>): játékosok haladási irányba mozoghatnak, elõre vagy hátra,
+elõre gyorsabban (késõbbi változatokban már megjelent a nyak, ezért a látvány és a
+haladási irány nem feltétlenül esik egybe)
+<li>rúgás (<code>kick</code>): négy jellemzõ tulajdonsága van
+<ul>
+<li>labda mozgásának megváltoztatása nem beállítással, hanem
+vektorösszeadással történik
+<li>a labdát a <code>kickable_area</code> nagyságának megfelelõ
+területen belül tudja a játékos eltalálni (valóságban ez nem mûködik)
+<li>a labda és a játékos ugyanúgy ütközhet, mint más tárgyak
+<li>a rúgás ereje a labda és a játékos egymáshoz viszonyított
+helyzetétõl is függ: a legnagyobb akkor lehet, ha labda közel van a
+játékos elõtt, a szöggel és a távolsággal az erõ csökken
+</ul>
+<li>védés (<code>catch</code>): csak kapusok, a büntetõterületen belül, csak megfelelõ távolságból
+<li>fizikai paraméterek változtatása: <code>change_view</code>, 
+<code>sense_body</code>
+</ul>
+<h3>Példa</h3>
+egy játékos mozgása és az általa érzékelt világ
+<p><img src="pict/samplemove.jpg" alt="samplemove"></p>
+<font size=-1>
+<pre>
+**-> (dash 100.00)
+(see 94 ((goal r) 15.3 27) ((flag r t) 47.9 8) ((flag p r t) 34.8 -15) ((flag p r c) 16.4 -34 0 0)
+    ((flag g r t) 21.8 19) ((ball) 8.2 0 0 0) ((player CMUnited) 40.4 -8)
+    ((player CMUnited 2) 16.4 -37 0 0 117) ((player Opponent 1) 16.4 15 0 0 -148)
+    ((player Opponent) 44.7 0) ((line t) 47.5 89))
+**-> (sense_body)
+(sense_body 95 (view_mode high normal) (stamina 1280 1) (effort 1.0) (recovery 1.0) (speed 0.39)
+*->  (dash 100.00)
+(see 96 ((goal r) 13.6 31) ((flag r t) 46.1 8) ((flag p r t) 33.1 -16) ((flag p r c) 14.9 -39 -0.298 -0.9)
+    ((flag g r t) 19.9 20 -0.398 0.5) ((ball) 6.7 -2 -0.402 0) ((player CMUnited) 36.6 -8)
+    ((player CMUnited 2) 14.9 -41 -0.298 -0.9 117) ((player Opponent 1) 14.9 17 -0.298 -148)
+    ((player Opponent) 40.4 0) ((line t) 45.6 89))
+**->  (dash 100.00)
+**-> (sense_body)
+(sense_body 97 (view_mode high normal) (stamina 1120 1) (effort 1.0) (recovery 1.0) (speed 0.44)
+**->  (dash 100.00)
+.
+.
+.
+(hear 103 -70 shoot the ball) (see 104 ...((ball) 1.8 6 0.108 5.4) ...)
+**-> (say shooting now)
+**-> (kick 100.00 65.40)
+(hear 104 self shooting now)
+**-> (sense_body)
+(sense_body 105 (view_mode high normal) (stamina 980 1) (effort 1.0) (recovery 1.0) (speed 0)
+**-> (turn 31.76)
+(see 106 ... ((ball) 4.1 14 1.23 7) ...)
+**-> (turn 14.00)
+.
+.
+.
+**->  (dash 100.00)
+(see 112 ((goal r) 6.8 12) ((flag r t) 38.5 -32) ((flag g r t) 12.3 -14 -0.246 0) ((ball) 7.4 2 0.74 1.5)
+    ((player Opponent 1) 7.4 -18 -0.148 -0.2 107) ((player Opponent) 33.1 -44) ((line r) 8.2 -40))
+(hear 113 referee goal_l_1)
+(hear 113 referee kick_off_r)
+</pre>
+</font>
+
+<h2>Egy csapat fejlesztése</h2>
+<ul>
+<li><a href="peldak/balint">kódok</a></li>
+</ul>
+
+<h2>A CMUnited-98 alapjai</h2>
+
+<ul>
+<li>a feladat megoldásának hierarchikus felépítése,
+<a href="peldak/client.c">az egyszerû kliens kódja</a> 
+csupa alacsonyszintû fájlmûveletet tartalmaz
+<li>az egész csapatjáték, ezért a kezdeti tervezésnél az együttmûködést kell
+szem elõtt tartani
+<li>a valósidejûség és a limitált kommunikációs lehetõségek miatt nem
+lehet komplex egyeztetõ protokollokat alkalmazni
+<li>Periodic Team Synchronization (PTS) bevezetése
+<li>a játék közbeni korlátos kommunikáció együtt a kezdeti, a
+félideji és idõkéréskori szabad egyeztetés lehetõségével
+<li>locker-room agreement: mindenki az öltözõbeli egyeztetésnek
+megfelelõ módon viselkedik
+
+<li>ezek figyelembe vételével alakul ki egy játékos általános felépítése
+<ul>
+<li>a felépítés
+<p><img src="pict/architecture.png" alt="architecture"></p>
+<li>a világ állapota: a játékos ismerete a világról érzetei és
+cselekvéseinek következményei alapján, meghatározott valószínûséggel
+rendelkezõ hitek gyújteménye
+<li>locker-room agreement: a flexibilis csapatmunkát meghatározó
+megállapodás, amit játék közben csak a belsõ viselkedések érthetnek el
+<li>belsõ állapot: a játékos belsõ változóinak halmaza, melyet a belsõ
+viselkedések módosítanak
+<li>belsõ viselkedések: belsõ állapotok módosítására az eddigi belsõ
+állapot, a világ állapota és az elõzetes megegyezések alapján
+<li>külsõ viselkedések: a belsõ állapotok és a világ állapota alapján
+a megfelelõ viselkedések kiválasztása
+<li>predictor: a viselkedések világra hatásának összegzése
+<li>interpreter: a világból érkezõ érzetek elõfeldolgozása
+<li>viselkedések fastruktúrát alkotnak, legfelsõ szinten egy belsõ
+viselkedés és egy külsõ viselkedés, melyeket idõközönként végrehajt a
+játékos
+<li> a viselkedést leíró többszintû hierarchia (tanulás)
+<p><img src="pict/hierarchy.png" alt="hierarchy"></p>
+</ul>
+
+<li>csapatmunka struktúrájának elemei
+<ul>
+<li>szerepek, formációk, begyakorolt figurák
+<li>szerep: belsõ és külsõ viselkedések specifikációja, a viselkedés
+tetszõleges szintjén definiálható
+<li>például egy középpályási pozíció egy szerep
+<li>formáció: szerepek halmaza, mellyel a csapaton belüli
+együttmûködést lehet meghatározni
+<li>egy formáció több egységet tartalmazhat kapitányokkal
+<li>szerepek és formációk nem fix struktúrái a játékosoknak és a
+csapatnak, menet közben cserélõdhetnek, változhatnak
+<li>a begyakorolt figurák szerepek halmazára értelmezettek, 
+egy indító feltétellel
+<li>az egyes szerepekhez viselkedés és terminálási feltétel tartozik,
+ami után a játékos visszatérhet normális viselkedéséhez
+<li>kommunikáció és megoldandó feladatai
+<li>csapattagok beazonosítása, védekezés az ellenfél zavaró üzenetei
+ellen, minimális mennyiségû üzenet kiadása, 
+robusztusság, azonos formációban tevékenykedés biztosítása
+<li>a feltételeknek megfelelõ üzenetformátum a locker-room agreement
+része
+<li>azonosítás: egyedi azonosítók játékosra, formációra
+<li>védekezés: kódolt idõbélyegzõ
+<li>robusztusság: játékosok csak segítségnek használják a kommunikációt, de nem
+függenek tõle
+<li>robusztusság: válasz igénye esetén a játékos kódjának megfelelõ
+késleltetéssel elküldött üzenet (egyszerre csak egy beszél)
+<li>formáció szinkronizálása: idõbélyegzõ felhasználása, legkésõbbi
+üzenet figyelembe vétele, ha üzenet régebbi, mint a legutolsó
+állapotváltásról szóló üzenet, akkor automatikus helyesbítõ válasz a
+tájékozatlan felé
+</ul>
+
+<li>elõre huzalozott alacsonyszintû viselkedések, melyek lokális hatásúak
+<ul>
+<li>rúgás: labda irányváltoztatása a <code>kickable_area</code> területén
+<li>labda tetszõleges irányból érkezhet és tetszõleges irányba kell
+tudni továbbítani
+<li>szükség esetén érintõ számításával a labda áttétele az átellenes oldalra
+<p><img src="pict/turnball.png" alt="turnball"></p>
+<li>rúgás elvégzéséhez kell a célsebesség és az irány meghatározása 
+<li>eltérõ sebesség lövés és passz esetén
+<li>több kis rúgással a <code>kickable_area</code> területén tartva a
+labdát talán jobb lövés érhetõ el
+<p><img src="pict/kicking.jpg" alt="kicking"></p>
+<li>labdavezetés: mozgás és apró rúgások felváltott sorozata
+<li>a két lépésnek összhangban kell lennie az aktuális és a jövõbeni
+pozíciók kiszámítása alapján
+<li>okos labdavezetés: akadályok és ellenfelek figyelembe vétele
+haladás közben, az ellenfél játékosainak pozíciója mindig az
+átellenes oldalra téríti ki a labdát, persze mindig a játékos elõtt
+hagyva (a közelség és a játékos elõtti térrész nagyobb súllyal számít)
+<li>labdakezelés: a mezõnyjátékosok a labda mozgásából jósolják annak 
+jövõbeni pozícióját és megpróbálnak eljutni a legközelebbi elérhetõ
+helyre
+<li>kapus esetén elég a labda útjába állni és <code>catch</code>
+utasítással elfogni
+<li>védés: széles látószög, labda folyamatos követése
+<li>ha a labda becsült mozgása a kapuban végzõdne, akkor a passzív
+labdakezelést alkalmazva elé kell állni
+<li>ha nincs lövés, akkor a labda és a kapu között legjobb helyre áll
+a kapus
+<li>védekezés: két módon játékos blokkolása, labda és játékos
+akadályozása, mindkét esetben az ellenfél figyelése és követése
+<p><img src="pict/defending.png" alt="defending"></p>
+<li>blokkoláskor ellenfél és kapu közötti vonal elállása
+<li>akadályozáskor a kapu, az ellenfél és a labda által bezárt szög
+felezõjében tartózkodás
+<li>felszabadítás: lehetõleg az ellenfél játékosainak elkerülése, és
+ritkán szabad középre adni
+<li>indításnál a középre adás jó, remélhetõleg saját támadó tudja
+megszerezni a labdát
+</ul>
+
+<li>további viselkedések megvalósítása rétegelt tanulással történik
+<li>labdakezelés: tanult módon is, neurális háló segítségével
+<li>passz kiértékelés: melyik játékoshoz érdemes passzolni adott
+szituációban, ehhez meg kell határozni a passz sikerének valószínûségét
+<li>az értékfüggvény játékról játékra egyezik, ezért egyszeri
+tanulással és a megoldást a viselkedésbe építve megfelelõen lehet
+eljárni
+<li>az egyedi kiértékelések a környezet 174 folytonos attributumára alapozva
+hozhatóak meg, egy döntési fát építve a C4.5 algoritmus szerint
+<li>passz kiválasztás: a környezet állapota és a passzkiértékelõ
+függvény alapján ki lehet választani a megfelelõ csapattársat
+<li>egy döntés eredménye csak a csapat egész meccsen nyújtott
+teljesítménye alapján értékelhetõ
+<li>ezért a megerõsítéses tanulás Q-learning nevû algoritmusának egy
+módosított változatát (TPOT-RL) alkalmazta a szerzõ, ami folyamatosan
+követi a cselekvéseket és késõbb pontozza õket
+</ul>
+
+<h2>Quake</h2>
+
+<ul>
+<li>Id Software számítógépes játéka
+<li>3 dimenziós, szobákra és szabad terekre osztott bonyolult
+labirintus ellenségekkel
+<li>pályaszerkesztõ: tárgyakkal és akadályokkal ellátott szoba készíthetõ
+<li>emberi irányításon túli mesterséges intelligencia megalkotása (bot) 
+<li>QuakeC: a C programozási nyelvre alapozott fejlesztõi környezet,
+J. Carmack alkotása
+<li>egyszerûsítések és kiegészítés a háromdimenziós környezet kezelése
+érdekében
+<li>szintatikai eltérések a C-tõl 
+<li>a megjegyzések formája, a változók, a konstansok, 
+a függvények definíciója, az összetett utasítások, az operátorok és a 
+függvények meghívása a szokásoshoz hasonló
+<li>új típus nem hozható létre, csak új mezõket lehet definiálni
+<li>entity típus: játékosok, ellenségek, tárgyak, és szintek tárolója
+<ul>
+<li><code>float frame</code>: aktuális cselekvés képe
+<li><code>float skin</code>: kinézet
+<li><code>vector origin</code>: térbeli pozíció
+<li><code>vector size</code>: entitás mérete
+<li><code>vector oldorigin</code>: korábbi pozíció
+<li><code>vector angles</code>: haladási irány
+<li><code>vector velocity</code>: sebesség
+<li><code>float health</code>: energiaszint
+<li><code>float items</code>: tárgyak a játékosnál
+<li><code>float armorvalue</code>: páncélzat értéke
+</ul>
+<li>függvények:<p>
+<code>void()      think = {...};</code><br>
+<code>entity()    FindTarget = {...};</code><br>
+<code>void(vector destination, float speed, void() callback)
+SUB_CalcMove = {...};</code><p>
+<li>frame függvény<p>
+<code>void() framename = [$framenum, nextthink] { ...code...};</code><p>
+ami az alábbinak felel meg:<p>
+<pre>
+    void() framename =
+    {
+       self.frame= $framenum;  // the model frame to displayed
+       self.nextthink = time + 0.1;   // next frame happens in 1/10 of second
+       self.think = nextthink; // the function to call at the next frame
+       ...code...
+    };
+</pre><p>
+<li>összetett utasítások:<p>
+<code>
+    if( expression )
+    {
+      statements
+    }
+    else
+    {
+      statements
+    }
+</code><p>
+<code>
+
+    while( expression )
+    {
+      statements
+    }
+</code><p>
+<code>
+    do
+    { 
+      statements
+    }while( expression )
+</code><p>
+<li>függvényhívás:<p>
+<code>
+    function_name ( parameter1, parameter2,... )
+</code><p>
+<li>operátorok:<code> !, &&, ||, <=, <, >=, >, ==, !=, *, /, -, +, &, |</code><p>
+<li>újdonság a beépített függvények és a globális változók szerepe
+melyek matematikai mûveleteket végeznek, kezelik a hangot, az entitásokat 
+és kapcsolatot tartanak a játék szerverével
+<li>néhány fontosabb globális változó
+<ul>
+<li><code>world</code>: minden változó és objektumok listájának tárolására
+<li><code>time</code>: a szimuláció ideje
+<li><code>self</code>: a játékost képviselõ entitás
+<li><code>other</code>: az ellenfél
+<li><code>mapname</code>: az aktuális térkép
+</ul>
+<li>néhány érdekesebb beépített függvény
+<ul>
+<li><code>normalize</code>: vektor normálása
+<li><code>vectoyaw</code>: vektor szögének visszaadása
+<li><code>entity find (entity start, .string field, string match)</code>: <br>
+entitás megkeresése a world istájában, minta alapján
+<li><code>entity findradius (vector origin, float radius)</code>: <br>
+entitások listájának visszaadása <code>radius</code> sugarú környezetben
+<li><code>float walkmove(float yaw, float dist)</code>: <br>
+haladás
+<code>yaw</code> irányba <code>dist</code> távolságot, ha lehetséges
+<li><code>vector aim(entity e, float missilespeed)</code>: <br>
+visszaad egy
+irányvektort, amerre <code>e</code> entitásnak a legközelebbi
+ellenfelét meg lehet céloznia
+<li><code>traceline (vector v1, vector v2, float nomonsters, entity forent)</code>:<br>
+<code>v1</code> és <code>v2</code> között a közvetlen összeköttetést
+vizsgálja, eredményül globális változókat állít be
+</ul>
+<li>végrehajtás: kezdeti inicializálás után think függvények meghívása
+idõszakonként, touch függvények meghívása érintkezéskor
+<li><a href="peldak/qfind.c">célpont megkeresése</a>
+<li><a href="peldak/progs">az alapvetõ forrás</a>
+</ul>
+
+</body>
+</html>
+
+
+
+
+
+

@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta3 (July 4th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Khepera, Webots</TITLE>
+<META NAME="description" CONTENT="Khepera, Webots">
+<META NAME="keywords" CONTENT="ea">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="ea.css">
+<LINK REL="next" HREF="node5.html">
+<LINK REL="previous" HREF="node3.html">
+<LINK REL="up" HREF="ea.html">
+<LINK REL="next" HREF="node5.html">
+</HEAD>
+<BODY >
+
+<H2>Braitenberg jármûvek</H2>
+<UL>
+<LI>StepRobot egyszerû használata: egy Braitenberg jármû</LI>
+<LI>Egyszerû, de intelligensnek tûnõ szabályozó mechanizmus mozgó automatákhoz</LI>
+<LI>Szenzorok és motorok</LI>
+<LI>Pozitív/negatív visszacsatolás, keresztezés</LI>
+<LI>Félénk, aggresszív, szeretetteli, felfedezõ, a két szenzoros, két
+motoros alaptípusok
+<P>
+<table BORDER=0 COLS=4 WIDTH="60%" >
+<tr>
+<td>
+<IMG ALIGN="bottom" BORDER=0 ALT="Félénk" 
+  SRC="screenshots/coward.gif">
+</td>
+<td><IMG ALIGN="bottom" BORDER=0 ALT="Agresszív" 
+  SRC="screenshots/aggressive.gif">
+</td>
+
+<td><IMG ALIGN="bottom" BORDER=0 ALT="Felfedezõ" 
+  SRC="screenshots/explorer.gif">
+</td>
+
+<td><IMG ALIGN="bottom" BORDER=0 ALT="Szeretetteli" 
+  SRC="screenshots/lover.gif">
+</td>
+</tr>
+
+<tr>
+<td>Félénk</td>
+
+<td>Agresszív</td>
+
+<td>Felfedezõ
+</td>
+
+<td>Szeretetteli
+</td>
+</tr>
+</table>
+<TABLE>
+
+</TABLE>
+</LI>
+<LI>Az eredmény: akadálykikerülést végzõ félénk felfedezõ
+<P>
+<FONT SIZE=-2>
+<PRE>
+boolean StepRobot(struct Robot *robot)
+{
+  if ((robot-&gt;IRSensor[0].DistanceValue &gt; THRESHOLD) ||
+      (robot-&gt;IRSensor[1].DistanceValue &gt; THRESHOLD) ||
+      (robot-&gt;IRSensor[2].DistanceValue &gt; THRESHOLD))  {
+    /* ütközés bal oldalon, fordulj jobbra */
+    robot-&gt;Motor[LEFT].Value  =  TURN_SPEED;
+    robot-&gt;Motor[RIGHT].Value = -TURN_SPEED;        
+  } else if ((robot-&gt;IRSensor[3].DistanceValue &gt; THRESHOLD) ||
+             (robot-&gt;IRSensor[4].DistanceValue &gt; THRESHOLD) ||
+             (robot-&gt;IRSensor[5].DistanceValue &gt; THRESHOLD))  {
+    /* ütközés jobb oldalon, fordulja balra */
+    robot-&gt;Motor[LEFT].Value  = -TURN_SPEED;
+    robot-&gt;Motor[RIGHT].Value =  TURN_SPEED;         
+  } else {
+    /* egyébként menj egyenesen */
+    robot-&gt;Motor[LEFT].Value  = FORWARD_SPEED;
+    robot-&gt;Motor[RIGHT].Value = FORWARD_SPEED;  
+  }
+  return(TRUE);
+}
+</PRE>
+</FONT>
+</LI></UL>
+
+<P>
+
+</BODY>
+</HTML>

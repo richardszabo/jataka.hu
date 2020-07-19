@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <link rel="Stylesheet" title="Default Stylesheet" media="Screen"
+  href="../default.css">
+  <meta http-equiv="Content-Type" content="text/html">
+</head>
+
+<body>
+<h1>Webots robotszimulációs verseny</h1>
+
+<table width="100%">
+  <tbody>
+    <tr>
+      <td><img src="webots_head.gif"></td>
+      <td><RIGHT><img src="SGripper.gif"></RIGHT></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Saját szimulációval részt vettem a Cyberbotics által rendezett 3D
+robotszimulációs versenyen 1999. április 15. és 1999. július 14. közötti elsõ,
+és 1999. szeptember 1. és 2000. szeptember 1. közötti második kiírásán. <br>
+<strong style="font-size: 16pt"><span style="color: #FF0000">Az elsõ versenyen
+második lettem, a másodikat pedig megnyertem</span></strong><span
+style="color: #FF0000; font-size: 16pt">.</span></p>
+
+<p>A feladat a következõ volt: <br>
+Egy 1mx1m-es szimulált 3D világba elhelyezett két robot verseng az
+energiaforrásokért. Az idõ múlásával a robotok energiaszintje folyamatosan
+csökken, így meg kell találniuk a teremben található négy energiaforrás
+valamelyikét, és energiát kell felvenniük belõle. Ez egyszerûen annyit jelent,
+hogy a forrás elõtt megfelelõ közelségben el kell haladni. Az energiaforrás
+egy ilyen esemény után feltöltõdik, majd újra használható állapotba kerül. A
+forrás aktuális állapota megállapítható a színébõl: ha zöld használható, ha
+piros nem. Az idõ múlásával a források feltöltõdési ideje nõ, így az
+ügyetlenebb (vagy pechesebb) robotnak egy idõ után nullára csökken az
+energiaszintje. Ekkor a másik robot megnyerte a mérkõzést.<br>
+Az alábbi kép egy tipikus környezetet mutat.</p>
+
+<p><img src="world.gif"></p>
+
+<p>A versenyzõk feladata az volt, hogy a szenzorok által nyújtott információ
+felhasználásával (80x60 fényérzékelõ szenzorok, infravörös akadályszenzorok) a
+kerekeken guruló jármû motorjait, úgy mûködtesse, hogy abból gyõztes stratégia
+alakuljon ki.<br>
+A következõ két kép a robot fényérzékelõi által észlelt világot mutatja, az
+utóbbin éppen egy energiaforrás látszik.</p>
+
+<p></p>
+
+<table width="100%">
+  <tbody>
+    <tr>
+      <td><img src="view1.gif"></td>
+      <td><img src="view2.gif"></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Az általam készített kontroller egy elõre huzalozott architektúra volt,
+mely kis mértékben Brooks subsumption modelljét követi. Mzperx nevû
+teremtményem a bemelegítõ fordulók után a körmérkõzések során mindenkit
+legyõzött, majd a két elsõ közti hatfordulós csatában alulmaradt.</p>
+
+<p>Íme <a href="match.html">egy jellemzõ küzdelem</a> a körmérkõzésekbõl.
+Mzperx fekete fejjel (fényérzékelõvel) látható.</p>
+
+<p>A kontroller fõ hiányossága az volt, hogy nem épített kognitív térképet,
+így egy már megtalált energiaforrást is el tudott hibázni, és ami még
+súlyosabb nullára tudott jutni az energiaszintje, úgy, hogy voltak feltöltött
+energiaforrások a teremben. <br>
+Másik probléma, ami miatt a döntõt is elveszítettem, az elakadás, vagyis
+amikor a robot beszorul falak közé, nem tud onnan kikeveredni, és elpusztul.
+Ez kognitív térképpel szintén kezelhetõ lenne.</p>
+
+<p>A versenyrõl, és az eredményeimrõl bõvebb információ <a
+href="http://www.cyberbotics.com">a Webots hivatalos honlapján</a>
+található.</p>
+
+<p>Az oldalt készítette: Szabó Richárd.</p>
+</body>
+</html>

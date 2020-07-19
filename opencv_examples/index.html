@@ -1,0 +1,716 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../bower_components/jquery.gifplayer/dist/gifplayer.css">    
+    <link rel="stylesheet" type="text/css" href="own.css">
+    
+    <title>OpenCV examples</title>
+</head>
+
+  <body data-spy="scroll" data-target="#myScrollspy" data-offset="90">      
+    <div class="container">
+        <div class="navbar navbar-default navbar-fixed-top">
+            <div class="navbar-header">
+                <h1>
+                    <a href="http://opencv.org"><img src="images/opencv_logo.png" alt="opencv logo" /></a> <a href="#top">OpenCV examples</a>
+                </h1>
+            </div>
+        </div>
+<!--http://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_ref_js_scrollspy&stacked=h	-->
+        <div class="row row-content">
+            <nav class="col-sm-2 hidden-xs" id="myScrollspy">
+                <ul class="nav nav-pills nav-stacked" data-spy="affix">
+                    <li role="presentation"><a href="#top">Top</a></li>
+                    <li role="presentation"><a href="#install">Configuration</a></li>
+                    <li role="presentation"><a href="#ImageTest">Displaying image</a></li>
+                    <li role="presentation"><a href="#WebcamTest">Webcam</a></li>
+                    <li role="presentation"><a href="#TrackbarTest">Trackbar</a></li>
+                    <li role="presentation"><a href="#BlendingTest">Blending</a></li>
+                    <li role="presentation"><a href="#ColorSearchTest">Color search</a></li>
+                    <li role="presentation"><a href="#ImageDiffTest">Image Difference</a></li>
+                    <li role="presentation"><a href="#KMeansTest">K-means</a></li>
+                    <li role="presentation"><a href="#JavaOpenCVTest">Java</a></li>
+                </ul>
+            </nav>
+            <div class="col-sm-10 col-xs-12">
+            <div id="top" class="row row-content mydata">
+                <div class="col-xs-12">
+                    <p>This page contains some basic <a href="http://opencv.org">OpenCV</a> programs that I have created during learning the base concepts and core functions of this library. 
+                        They are mostly written in C++ as this is the native language of OpenCV. I am using the latest OpenCV version: 3.2. 
+                        Formerly I also used C but the C++ interface is cleaner and 
+                        this has the main development focus since OpenCV 2.x. I have also tried Java: there is a desktop and an Android version. 
+                        The latter becomes more and more popular.</p>
+                    <p>An older OpenCV project using Android and Lego NXT robot that I created years ago can be found <a href="../nxt_android_opencv/index.html">here</a>.</p>
+                </div>
+            </div>
+
+            <div id="install" class="row row-content mydata">                                    
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                           <h3 class="panel-title"><a >Configuration</a></h3></div>
+                        <div class="panel-body">
+                            <p>It is always hard to get OpenCV working. For the last time I have followed 
+                                <a href="http://docs.opencv.org/3.2.0/d7/d9f/tutorial_linux_install.html">this tutorial</a> to get OpenCV working on Ubuntu 16.04.</p>
+                            <p>I have installed to <code>/usr/share/opencv</code> with the following commands (It was not the first attempt).</p>
+                            <pre>cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr/share/opencv -D BUILD_DOCS=ON /home/rics/tmp/opencv-3.2.0
+make -j7
+sudo make install</pre>
+                            <p>After that <code>/usr/share/opencv/include</code> contains the header files and <code>/usr/share/opencv/lib</code>                                
+                               contains the libraries to be dynamically linked, in other words the .so files. 
+                               For easier use I have configured OpenCV with <a href="https://linux.die.net/man/1/pkg-config">pkg-config</a> as follows.</p> 
+                               <pre>export OPENCV_HOME=/usr/share/opencv
+export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$OPENCV_HOME/lib/pkgconfig</pre>
+                            <p>Then <code>pkg-config --cflags opencv</code> and <code>pkg-config --libs opencv</code> is enough to determine the location 
+                                of the include and the library directory of OpenCV. (In Netbeans the latter automatically causes the former.) 
+                                Finally the following 3 libraries need to be linked:
+                                <code>opencv_core</code>, <code>opencv_highgui</code>, <code>opencv_imgproc</code>.</p>
+                            <p>For using OpenCV with Java wrapper functions are created that calls C++ interface elements.
+                                This Java layer above C++ is defined in <code>/usr/share/opencv/share/OpenCV/java</code>, a directory that 
+                                is created during OpenCV compilation. 
+                                This directory contains an <code>opencv-320.jar</code> to be referenced from the java project when the Java classes are compiled. 
+                                It means that <code>opencv-320.jar</code> has to be on the classpath.
+                                Moreover this directory should also be on the Java library path because it contains the <code>libopencv_java320.so</code> dynamic library
+                                that links Java and C++ code together.<br />
+                                Library path can be set like this in Linux before the first execution:
+                            </p>
+                                <pre>export LD_LIBRARY_PATH=/usr/share/opencv/share/OpenCV/java</pre>
+                            <p>    or like this during program start:</p>
+                                <pre>java -Djava.library.path="/usr/share/opencv/share/OpenCV/java" -jar JavaOpenCVTest.jar</pre>.                                
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="ImageTest" class="row row-content mydata">                                    
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                          <h2 class="panel-title"><a>Displaying image</a></h2></div>
+                        <div class="panel-body">
+                        <p>The simplest OpenCV program. Opens the chessboard.jpg in a window from the images directory using imread and imshow highgui functions 
+                            and waits for a keypress. 
+                            It is important to note that OpenCV has built-in garbage collection so deallocating the <code>img</code> object is not necessary.</p> 
+                        <button class="btn btn-info btn-xs" data-clipboard-target="#ImageTestCode">Copy</button>
+                        <div id="ImageTestCode" class="codeblock">#include &lt;iostream&gt;
+#include &lt;opencv2/core.hpp&gt;
+#include &lt;opencv2/highgui.hpp&gt;
+
+using namespace std;
+using namespace cv;
+
+int main(int argc, char** argv) {
+
+    string filename = "./images/chessboard.jpg";
+    cout &lt;&lt; "img:" &lt;&lt; filename &lt;&lt; endl;
+    Mat img = imread(filename);    
+    namedWindow("Image", 1);
+    imshow( "Image", img );
+
+    waitKey(0);
+    
+    return 0;
+}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
+            <div id="WebcamTest" class="row row-content mydata">                                    
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                           <h2 class="panel-title"><a>Showing a webcam stream</a></h2></div>
+                        <div class="panel-body">
+                            <p>Opening the default web camera and showing its image in a window.</p>                            
+                        <button class="btn btn-info btn-xs" data-clipboard-target="#WebCamTestCode">Copy</button>
+<div id="WebCamTestCode" class="codeblock">#include &lt;iostream&gt;
+#include &lt;opencv2/core.hpp&gt;
+#include &lt;opencv2/highgui.hpp&gt;
+#include &lt;opencv2/imgproc.hpp&gt;
+
+using namespace std;
+using namespace cv;
+
+int main(int argc, char** argv) {
+
+    VideoCapture inputVideo(0);              // Open input
+    if (!inputVideo.isOpened()) {
+         cout  &lt;&lt; "Could not open webcam." &lt;&lt; endl;
+        return -1;
+    }
+
+    namedWindow("Video", 1);
+    Mat src;
+    for(;;) //Show the image captured in the window and repeat
+    {
+        inputVideo &gt;&gt; src;              // read
+        if (src.empty()) break;         // check if at end
+
+        imshow( "Video", src );
+        char c = (char)waitKey(10);
+        if (c == 27) break;
+    }
+    
+    cout &lt;&lt; "Finish" &lt;&lt; endl;
+    return 0;
+}</div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
+            <div id="TrackbarTest" class="row row-content mydata">                                    
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                           <h2 class="panel-title"><a>Trackbar</a></h2></div>
+                        <div class="panel-body">
+                            <p>In the following program a video is displayed in a window. The window contains a trackbar at the top.</p>
+                            <figure>
+                                <img class="img-responsive gif" src="images/TrackbarTest.png" alt="TrackbarTest">
+                            </figure>
+                            <p>
+                                The actual position of the trackbar is stored in <code>g_slider_position</code> and continuously update 
+                                with <code>setTrackbarPos</code>.
+                                If the user moves the position then the video position is updated accordingly with the help of 
+                                the <code>onTrackbarSlide</code> callback function.</p>
+                        <button class="btn btn-info btn-xs" data-clipboard-target="#TrackbarTestCode">Copy</button>
+<div id="TrackbarTestCode" class="codeblock">#include &lt;iostream&gt;
+#include &lt;opencv2/core.hpp&gt;
+#include &lt;opencv2/highgui.hpp&gt;
+#include &lt;opencv2/imgproc.hpp&gt;
+
+using namespace std;
+using namespace cv;
+
+VideoCapture inputVideo;
+int g_slider_position = 0;
+
+void onTrackbarSlide(int pos, void *object) {
+    inputVideo.set(
+        CV_CAP_PROP_POS_FRAMES,
+        pos
+    );
+}
+
+int main(int argc, char** argv) {
+
+    inputVideo.open(argv[1]); // Open input
+    if (!inputVideo.isOpened()) {
+        cout &lt;&lt; "Could not open video file." &lt;&lt; endl;
+        return -1;
+    }
+
+    int frames = (int) inputVideo.get(CV_CAP_PROP_FRAME_COUNT);
+
+    cout &lt;&lt; "frames:" &lt;&lt; frames &lt;&lt; endl;
+    
+    namedWindow("Video", 1);
+    createTrackbar(
+            "Position",
+            "Video",
+            &g_slider_position,
+            frames,
+            onTrackbarSlide
+            );
+
+    Mat src;
+    for (;;) //Show the image captured in the window and repeat
+    {
+        inputVideo &gt;&gt; src; // read
+        if (src.empty()) break; // check if at end
+        imshow("Video", src);
+        setTrackbarPos("Position","Video",g_slider_position+1);
+
+        char c = (char) waitKey(10);
+        if (c == 27) break;
+    }
+
+    cout &lt;&lt; "Finish" &lt;&lt; endl;
+
+    return 0;
+}</div>
+                            
+                        </div>
+                    </div>                
+                </div>
+            </div>
+                
+            <div id="BlendingTest" class="row row-content mydata">                                    
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                           <h2 class="panel-title"><a>Blending</a></h2></div>
+                        <div class="panel-body">
+                            <p>There are really powerful image manipulation methods in OpenCV. A simple, yet spectacular one is <code>addWeighted</code> 
+                                with which two image matrices are mixed together. The weight of the components is determined by the user with a trackbar.
+                                The example is taken from <a href="http://docs.opencv.org/2.4/doc/tutorials/highgui/trackbar/trackbar.html">here</a>.</p>
+                        <button class="btn btn-info btn-xs" data-clipboard-target="#BlendingTestCode">Copy</button>
+<div id="BlendingTestCode" class="codeblock">#include &lt;cstdlib&gt;
+#include &lt;opencv2/core.hpp&gt;
+#include &lt;opencv2/highgui.hpp&gt;
+#include &lt;opencv2/imgproc.hpp&gt;
+
+using namespace std;
+using namespace cv;
+
+#define STATES 100
+int state = 0;
+
+string imagename1 = "kolontar_before.png";
+string imagename2 = "kolontar_after.png";
+
+int g_slider_position = 0;
+
+double alphaBlend = 0.0;
+double betaBlend = 1.0;
+double gammaBlend = 0.0;
+
+Mat img, img1, img2;
+
+void onTrackbarSlide(int pos, void *object) {
+    state = pos;
+    betaBlend = (double) pos / STATES;
+    alphaBlend = 1 - betaBlend;
+    addWeighted(img1, alphaBlend, img2, betaBlend, gammaBlend, img);
+}
+
+int main(int argc, char** argv) {
+    namedWindow("Blending", CV_WINDOW_AUTOSIZE);
+    img1 = imread(imagename1);
+    img2 = imread(imagename2);
+    resize(img1,img1,Size(640,480));
+    resize(img2,img2,Size(640,480));
+    img = img1.clone();
+
+    createTrackbar(
+            "Position",
+            "Blending",
+            &g_slider_position,
+            STATES,
+            onTrackbarSlide
+            );
+    while (1) {
+        setTrackbarPos("Position", "Blending", state);
+        imshow("Blending", img);
+        char c = (char) waitKey(10);
+        if (c == 27) break;
+    }
+
+    return 0;
+}</div>
+                            
+                        <figure>
+                            <img class="img-responsive gif" src="images/BlendingTest.png" alt="BlendingTest">
+                        </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="ColorSearchTest" class="row row-content mydata">                                    
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                           <h2 class="panel-title"><a>Color search</a></h2></div>
+                        <div class="panel-body">
+                            <p>Another image processing method is thresholding with <code>inRange</code> function. 
+                               In this case pixels falling into a selected range will marked as white, 
+                               all other pixels stay black in the resulting image.
+                               This process is performed by <code>findColor</code> below after a conversion from RGB to HSV 
+                               <a href="https://en.wikipedia.org/wiki/Color_space">color space</a>. 
+                               HSV (hue-saturation-value) color space is better suited to select a certain perceived color than RGB. 
+                               In the following example the selected color is yellow with hue interval (30,70) on the (0,360) <a href="http://hslpicker.com/#7fccb3">scale</a>.
+                            </p>
+                        <button class="btn btn-info btn-xs" data-clipboard-target="#ColorSearchTestCode">Copy</button>
+<div id="ColorSearchTestCode" class="codeblock">#include &lt;iostream&gt;
+#include &lt;opencv2/core.hpp&gt;
+#include &lt;opencv2/highgui.hpp&gt;
+#include &lt;opencv2/imgproc.hpp&gt;
+
+using namespace std;
+using namespace cv;
+
+void findColor(const Mat image, Mat& resultImage) {
+    // hue is between 0 and 360
+    Scalar lower(30/2,100,100);
+    Scalar upper(70/2,255,255);
+
+    Mat imageHSV = image.clone();
+
+    cvtColor(imageHSV, imageHSV, CV_BGR2HSV); // Converting the color space
+
+    // clearing the result image
+    resultImage = Mat::zeros(image.rows,image.cols,image.type());
+
+    inRange(imageHSV,lower,upper,resultImage);
+}
+
+int main(int argc, char** argv) {
+
+    VideoCapture inputVideo(0);              // Open input
+    if (!inputVideo.isOpened()) {
+         cout &lt;&lt; "Could not open webcam." &lt;&lt; endl;
+        return -1;
+    }
+
+    namedWindow("Video", WINDOW_NORMAL);
+    resizeWindow("Video",320,180);
+    namedWindow("Color", WINDOW_NORMAL);
+    resizeWindow("Color",320,180);
+    Mat src;
+    for(;;) //Show the image captured in the window and repeat
+    {
+        inputVideo >> src;              // read
+        if (src.empty()) break;         // check if at end
+
+        Mat res(src.rows,src.cols,src.type());
+        findColor(src, res);
+
+        imshow( "Video", src );
+        imshow( "Color", res );
+        char c = (char)waitKey(10);
+        if (c == 27) break;
+    }
+    
+    cout &lt;&lt; "Finish" &lt;&lt; endl;
+    return 0;
+}</div>
+                            
+                        <p>The video capture shows the original and the thresholded frames as well.</p>
+                            <figure>
+                                <img class="img-responsive gif" src="images/ColorSearchTest.png" alt="ColorSearchTest">
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="ImageDiffTest" class="row row-content mydata">                                    
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                           <h2 class="panel-title"><a>Image difference</a></h2></div>
+                        <div class="panel-body">
+                            <p>There are <a href="https://www.intorobotics.com/how-to-detect-and-track-object-with-opencv/">several ways</a> 
+                                to detect changes and track object movement with OpenCV. 
+                                A simple solution is the image difference program below. First it creates a large <code>img</code> matrix,
+                                its left (<code>left_img</code>) will show the original video frames and its right (<code>right_img</code>) 
+                                will show the changing pixels in white color.                                
+                            </p>
+                            <p>Detection of the change is performed by <code>diffImage</code>. 
+                                This function splits the current and the previous frame to their BGR channels, blurs them with <code>boxFilter</code> 
+                                and then calculates the absolute difference (<code>absDiff</code>) pixel by pixel 
+                                in each channel. The result is stored in the one-channel matrix <code>res</code>. 
+                                Then <code>res</code> is further processed with the <code>compare</code> function. 
+                                If the absolute difference is bigger than <code>20</code> 
+                                then the resulting pixel will be <code>255</code>.</p>
+                            <p>Based on <code>diffImage</code>'s result a bounding rectangle of the movements 
+                                is calculated with <code>calculateMovementCoordinates</code> and rectangle is copied onto <code>left_img</code>. 
+                                Finally <code>res_img</code> is copied onto each channel of the BGR <code>right_img</code> to get a black and white frame.</p>                            
+                        <button class="btn btn-info btn-xs" data-clipboard-target="#ImageDiffTestCode">Copy</button>
+<div id="ImageDiffTestCode" class="codeblock">#include &lt;iostream&gt;
+#include &lt;opencv2/core.hpp&gt;
+#include &lt;opencv2/highgui.hpp&gt;
+#include &lt;opencv2/imgproc.hpp&gt;
+
+using namespace cv;
+using namespace std;
+
+void diffImage(Mat& img1, Mat& img2, Mat& res) {    
+    vector&lt;Mat&gt; bgr_planes1;
+    split(img1, bgr_planes1);
+    boxFilter(bgr_planes1[0], bgr_planes1[0], -1, Size(5, 5));
+
+    vector&lt;Mat&gt; bgr_planes2;
+    split(img2, bgr_planes2);
+    boxFilter(bgr_planes2[0], bgr_planes2[0], -1, Size(5, 5));
+
+    // comparison
+    absdiff(bgr_planes1[0], bgr_planes2[0], res);
+    compare(res, 20, res, CMP_GE);
+}
+
+void calculateMovementCoordinates(
+        Mat diff_img,
+        Point& upperLeft,
+        Point& lowerRight) {
+
+    upperLeft = Point(-1, -1);
+    lowerRight = Point(-1, -1);
+    for (int row = 0; row &lt; diff_img.rows; ++row) {
+        for (int col = 0; col &lt; diff_img.cols; ++col) {
+            if ( diff_img.at&lt;uchar&gt;(row,col) ) {
+                if (upperLeft.y == -1) {
+                    upperLeft.y = row;
+                } else {
+                    lowerRight.y = row;
+                }
+                if (upperLeft.x == -1 || upperLeft.x &gt; col) {
+                    upperLeft.x = col;
+                } else if (lowerRight.x &lt; col) {
+                    lowerRight.x = col;
+                }
+            }
+        }
+    }
+}
+
+int main(int argc, char** argv) {
+    VideoCapture inputVideo;
+    Point upperLeft, lowerRight;
+
+    namedWindow("ImageDiff", WINDOW_AUTOSIZE);
+    inputVideo.open(argv[1]); // Open input
+    if (!inputVideo.isOpened()) {
+        cout &lt;&lt; "Could not open video file." &lt;&lt; endl;
+        return -1;
+    }
+
+    // image sequence
+    Mat old_img, new_img;
+    // 1st frame
+    inputVideo &gt;&gt; new_img; // read
+    if (new_img.empty()) return -1; // check if at end
+    old_img = new_img.clone();
+    Mat res_img(new_img.rows,new_img.cols,CV_8UC1);    
+            
+    // image to show
+    Mat img(new_img.rows,2*new_img.cols,new_img.type());    
+    Mat left_img = img.colRange(0,new_img.cols);
+    Mat right_img = img.colRange(new_img.cols,2*new_img.cols);
+    
+    while (1) {
+
+        inputVideo &gt;&gt; new_img; // read
+        if (new_img.empty()) break; // check if at end
+        diffImage(old_img, new_img, res_img);
+        calculateMovementCoordinates(res_img, upperLeft,lowerRight);
+        
+        new_img.copyTo(left_img);
+        rectangle(left_img,upperLeft,lowerRight,Scalar(0,0,255),6);
+        for (int i = 0; i &lt; right_img.channels(); i++) {
+            insertChannel(res_img,right_img,i);
+        }
+        
+        imshow("ImageDiff", img);
+        new_img.copyTo(old_img);
+        char c = (char) waitKey(10);
+        if (c == 27) break;
+    }
+
+    return 0;
+}</div>
+                            
+                            <figure>
+                                <img class="img-responsive gif" src="images/ImageDiffTest.png" alt="ImageDiffTest">
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                    
+            <div id="KMeansTest" class="row row-content mydata">                                    
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                           <h3 class="panel-title"><a>K-means</a></h3></div>
+                        <div class="panel-body">
+                            <p>As images are represented as large matrices OpenCV is equally useful for more general matrix manipulation.
+                                The following program groups 2D points with the 
+                                <a href="https://en.wikipedia.org/wiki/K-means_clustering">k-means clustering</a> algorithm.
+                                It is based on an example found in Gary Bradski and Adrian Kaehler's 
+                            <a href="http://shop.oreilly.com/product/9780596516130.do">Learning OpenCV: Computer Vision with the OpenCV Library</a> book      
+                            (Published by O'Reilly Media, 2008).
+                            </p>                            
+                            <p>After generating randomly distributed points <code>kmeans</code> function groups them into 
+                               <code>cluster_count</code> clusters based on their distance to each other.
+                            Points of clusters are then displayed by different color in an image.</p>
+                        <button class="btn btn-info btn-xs" data-clipboard-target="#KMeansTestCode">Copy</button>
+<div id="KMeansTestCode" class="codeblock">#include &lt;iostream&gt;
+#include &lt;opencv2/core.hpp&gt;
+#include &lt;opencv2/highgui.hpp&gt;
+#include &lt;opencv2/imgproc.hpp&gt;
+
+using namespace std;
+using namespace cv;
+
+int main(int argc, char** argv) {
+
+    #define MAX_CLUSTERS 5
+    Scalar color_tab[MAX_CLUSTERS];
+    Mat img(Size( 500, 500 ), CV_8UC3 );
+    RNG rng( 0xFFFFFFFF );
+
+    color_tab[0] = Scalar(255,0,0);
+    color_tab[1] = Scalar(0,255,0);
+    color_tab[2] = Scalar(100,100,255);
+    color_tab[3] = Scalar(255,0,255);
+    color_tab[4] = Scalar(255,255,0);
+
+    namedWindow( "clusters", 1 );
+
+    for(;;) 
+    {
+        
+        int k, cluster_count = rng.uniform(1,MAX_CLUSTERS+1);
+        int i, sample_count = rng.uniform(1,1000+1);
+        Mat points( sample_count, 1, CV_32FC2 );
+        Mat clusters( sample_count, 1, CV_32SC1 );
+                
+        /* generate random sample from multivariate
+           Gaussian distribution */
+        for( k = 0; k &lt; cluster_count; k++ )
+        {
+            Point center;
+            Mat point_chunk;
+            center.x = rng.uniform(0,img.cols);
+            center.y = rng.uniform(0,img.rows);
+            point_chunk = points.rowRange(k*sample_count/cluster_count,
+                       k == cluster_count - 1 ? sample_count :
+                       (k+1)*sample_count/cluster_count);
+            rng.fill(point_chunk, CV_RAND_NORMAL,
+                     Scalar(center.x,center.y,0,0),
+                     Scalar(img.cols/6, img.rows/6,0,0) );            
+        }
+        
+        /* shuffle samples */
+        for( i = 0; i &lt; sample_count/2; i++ )
+        {
+            Point2f pt1 = points.at&lt;Point2f&gt;(rng.uniform(0,sample_count),0);
+            Point2f pt2 = points.at&lt;Point2f&gt;(rng.uniform(0,sample_count),0);
+            Point2f temp;
+            CV_SWAP( pt1, pt2, temp );
+        }
+
+        kmeans( points, cluster_count, clusters,
+                   TermCriteria( CV_TERMCRIT_EPS+CV_TERMCRIT_ITER,
+                                   10, 1.0 ),1,0);
+
+        img = img.zeros(img.size(),img.type());
+
+        for( i = 0; i &lt; sample_count; i++ )
+        {
+            Point2f pt = points.at&lt;Point2f&gt;(i,0);
+            int cluster_idx = clusters.at&lt;int&gt;(i,0);
+            circle( img, pt, 2,
+                      color_tab[cluster_idx], CV_FILLED );
+        }
+        
+        imshow( "clusters", img );
+        char c = (char)waitKey(0);
+        if (c == 27) break;
+    }
+    
+    cout &lt;&lt; "Finish" &lt;&lt; endl;
+    return 0;
+}</div>
+                            
+                        <figure>
+                            <img class="img-responsive" src="images/KMeansTest.png" alt="KMeansTest">
+                        </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+	    
+            <div id="JavaOpenCVTest" class="row row-content mydata">                                    
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                           <h3 class="panel-title"><a>Java</a></h3></div>
+                        <div class="panel-body">
+                            <p>OpenCV supports other languages than C++. 
+                                For Java wrapper functions need to be available as described above in the <a href="#install">Configuration</a>.
+                                The example below only sets and reads some matrix elements, the important point is the inclusion of the native interface with
+                                <code>static{ System.loadLibrary(Core.NATIVE_LIBRARY_NAME); }</code>.</p>
+                        <button class="btn btn-info btn-xs" data-clipboard-target="#JavaOpenCVTestCode">Copy</button>
+<div id="JavaOpenCVTestCode" class="codeblock">package javaopencvtest;
+
+import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.core.CvType;
+import org.opencv.core.Scalar;
+
+class JavaOpenCVTest {
+
+  static{ System.loadLibrary(Core.NATIVE_LIBRARY_NAME); }
+
+  public static void main(String[] args) {
+    System.out.println("Welcome to OpenCV " + Core.VERSION);
+    Mat m = new Mat(5, 10, CvType.CV_8UC1, new Scalar(0));
+    System.out.println("OpenCV Mat: " + m);
+    Mat mr1 = m.row(1);
+    mr1.setTo(new Scalar(1));
+    Mat mc5 = m.col(5);
+    mc5.setTo(new Scalar(5));
+    System.out.println("OpenCV Mat data:\n" + m.dump());
+  }
+}</div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>            
+        </div>            
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row row-footer">
+                <div class="col-xs-6">
+                    <div>Copyright &copy; 2017, Richárd Szabó</div>
+                </div>
+                <div class="col-xs-6">
+                    <div id="modification">Last modification: <span id="last_modified">abc</span></div>
+                </div>
+            </div>
+            <div class="row row-footer">
+                <div class="col-xs-12">
+                    <!-- BEGIN WebSTAT Activation Code -->
+                    <script type="text/javascript" src="http://hits.webstat.com/cgi-bin/wsv2.cgi?39877"></script>
+                    <noscript>
+                        <!--<a href="http://www.webstat.com">
+                        <img src="http://hits.webstat.com/scripts/wsb.php?ac=39877" border="0" alt="WebSTAT - Free Web Statistics" /></a>-->
+                    </noscript>
+                    <!-- END WebSTAT Activation Code -->
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>    
+    <script src="../bower_components/clipboard/dist/clipboard.min.js"></script>
+    <script src="../bower_components/jquery.gifplayer/dist/jquery.gifplayer.js"></script>
+    <script>
+        $( document ).ready(function() {
+            $("#last_modified").text(document.lastModified);
+            var btns = document.querySelectorAll('button');
+            var clipboard = new Clipboard(btns);
+            clipboard.on('success', function(e) {  
+                e.clearSelection();
+            });
+            $('.gif').gifplayer();
+        });        
+        $( window ).resize(function() {
+            console.log("resize");
+            $('.gif').gifplayer('stop');//first stop the playing gifs,videos
+            $('.gif,.gif *').unbind().removeData();//remove all the things added by the plugin
+            $(".gif").unwrap();//remove the parent class (this parent is the source of the problem)
+            $( ".play-gif" ).remove();//remove the play button
+            $(".gif").css("display","block");//for the videos
+            $( ".gp-video-element" ).remove();//for the videos
+            $('.gif').gifplayer();//reattach the plugin (don't worry it is fast )
+        });        
+    </script>
+  </body>
+</html>

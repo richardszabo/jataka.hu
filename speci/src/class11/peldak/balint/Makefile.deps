@@ -1,0 +1,14 @@
+b0.o: b0.c conn.h command.h
+b1.o: b1.c conn.h command.h parse.h defs.h game_data.h see_data.h
+b2.o: b2.c conn.h command.h parse.h defs.h game_data.h see_data.h
+b3.o: b3.c conn.h command.h parse.h defs.h game_data.h see_data.h
+b4.o: b4.c conn.h command.h parse.h defs.h game_data.h see_data.h \
+ log.h
+b5.o: b5.c conn.h command.h parse.h defs.h game_data.h see_data.h \
+ log.h
+command.o: command.c command.h conn.h log.h
+conn.o: conn.c conn.h
+game_data.o: game_data.c parse.h defs.h game_data.h
+log.o: log.c log.h
+parse.o: parse.c parse.h defs.h
+see_data.o: see_data.c parse.h defs.h game_data.h see_data.h

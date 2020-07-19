@@ -1,0 +1,4 @@
+package gridworld;
+
+public class Action extends rl.Action {
+}

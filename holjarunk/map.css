@@ -1,0 +1,44 @@
+#pano {
+    width: 100%;
+    height: 100%;
+    float: left;
+    z-index: 0;
+}
+#control {
+    position: absolute;
+    right: 5%;
+    z-index: 1;
+    opacity: 0.8;
+    border: 1px solid black;
+    padding: 0.5em;
+    background-color: lightgrey;
+}
+#choice {
+    padding: 0.2em;
+}
+
+#value {
+    padding-top: 0.2em;
+}
+#endgame {
+    opacity: 0.9;
+    left: 30%;
+    right: 30%;
+}
+.input_panel {
+    top: 22%;
+    display: none;
+}
+@media only screen and (max-width: 900px) {
+    #endgame {
+        left: 5%;
+        right: 5%;
+    }
+    .input_panel {
+        top: 5%;
+    }
+}
+#end_text {
+    margin-bottom: 1em;
+    text-align: justify;
+}

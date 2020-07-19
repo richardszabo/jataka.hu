@@ -1,0 +1,50 @@
+package rl;
+
+import java.util.Random;
+
+public abstract class TaskSpecification {
+    
+    protected State states[];
+    Random random;
+
+    public TaskSpecification() {
+	random = new Random();
+    }
+
+    /**
+     * Returns possible states of the task.
+     */
+    public State[] getStates() {
+	return states;
+    }
+
+    /**
+     * Returns the next states after performing the action.
+     */
+    public int getNextState(int actState, int action) {
+	double bet = random.nextDouble();
+	Action a = states[actState].getActions()[action];
+	double d;
+	int i;
+
+	for( d = a.a(states[actState],states[0]), i = 0 ; 
+	     i < states.length && d < bet; 
+	     d += a.a(states[actState],states[i]), ++i);
+	return i;
+    }
+
+    /**
+     * Returns the reward of getting from actState to nextState through action.
+     */
+    public Reward getReward(int actState, int action, int nextState) {
+	return states[actState].getActions()[action].
+	    r(states[actState],states[nextState]);
+    }
+
+    // probability function (encoded in the states and actions)
+    //public abstract Probability probFunc(State actS, Action a, State nextS);
+
+    // reward function (encoded in the states and actions)
+    //public abstract Reward rewardFunc(State actS, Action a, State nextS);   
+}
+ 

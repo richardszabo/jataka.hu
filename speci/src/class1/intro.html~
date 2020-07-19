@@ -1,0 +1,261 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.51 [en] (X11; I; Linux 2.2.5-15 i586) [Netscape]">
+</head>
+<body>
+
+<h1>Robotika és szimuláció</h1>
+
+<h2>Bevezetés</h2>
+<ul>
+<li>emberiség és jólét, tudomány és technika más kihasználása nélkül
+<li>ipari forradalom és fizikai munka 
+<li>szellemi munkavégzés kiváltása a 20. században
+<li>sci-fi, társadalomtudományok, álmok
+<li>eddigi eredmények: autógyártás, ûrkutatás, hadiipar, informatika
+<li>a költségek és elterjedés összefüggései
+</ul>
+<h2>A robot definíciója</h2>
+
+Néhány jellemzõ alkalmazás:<br>
+implant<br>
+<img src="pict/bionic.jpg">
+<img src="pict/bionic-2.jpg"><br>
+meteoritkutatás<br>
+<img src="pict/open20.jpg"><br>
+õrjárat<br>
+<img src="pict/Military.JPG"><br>
+aknaszedés<br>
+<img src="pict/MERV.jpg"><br>
+Aibo<br>
+<img src="pict/doggies.jpg"><br>
+World Trade Center:
+R. Murphy (Florida): felszerelt anyarobot, változékony gyerekekkel<br>
+Col. Blitch (Colorado): kígyószerû mentõrobot<br>
+<img src="wtc/pumpkin5.jpg"><br>
+<ul>
+<li>
+Újraprogramozható, többfunkciós manipulátor anyagok, eszközök, részegységek
+mozgatására, megváltoztatására programozott mozdulatsor segítségével 
+különféle feladatok elvégzése érdekében.<br>
+Robot Institute of America, 1979
+<li>
+Egy önmûködõ eszköz, mely emberformájú vagy olyan feladatokat hajt
+végre, melyeket emberinek nevezünk.<br>
+Webster szótár, 1993
+<li>
+Erõ és intelligencia együttese, ahol a MI találkozik a valós világgal.<br>
+robotics faq
+<li>Mobil robot: Feladatának elvégzéséhez helyváltoztatásra van szükség.
+</ul>
+<h2>A kezdetek</h2>
+<h3>Az irodalom</h3>
+<ul>
+<li>K. Capek: Rossum Univerzális Robotjai, 1921<br>
+<img src="pict/rur.jpg">
+<li>kényszerû munka
+<li>I. Asimov: Én, a robot novellásgyûjtemény egyik elsõ darabja, 1942<br>
+<img src="pict/asimov.gif">
+<li>robotikai törvények, erkölcsi elvárások
+</ul>
+<h3>A tudomány</h3>
+<ul>
+<li>N. Tesla: elsõ távirányítású szerkezetek, 1890-es évek
+<li>G. Walter: Elsie, az elsõ valódi automata, 1940-es évek <br>
+<img src="pict/tortoise.jpg">
+<li>Stanford Kutatóintézet: Shakey, elsõ memóriával rendelkezõ szerkezet, 1960-as évek
+<img src="pict/shakey.jpg">
+<li>R. Moser: General Electric Walking Truck, 1960-as évek<br>
+<img src="pict/walktruk.jpg">
+<li>G. Devol és J. Engelberger: Unimat, elsõ sikeres
+kereskedelmi-ipari alkalmazás, 1950-es, 1960-as évek<br>
+<img src="pict/unimate.jpg">
+<li>H. Moravec: Stanford Cart, elsõ természetes környezetben mûködõ
+robot, 1970-es évek<br>
+</ul>
+<table border=2>
+<tr><td>Év </td><td>Robotok száma</td> <td>$US</td></tr>
+<tr><td>1984</td><td>    5800</td><td>            $480M</td></tr>
+<tr><td>        1985</td><td>    6200 </td><td>           $380M</td></tr>
+<tr><td>        1986</td><td>    5400 </td><td>           $320M</td></tr>
+<tr><td>        1987</td><td>    3800 </td><td>           $300M</td></tr>
+<tr><td>        1988</td><td>    4000 </td><td>           $325M</td></tr>
+<tr><td>        1989</td><td>    4500 </td><td>           $510M</td></tr>
+<tr><td>        1990</td><td>    5000 </td><td>           $510M</td></tr>
+<tr><td>        1991</td><td>    4000 </td><td>           $410M</td></tr>
+<tr><td>        1992</td><td>    5250 </td><td>           $500M</td></tr>
+<tr><td>        1993</td><td>    6800 </td><td>           $630M</td></tr>
+</table>
+
+<h2>A robotok múlt és jövõbeli fejlõdése</h2>
+
+<ul>
+<li>90-es évek: lehetõség az áttörésre (1 MIPS fölött)
+<ul>
+<li>60-as évek: katonai célú szuperszámítógépek, MI az új csodafegyver
+<li>1 MIPS-nek elégnek kell lennie (játékok, tételbizonyítás)
+<li>cáfolat a számítógépes látás területérõl, érdeklõdés alábbhagy
+<li>70-es évek: másodvonalbeli hardver, másodvonalbeli kutatások
+<li>80-as évek: olcsóbb PC-k, még mindig 1 MIPS
+<li>90-es évek: egyre magasabbra, már 1000 MIPS
+</ul>
+<li>De mire elég ez a teljesítmény?
+<ul>
+<li>matematikai számítások idõigényének felülbecslése, emberi
+cselekvések idõigényének alulbecslése (evolúciós idõ <-> hétköznapok)
+<li>alacsony szintû emberi funkciók modellezésének nehézségei
+<li>egy gramm emberi agy funkciója: 50,000 MIPS,  100 millió MIPS a teljes agy 
+<li>most valahol a rovaroknál tartunk, vesztésre állunk a retina 1
+grammja vagy az aranyhal 0.1 grammnyi agyával szemben
+<li>évente duplázódik a MIPS, kb. egy évtized múlva 1000 MIPS, guppi
+</ul>
+<ul>
+<li>mostanában kereskedelemben 10 MIPS, rovarok
+<li>egyszerûbb rutin feladatok: szállítás, õrködés, padlótisztítás 
+<li>régebben drága, padlóba épített elektronikus jelzõrendszer
+<li>padlómintázat
+<li>90-es évek: a környezet egyéb jelei (falak, sarkok, átjárók)
+<li>a környezet átalakítása helyett pontosan hangolt szabályzó
+rendszer
+</ul>
+
+Rovarszinten lévõ, rovarszerû robotok:<br>
+<img src="pict/littlerobot.jpg">
+<img src="pict/roboroch.jpg">
+
+<ul>
+<li>ezek még a környezettõl erõsen függõ robotok 
+<li>nem lehet minden takarításnál robotspecialista
+<li>gazdaságos mûködéshez hónapok hibátlan szereplése szükséges, 
+ami a 10 MIPS-sel még nehezen érhetõ el.
+<li>90-es évek: viszonylag olcsó, 100 MIPS-es processzoraival
+térképítés és viszonylagos megbízhatóság
+<li>további áresés, és teljesítménynövekedés
+</ul>
+
+
+<li>A mai szintet képviselõ néhány robot:<br>
+<img src="pict/honda-1.jpg">
+<img src="pict/RockyIV_2.jpg">
+<img src="pict/TRCover98.jpg">
+
+<li>a többi a jövõ, Moravec elképzelései szerint
+
+<li>2010-re gyíkok 5000 MIPS-es teljesítménye
+<ul>
+<li>fûnyírás, takarítás, szemétgyûjtés, raktározás, szállítás, ajtónyitás, házõrzés
+<li>Univerzális Robotok elsõ generációja
+<li>nem lesznek képesek adaptálódni a változó körülményekhez
+<li>nem hatékonyak, de használhatóak 
+</ul>
+<li>második generáció: egerek 100,000 MIPS-e
+<ul>
+<li>megerõsítéses tanulás 
+<li>felhasználó jutalmaz és büntet
+<li>tapasztalattal egyre jobb teljesítmény 
+</ul>
+
+<li>harmadik generáció: majmok 5 millió MIPS-e
+<ul>
+<li>nagyon gyors tanulás
+<li>belsõ szimuláció: a feladat fizikai, kultúrális és pszichikai tényezõi
+<li>fizikai: tárgyak súlya, alakja és képe
+<li>kulturális: tárgy neve, értéke, helye és hasznosíthatósága
+<li>pszichikai: emberi és gépi célok, hitek, érzések ismerete
+</ul>
+
+<li>negyedik generáció: 100 millió MIPS-es emberi képességek
+<ul>
+<li>absztrakció és az általánosítás
+<li>fogalmak, szimbólumok összekapcsolása a valódi világgal
+</ul>
+
+<img src="pict/llab_logo.jpg">
+
+<li>
+<ul>
+<li>nagyratörõ és optimista jövõkép
+<li>következõ 50 év
+<li>kézzelfogható feladatokat, melyeket ``már csak valakinek meg kellene
+csinálni'' -> 10 év
+<li>nem várt nehézségek kapcsolódnak, komoly új felfedezések -> 50 év
+</ul>
+</ul>
+
+<h2>A robotszimuláció szerepe</h2>
+<ul>
+<li>szimuláció szerepe a robotika fejlõdésére
+<li>elõny a fejlesztõknek
+<li>robotépítés terepe, paraméterek meghatározása:
+  <ul>
+  <li>általános felépítés
+  <li>szükséges alkatrészek
+  <li>megfelelõ mennyiségû, érzékelési tartományú és felbontású
+  szenzorok
+  <li> kellõ hatóerõvel és szabadságfokokkal rendelkezõ aktorok
+  </ul>
+<li>a robot viselkedését meghatározó algoritmusok kifejlesztése
+<li>irodaházi takarító robot fejlesztése
+<li>iterációk száma, kopás, környezet tûrõképesssége
+<li>elõny a felhasználóknak: veszélyes környezetben, egyszeri
+próbálkozásnál vagy költséges feladatnál
+</ul>
+
+<img src="pict/igrip.jpg">
+
+<img src="pict/adw.gif">
+<ul>
+<li>
+a világ modellezése, azaz a feladat szempontjából lényeges részek
+kiemelése 
+<li>
+a világ minél pontosabb modellezése (mozgás dinamikája, ütközések,
+optika (fény-árnyék, tükrözõdés, takarás), a modell megbízhatósága 
+<li>
+általánosság (sokféle robot szimulálásának lehetõsége,
+új robotok szerkesztése, algoritmuskönyvtár)
+<li>
+valódi robottal való kapcsolat lehetõsége (semmi,offline,online (VR))
+<li>
+valós idejûség
+<li>
+grafikus megjelenítés minõsége
+<li>
+eredmény analízisének támogatása
+</ul>
+
+<h2>A mesterséges intelligencia fejlõdésének buktatói</h2>
+
+<ul>
+<li>Azonban a MI csúcsa nem fog a fejlõdés lendületénél fogva létrejönni
+<li>R. Brooks gondolatkísérlete
+<li>mesterséges repülés megvalósításának feladata 1890-ben
+<li>kutatók idõutazása 1990-be egy utasszállító gép fedélzetére
+<li>látszik az eredmény, le kellene utánozni
+<li>kezdeti sikerek: ülés biztonsági övvel, kétrétegû ablaküveg
+<li>problémák -> szakterületekre specializálódott kutatócsoportok
+<li>kevés csoportok közötti kommunikáció
+<li>független eredmények: tömör acélrudak - csövek, pilótafülke (gáz,
+fék, magasság, autókormány, légsebességmérõ csõrendszer
+<li>integráció sikertelensége
+<li>hasonló buktatók a MI-ban
+  <ul> 
+    <li>megoldható
+    <li>mégis nehéz feladat
+    <li>szép eredmények etológiából, genetikából,
+neurobiológiából, evolúcióbiológiából, antropológiából, robotikából
+    <li>tudat, az érzetek, a hit, a vágy, a szándék lényege
+    megoldatlan kérdések
+  </ul>
+</ul>
+
+
+</body>
+</html>
+
+
+
+
+

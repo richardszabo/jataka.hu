@@ -1,0 +1,18 @@
+img.museum { 
+   width: 400px; 
+}
+img.standalone, object.standalone {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.chesslightbox {
+  color: rgb(34,62,110);
+  background-color: rgb(212,212,212);
+  padding: 2ex 2em 0.25em 2em;
+}
+.chessdarkbox {
+  color: rgb(34,62,110);
+  background-color: rgb(96,96,96);
+  padding: 2ex 2em 0.25em 2em;
+}

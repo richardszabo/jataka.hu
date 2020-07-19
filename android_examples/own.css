@@ -1,0 +1,91 @@
+body {
+    position: relative;    
+    background-color: #ccccdd;
+    margin-top: 90px;
+    text-align: justify;
+} 
+.mydata {
+    padding-top: 90px;
+    margin-top: -90px;        
+}	     
+.navbar-header h1 {
+    padding-left: 1em;
+}
+.navbar-header img {
+    height: 50px;
+}
+a {
+    color: #334466;    
+}
+.navbar-header {
+    background-color: #334466;
+    width: 100%;
+}
+.navbar-header a {
+    color: #ccccdd;
+}
+.nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {
+    background-color: #334466;
+    color: #ccccdd;
+}
+.panel-default > .panel-heading {
+    background-color: #334466;
+    background-image: none;
+}
+.panel-body {
+    background-color: #aaaabb;    
+}
+.panel-title a {
+    color: #ccccdd;
+}
+.codeblock {
+    border: solid;
+    border-width: 1px;
+    background-color: #f5f5f5;
+    font-family: monospace;
+    white-space: pre-wrap;
+    padding: 0.5em;
+}
+code {
+    background-color: inherit;    
+    color: inherit;
+}
+footer  {
+    width: 100%;
+    background-color: #334466;
+    color: #ccccdd;
+}
+footer .container:first-child {
+    padding-top: 1em;
+}
+#modification {
+    float: right;
+}
+.btn {
+    float: right;
+    background-image: none;
+    //background-color: rgba(255, 0, 0, 0.2);
+}
+figure {
+    padding-top: 1em;
+}
+.img-responsive {   
+    margin: 0 auto;
+}
+figure .gifplayer-wrapper  {   
+    display: inherit;
+    margin: 0 auto;
+}
+.iframe_container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+}
+.iframe_container .video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}

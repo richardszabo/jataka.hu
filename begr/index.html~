@@ -1,0 +1,577 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="hu" lang="hu"><head>
+  
+  <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+
+  
+  <meta name="author" content="rics" />
+
+<!-- Navigational metadata for large websites (an accessibility feature): -->
+  <title>BegR, a pénzgyűjtő robot</title>
+
+  
+  
+  <link rel="top" href="./index.html" title="Homepage" />
+
+  
+  <link rel="up" href="./index.html" title="Up" />
+
+  
+  <link rel="first" href="./index.html" title="First page" />
+
+  
+  <link rel="previous" href="./index.html" title="Previous page" />
+
+  
+  <link rel="next" href="./index.html" title="Next page" />
+
+  
+  <link rel="last" href="./index.html" title="Last page" />
+
+  
+  <link rel="toc" href="./index.html" title="Table of contents" />
+
+  
+  <link rel="index" href="./index.html" title="Site map" />
+
+  
+  <link rel="stylesheet" type="text/css" href="tierraverde-blue-screen.css" media="screen" title="Tierra Verde (screen)" />
+
+  
+  <link rel="stylesheet" type="text/css" href="tierraverde-print.css" media="print" />
+
+  
+  <link rel="stylesheet" type="text/css" href="artu.css" media="screen" title="Tierra Verde (screen)" />
+
+  
+  <style type="text/css">
+<!--
+.style1 {color: #C1FF64}
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </style>
+</head><body>
+<!-- For non-visual user agents: -->
+<div id="top"><a href="#main-copy" class="doNotDisplay doNotPrint">Skip
+to main
+content.</a></div>
+
+<!-- ##### Header ##### -->
+<div id="header">
+<h1 class="headerTitle"><a href="./index.html" title="Browse to homepage">BegR, a pénzgyűjtő robot</a> </h1>
+</div>
+
+<!-- ##### Side Bar ##### -->
+<div id="side-bar">
+<p class="sideBarTitle"><a href="#start">A kiindulás</a></p>
+<p class="sideBarTitle"><a href="#task">A feladat</a></p>
+<p class="sideBarTitle"><a href="#epites">A váz építése</a></p>
+<p class="sideBarTitle"><a href="#programozas">Programozás</a></p>
+<p class="sideBarTitle"><a href="#experiences">Eredmények, folytatás</a></p>
+<p class="sideBarTitle"><a href="#links">További hasznos oldalak</a></p>
+<!--<span class="sideBarText">
+<span class="doNotDisplay">Useful Links: </span>
+</span>-->
+</div>
+
+<!-- ##### Main Copy ##### -->
+<div id="main-copy">
+<div id="introduction" class="lighterBox">
+<h2><a name="start">A kiindulás</a></h2>
+<p>2009-ben építettem egy kartonpapír szerkezetű, két motorral és egy
+  szonarral felszerelt robotot, ami egy Arduino mikrokontroller
+  segítségével egyszerű akadálykikerülést végzett. A robot
+  elkészítéséről akkor <a href="../artu/index.html">részletesen</a>
+  írtam, az akkori robot végül ilyen lett.</p>
+
+<img class="standalone" alt="artu total"
+	src="../artu/images/artu_total.jpg" width="500" />
+
+<p>A tapasztalatok alapján úgy döntöttem, hogy a
+  továbblépéshez valamivel komolyabb vázat fogok használni, illetve a
+  robotot is céltudatosabbá teszem, kitalálok egy egyszerű feladatot
+  is neki. Ugyanakkor továbbra is fontos szempont, hogy a robot
+  viszonylag olcsó, egyszerűen összeépíthető legyen.</p>
+
+<p>Ezen az oldalon az új robotot fogom bemutatni. Ezúttal nem térek ki
+  az elkészítés legkisebb részleteire, mint azt a kartonrobotnál
+  tettem, hanem inkább a lényegesebb újdonságokra koncentrálok.</p>
+
+<p>Az elkészült új robot, aktuális jelmezében így néz ki:</p>
+
+<img class="standalone" alt="begr"
+	src="images/begr.jpg" width="480" />
+
+</div>
+
+<div class="darkerBox">
+<h2><a name="task">A feladat</a></h2>
+
+<p>A <a href="http://robotika.blog.hu">robotika blog</a>-hoz anyagot
+  gyűjtve bukkantam az alábbi kis filmre, ami alapján 
+<a href="http://robotika.blog.hu/2010/10/01/aggya_penzt_robot">ezt a bejegyzést</a> írtam.</p>
+
+<object class="standalone" style="height: 390px; width: 640px"><param name="movie" value="http://www.youtube.com/v/ujJu0uyY-8o?version=3"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="http://www.youtube.com/v/ujJu0uyY-8o?version=3" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="640" height="390"></object>
+
+<p>A filmen szereplő robot bögréjét rázva pénzt gyűjt. Én ehhez
+  hasonló mozgó robotot szerettem volna csinálni. </p>
+
+<p>A korábbi kartonrobot két motorra és egy szonárra épülő mozgása
+  megfelelő alap az új robotnak is. Ebből kiindulva azt kellett
+  elérni, hogy a robot ne faltól falig menjen, hanem időnként
+  körülnézzen, irányt váltson és megrázza a bögréjét. Az összetettebb
+  mozgáshoz több motorra és bonyolultabb program van szükség.</p>
+
+<p>A <a href="../artu/index.html#30ezresterv">korábbi alkatrészek</a> közül az Arduino Duemilanove, a 2 db Parallax
+  körbeforgó szervomotor, a Parallax Ping ultrahangos szenzor és az
+  elemtartó az új robotban is szerepet kap. A felhasznált alkatrészek
+  listája a következőkkel bővül: </p>
+<table>  
+<tr>
+<td class="chesslightbox">
+  1 db Merkur építőkészlet (a képet a <a href="http://retronom.hu/index.php?q=node/14938">retronom.hu</a>-ról vettem)<br />
+    <p><img class="standalone" alt="Merkur építőkészlet" src="images/merkur.jpg" width="240" /></p>
+</td>
+<td class="chessdarkbox">  
+2db Parallax
+(Futaba) standard, 180 fokot forduló szervomotor<br />
+    <p><img class="standalone" alt="szervo" src="../artu/images/servo.gif" height="182"
+    width="150" /></p>
+</td>
+</tr>
+<tr>
+<td class="chessdarkbox">
+  2 db játékautókerék<br />
+    <p><img class="standalone" alt="kerék" src="images/kerek.jpg" height="160" width="200" /></p>
+</td>
+<td class="chesslightbox">
+  1 db egyszerű, barkácsáruházból beszerezhető görgő kerék<br />
+    <p><img class="standalone" alt="görgő" src="images/gorgo.jpg" height="160" width="200" /></p>
+</td>
+</tr>
+<tr>
+<td class="chesslightbox">
+  1 db próbapanel
+    <p><img class="standalone" alt="próbapanel" src="images/probapanel.jpg" height="150" width="120" /></p>
+</td>
+<td class="chessdarkbox">
+  1 köteg vezeték
+    <p><img class="standalone" alt="vezeték" src="images/vezetek.jpg" height="150" width="150" /></p>
+</td>
+</tr>
+<tr>
+<td class="chessdarkbox">
+<ul>
+  <li>műanyag ételhordó doboz</li>
+  <li>egy füles fémbögre</li>
+  <li>sok kisméretű csavar és anya</li>
+  <li>jelmez tetszés szerint</li>
+</ul>
+</td>
+<td class="chesslightbox">
+&nbsp;
+</td>
+</tr>
+</table>
+<p>Az elkészítéshez és működtetéshez felhasznált eszközök sem
+  változtattak a lényegen: a program feltöltéséhez szükséges USB A-B típusú
+  kábel mellett, az arduino fejlesztői környezettel rendelkező
+  számítógépen, és csavarhúzón kívül mást nem nagyon használtam.
+</p>
+
+<h3><a name="beszerzes">Beszerzés</a></h3>
+<p>A felsorolt eszközöket és alkatrészeket némi utánajárással -
+  illetve házhoz szállításos online rendelés esetén anélkül is - be lehet
+  szerezni. <br />
+  A két szervót ismét a <a href="http://www.chipcad.hu">Chipcadnél</a>
+  vásároltam, 3000 Ft + ÁFÁ-ért darabját. A Merkur építőkészlet
+  legalább 25 éves, megteszi helyette más hasonló is, lényeg, hogy
+  viszonylag stabil legyen és hozzá lehessen csavarozni a többi, nem a
+  készlethez tartozó alkatrészt. <br />
+  A játékautókerék egy újabban kiszuperált
+  gyerekjátékról került elő, a görgőt az OBI-ban vettem, párszáz
+  forintért.<br />
+  A kisméretű, az ételhordóba beférő próbapanelt és egy csomag
+  vezetéket
+  a <a href="http://www.hestore.hu/cat_339.html">hestore</a>-ban
+  vettem, együtt még 2000
+  forintba sem kerültek. Segítségükkel az elektronikát forrasztás nélkül össze
+  lehetett állítani. A csatlakozóval ellátott vezetékek azért is hasznosak, mert az Arduino-n
+  és a próbapanelen meglévő tüskékbe könnyen beilleszkednek, és utána
+  biztosan benne is maradnak. Az egyszerű rézvezetékről egyik sem
+  mondható el, a korábbi szerelés és programozás során ez elég sok
+  fejfájást okozott.
+</p>
+</div>
+
+<div class="lighterBox">
+
+<h2><a name="epites">A váz építése</a> </h2>
+
+<p>A váz elkészítése az én Merkur készletem legnagyobb felületű két elemének egymáshoz
+  rögzítésével kezdődik. Erre van rácsavarozva a műanyag doboz,
+  melyben az Arduino, a próbapanel, az elemtartó és a vezetékek nagy
+  része helyezkedik el. A műanyag doboz segítségével elérhető, hogy az
+  Arduino fém részei ne érjenek össze a szerkezet többi részével, mert
+  az rövidzárlatot okoz.
+  A további alkatrészeket különböző
+  hosszúságú, vékony egyenes elemekkel rögzítettem az alaphoz.
+  Alulról a két körbeforgó szervót, azokra a játékautó-kereket, hátul egy kis felfüggesztéssel a
+  görgőt. A kerekek rögzítéséhez a szervó szarvakat és a kerék belső
+  oldalát is óvatosan át kellett fúrni. Ez így sokkal megbízhatóbb
+  összekötést nyújt a korábbi kartonkerékhez képest.<br />
+
+  Fölfelé terjeszkedve a leghosszabb elemek felhasználásával sikerült viszonylag
+  magas robotot összehozni. Ezekre a hosszú elemekre került elölről a
+  szonár, fölé a bögrét mozgató standard szervó, hozzárögzítve a
+  fémbögre. Felülről egy nagy felületű elem zárja le vízszintesen a törzset,
+  amihez a negyedik, fejet forgató standard szervó rögzül.<br />
+
+<table class="image">
+<tr><td><img alt="begr1" src="images/structure1.jpg" width="250"
+	     /></td><td>
+<img alt="begr2" src="images/structure2.jpg" width="250" /> </td></tr>
+<tr><td><img alt="begr3" src="images/structure3.jpg" width="250"
+	/></td><td><img alt="begr4" src="images/structure4.jpg"
+	       width="250" /></td></tr>
+</table>
+
+  Ezen kívül még néhány keresztrögzítésre, illetve egy hátsó ellensúlyra
+  volt szükség, mert a hosszúkás alak sok pénzzel a bögréjében
+  hajlamossá vált orra bukni.<br />
+
+  A váz összeállítása jó néhány óráig eltartott és az itteni leírással
+  szemben nem volt mindig előre haladó, többször vissza kellett
+  bontani egyes részeket, sőt új alkatrészt kellett találni/venni,
+  amikor egy megoldás nem vált be. Például a görgő a harmadik változat
+  a hátsó támasztás biztosítására.<br />
+
+  A végeredménynél szempont volt, hogy a mikrokontrollerhez könnyen
+  lehessen csatlakozni és az elemeket bármikor ki lehessen cserélni.
+</p>
+
+<p>
+A jelmezzel kapcsolatban csupán arra kellett figyelni, hogy a forgó
+alkatrészek ne csíphessék be, valamint hogy a szonár ne kerüljön
+a ruha takarásába, mert különben mindig közeli akadályt jelez.
+</p>
+
+</div>
+<div class="darkerBox">
+<h2><a name="elektronika">Elektronika</a> </h2>
+
+<p>Az elektronika kialakítása a korábbi cikkhez képest jórészt
+annyiban változik, hogy két új motort kell tudni kezelni.
+Ezen kívül az összes eszköz fázisát, ideértve a korábban kihagyott
+mikrokontrollerét összekötve a robot egyaránt működhet az USB-n
+keresztül a PC-től kapott árammal, illetve a négy ceruzaelemmel.<br />
+Így a korábbi hiányolt autonómia már megoldható.
+Az alábbi ábra a pénzgyűjtő robot összeköttetéseit mutatja.
+</p>
+
+<p><img class="standalone"  alt="huzalozás" src="images/wiring_begr.png" height="383" width="680" /></p>
+</div>
+<div class="lighterBox">
+<h2><a name="programozas">Programozás</a> </h2>
+<p>A robot programozása a korábban használt <a href="http://arduino.cc/en/Reference/HomePage">Arduino programozási
+nyelven</a> írt kód átalakítását jelenti. A programot az 
+Arduino saját <a href="http://arduino.cc/en/Main/Software">fejlesztői
+környezetében</a> készítettem el, majd az USB kapcsolaton keresztül a
+robotra töltöttem.
+</p>
+<p><img class="standalone" alt="ide" src="images/arduino_ide.png" height="620" width="675" /></p>
+<p>Az új program két működési módot biztosít: ha a robot a
+  számítógéphez van csatlakoztatva, akkor a soros porton keresztül
+  parancsok küldhetők neki, egyébként önálló mozgásba kezd.<br />
+Az irányított módban az összes aktorát be lehet kapcsolni, azaz a
+  robot képes előre és hátra elmozdulni, elfordulni, megrázni a
+  bögréjét és forgatni a fejét, valamint a szonár alapján a szemben
+  lévő akadályok távolságát megmérni. Később, ha bluetooth
+  kapcsolatot építek ki az Arduinoval (az eddigi próbálkozások Arduino
+  BT-vel valamint egy Bluegiga bluetooth modullal nem jártak sikerrel),
+  akkor ez a mód valódi távirányításnak felel meg, mely akár
+  okostelefonról is használható lesz.</p>
+<p>
+A bögre egyszeri megrázása a cupServo inicializálása után az alábbi
+  egyszerű kóddal történik:</p>
+<p>
+<code>
+void shakeOnce(){<br />
+&nbsp; cupServo.write(100);<br />
+&nbsp; delay(100);<br />
+&nbsp; cupServo.write(80);<br />
+&nbsp; delay(100);<br />
+}
+</code>
+</p>
+<p>
+Mivel a standard szervó a 0-tól 180 fokig tud fordulni, ezért a 90
+érték átadása a <code>write</code> eljárásnak ép az alapállapotot, a 100-as
+az egyik, a 80-as a másik irányba 10 fokos elfordulást jelenti. A
+bögre rázásához ezt a <code>shakeOnce</code>-ot hívom meg
+háromszor.<br />
+A fej forgatása ehhez teljesen hasonló, egyszeri, nagyobb szögű körülnézés:
+</p>
+<p>
+<code>
+void turnHead(){<br />
+&nbsp; headServo.write(150);<br />
+&nbsp; delay(300);<br />
+&nbsp; headServo.write(30);<br />
+&nbsp; delay(600);<br />
+&nbsp; headServo.write(90);<br />
+}
+</code>
+</p>
+
+<p>
+Az automatikus mód a korábbi egyenes haladás és akadálykikerülés
+kiterjesztése, melyet a <code>loop</code> függvényben ciklusonként meghívott következő kód határoz meg:
+</p>
+
+<p>
+<code>
+<pre>
+void beg() {
+       if( state == TURN ) {
+         if( millis() - actionStart < TURNTIME ) {
+           turn(turnDirection);         
+           return;
+         } else {
+           startMove();
+         }
+       }
+       // finding obstacles
+       if( cms[0] != 0 ) {  // moving sensing queue forward
+         for( int i = NO_PINGS -1; i > 0; --i) {
+           cms[i] = cms[i-1]; 
+         }
+       }
+       cms[0] = ping(); // new sensation
+       int isWallClose = 0;
+       for( int i = 0; i < NO_PINGS; ++i) { // finding obstacle
+           if( cms[i] < 30 && cms[i] > 0 ) {
+             isWallClose = 1;             
+           }
+       }
+       
+       if( isWallClose ) {     // wall/person found
+           goStop();
+           shakeAndStartTurn();
+       } else {
+         if( millis() - actionStart < moveTime ) {
+           goForward();
+         } else {
+           goStop();
+           turnHead();
+           shakeAndStartTurn();
+         }        
+       }       
+}
+</pre>
+</code>
+</p>
+
+<p>Annak érdekében, hogy a robot ne mindig faltól-falig
+haladjon, ezért véletlenszerű időközönként a robot közeli akadály
+jelenléte nélkül is elfordul. Ehhez az egyenes vonalú mozgás
+megkezdésekor meghívott <code>startMove</code> eljárás egyrészt eltárolja az
+aktuális időt a <code>millis</code> beépített függvény meghívásával,
+másrészt meghatározza, hogy az előre konfigurált 3-7 másodperc között mi legyen az
+az időintervallum, amit a robot mozgásban tölt.</p>
+
+<p>
+<code>
+<pre>
+void startMove() {
+         state = MOVE;
+         moveTime = random(MOVEMAX-MOVEMIN) + MOVEMIN;
+         actionStart = millis();           
+}
+</pre>
+</code>
+</p>
+
+<p>
+Ha eközben nem érzékel akadályt a robot - amit
+az <code>isWallClose</code> változóba gyűjtve határoz meg -, akkor
+előrefelé megy, majd a kijelölt idő leteltével megforgatja a fejét,
+megrázza a bögrét és valamilyen irányba elfordul. Ha mégis akadályba
+ütközne, akkor hamarabb megkezdi az elfordulást (<code>shakeAndStartTurn</code>
+eljárás két hívása az utolsó előtti <code>if</code> két ágában).</p>
+
+<p>Annak megállapítása, hogy van-e akadály a robot előtt, egy picit
+trükkös, mivel a szonár nem teljesen megbízhatóan szállítja az
+érzeteket az Arduinonak. A kód középső, <code>finding obstacles</code>
+megjegyzéstől kezdődő része a paraméterezésnek megfelelően három
+egymás utáni szonár mérést tárol el egy tömbként implementált FIFO
+sorban. Ha a három érvényes, tehát nem nulla mérés között van olyan,
+ami 30 centiméternél kisebb értéket jelez, akkor a robot úgy veszi,
+hogy akadály van hozzá közel. A nulla érték azt jelzi, hogy a
+szonárnak a rendelkezésre álló fél tizedmásodpercben nem sikerült
+visszaverődő impulzust fogadnia.<br /> Az adatok több méréssel való 
+biztosítására azért is szükség van, mert ha a szonár jele nem merőlegesen
+érkezik meg egy akadályra, akkor a jel elveszhet, illetve többszöri
+visszaverődés miatti túl nagy érték jelenhet meg.
+</p>
+
+<p>
+Mielőtt a robot nekilát a fordulásnak, megrázza a bögréjét, hátha az
+akadály egy ember, így elérkezett az ideje a pénzgyűjtésnek. Egy
+másodperccel később kiválasztja az elfordulás irányát, törli az eddig
+begyűjtött szonár méréseket, hisz a legközelebbi egyenes mozgásnál
+tiszta lappal lehet indulni. Ezen kívül eltárolja a fordulás kezdő
+időpontját.
+Mindezt a <code>shakeAndStartTurn</code> eljárás az alábbi módon definiálja:
+</p>
+
+<p>
+<code>
+<pre>
+void shakeAndStartTurn() {
+         state = TURN;      // robot turns
+         clearSenses();     // cleaning up to pings because we will turn for a while
+         shake();         // shake, may be the obstacle is a person
+         delay(1000);                     //waits for 1 seconds
+         turnDirection = random(2)*2-1; // setting turning direction
+         actionStart = millis();
+}
+</pre>
+</code>
+</p>
+
+<p>
+Visszatérve a fő eljárásra látható, hogy amennyiben fordulási módban
+(<code>state = TURN</code>) van a robot, akkor mindaddig a
+kiválasztott irányba fordul, amíg <code>TURNTIME</code> idő le nem
+telik, ami jelenleg fél másodperc. Ezután ismét visszatér
+a <code>startMove</code> eljáráshoz, azaz az egyenes haladáshoz.
+</p>
+
+<p>
+Az eddigiekből kiderül, hogy a <code>state</code> változó segítségével egy egyszerű
+kétállapotú automatát írtam le, melyben az állapotok közti
+váltásokat az akadályok, illetve a többnyire véletlenszerű időzítés
+határozza meg.<br />
+Annak is fontos szerepe van, hogy nem
+egyszerűen <code>delay(TIME)</code> módon oldom meg egy adott
+tevékenység meghatározott ideig történő végrehajtását. Ez ugyanis
+blokkolna minden más kódot, így például a haladás közben nem lehetne
+az akadályok felbukkanását vizsgálni. Ehelyett eltárolom a tevékenység
+kezdetének idejét, és egyéb programrészek futása közben is
+folyamatosan figyelni tudom, hogy eltelt-e már az adott feladatra
+szánt idő.
+</p>
+
+<p>A robot teljes kódja <a href="src/begr.pde">innen</a> tölthető
+  le.<br />
+A robotra töltés után a program rögtön el is indul, vagyis elkezdi küldeni
+a jeleket a szervók felé, így továbbra is érdemes volna egy kapcsolót
+a robotra szerelni.
+</p>
+
+</div>
+<div class="darkerBox">
+<h2><a name="experiences">Eredmények, folytatás</a> </h2>
+<p>Az elkészült robot a korábbi változatnál lényegesen masszívabb és
+  megbízhatóbban is mozog. Az
+  ügyesebb összekötés miatt az áramellátáshoz már nem szükséges számítógépes kapcsolat.
+  Az új program érdekesebb feladatot végez, mint elődje.</p>
+ 
+<p>A jobb kerekek és a görgő segítségével már többféle talajon, így
+  parkettán, padlólapon, szőnyegen is jól mozog a robot. </p>
+
+<p>Az alábbi film a robot működését mutatja be:  </p>
+<object class="standalone" style="height: 390px; width: 640px"><param name="movie" value="http://www.youtube.com/v/Zqpkh_58rKo?version=3"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="http://www.youtube.com/v/Zqpkh_58rKo?version=3" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="640" height="390"></object>
+
+<p>A farsangra készülő robottal kapcsolatos első elképzelés az volt,
+  hogy bluetooth kapcsolaton keresztül távirányítva fog működni. Mivel
+  ezt egyelőre nem sikerült megoldani, ezért tértem át az önállóan is
+  működőképes robotra. Magyarázva a bizonyítványt ennek megvan az az
+  előnye, hogy az autonómia szembeszökőbb, így önálló lényként jobban
+  értelmezhető a gyerekek számára.<br />
+A bluetooth kapcsolatot persze továbbra is érdemes volna
+  megoldani, mert a robotra helyezett laptoppal vagy még inkább
+  mobiltelefonnal kommunikálva sokkal többre lenne képes, például a
+  képek alapján navigálhatna.</p>
+
+<p>A használt szervók nem túl gyorsak, ha nagyobb szöget írnék elő 
+  a bögre rázásához vagy gyorsítani próbálnám a fej mozgatását, akkor
+  nem járnék sikerrel, a "végtag" hamarabb elkezdené a visszafele
+  mozgást, minthogy célba érne. Emiatt egy komolyabb robotnál komolyabb
+  meghajtásra is lesz szükség.
+</p>
+</div>
+
+<div class="lighterBox">
+<h2><a name="links">További hasznos oldalak</a> </h2>
+Magyarul
+<ul>
+  <li><a href="http://www.jataka.hu/rics">Egyéb robotos oldalaim</a></li>
+<li><a href="http://www.robotika.njszt.hu/index.php?title=Kezd%C5%91lap">NJSZT
+  Robotika szakosztály</a>, ahol többen segíthetnek, ha valamilyen
+  robotot szeretnél építeni. </li>
+  <li>Magyar gyártású <a href="http://avr.tavir.hu/modules.php?name=Content&amp;pa=showpage&amp;pid=97">Arduino-klón</a></li>
+  <li><a href="http://people.inf.elte.hu/istenes/robotika/">ELTE</a>-s
+robotika honlap</li>
+  <li><a href="http://www.bmfnik.hu/iar/">BMF</a> automatizált
+rendszerek honlap</li>
+</ul>
+Angolul
+<ul>
+  <li>Az <a href="http://www.societyofrobots.com/step_by_step_robot.shtml">50
+$-os robot</a></li>
+  <li>Az <a href="http://www.personalrobotics.nl/mambo/index.php?option=com_content&amp;task=view&amp;id=106&amp;Itemid=84">50
+€-s robot</a></li>
+<li><a href="http://www.instructables.com/id/Android-G1-Serial-To-Arduino/">Rootolt
+    Androidos telefon felhasználása Arduino alapú robot vezérléséhez</a></li>
+  <li>Arduino alapú, <a href="http://www.instructables.com/id/How_to_Make_an_Arduino_Controlled_Servo_Robot_SER/">profin
+kinéző robot</a>, ami készletben is <a href="http://www.oomlout.com/serb.html">rendelhető</a></li>
+  <li>Az előbbi robot <a href="http://www.instructables.com/id/SX5NPB8FNZAH9RU/">bővítése
+netbookkal</a></li>
+  <li>Arduino alapú <a href="http://www.instructables.com/id/Ard-e-The-robot-with-an-Arduino-as-a-brain">egyszerű
+robot</a></li>
+  <li><a href="http://www.arduino.cc/">Arduino</a> honlap</li>
+  <li><a href="http://www.freeduino.org/">Freeduino</a>, egy Arduino-változat</li>
+  <li>Robotokra specializált Arduino-klón:
+  a <a href="http://www.curiousinventor.com/kits/roboduino">Roboduino</a></li>
+</ul>
+<p>Ha ismersz még ide tartozó érdekes oldalt, különösen magyar robotikai
+eredményeket, kérlek, írd meg! </p>
+</div>
+</div>
+
+<!-- ##### Footer ##### -->
+<div id="footer">
+<div class="right">Utolsó módosítás: 2011-ápr-05 </div>
+<br class="doNotDisplay doNotPrint" />
+</div>
+
+<div class="subFooter">
+<p>Copyright © 2011, Szabó Richárd<br />
+richard_szabo@nospam.invitel.hu (a nospam törlendő)<br />
+<!--This theme is free for distriubtion, so long as link to openwebdesing.org and florida-villa.com stay on the theme-->
+Courtesy <a href="http://www.openwebdesign.org">Open Web Design</a><a href="http://www.dubaiapartments.biz"></a>Thanks to <a href="http://www.florida-villa.com">Florida Vacation Homes</a> <br class="doNotPrint" />
+      <p>&nbsp;  </p>
+<!-- BEGIN WebSTAT Activation Code -->
+<script type="text/javascript" language="JavaScript" src="http://hits.webstat.com/cgi-bin/wsv2.cgi?39877"></script>
+<noscript>
+<a href="http://www.webstat.com">
+<img src="http://hits.webstat.com/scripts/wsb.php?ac=39877" border="0" alt="WebSTAT - Free Web Statistics" /></a>
+</noscript>
+<!-- END WebSTAT Activation Code --></p>
+</div>
+
+</body></html>

@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta3 (July 4th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Bevezetés</TITLE>
+<META NAME="description" CONTENT="Bevezetés">
+<META NAME="keywords" CONTENT="ea">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="ea.css">
+<LINK REL="next" HREF="node3.html">
+<LINK REL="previous" HREF="node1.html">
+<LINK REL="up" HREF="ea.html">
+<LINK REL="next" HREF="node3.html">
+</HEAD>
+<BODY >
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<H1><A NAME="SECTION00020000000000000000">
+Bevezetés</A>
+</H1>
+<UL>
+<LI>Ipari forradalom, információs forradalom, intelligencia forradalma</LI>
+<LI>Tõkeigényes fejlesztés, meghatározó szektorokban</LI>
+<LI>Nagyon gyors várható terjedés</LI>
+<LI>Szimuláció szerepe a fejlesztésben</LI>
+<LI>Felépítés meghatározása:
+<UL>
+<LI>Alkatrészek</LI>
+<LI>Szenzorok mennyisége, érzékelési tartománya, felbontása</LI> 
+<LI>Aktorok ereje, szabadságfoka</LI>
+</UL>
+<LI>Viselkedés meghatározása:
+<UL>
+<LI>Algoritmusok kifejlesztése számítási idõ, energia, karbantartási
+költség megspórolásával</LI>
+<LI>Szemétgyûjtõ robot fejlesztése</LI>
+</UL>
+</LI>
+</UL>
+</BODY>
+</HTML>

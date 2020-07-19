@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Franciaország játékos megismerése a Google Street View-n keresztül." />
+    <meta name="keywords" content="Franciaország, térkép, földrajz, játék, keresés, tanulás, kvíz, Google Street View" />
+    <meta name="copyright" content="Szabó Richárd 2016." />
+    <meta name="country" content="Hungary">
+    <meta name="content-language" content="hu, hun, hungarian">
+
+    <title>Hol járunk?</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="map.css">
+  </head>
+  <body>
+    <div id="pano"></div>
+    <div id="control">
+      <div class="title">Hol járunk?</div>
+      <div id="choice">
+	<span id="option_buttons"></span>
+      </div>
+      <div id="value">
+          <span>Találatok:</span>
+          <span id="hits">0</span>
+          <span>Hibák:</span>
+          <span id="misses">0</span>
+      </div>
+      <div><a id="back_link" href="index.html">Újrakezdés</a></div>
+  </div>
+    <div class="input_panel" id="endgame">
+      <div class="title">Vége</div>
+      <div id="end_text">
+	<span id="point"></span> pontot értél el a lehetséges <span id="maxpoint"></span> pontból.
+	<div><a id="back_link" href="index.html">Újrakezdés</a></div>
+      </div>	
+    </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="map.js"></script>
+    <script>
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+    function loadMap() {
+    var map = new WhereAmIMap();
+    $.getJSON("locations.json", function(json) {
+    var level = getParameterByName('level');
+    map.setPlaces(json.places);
+    map.setLevel('0');
+    map.setLocations(json.locations);
+    map.init();
+    });
+    }
+    </script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD71qGE_RIDNA5QmDm6x4P0x_YOIADPoZw&signed_in=true&callback=loadMap"
+        async defer ></script>
+  </body>
+</html>

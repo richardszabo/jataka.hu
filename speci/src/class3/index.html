@@ -1,0 +1,409 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+                      "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+<h1>Mobil robotok szimulációja speci 3. óra</h1>
+
+<h2>Bevezetés</h2>
+<ul>
+  <li>megismerés folyamata: kategóriákra osztás képessége, 
+      kisebb egységekbe csoportosítás, hierarchiák rendszere</li>
+  <li>az emberi világ építésének része</li>
+  <li>komplex rendszerek: modularitás</li>
+  <li>új egész, kicsi, egyszerû, de önmagában is értelmes részekbõl</li>
+  <li>belsõ kohézió, laza kapcsolat</li>
+  <li>biológiai jelentõség, evolúciós folyamatok</li>
+  <li>tengeren hánykolódó tutaj újraácsolása</li>
+  <li>természet hierarchikus rendszere: makromolekulák, sejtek, szövetek,
+    szervek, szervrendszerek</li>
+  <li>robotok fejlesztésénél alapelv</li>
+</ul>
+
+<h2>Animatok</h2>
+<ul>
+  <li>animal + automaton = animat</li>
+  <li>animat: szimulált állatok vagy állatszerû robotok</li>
+  <li>állatok viselkedésének megértése analízissel, majd szintézissel</li>
+  <li>hasznos állati viselkedési elemek felhasználása robotok építéséhez</li>
+</ul>
+
+<h2>Braitenberg jármûvek</h2>
+<ul>
+  <li>Jármûvek, V. Braitenberg 1980-as évek</li>
+  <li>egyszerû szabályozó mechanizmusokkal mozgó automaták</li>
+  <li>intelligensnek tûnõ viselkedés, szenzor-irányítás-motor
+  hármasával (nincs memória)</li>
+  <li>elemi animatok különféle típusai (erõtérszerû vagy anyagkoncentrációs érzékelés)</li>
+  <li>1. jármû: 1 szenzor, 1 motor, a bemenettel arányos kimenet</li>
+  <li>egyenes vonalú mozgás</li>
+  <li>a terep egyenetlensége ezt megváltoztatja</li>
+  <li>2. jármû: 2 szenzor, 2 motor, a bemenettel arányos kimenet</li>
+  <li>soros típus:ingerszegény környezet irányába törekszik az ingerrel
+    arányos sebességgel hagyja el a forrást (gyáva)</li>
+  <li>keresztezett típus:inger felé törekszik, közelítve a forráshoz nõ a
+    sebessége (agresszív)</li>
+  <li><img src="pict/coward_web.gif" alt="Gyáva"> <img src="pict/aggressive_web.gif"
+    alt="Agresszív"></li>
+  <li>3. jármû 1. és 2. típusa a 2. jármûvek ellentéte: gátló kapcsolatok</li>
+  <li>soros típus: lassulva az ingerforrás felé fordul és megáll elõtte
+    (szeretetteli)</li>
+  <li>keresztezett típus: a forrásnak háttal áll meg, és a kis változások is
+    új keresésre bírják (felfedezõ)</li>
+  <li><img src="pict/lover_web.gif" alt="Szeretetteli"> <img
+    src="pict/explorer_web.gif" alt="Felfedezõ"></li>
+  <li>3. jármû 3. típusa összetettebb, 4 pár szenzor, 2 motor</li>
+  <li>fényre, hõmérsékletre, oxigénre és szervesanyag-koncentrációra
+    érzékenyek</li>
+  <li>lámpaizzõkra agresszíven, a magas hõmérsékletre gyáván, az oxigénre
+    felfedezõ módon és a szervesanyagra szeretettel reagál a jármû</li>
+  <li>4. jármû 3. jármûhöz harmadik típusához hasonló</li>
+  <li>a növekvõ inger egy ponton túl ellentétes hatást vált ki</li>
+  <li>sajátságos körözõ mozgás alakul ki a forrás körül</li>
+  <li>nagyon hasonlít repülõ rovarok viselkedésére</li>
+  <li>
+    <table border="1">
+      <tbody>
+        <tr>
+          <td>Típus</td>
+          <td>Szenzorok</td>
+          <td>Motorok</td>
+          <td>Kapcsolat</td>
+          <td>Viselkedés</td>
+        </tr>
+        <tr>
+          <td>1.</td>
+          <td>1</td>
+          <td>1</td>
+          <td>erõsítõ</td>
+          <td>egyenes haladás</td>
+        </tr>
+        <tr>
+          <td>2.1.</td>
+          <td>2</td>
+          <td>2</td>
+          <td>erõsítõ, soros</td>
+          <td>gyáva</td>
+        </tr>
+        <tr>
+          <td>2.2.</td>
+          <td>2</td>
+          <td>2</td>
+          <td>erõsítõ, keresztezett</td>
+          <td>agresszív</td>
+        </tr>
+        <tr>
+          <td>3.1.</td>
+          <td>2</td>
+          <td>2</td>
+          <td>gátló, soros</td>
+          <td>szeretetteli</td>
+        </tr>
+        <tr>
+          <td>3.2.</td>
+          <td>2</td>
+          <td>2</td>
+          <td>gátló, keresztezett</td>
+          <td>felfedezõ</td>
+        </tr>
+        <tr>
+          <td>3.3.</td>
+          <td>8</td>
+          <td>2</td>
+          <td>összes kombináció</td>
+          <td>összetett</td>
+        </tr>
+        <tr>
+          <td>4.</td>
+          <td>8</td>
+          <td>2</td>
+          <td>összes kombináció, de korlátosan</td>
+          <td>szaggatott, körkörõs</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+</ul>
+
+<h2>Kibontakozó viselkedés</h2>
+<ul>
+<li>Boid
+<ul>
+<li>akadálykikerülés</li>
+<li>orientáció tömegközéppont felé</li>
+<li>sebesség- és iránytartás</li>
+</ul>
+</li>
+<li>hangyatemetõ
+<ul>
+<li>szabad lábak és a környezettõl eltérõ lárva -&gt; felvesz</li>
+<li>szállít és a szállítotthoz hasonló lárvák -&gt; letesz</li>
+</ul>
+</li>
+  <li>Kibontakozás egyszerû modulok interakciójából (P. Maes)
+    <ul>
+      <li>etológiából ismert viselkedések és motivációk egymásra
+      hatása irányítja a robotot</li>
+      <li>elemi viselkedésmodulokon alapuló decentralizált architektúra</li>
+      <li>modulok: elkerülés, megközelítés, felfedezés, evés, ivás, étel vagy
+        ital megközelítése, menekülés, csata, alvás (mint az elõbbi jármûvek)</li>
+      <li>néhány szenzor, ami viselkedésekhez van kapcsolva (pl. víz a
+        közelben-ivás)</li>
+      <li>modul paraméterei: aktivációs szint és aktivációs küszöb, (mint
+         K. Lorenz pszichohidraulikus modellje)<br />
+        illetve elõfeltételek, hamissá és igazzá tehetõ feltételek listája</li>
+      <li>modulok hálózata megelõzõ, rákövetkezõ és konfliktus kapcsolatok
+        mentén egy irányított gráffá alakul</li>
+      <li>például keresés megelõzõ kapcsolata az evésnek (étel
+      közelben feltétel)</li>
+      <li>menekülés konfliktus kapcsolatban van a harc modullal
+      (ellenfél közel feltétel)</li>
+      <li><img src="pict/viselkedes_web.jpg" alt="Viselkedés"></li>
+      <li>különféle motivációk: félelem, aggresszió, éhség, szomjúság,
+        fáradtság, kiváncsiság</li>
+      <li>kapcsolat a motivációk és a viselkedések között, hogy melyik
+        viselkedés melyik motivációt csökkenti (pl. éhség-evés)</li>
+      <li><img src="pict/motivacio_web.jpg" alt="Motiváció"></li>
+    </ul>
+  </li>
+  <li>Maes fõ gondolata: az aktuális szituáció és a motivációk által keltett
+    aktivációs energiák végighaladnak a kapcsolatok hálózatán
+    <ul>
+      <li>minden motiváció növeli a kapcsolt viselkedések aktivációs
+      szintjét</li>
+      <li>minden végrehajtható viselkedés növeli az aktivációs szintjét
+        rákövetkezõinek</li>
+      <li>minden nem végrehajtható viselkedés növeli az aktivációs szintjét a
+        megelõzõinek</li>
+      <li>minden viselkedés csökkenti az aktivációs szintjét a
+      konfliktorainak</li>
+      <li>viselkedési láncolatok versenyeznek egymással</li>
+      <li>ha egy viselkedés aktivációs szintje átlépi az aktivációs küszöbjét,
+        akkor végrehajtódik</li>
+      <li>nincs központi irányítás, mégis a modulok kibontakozása elfogadható
+        viselkedést hoz létre</li>
+      <li><img src="pict/animat.jpg" alt="Animat"></li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Magába foglaló (subsumption) architektúra</h2>
+<ul>
+  <li>Rovarok különféle járásmódjai
+    <ul>
+      <li>lábak egyenként, egymás után</li>
+      <li>lábak egyenként, felemelés és leengedés átfedésben</li>
+      <li>átellenes elsõ és hátsó egyszerre, középsõk egyedül</li>
+      <li>elsõ és hátsó az átellenes középsõvel egyszerre</li>
+      <li><img src="pict/genghis.jpg" alt="Genghis"></li>
+    </ul>
+  </li>
+  <li>A subsumption architektúra alapelemei (R. Brooks)
+    <ul>
+      <li>inkrementális robotépítési mód</li>
+      <li>kiterjesztett véges állapotú automaták hálózata</li>
+      <li>egy megfelelõ viselkedési szint után új elemek adhatók a hálózathoz
+        a régi elemek módosítása nélkül</li>
+      <li>új viselkedési rétegek építhetõk az eddigiekre</li>
+      <li>huzalozási diagram formájú struktúra</li>
+    </ul>
+  </li>
+  <li>A kiterjesztett automata felépítése
+    <ul>
+      <li>véges automata, regiszterek halmaza és belsõ órák</li>
+      <li>bemenet a regiszterekbe érkezik fölülírva azokat</li>
+      <li>üzenetérkezés vagy óraütés állapotátmenetet eredményezhet</li>
+      <li>az állapotátmenet a regiszterek tartalmának függvénye</li>
+      <li>az eredmény egy regiszterbe vagy a kimenetre íródik</li>
+      <li>a bemenetek érkezhetnek szenzortól vagy másik automatától</li>
+      <li>a kimenet motorhoz vagy másik automatához csatlakozik</li>
+      <li><img src="pict/afsm.jpg" alt="Kiterjesztett automata"></li>
+    </ul>
+  </li>
+  <li>Kapcsolat az automaták között
+    <ul>
+      <li>automaták már mûködõ rétegéhez többféleképpen lehet kapcsolódni</li>
+      <li>gátló kimeneti csatlakozás elnyomja az eredeti úton érkezõ jelet,
+        amíg fennáll (i)</li>
+      <li>elnyomó bemeneti csatlakozás a saját jelét küldi az eredeti helyett,
+        amíg fennáll (s)</li>
+      <li>alapértelmezõ bemeneten érkezik a jel, ha az eredeti vonalon nincs
+        jel (d)</li>
+      <li>egyforma sebességû órák, aszinkron módon mûködtetve</li>
+    </ul>
+  </li>
+  <li>Az inkrementális felépítés
+    <ul>
+      <li>az elõbb ábrázolt hatlábú rovar </li>
+      <li>lábanként két motor: elõre-hátra (alfa) és föl-le (béta)</li>
+      <li>jelölések: felsõ vonal - összesen egy (központi), nincs vonal -
+        lábanként egy, bal felsõ háromszög - input, jobb alsó háromszög -
+        output, szaggatott felsõ vonal - két darab</li>
+      <li>Stabil állás
+        <ul>
+          <li>lábanként két automata alfa és béta motor pozíciójának
+            beállítása tárolt értékre (alpha pos, beta pos)</li>
+          <li>az alapértelmezés egy stabil pozíció</li>
+        </ul>
+      </li>
+      <li>Egyszerû járás
+        <ul>
+          <li>minden szint az elõzõre épül</li>
+          <li>lábletevés, mint alapmûködés minden lábra (leg down)</li>
+          <li>egy darab alfa egyensúly automata (alpha balance): a lábak szögének összegét
+            konstansként próbálja tartani, egy láb elõre mozgása mindegyiken
+            egyhatodnyi hátra parancsot eredményez</li>
+          <li>alpha advance: felemelt lábnál elnyomja az alfa egyensúly jelét,
+            és elõre irányítja a lábat</li>
+          <li>lábemelés indítás: ha a láb lent van, egy bizonyos idõ után
+            felemelés utasítást kap</li>
+          <li>már csak egy központi indítás-szabályozás kell: járás automata
+            jelet küld hármas lábemelés vagy egyesével emelés formában</li>
+          <li><img src="pict/jaras_web.jpg" alt="Egyszerû járás"></li>
+        </ul>
+      </li>
+      <li>Erõkiegyenlítés
+        <ul>
+          <li>durva talajon a robot felborulhat, akadályra lépve az elõre
+            beállított szöget eröltetve</li>
+          <li>beta force automata lábanként méri a földhöz nyomás erejét</li>
+          <li>beta balance automata az elõbbi jelére alapozva elnyomja a
+            láblenyomás mûveletét a lábemelésen keresztül</li>
+        </ul>
+      </li>
+      <li>Lábemelés
+        <ul>
+          <li>lábemelés magassága fordítottan arányos a haladási
+          sebességgel</li>
+          <li>ugyanakkor akadályok átlépéséhez fontos a magasság</li>
+          <li>alfa collide automata mérve az elõrenyúláskori magasságot a
+            lábemelés magasságának regiszterét írja nagyobb értékre</li>
+          <li>ez az érték a következõ lábemelésnél visszaáll az eredeti
+            értékre</li>
+        </ul>
+      </li>
+      <li>Tapintásérzékelõk
+        <ul>
+          <li>a robot elsõ lábának magasabbra emelése tárggyal való ütközés
+            után következik be</li>
+          <li>tapintásérzékelõvel a magasabb emelést korábban ki lehet
+          váltani (feeler)</li>
+        </ul>
+      </li>
+      <li>Dõlés stabilizálás
+        <ul>
+          <li>nagy dõléskor az erõkiegyensúlyozás nem mindig jó: az erõsen
+            támaszkodó elsõ és hátsó lábat fölemeli, amivel növeli a
+          dõlést</li>
+          <li>két automatával (forward pitch, backward pitch) az erõkiegyensúlyozás
+            gátolható</li>
+        </ul>
+      </li>
+      <li>Követés
+        <ul>
+          <li>mozgó tárgy követéséhez elég két új automatát bevezetni</li>
+          <li>az infravörös szenzorra kötött érzékeli, ha valami elhalad a
+            robot elõtt</li>
+          <li>a másik automata (prowl) alapvetõen gátolja a lábemeléseket,
+              így a robot mozdulatlan, de mozgás érzékelésekor enged
+          haladni</li>
+        </ul>
+      </li>
+      <li>Irányított követés
+        <ul>
+          <li>az irányítás bevezetéséhez egy új automata kell (steer)</li>
+          <li>az infravörös szenzorok adatait felhasználva módosítja az alfa
+            pozíció automaták regisztereit, melyek a lábak hátranyújtásának
+            szögéért felelõsek (szeretetteli animat)</li>
+        </ul>
+      </li>
+      <li><img src="pict/subsumption_web.jpg" alt="Kiterjesztett automata"></li>
+    </ul>
+  </li>
+  <li>Konklúziók
+    <ul>
+      <li>57 automatából álló hálózat</li>
+      <li>robusztus viselkedés, minimális központi irányítással</li>
+      <li>magasszintû viselkedések integrálhatók alacsony szintû viselkedések
+        megvalósítására alkalmas rendszerbe</li>
+      <li>makro viselkedések, elemi viselkedésekbõl létrehozhatók</li>
+      <li>további javulás érthetõ el jobb szenzorok bevezetésével</li>
+      <li>nem neurális hálózat, mert kevés kapcsolat, inhomogén feldolgozó
+        elemek és biológiailag nem megalapozott</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Tanulás</h2>
+<ul>
+  <li>a mesterséges intelligencia egyik sarokpontja</li>
+  <li>Egy számítógépes program tanul egy E tapasztalatból egy T feladatra és P
+    teljesítmény-mértékre nézve, ha az E felhasználásával egy idõ után a T
+    feladatot jobban végzi el P szerint.</li>
+  <li>Például: autóvezetés programja
+    <ul>
+      <li>T - vezetés hagyományos többsávos autõpályán képi információk
+        felhasználásával</li>
+      <li>P - hiba nélkül megtett átlagos távolság</li>
+      <li>E - képsorozatok és hozzájuk tartozó emberi kormánymozdulatok</li>
+    </ul>
+  </li>
+  <li>tanuló rendszer létrehozása egy döntési folyamat eredménye</li>
+  <li>tanuló rendszer tervezésének lépései (sakk példáján keresztül):
+    <ul>
+      <li>az E tapasztalathalmaz kiválasztása
+        <ul>
+          <li>direkt tapasztalat (állások és hozzájuk tartozó helyes
+          lépések)</li>
+          <li>indirekt tapasztalat (állások és végeredmény)</li>
+          <li>játszmák önmaga ellen</li>
+          <li>...</li>
+        </ul>
+      </li>
+      <li>a célfüggvény, feladat (T) kiválasztása (mit oldunk meg?)
+        <ul>
+          <li>állások -&gt; lépés</li>
+          <li>állások -&gt; érték</li>
+          <li>...</li>
+        </ul>
+      </li>
+      <li>a feladatreprezentáció kiválasztása (hogyan oldjuk meg?)
+        <ul>
+          <li>polinomiális függvény</li>
+          <li>néhány jellemzõ lineáris függvénye</li>
+          <li>mesterséges neurális háló</li>
+          <li>...</li>
+        </ul>
+      </li>
+      <li>tanulási algoritmus kiválasztása
+        <ul>
+          <li>lineáris programozás</li>
+          <li>gradiens módszer</li>
+          <li>Monte-Carlo módszer</li>
+          <li>kifejezésfák</li>
+          <li>...</li>       
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><img src="pict/devel_methods_web.png" alt="Tanulási módszerek"></li>
+  <li>induktív és analitikus tanulás (H-hipotézistér, D-példahalmaz,
+    h-célhipotézis, B-alaptudás(törvényszerûségek))
+  (függvény-approximáció, tételbizonyítás)</li>
+  <li>tanulás tanítóval (Popper)</li>
+  <li>tanulás megerõsítés útján: korbács vagy cukor (fogalmazás)
+  (Skinner)</li>
+  <li>önszervezõdés: a bemenet belsõ struktúrájának felismerése
+  (koccanások)</li>
+  <li>döntési fák (attribútum-értékek ágaihoz kimenetet rendelünk)
+  (tenisz)</li>
+  <li>evolúciós algoritmusok (Darwin)</li>
+  <li>Bayes-módszerek: hipotézis és adatok valószínûségének összefüggéseibõl a
+    legvalószínûbb hipotézist adja vissza</li>
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="ant-ropy.css">
+    <link rel="stylesheet" type="text/css" href="tab.css">
+    <title>Playground for ants - what is this?</title>
+</head>
+<body>
+    <h1>Playground for ants - what is this?</h1>
+<p>
+    It is an ant simulation aimed at investigating their foraging behavior.
+    When ants - small red discs with a line heading marker -
+    swarm out of their nest they appear to wander randomly at first,
+    but soon they form a well-pronounced trail between the nest - blue disc - and the food source -
+    a bunch of green dots in a neighbourhood.
+    Surprisingly, the trail found is typically fairly close to the shortest possible path.
+    When there are multiple food sources, the ant colony usually exploits them
+    in the order of their distance.
+</p>
+<p>
+    Individual ants wander out of the nest in random directions, leaving a trail of ‘homing pheromone’
+    (a volatile chemical substance) - blue cloud - behind.
+    When an ant finds food, it sets out for the nest, this time dropping ‘food pheromone’ - green cloud - as it goes.
+    Food-seeking ants follow the gradient of ‘food pheromone’ in their local neighborhood,
+    while homing ants seek places with high amounts of ‘homing pheromone’.
+    Below a certain threshold pheromone level and also with a constant probability, the ants move randomly.
+    This latter component controls the balance between ‘exploitation’ and ‘exploration’, the essence of optimizing behavior.
+</p>
+<p>
+    During their walk, ants follow a simple probabilistic rule:
+    they move to the neighboring cell with the highest pheromone level
+    (depending on their destination, they either seek ‘homing pheromone’ or
+    ‘food pheromone’ locations). Below a certain threshold, and with a given
+    probability, they move randomly. However, the ants prefer not to turn, i.e.,
+    their selection of new location is biased by their direction.
+</p>
+<p>
+    The simulation has some parameters that can be altered by you:
+    <ul>
+        <li>
+            Seed: randomization value. The same seed with other parameters unchanged always shows the same colony behavior.
+        </li>
+        <li>
+            Food sources: the number of location around which food particles are scattered with a Gaussan distribution.
+        </li>
+        <li>
+            Food: Number of food particles in all food sources.
+        </li>
+        <li>
+            Ants: Number of foraging ants.
+        </li>
+    </ul>
+    The results table shows the following information:
+    <ul>
+        <li>
+            Step: Elapsed time since the start of the simulation in discrete units.
+        </li>
+        <li>
+            Ants carrying: Number of ants possessing a food particle and carrying it to the hive.
+        </li>
+        <li>
+            Ants searching: Number of ants without food searching for a particle.
+        </li>
+        <li>
+            Food collected: Number of food particles collected so far.
+        </li>
+        <li>
+            Step cycle: current speed of the simulation in milliseconds.
+            Be careful and do not use too large parameters to keep the simulation responsive.
+        </li>
+    </ul>
+</p>
+<p>
+    If you click on an ant then it becomes the selected ant - highlighted in yellow -
+    and you will see its actual state in the table on the Selected ant tab.
+</p>
+<p>
+    Entropy tab shows the development of the ant and the food entropy over time.
+</p>
+<p>
+    You can watch the on-going simulation by clicking on Run or follow it step by step clicking on Step.
+</p>
+<p>For details of our research you can read this article: <a id="paper" href="foraging_ants.pdf">Measuring Stigmergy: the Case of Foraging Ants</a>.</p>
+</body>

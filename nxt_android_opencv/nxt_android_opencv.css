@@ -1,0 +1,37 @@
+img.standalone, object.standalone {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+img.floatLeft { 
+    float: left; 
+    margin: 10px; 
+}
+img.floatRight { 
+    float: right; 
+    margin: 10px; 
+}
+
+table.image{
+    border-width: 0;
+    margin-left: auto;
+    margin-right: auto;    
+}
+
+table.largefont {
+    font-size: 200%;
+    font-weight: bold;
+}
+
+#main-copy a {
+/*  text-decoration: none;*/
+}
+.code {
+    border: solid;
+    border-width: 1px;
+    background-color: rgb(245,245,245);
+    font-family: monospace;
+    white-space: pre;
+    padding: 1em;
+}

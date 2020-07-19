@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+                      "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+
+<h1>BackPropagáció Javában</h1>
+<ul>
+  <li>az Interneten sokféle implementációt lehet találni</li>
+  <li>saját Javás megoldás, ami a felsorolt kiegészítések többségét
+    tartalmazza</li>
+  <li><a
+  href="BackPropagation/BackPropagation.java">BackPropagation.java</a></li>
+  <li><a href="BackPropagation/Neuron.java">Neuron.java</a></li>
+  <li><a href="BackPropagation/doc/index.html">java dokumentáció</a></li>
+  <li><a href="BackPropagation/BPtest.java">1. példa</a> <a
+    href="BackPropagation/bptest.txt">1. példa eredménye</a></li>
+  <li><a href="BackPropagation/BPtest2.java">2. példa</a> <a
+    href="BackPropagation/bptest2.txt">2. példa eredménye</a></li>
+  <li><a href="BackPropagation/BPtest5.java">3. példa</a> <a
+    href="BackPropagation/bptest5.txt">3. példa eredménye</a></li>
+</ul>
+
+<h2>Képfeldolgozás</h2>
+
+<table border=1>
+<tr>
+<td><img src="BackPropagation/pics256/ll/1.jpg" alt=""></td>
+<td><img src="BackPropagation/pics256/ll/2.jpg" alt=""></td>
+</tr>
+<tr>
+<td><img src="BackPropagation/pics256/ll/3.jpg" alt=""></td>
+<td><img src="BackPropagation/pics256/ll/4.jpg" alt=""></td>
+</tr>
+<tr>
+<td><img src="BackPropagation/pics256/ll/5.jpg" alt=""></td>
+<td><img src="BackPropagation/pics256/ll/6.jpg" alt=""></td>
+</tr>
+<tr>
+<td><img src="BackPropagation/pics256/ll/7.jpg" alt=""></td>
+<td><img src="BackPropagation/pics256/ll/8.jpg" alt=""></td>
+</tr>
+<tr>
+<td><img src="BackPropagation/pics256/ll/9.jpg" alt=""></td>
+<td><img src="BackPropagation/pics256/ll/10.jpg" alt=""></td>
+</tr>
+</table>
+<ul>
+</ul>
+
+<ul>
+<li>256x256 méretû képek, jellemzõen egyik sarokban sötét folt</li>
+<li>a feladat a sarok megtanulása és megadása</li>
+  <li><a href="BackPropagation/corner_learning/CornerLearning.java">CornerLearning.java</a></li>
+  <li><a href="BackPropagation/corner_learning/CornerTesting.java">CornerTesting.java</a></li>
+  <li><a href="BackPropagation/corner_learning/result256.txt">100 példa,
+  6 perc tanulás után a hiba 10 a -5-en</a></li>
+  <li><a href="BackPropagation/corner_learning/corner_learning256.bps">a hálózat</a></li>
+<li>eredmények: <br />
+<code>
+output - ul:-0.9999654247133428, ur:-0.9993022974027022,ll:0.9998592802048032,lr:-0.9679824598074586
+</code><br />
+<code>
+output - ul:-0.9999486108550013, ur:-0.9997663629641741,ll:-0.999956824657347,lr:0.9999982890882304
+</code></li>
+<li>túl nagy háló, emiatt lassú a Java kód</li>
+<li>valódi képek feldolgozására, ennél ügyesebb megoldás kell</li>
+</ul>
+</body>
+</html>

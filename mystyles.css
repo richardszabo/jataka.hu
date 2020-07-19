@@ -1,0 +1,142 @@
+body {
+    color: #fff;
+    background-color: #373839;
+}
+
+a {
+    font-weight: bold;
+    color: #F5F5F5;
+}
+
+a:focus, a:hover {
+    color: #666;
+    text-decoration: none;
+}
+
+.content-container {
+    border-radius: 5px;
+}
+
+.content-container.programozas {
+    background-color: #2b6b83;
+}
+
+.content-container.egyeb {
+    background-color: #ed8601;
+}
+
+.content-container.kapcsolat {
+    background-color: #68287d;
+}
+
+.row {
+    padding: 1em;
+}
+.col-xs-12 {
+    margin-bottom: 1em;
+}
+
+.navbar-default {
+    background-color: #373839;
+    background-image: none; //linear-gradient(to bottom, #000 0px, #373839 100%);
+    box-shadow: none;
+}
+
+.navbar {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0px;
+    border: 0px;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: #fff;
+    border-radius: 7px;
+}
+
+.navbar-default {
+    border-color: transparent;
+}
+
+.navbar-nav > li > a {
+    padding: 5px;
+    margin: 10px 5px 5px 5px;
+}
+
+.navbar-nav > li.a > a, .navbar-nav > li.a.active > a {
+    background-color: #2b6b83;
+}
+
+.navbar-default .navbar-nav > li.a > a:focus, .navbar-default .navbar-nav > li.a > a:hover {
+    background-color: #6babc3;
+}
+
+.navbar-nav > li.b > a, .navbar-nav > li.b.active > a {
+    background-color: #ed8601;
+}
+
+.navbar-default .navbar-nav > li.b > a:focus, .navbar-default .navbar-nav > li.b > a:hover {
+    background-color: #fda631;
+}
+
+.navbar-nav > li.c > a, .navbar-nav > li.c.active > a {
+    background-color: #68287d;
+}
+
+.navbar-default .navbar-nav > li.c > a:focus, .navbar-default .navbar-nav > li.c > a:hover {
+    background-color: #9858ad;
+}
+
+.navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li.active > a:focus, .navbar-default .navbar-nav > li.active > a:hover {
+    color: #333;
+}
+
+.navbar-default .navbar-brand {
+    color: #fff;
+}
+
+.navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
+    color: #999;
+    background-color: transparent;
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .open > a {
+    background-image: none;
+    box-shadow: none;
+}
+
+.navbar-default .navbar-nav > .active > a {
+    color: #fff;
+}
+.project {
+    background-color: #6babc3;
+    padding: 1em;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px;
+    height: 300px;
+}
+.project-desc {
+    //background-color: #3b8bc3;
+    padding: 0.5em 1em 0.5em 1em;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px;
+    text-align: center;
+}
+.project h2 {
+    font-size: 120%;
+    font-weight: bold;
+}
+
+.project img {
+    max-width: 75%;
+    max-height: 85%;
+}
+
+img#richard {
+    border-radius: 5px;
+    width: 70%;
+}

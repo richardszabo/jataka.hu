@@ -1,0 +1,166 @@
+#include "NXCDefs.h"
+
+#define min(a,b) ((a)<(b)?(a):(b))
+#define max(a,b) ((a)>(b)?(a):(b))
+
+// normal speed is 50%
+#define FORWARD_SPEED 50
+
+#define PRECISION  5
+int dist[PRECISION];
+
+mutex dist_mutex;
+
+#define MAX_ANGLE  120
+
+int inited;
+
+mutex init_mutex;
+
+int turn_right;
+
+mutex turn_mutex;
+
+// converts distances
+// to 100-0 domain
+// distances bigger than 33 cm are ignored
+// 100 - at an obstacle
+// 0 - clear sight
+int convert_dist(int dist) {
+     //return dist > 33 ? 33 : dist;
+     return max(33 - dist,0) * 3;
+}
+
+// moves the robot depending on the distance measures
+task move() {
+     int stimulus;
+     int left_speed;
+     int right_speed;
+
+     while(true) {
+          // senses ahead are more important than in lateral position
+          // stimulus is in 0-1800 interval, theoretically
+          Acquire(init_mutex);
+          if( inited == 0 ) {
+              Release(init_mutex);
+              continue;
+          } else {
+              Release(init_mutex);
+          }
+          
+          Acquire(dist_mutex);
+          
+          /*if( dist[0] > 33 &&
+              dist[1] > 33 &&
+              dist[2] > 33 &&
+              dist[3] > 33 &&
+              dist[4] > 33 ) {
+              
+              // no wall in the neighborhood
+              // just go ahead
+              stimulus = 0;
+              
+          } else {           */
+          
+              // calculation based on wall distance
+              stimulus = (convert_dist(dist[3]) - 30) +
+                     (convert_dist(dist[2]) - 30) +
+                     convert_dist(dist[1]) +
+                     convert_dist(dist[0]);
+          //}
+          Release(dist_mutex);
+          
+          // stimulus converted to 0-100 interval
+          stimulus = stimulus/5;
+          left_speed = max(min(FORWARD_SPEED + stimulus,100),-100);
+          right_speed = max(min(FORWARD_SPEED - stimulus,100),-100);
+          
+          // some debug messages
+          TextOut(5,LCD_LINE6,"                                                                            ");
+          TextOut(5,LCD_LINE7,"                                                                            ");
+          NumOut(5,LCD_LINE6,stimulus);
+          NumOut(70,LCD_LINE6,convert_dist(dist[3]));
+          NumOut(5,LCD_LINE7,left_speed);
+          NumOut(70,LCD_LINE7,right_speed);
+          
+          // acting on motors
+          OnFwd(OUT_B,left_speed);
+          OnFwd(OUT_C,right_speed);
+
+          Wait(5);
+    }
+}
+
+// collects ultrasonic data
+task sense() {
+     int i;
+     int t;
+
+     SetSensorLowspeed(IN_2);
+     ResetTachoCount(OUT_A);
+
+     while(true) {
+          // getting turn direction
+          Acquire(turn_mutex);
+          t = turn_right;
+          Release(turn_mutex);
+
+          if( t == 1 ) {
+              // collection of senses from middle to right
+              i = 0;
+              while( i < PRECISION ) {
+                  if( MotorTachoCount(OUT_A) + 5 > i * MAX_ANGLE / (PRECISION - 1) ) {
+                      Acquire(dist_mutex);
+                      dist[i] = SensorUS(IN_2);
+                      Release(dist_mutex);
+                      ++i;
+                  }
+                  Wait(10);
+              }
+              // senses are initialized so robot may start to move
+              Acquire(init_mutex);
+              inited = 1;
+              Release(init_mutex);
+          } else {
+              // collection of senses from right to middle
+              i = PRECISION - 1;
+              while( i >= 0 ) {
+                  if( MotorTachoCount(OUT_A) - 5 < i * MAX_ANGLE / (PRECISION - 1) ) {
+                      Acquire(dist_mutex);
+                      dist[i] = SensorUS(IN_2);
+                      Release(dist_mutex);
+                      --i;
+                  }
+                  Wait(10);
+              }
+          }
+          /*
+          // display sensed values
+          display_senses();
+          */
+     }
+}
+
+// rotates the sonar to sense the wall in one direction and ahead
+task rotate() {
+     while(true) {
+          // turning from middle to right
+          Acquire(turn_mutex);
+          turn_right = 1;
+          Release(turn_mutex);
+          RotateMotor(OUT_A,50,-1 * MAX_ANGLE);
+          // turning back
+          Acquire(turn_mutex);
+          turn_right = 0;
+          Release(turn_mutex);
+          RotateMotor(OUT_A,50,MAX_ANGLE);
+     }
+}
+
+// the main program
+task main() {
+     inited = 0;
+     start rotate;
+     start sense;
+     start move;
+}

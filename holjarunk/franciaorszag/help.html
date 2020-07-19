@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Franciaország játékos megismerése a Google Street View-n keresztül." />
+    <meta name="keywords" content="Franciaország, térkép, földrajz, játék, keresés, tanulás, kvíz, Google Street View" />
+    <meta name="copyright" content="Szabó Richárd 2016." />
+    <meta name="country" content="Hungary">
+    <meta name="content-language" content="hu, hun, hungarian">
+
+    <title>Segítség</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="suggest.css">
+  </head>
+  <script>
+  function sendMail() {
+      var str = ['holjarunk','jataka.hu'].join('@');
+      var link = "mailto:" + str
+      + "?&subject=" + encodeURI("Hol járunk - vélemény");
+      window.location.href = link;
+  }
+  </script>
+
+  <body>
+    <iframe class="background" id="latour" src="https://www.google.com/maps/embed?pb=!1m0!3m2!1shu!2shu!4v1455885602384!6m8!1m7!1srTIMPB0oo2sbgYiPeS1bew!2m2!1d48.85631304229774!2d2.297768609839702!3f326.87136383929794!4f1.6459227747719325!5f0.7820865974627469" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+    <div class="input_panel" id="suggest">
+      <div class="title">Segítség</div>
+      <div id="suggest_text">
+        <p>Ez az oldal egy <a href="https://www.google.com/maps/streetview/">Google Street View</a>-ra épülő játék,
+            kvíz avagy tanulási lehetőség, amelynek segítségével Franciaország érdekesebb helyeit lehet megismerni.</p>
+        <p>A játék során megjelenő kép a jobb felső sarokban szereplő négy település közül az egyikben készült:
+            a helyes választ neked kell megadnod. A válasz kitalálásához érdemes a Street View-ban megszokott módon "közlekedni".
+            Az egyszerűbb feladatoknál a kiinduló kép rögtön felismerhető, máskor körül kell nézni, esetleg rövidebb "gyaloglás"
+            is szükséges ahhoz, hogy egy híresebb részhez érjünk.</p>
+        <p>Ha véleményed, ötleted van, kérlek <a href="" onclick="sendMail()">írjad meg</a>!</p>
+      </div>
+        <div><a id="back_link" href="index.html">Újrakezdés</a></div>
+    </div>
+</body>
+</html>

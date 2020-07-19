@@ -1,0 +1,1 @@
+requirejs(['Graph_example']);require(['Graph_example'],function(Graph_example) {    var ge = new Graph_example();    ge.loop();});

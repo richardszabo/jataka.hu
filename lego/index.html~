@@ -1,0 +1,886 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-AU">
+  <head>
+    <meta http-equiv="content-type" content="application/xhtml+xml; charset=iso-8859-1" />
+    <meta name="author" content="haran" />
+    <meta name="generator" content="haran" />
+
+    <!-- Navigational metadata for large websites (an accessibility feature): -->
+    <link rel="top"      href="./index.html" title="Homepage" />
+    <link rel="up"       href="./index.html" title="Up" />
+    <link rel="first"    href="./index.html" title="First page" />
+    <link rel="previous" href="./index.html" title="Previous page" />
+    <link rel="next"     href="./index.html" title="Next page" />
+    <link rel="last"     href="./index.html" title="Last page" />
+    <link rel="toc"      href="./index.html" title="Table of contents" />
+    <link rel="index"    href="./index.html" title="Site map" />
+
+    <link rel="stylesheet" type="text/css" href="./tierraverde-screen.css" media="screen" title="Tierra Verde (screen)" />
+    <link rel="stylesheet" type="text/css" href="./tierraverde-print.css" media="print" />
+
+    <title>A LEGO Mindstorms NXT programozása</title>
+    <style type="text/css">
+<!--
+.style1 {color: #C1FF64}
+-->
+    </style>
+</head>
+
+  <body>
+    <!-- For non-visual user agents: -->
+      <div id="top"><a href="#main-copy" class="doNotDisplay doNotPrint">Skip to main content.</a></div>
+
+    <!-- ##### Header ##### -->
+
+    <div id="header">
+      <h1 class="headerTitle">
+        <a href="./index.html" title="Browse to homepage">A LEGO Mindstorms NXT programozása</a>
+      </h1>
+
+      <!--TODO ENGLISH <div class="headerLinks">
+        <span class="doNotDisplay">Useful Links: </span>
+        <a href="./index.html">Magyar zászló</a>
+        <a href="./index.html">Angol zászló</a>
+      </div>-->
+    </div>
+
+    <!-- ##### Side Bar ##### -->
+
+    <div id="side-bar">
+      <p class="sideBarTitle"><a href="#NXT">A LEGO Mindstorms NXT</a></p>
+      <ul>
+        <li><a href="#introduction">Bevezetés</a></li>
+      </ul>
+
+      <p class="sideBarTitle"><a href="#langs">Programozási nyelvek</a></p>
+      <ul>
+        <li><a href="#langs_online">Az NXT-n mûködõ programnyelvek</a></li>
+        <li><a href="#langs_NXT">A LEGO MindStorms NXT Software</a></li>
+        <li><a href="#langs_NBC">Az NBC/NXC</a></li>
+        <li><a href="#langs_RobotC">A RobotC</a></li>
+        <li><a href="#langs_LeJOS">A LeJOS</a></li>
+        <li><a href="#langs_remote">Az NXT-t távolról irányító megoldások</a></li>
+      </ul>
+
+      <p class="sideBarTitle"><a href="#robots">Építhetõ robotok</a></p>
+      <ul>
+        <li><a href="#robots_base">Az alaptípusok</a></li>
+        <li><a href="#Tribot">TriBot</a></li>
+        <li><a href="#RobotArm">RobotArm</a></li>
+        <li><a href="#Spike">Spike</a></li>
+        <li><a href="#Alpha">Alpha Rex</a></li>
+      </ul>
+
+      <p class="sideBarTitle"><a href="#tasks">További feladatok</a></p>
+      <ul>
+        <li><a href="#remote">Irányítás Bluetooth kommunikációval</a></li>
+        <li><a href="#comm">Bluetooth kommunikáció használata</a></li>
+        <li><a href="#wall_avoiding">Falkikerülés</a></li>
+        <li><a href="#wall_following">Falkövetés</a></li>
+        <li><a href="#sonar">Falkövetés</a></li>
+      </ul>
+
+      <p class="sideBarTitle"><a href="#experiences">Általános tapasztalatok</a></p>
+      <p class="sideBarTitle"><a href="#various">Érdekes kísérletek</a></p>
+      <p class="sideBarTitle"><a href="#links">További hasznos oldalak</a></p>
+      <p class="sideBarTitle"><a href="#acknowledgement">Köszönet</a></p>
+      <!--<span class="sideBarText">
+        <span class="doNotDisplay">Useful Links: </span>-->
+      </span>
+    </div>
+
+    <!-- ##### Main Copy ##### -->
+
+    <div id="main-copy">
+      <div id="introduction" class="darkerBox">
+<h2>
+<a name="NXT">A LEGO Mindstorms NXT</a>
+</h2>
+
+Ha valaki robotok programozásával szeretne
+foglalkozni, akkor ideális választás lehet a LEGO Mindstorms NXT
+készlete. Az alapcsomag a nem játék szintjén programozható robotokhoz
+képest viszonylag olcsó, százezer forint alatt
+beszerezhetõ. Ugyanakkor a rendszer kellõen összetett ahhoz, hogy a
+szórakozáson túlmenõen komoly kihívások elé állítsa a vállalkozó kedvû
+fejlesztõket, és bepillantást engedjen ebbe a mûszaki informatikai világba.
+<p />
+
+A LEGO a hagyományos konstrukciós játékok készítése mellett már több
+mint két évtizede foglalkozik robotokkal.
+A cég a <a href="http://en.wikipedia.org/wiki/Lego_Mindstorms">Mindstorms</a>
+szériát 1998-ban indította útjára, ennek egyik elsõ típusa az
+intelligens téglaként is nevezett  
+<a href="http://www.lego.com/eng/education/mindstorms/home.asp?pagename=rcx">RCX</a>.
+Az <a href="http://en.wikipedia.org/wiki/Lego_mindstorms_nxt">NXT</a> a LEGO legújabb generációs programozható robotkészlete.
+A LEGO Mindstorms NXT <a
+href="http://mindstorms.lego.com/">honlapja</a> részletesen bemutatja
+a készletet, a továbbiakban én csak a legfontosabbak tudnivalókat írom
+le.
+<p />
+
+A következõ kép a készlet központi részét, az NXT
+egységet ábrázolja. (Az oldal képei a LEGO Mindstorms
+honlapjáról valók, a filmek saját készítésûek.)<p />
+
+<a href="images/9841-0000-XX-12-1.jpg"><img src="images/9841-0000-XX-12-1_th.jpg"></a><p />
+<p />
+
+Az NXT készlethez a közismert <a href="http://technic.lego.com/">Technic</a> építõelemeken és a központi
+egységen kívül hozzátartozik 3 szervómotor és 4 különbözõ
+szenzor. <br />
+Az NXT alapú robot szervómotorainak segítségével tud bármiféle mozgást
+végezni, így kereken gurulni, járni vagy tárgyakat emelni.
+A motorok sajátsága, hogy elfordulásérzékelõt tartalmaznak, így az
+általuk végrehajtott elfordulás lekérdezhetõ, illetve viszonylag finom
+mozgás kivételezésre adódik lehetõség.
+<p />
+
+<a href="images/9842-0000-XX-12-1.jpg"><img src="images/9842-0000-XX-12-1_th.jpg"></a><p />
+<p />
+A 4 önálló szenzortípus különbözõ érzékelési modalitásokban mûködik. Az
+érintésérzékelõ az eszköz végén lévõ gomb benyomódását, felengedését
+jelzi vissza. 
+A fényérzékelõ a fény erõsségérõl tájékoztat.
+A hangérzékelõ különféle hangmintákat ismer fel.
+Az ultrahangos érzékelõ a tárgyakról visszaverõdõ ultrahang
+segítségével határozza meg a környezet elemeinek távolságát.
+
+<table border=0>
+<tr>
+<td>
+érintésérzékelõ</td>
+<td>
+fényérzékelõ
+</td>
+<td>
+hangérzékelõ</td>
+<td>
+ultrahangos érzékelõ</td>
+</tr>
+<tr>
+<td>
+<a href="images/9843-0000-XX-12-1.jpg"><img src="images/9843-0000-XX-12-1_th.jpg"></a><p />
+</td>
+<td>
+<a href="images/9844-0000-XX-12-1.jpg"><img src="images/9844-0000-XX-12-1_th.jpg"></a><p />
+</td>
+<td>
+<a href="images/9845-0000-XX-12-1.jpg"><img src="images/9845-0000-XX-12-1_th.jpg"></a><p />
+</td>
+<td>
+<a href="images/9846-0000-XX-12-1.jpg"><img src="images/9846-0000-XX-12-1_th.jpg"></a><p />
+</td>
+</tr>
+</table>
+
+Az alapkészlethez további érzékelõk vásárolhatók, akár eddig nem
+említett típusúak, pl. iránytû, színérzékelõ, gyorsulásmérõ.
+<br />
+Mivel ezek az érzékelõk a készlethez képest viszonylag drágák, ezért ha
+megoldható, akkor célszerûbb két alapkészletet vásárolni. Ennek a
+megoldásnak további elõnye, hogy a robotok közötti kommunikáció,
+feladatmegosztás, versenyzés kipróbálása is lehetségessé válik. 
+      </div>
+
+      <div id="cross-browser" class="lighterBox">
+<h2>
+<a name="langs">Programozási nyelvek</a>
+</h2>
+
+Az NXT programozási lehetõség nélkül nem volna más, mint egy
+többfunkciós mozgó játék. A megfelelõ programozási nyelveket
+alkalmazva viszont önálló robottá válhat. <p />
+
+A robot programozása kétféle irányból közelíthetõ meg.
+Egyrészrõl a robot NXT egységébe tölthetõ le egy asztali gépen megírt
+program, másrészrõl egy asztali gépen futó program USB vagy Bluetooth
+kapcsolaton keresztül közvetlenül irányíthatja a robotot.
+Az elsõ megközelítés elõnye, hogy a robot teljesen autonóm módon
+mûködhet, ugyanakkor csak kellõen kis méretû és egyszerû programok
+írhatók meg így. A második megoldás mellett az szól, hogy a kis
+számítási és memóriakapacitású NXT eszköz helyett a lényegi
+számításokat a nagyságrendekkel nagyobb hardverkörnyezet végzi
+el. Ekkor viszont a kommunikációs kapcsolatnak kellõen gyorsnak és
+megbízhatónak kell lennie.<p />  
+
+Az NXT programozására alkalmas nyelvek egy áttekintését mutatja az
+alábbi <a
+href="http://www.teamhassenplug.org/NXT/NXTSoftware.html">oldal</a>,
+mely mindkét megközelítésmódot ismerteti. <br />
+Fontos megjegyezni azonban azt is, hogy a Mindstorms készlet
+programozása világszerte sokak fantáziáját megmozgatja, akik sok
+energiát áldoznak arra, hogy minél több és minél komolyabb megoldások
+szülessenek. Ebbõl következõen a lehetõségek szinte
+napról napra
+bõvülnek, mindig érdemes újabb, a kitalált feladathoz jól illeszkedõ
+szoftvereket keresni, a használt környezetek legújabb változatát alkalmazni.<p />
+
+<h3>
+<a name="langs_online">Az NXT-n mûködõ programnyelvek</a>
+</h3>
+
+<h4>
+<a name="langs_NXT">A LEGO MindStorms NXT Software</a>
+</h4>
+
+Az elsõ csoportba tartozó legkézenfekvõbb programozási mód a LEGO
+által a készlethez adott cd-n található LEGO
+MindStorms NXT Software használata (a táblázatban NXT-G néven láthatók). 
+Ez a programozási környezet elsõsorban nem programozóknak készült,
+akik grafikus építõkockákból a robot építéséhez hasonlóan viszonylag
+gyorsan állíthatják 
+össze és konfigurálhatják az irányító programot. A környezet egyúttal néhány
+alap robottípus építését is támogatja, ahogy arról a következõ
+fejezetben szó lesz. 
+A program hátránya, hogy hagyományos programozási nyelvekhez szokott
+fejlesztõnek eléggé idegen, komolyabb programok már nem igazán
+áttekinthetõek benne. A készülõ kód a többi megoldáshoz képest lassan
+fut és sok memóriát igényel. <p /> 
+
+<h4>
+<a name="langs_NBC">Az NBC/NXC</a>
+</h4>
+
+A következõ lehetõség az ingyenes letölthetõ <a
+href="http://bricxcc.sourceforge.net/nbc/">NBC/NXC</a> nyelvpáros
+használata, melyhez a szintén ingyenes <a
+href="http://bricxcc.sourceforge.net/">a Bricx Command Center</a>
+biztosít programozási környezetet. A két nyelv közül az NXC a magasabb
+szintû, C programozási nyelvhez való hasonlóságát és különbözõségét 
+neve is mutatja: Not eXactly C. Az NBC (Next Byte Codes) az NXT egység
+bájtkódjának felel meg, az NXC programok is elsõre erre a nyelvre
+fordulnak le. Ez a két programozási nyelv gyakorlott programozók
+számára készült, mélyebb szintû betekintést enged az NXT világába. Az
+eredményül kapott kód gyorsabb, kisebb méretû, mint a LEGO
+MindStorms NXT Software-rel elõállított. <br />
+Ugyanakkor a nyelv
+kifejezõereje még eléggé korlátos: ezen oldal írása közben készült el
+az a változat (NBC 1.0.1.b32 beta), amely tömbök esetében a változóval címzést is
+engedélyezi, ami egy ciklus megírásához eléggé
+fontos. Ezen kívül csak az egész számokat ismeri, így
+racionális számok kezelésére kerülõ
+megoldásként például a százszoros érték
+tárolása lehet megoldás. <br />
+Ráadásul a
+nyelv nem teljesen kiforrott a két fenti változat között például a
+NumOut függvény két paramétere valamiért megcserélõdött, sok vidám
+percet okozva a fejlesztõnek a hiba megtalálásáig és minden elkészült
+program módosításáig. <br />
+Reményt keltõ viszont, hogy a programnak szinte havonta jön ki új
+változata, ezért középtávon ezek a problémák is valószínûleg meg
+fognak oldódni. 
+<p />
+
+<h4>
+<a name="langs_RobotC">A RobotC</a>
+</h4>
+
+Érdekes lehet még a robotikában komoly hírnévnek örvendõ Carnegie
+Mellon egyetem robotakadémiája által fejlesztett 
+<a href="http://www.robotc.net/index.htm">RobotC</a> nyelv, mely
+többek között a Mindstorms készlettel is használható. Bár ez a
+környezet nem ingyenes, van egy egyhónapos próbaváltozata is. A nyelv
+C-re épül, de az NXC-vel ellentétben a C teljes funkcionalitását
+biztosítja és ehhez ad ipari szabványokban megszokott C támogatást. 
+<p />
+    
+<h4>
+<a name="langs_LeJOS">A LeJOS</a>
+</h4>
+
+A <a href="http://lejos.sourceforge.net/">LeJOS</a> programozási 
+környezet az eddigi megoldásokon túlmegy abban az
+értelemben, hogy az NXT operációs rendszerét is lecseréli. Ennek
+hatására egy kicsi Java virtuális gép jelenik meg a roboton. Ez
+NXJ API-nak megfelelõ egyszerûsített, ugyanakkor NXT-vel kapcsolatos
+lehetõségekkel bõvített Java nyelvû programok futtatását teszi lehetõvé.
+Ez a megoldás sem tekinthetõ még igazán kiforrottnak, de néhány
+havonta új verzió készül el. <p />
+
+<h3>
+<a name="langs_remote">Az NXT-t távolról irányító megoldások</a>
+</h3>
+
+Az NXT kockát nem csak a saját beépített processzorán
+futó programok irányíthatják, hanem az USB vagy a
+Bluetooth csatlakozás túloldalán lévõ eszköz,
+leginkább számítógép is vezérelheti. <br />
+
+Ennek egyszerûbb formája, amikor a vezérlõ eszköz
+távirányítóként mûködik, vagyis az emberi
+utasításokat a kapcsolat sebességével viszi
+át a robotra. Erre többek között egy mobiltelefonra
+töltött javás alkalmazás, a BrickxCC, a RobotC is
+képes.<p />
+
+Ennél érdekesebb lehetõség, amikor egy PC-n futó
+program távirányítja a robotot a Bluetooth kapcsolaton át.
+Ebbõl a célbõl számos ismert programozási nyelvhez
+készül kiegészítés, így 
+<a href="http://lejos.sourceforge.net/">Java-hoz</a>, 
+<a href="http://nxtsharp.fokke.net/">C#-hoz</a> 
+(<a href="http://www.mindsqualls.net/Introduction.aspx">kettõ is</a>), 
+<a href="http://nxt.ivorycity.com/">Perlhez</a>,
+<a href="http://home.comcast.net/~dplau/nxt_python/index.html">Pythonhoz</a>, 
+<a href="http://rubyforge.org/projects/ruby-nxt/">Rubyhoz</a>.
+
+      </div>
+
+      <div id="stylesheets" class="darkerBox">
+<h2>
+<a name="robots">Építhetõ robotok</a>
+</h2>
+
+Ahogy az a LEGO játékoknál már megszokott,
+rendkívül sokféle variációt lehet összerakni.
+További hagyományos Technic elemek hozzáadásával a lehetõségek tovább bõvíthetõk.
+
+<h3><a name="robots_base">Az alaptípusok</a></h3>
+
+A MindStorms NXT készlethez adott CD-n található MindStorms NXT
+Software programozási
+környezet 4 robot építéséhez (és programozásához) nyújt részletes,
+lépésrõl lépésre haladó tájékoztatást. Ezek a robotok a készlet
+széles lehetõségeit mutatják be, egyre komolyabb szerelési és talán
+programozási feladat elé állítva a kísérletezõket. <br />
+A program ergonómia értelemben szinte tökéletes, érzékelhetõ, hogy a
+készítõk nagy hangsúlyt fektettek arra, hogy a gyerekek számára
+élvezet legyen a robotok építése és programozása.
+A szerzõk minden egyes demonstrációs feladatot elemi részekre
+bontottak. A részek elkészültekor pedig a felhasználók egy önállóan is
+értelmezhetõ programozási feladatot oldhatnak meg, majd
+kísérletezhetnek az eredménnyel.<p />
+
+<h4><a name="Tribot">Tribot</a></h4>
+
+A demonstrációs feladatok közül a legegyszerûbben megépíthetõ robot a  
+<a
+href="http://mindstorms.lego.com/Overview/MTR_Tribot.aspx">TriBot</a>
+egy kerekeken guruló jármû, mely az összes szenzor és motor
+használatát mutatja be.
+A következõ képen az elkészült robot látható.
+<p /> 
+
+<a href="images/TriBot.jpg"><img src="images/TriBot_th.jpg"></a><p />
+
+Az építés során elsõ lépésként az alapjármû készül el, melyben két
+motor segítségével már önálló mozgást lehet végezni. A következõ rész a
+nyomásérzékelõ beépítése, amivel az akadálynak való frontális ütkõzést
+lehet észlelni. Ezután jelennek meg a robot elején a fogókarok, melyek
+a harmadik motor felhasználásával már a készletben lévõ labdák
+szállítására is alkalmasak. A következõ két lépésben kerül a robot 
+tetejére a hangérzékelõ, aljára a fényérzékelõ. Utóbbival a padló
+színének változása követhetõ. Végezetül a robot elején megjelenõ
+ultrahangos érzékelõ a tárgyakhoz való közeledést már az ütközés elõtt
+is jelezheti a robotnak. <p />
+
+A következõ film a TriBot utolsó fázisának elkészítése utáni mûködését
+mutatja. A robot a tesztpályán elindul, ha az ultrahangos
+érzékelõvel valamilyen akadályt érzékel maga elõtt, 
+jelen esetben az odahelyezett labdát. Ezután megáll, amint az akadályhoz ér a
+nyomásérzékelõ szerint. Valamilyen zajra, tapsra megfogja a labdát,
+megfordul, visszamegy a kiindulási pontra, amit a fényérzékelõ vesz
+észre, a tesztpálya fekete csíkjához érkezve. Ott a robot elengedi a
+labdát.<p />
+
+<object width="425" height="350"><param name="movie"
+value="http://www.youtube.com/v/ZIkj2rpyCmE"></param><embed
+src="http://www.youtube.com/v/ZIkj2rpyCmE"
+type="application/x-shockwave-flash" width="425"
+height="350"></embed></object>
+
+<p />
+Az elõbbi viselkedésért egy egyszerû, lineáris felépítésû program a
+felelõs, ahogy az a következõ képen látható, mely egyúttal a LEGO
+MindStorms NXT Software
+környezetet is megmutatja.<p />
+
+<a href="images/Tribot_code.jpg"><img src="images/Tribot_code_th.jpg"></a>
+<p />
+
+A kész program <a href="src/TriBot6.rbt">forrása</a>.
+
+<h4><a name="RobotArm">RobotArm</a></h4>
+
+A valamivel összetettebb 
+<a
+href="http://mindstorms.lego.com/Overview/MTR_RoboArm.aspx">RobotArm
+T-56</a>
+egy nem mobil típus, mely daruként képes funkcionálni. Ezt egyelõre
+nem készítettem el.
+<p />
+
+<a href="images/RobotArm.jpg"><img src="images/RobotArm_th.jpg"></a><p />
+
+<h4><a name="Spike">Spike</a></h4>
+
+A skorpiót mintázó 
+<a
+href="http://mindstorms.lego.com/Overview/MTR_Spike.aspx">Spike</a>
+érdekessége, hogy kerekek helyett lábakon járást valósít meg.
+A dolog szépséghibája annyi, hogy a képen látható három pár
+távolra kinyúló láb és a fogókarok csak esztétikai elemek, a járást
+valójában a robot oldalán elhelyezkedõ kis pálcikák végzik.
+<p />
+<a href="images/Spike.jpg"><img src="images/Spike_th.jpg"></a><p />
+
+A robotot és a hozzá tartozó kódot Salamon András készítette el.
+Ennek eredményeként a skorpió egyenesen, bár nem túl gyorsan halad
+elõre a nyílt terepen. Ha 30 centiméternél közelebb valami megjelenik
+az ultrahangos érzékelõje elõtt, akkor hátrálni kezd. 
+Ha ennél is kisebb, néhány centiméteres távolságra közelíti meg
+valami, akkor sarokba szorított állat módjára kezd el támadni, ami
+annyit jelent, hogy a harmadik motorhoz kapcsolt szerkezetet, azaz a
+farkát villámgyorsan elõrenyújta és lecsap áldozatára. Amennyiben a
+nyomásérzékelõ találatot jelez, akkor a kar visszahúzódik helyére.<p />
+
+<object width="425" height="350"><param name="movie" value="http://www.youtube.com/v/Lb0SQhGEKoU"></param><embed src="http://www.youtube.com/v/Lb0SQhGEKoU" type="application/x-shockwave-flash" width="425" height="350"></embed></object>
+
+<p />
+A skorpióhoz tartozó program ábráján látható,
+hogy az már összetett programozási struktúrákat, azaz elágazást és
+ciklust is tartalmaz.
+<a href="images/Crawling_code.jpg"><img src="images/Crawling_code_th.jpg"></a>
+
+<p />
+A kész program <a href="src/Crawling4.rbt">forrása</a>.
+
+<h4><a name="Alpha">Alpha Rex</a></h4>
+
+A legkomolyabb alaprobot az 
+<a
+href="http://mindstorms.lego.com/Overview/MTR_AlphaRex.aspx">Alpha
+Rex</a>, mely egy valódi járásra képes humanoid típus. Megépítése
+igazán idõigényes és a Mindstorms készlet nagy részére szükség van
+hozzá. Az eredmény igazán látványos, az alábbi képen látható 
+méretes robot két nagy lábát felváltva mozgatva, halad elõre. 
+
+<p />
+<a href="images/AlphaRex.jpg"><img src="images/AlphaRex_th.jpg"></a>
+<p />
+
+A robot felépítésének összetettségét az alábbi film is
+bemutatja. <p />
+ 
+<object width="425" height="350"><param name="movie"
+value="http://www.youtube.com/v/-f8YklNZ_5E"></param><embed
+src="http://www.youtube.com/v/-f8YklNZ_5E"
+type="application/x-shockwave-flash" width="425"
+height="350"></embed></object><p />
+
+Ugyanakkor a robot korlátai is
+érzékelhetõk: a járás igazából lábemelés nélküli csoszogás, így Alpha
+Rex már egy szõnyeget sem képes megmászni. Ezen kívül a haladás eléggé
+bizonytalan, kevésbé iránytartó, mint a kerekeken gurulás, és
+természetesen lényegesen lassabb is. Vagyis ezen mozgásforma NXT-beli
+változata egyelõre nem alternatívája a gurulásnak, csupán egy érdekes
+kísérletként értelmezhetõ. <br />
+Az alábbi film a robot járását mutatja be. <p />
+
+<object width="425" height="350"><param name="movie"
+value="http://www.youtube.com/v/t2cc-KIkfTU"></param><embed
+src="http://www.youtube.com/v/t2cc-KIkfTU"
+type="application/x-shockwave-flash" width="425"
+height="350"></embed></object><p />
+
+<p />
+A járás programjának <a href="src/AlphaRex1.rbt">forrása</a>.
+<p />
+
+A humanoid robot is gyerekbarátabbá tehetõ a szenzorok használatával.
+Erre példa a táncoló változat. Ez a robot a nyomásérzékelõ érintésekor
+megszólal (Play music!), majd jobbra-balra mozgatni kezdi a derekát.
+Ha a kérésének megfelelõen zenét játszunk le (illetve bármilyen zajt
+keltünk a hangérzékelõ környezetében), akkor fejét ingatja, karjait
+emelgeti, ahogy az az alábbi felvételen is látható. <p />  
+
+<object width="425" height="350"><param name="movie"
+value="http://www.youtube.com/v/0iWUXQhwGMI"></param><embed
+src="http://www.youtube.com/v/0iWUXQhwGMI"
+type="application/x-shockwave-flash" width="425"
+height="350"></embed></object><p />
+
+<p />
+A kész program <a href="src/AlphaRex4.rbt">forrása</a>.
+
+      </div>
+
+      <div id="accessibility" class="lighterBox">
+<h2>
+<a name="tasks">További feladatok</a>
+</h2>
+
+<h3>
+<a name="remote">Irányítás Bluetooth kommunikációval</a>
+</h3>
+
+Mivel az NXT kocka Bluetooth kommunikációra képes, ezért arra alkalmas
+eszközzel, így például megfelelõ mobiltelefonnal
+irányítani lehet. <br />
+
+A mobiltelefonon futó Java MIDP-s <a
+href="http://mindstorms.lego.com/overview/Mobile%20Application.aspx">program</a>,
+a LEGO NXT Mobile application.<br />
+
+Az alkalmazással a robotba korábban letöltött programokat lehet
+elindítani, illetve a telefonnal közvetlen navigálás is lehetséges. Ez
+utóbbit mutatja be az alábbi film, melyben látható, ahogy
+a számbillentyûk lenyomásának hatására a motorok
+elõre- és hátramenetbe kapcsolnak, amitõl a robot mozog,
+illetve az ultrahangos szenzort hordó fej forog. <p />
+
+<object width="425" height="350"><param name="movie"
+value="http://www.youtube.com/v/o3zQmd3EyxU"></param><embed
+src="http://www.youtube.com/v/o3zQmd3EyxU"
+type="application/x-shockwave-flash" width="425"
+height="350"></embed></object><p />
+
+
+<h3>
+<a name="comm">Bluetooth kommunikáció használata LEGO
+MindStorms NXT Software-ben</a>
+</h3>
+
+Az elõbb említett 
+<a
+href="http://mindstorms.lego.com/overview/Mobile%20Application.aspx">oldalon</a>
+a mobiltelefonra letölthetõ alkalmazás mellett robotoldali program is
+található.
+A két NXT Software-beli program üzeneteket küld
+és fogad, 
+ezáltal a telefonon keresztül irányítja a robotot.<p />
+
+A SendMsg.rbt attól függõen, hogy az 1., a 2. vagy a
+3. portra van csatlakoztatva a nyomásérzékelõ, a robot lejátszik egy
+hangot, majd  1, 2, 3 jelet küld a telefonnak. A telefon az elsõ
+esetben készít egy fényképet (rákérdezés után), a második esetben
+elvileg lejátszik egy hangot (nálam ilyen funkció nem volt), a
+harmadik esetben egy Hello üzenetet küld át, ami a telefonon
+a Collected data alatt is látható. <p />
+
+A ReceiveMsg.rbt elindítása után a telefon 1,2,3 gombok valamelyikének lenyomásakor
+a robot kimondja a gomb számát.
+
+<h3>
+<a name="wall_avoiding">Fal elkerülése Tribottal</a>
+</h3>
+
+Igazán egyszerû feladat a falak elkerülése az ultrahangos szenzor
+felhasználásával. Ennek során a robot elõrefele halad, majd amint 15
+centiméternél közelebb falat érzékel maga elõtt, akkor az egyik
+oldalon rövid idõre hátramenetbe kapcsol, aminek hatására éles
+fordulatot vesz. <p /> 
+
+A robot mûködése a következõ filmen látható. <p />
+ 
+<object width="425" height="350"><param name="movie"
+value="http://www.youtube.com/v/3azDaR1S2SI"></param><param
+name="wmode" value="transparent"></param><embed
+src="http://www.youtube.com/v/3azDaR1S2SI"
+type="application/x-shockwave-flash" wmode="transparent" width="425"
+height="350"></embed></object><p />
+
+A program  <a href="src/wall_avoiding.nxc">forrása</a>.<p />
+
+<h3>
+<a name="wall_following">Falkövetés NQC-ben</a>
+</h3>
+
+Az ultrahangos szenzor távolságbecslése nem csak a faltól
+való kitérésre, hanem a fal mentén haladásra is
+használható. Ennek segítségével a véletlenszerû
+akadályelkerülõ mozgást felválthatja egy tudatos
+viselkedés, mely a kitûzött célpontot a közbeesõ
+akadályok ellenére is eléri. Ezen algoritmus elsõ
+lépése az, hogy a robot képes legyen tárgyak mentén
+haladni. <p />
+
+A feladat megoldásához azonban alapvetõen egynél több
+távolságérzékelõre van szükség. A robot
+haladási irányában lévõ szenzor észleli, ha a robot
+elõtt akadály bukkan fel. Amikor a jármû elkezd kitérni
+az akadály elõl valamelyik irányban, akkor az oldalsó
+érzékelõi segítségével észlelheti, hogy az
+akadályt elhagyta-e már és folytathatja-e az útját
+eredeti célja felé.<p />
+
+Mivel a Mindstorms készlet csak egy ultrahangos érzékelõt
+tartalmaz, ezért a több érzékelõ helyett az egy szenzor
+mozgatása látszott kivitelezhetõnek. Ezért
+készítettem egy olyan két meghajtott kerekû robotot, 
+amelyikben a harmadik motor forgástengelye függõleges. Erre a tengelyre van
+rögzítve a robot által forgatható ultrahangos szenzor. <br />
+Az elkészített robot induláskor elõre néz, majd - mivel
+jobboldali falkövetést végez, ezért - nagyjából 120
+fokos szögig jobbra fordul. Eközben méri a távolságokat
+és az értékek alapján kiszámolja, milyen
+irányba kell fordulnia ahhoz, hogy tartsa a faltól elõre
+eltervezett, nagyjából 20 centiméteres távolságot.<p />
+
+A program elsõ változata 30 fokokat fordított a szenzoron,
+és mindenütt mért egyet. Bár a robot így is
+mûködõképes, a forgató motor indításából,
+leállításából származó idõkésés miatt a
+mért értékek viszonylag lassan gyûlnek össze, ezért
+a robot csupán maximális sebességének 20
+százalékával haladhat. <p />
+
+A program  <a href="src/wall_following.nxc">forrása</a>.<p />
+
+A program következõ változata a "fejet" folyamatosan forgatja
+jobbra és vissza, miközben egy másik taszk megfelelõ
+idõközönként méréseket végez. Az így
+felgyorsított robot már 50 százalékos sebességgel is
+elfogadhatóan közlekedik, ahogy az a következõ két
+videón is látható.<p />
+
+<object width="425" height="350"><param name="movie"
+value="http://www.youtube.com/v/TyKmREwicjY"></param><embed
+src="http://www.youtube.com/v/TyKmREwicjY"
+type="application/x-shockwave-flash" width="425"
+height="350"></embed></object><p />
+
+<object width="425" height="350"><param name="movie"
+value="http://www.youtube.com/v/vgLjSz8kBXg"></param><embed
+src="http://www.youtube.com/v/vgLjSz8kBXg"
+type="application/x-shockwave-flash" width="425"
+height="350"></embed></object><p />
+
+A program  <a href="src/wall_following_cont.nxc">forrása</a>.<p />
+
+Ugyanakkor megjegyzendõ az is, hogy a program csupán
+kísérleti fázisban van. A robot még nem mûködik
+megbízhatóan, az érzékelt falfelületek
+hangvisszaverõ képessége eltérõ, a merõlegestõl
+komolyan elterõ mérési értékek igen pontatlanok
+lehetnek, a csupán egy szenzorból adódóan a robot
+figyelmen kívül hagyhat fontos információkat. <p />
+
+<h3>
+<a name="wall_following">Szonar</a>
+</h3>
+
+Ez a kis alkalmazás az NXT kijelzõjén mutatja meg, hogy a
+robot körül milyen távolságban találhatók
+akadályok. Ehhez a függõleges tengelyû motorra szerelt
+ultrahangos érzékelõ folyamatosan 360 fokos kört tesz meg
+oda és vissza. Eközben az érzékelést végzõ
+másik taszk a távolságoknak megfelelõen a képernyõ
+közepébõl sugárirányba kiinduló vonalakat rajzol az
+adott irányba érzékelt akadály távolságával arányosan.
+
+A program  <a href="src/sonar_cont.nxc">forrása</a>.<p />
+
+<!--TODO webcamtest belinkelheto, mint kis javas kezdemeny robotos -->
+<!--kepfeldolgozashoz -->
+
+<!--TODO képek a telefonról a saját építésû szonarfejrõl.-->
+
+      </div>
+
+
+      <div id="stylesheets" class="darkerBox">
+<h2>
+<a name="experiences">Általános tapasztalatok</a>
+</h2>
+
+Az alábbi lista az NXT készlettel kapcsolatos tapasztalatok
+összegzése, szemben az egyetemi kutatásokhoz vagy mérnöki
+játszadozásokhoz használható egyéb robotokkal.
+
+<ul>
+<li>
+Az NXT a LEGO készletek közül az egyik legdrágább, a valódi robotot
+tartalmazó programozási környezetek közül pedig az egyik
+legolcsóbb. Az alapcsomag nagyjából 70 ezer Ft-ért már kapható.
+</li>
+<li>
+Az elõre összeállított, nem módosítható robotokhoz képest 
+elõnye az átépítéseknek köszönhetõ flexibilitás.
+</li>
+<li>
+Nagyon összetett formájú robot építhetõ a teljes
+LEGO technic arzenál felhasználásaval.
+</li>
+<li>
+A szenzorok valódi robotokhoz képest elég egyszerûek, kis érzékelési
+tartománnyal. Ezért érdemes azonos típusú, de komolyabb érzékelõket
+felhasználni és új fajtákat is bevezetni (giroszkóp, GPS, kamera).  
+</li>
+<li>
+Kevés a szenzor, azonos típusúból is többre lenne szükség. Az alap
+négy érzékelõn kívül továbbiak (más típusúak is) vásárolhatók. Ezek
+relatív magas ára miatt érdemes meggondolni egy második Mindstorms
+készlet beszerzését.
+</li>
+<li>
+A szenzorokra és motorokra kevés csatlakozás
+jut. Például egy labda hozzávetõleges irányát
+meghatározó szonarrendszer kialakításához
+máris több mint 4 szenzorra van szükség. Ez csak
+speciális hardverrel lehetséges.  
+A motorok
+számának korlátozása a növekvõ energiaigény miatt
+is ésszerû, de ezzel sajnos túl kevés szabadságfok
+biztosítható.
+</li>
+<li>
+A beépített robotok építése jól dokumentált, építésük viszonylag
+gyorsan halad. Nehézséget inkább a sok kis alkatrész keresgélése
+jelent, ami nem kifejezetten izgalmas.
+</li>
+<li>
+Az alappéldákhoz tartozó programok kifejezetten egyszerûek. A készlet
+összeállítói ezt azzal próbálják ellensúlyozni, hogy az egymásra épülõ
+programok újabb szintjének felépítését elõlrõl mutatják be. Pozitív
+megfogalmazásban ez annyit jelent, hogy a szerényebb absztrakciós
+képességû gyerekekre is gondoltak. 
+</li>
+<li>
+A fenti két megjegyzésbõl következõen a fejlesztés hardver/szoftver
+aránya így nagyon a hardver felé tolódik el. Komolyabb
+programfejlesztéshez valószínûleg célszerû megépíteni egy az
+igényeknek megfelelõ robotot, majd sokféle kísérletet elvégezni rajta
+külonféle programok, vezérlések megírásával.
+</li>
+<li>
+A példarobotok rendkívül elegáns építmények, látszik rajtuk, hogy
+szakértõk tervezték õket. Megközelítõen jó struktúrájú, funkcionálisan
+megfelelõ saját robot tervezéséhez sok gyakorlás szükséges.
+</li>
+<li>
+A hardver gyenge pontja a kábelezés. 3 motor és 4 szenzor
+bekötését kell megoldani úgy, hogy a kábelek ne akadályozzák egymást
+és a robot mozgását sem. Ez egyáltalán nem egyszerû. Különösen
+komoly problémát jelenthet, ha egy szenzor vagy egy motor a robot
+mozgó részén van, mivel így a kábelnek is mozognia kell. 
+</li>
+<li>
+A szenzorok, ahogy az a robotikában megszokott, igen érzékenyek a
+környezetre. Egy fénymérés eltérõ eredményt ad napos és felhõs idõben,
+távolságmérés eredménye változik az érzékelt felület anyagi
+minõségétõl függõen. Erre a problémára általános megoldást adni a
+robotika legnagyobb kihívásai közé tartozik.
+</li>
+<li>
+6 ceruzaelemre - inkább akkura - van szükség a mûködéshez. Ezek
+intenzív használattal, vélhetõen a robot nagy súlya miatt elég hamar
+lemerülnek. Ez még önmagában nem lenne baj, de az már probléma, hogy
+az energiafogyás kijelzése nem az igazi, mivel nagyon hirtelen válik
+szinte mûködésképtelenné az NXT. Ezért két kísérletezési alkalom
+között célszerû mindig tölteni. 
+</li>
+<!--<li>
+Képernyõtörlés nélkül az adatok elég érdekesek a kijelzõn.
+</li>-->
+</ul>
+      </div>
+
+      <div id="stylesheets" class="lighterBox">
+<h2>
+<a name="various">Érdekes kísérletek</a>
+</h2>
+<!--TODO Néhány kép/link mások munkáiról.-->
+<ul>
+<li>
+Egy <a href="http://bluetoothkiwi.blogspot.com/2007/08/swimming-pool-insect-terminator-spit.html">úszó robot</a>.
+</li>
+<li>
+Érdekes <a
+href="http://nxtasy.org/2006/11/08/roborealm-machine-vision-for-nxt/">képfeldolgozási
+kísérlet</a>, melyben a robotra applikált kamera képét egy PC dolgozza föl. 
+</li>
+<li>
+<a href="http://mindstorms.lego.com/nxtlog/ProjectDisplay.aspx?id=382324e7-ad92-4908-b4e0-4caef95a7c0a">
+Egyensúlyozó</a> robot.
+</li>
+<li>
+A gyakran megvalósított <a href="http://home.earthlink.net/~xaos69/NXT/Line_Follower/Line_Follower.html">
+vonalkövetés</a> egy példája.
+</li>
+<li>
+<a href="http://daniele.benedettelli.com/LRU.htm">Rubik-kockát
+kirakó</a> robot.
+</li>
+<li>
+Két készletbõl összeállított <a
+href="http://www.evis.net/lhex/">hatlábú rovar</a> a fûben mozog. 
+</li>
+<li>
+<a href="http://bnxt.com/paper/radar_display">Radar</a> NXT-G-ben.
+</li>
+</ul>
+
+      </div>
+
+      <div id="stylesheets" class="darkerBox">
+<h2>
+<a name="links">További hasznos oldalak</a>
+</h2>
+        <a href="http://www.jataka.hu/rics">Saját honlap</a><br />
+        <a href="http://quasar.inf.elte.hu/">Istenes Zoltán robotika
+	honlapja az ELTE-n</a><br />
+	<a href="http://mindstorms.lego.com/NXTLOG/default.aspx">A LEGO NXT-s híroldala</a><br />
+	<a href="http://thenxtstep.blogspot.com">NXT-vel kapcsolatos
+	információk blogja</a><br />
+<a
+href="http://www.amazon.com/s/ref=nb_ss_gw/103-4538370-2139048?initialSearch=1&url=search-alias%3Daps&field-keywords=lego+mindstorms&Go.x=9&Go.y=16&Go=Go">LEGO
+Mindstorms-zal kapcsolatos könyvek az Amazonon</a><br />
+        <a
+	href="http://www.sulinet.hu/tart/fncikk/Kab/0/4112/legorobot.html">
+Egy LEGO robotokról szóló régebbi oldal</a><br />
+        <a
+	href="http://www.magyarokamarson.hu/">Magyarok a
+	Marson - Alkalmazott (mérnöki) tudományok versenye
+	Kiskunhalason diákoknak</a><br />
+<a href="http://robotika.lap.hu/">lap.hu oldal robotokról</a><br />
+<a href="http://www.legoaruhaz.hu/">LEGO áruház</a><br />
+<a href="http://www.rcs.hu/roboshop/hIndex.htm">RoboShop -
+Robotalkatrészek boltja</a><br />
+      </div>
+
+      <div id="stylesheets" class="darkerBox">
+<h2>
+<a name="acknowledgement">Köszönetnyilvánítás</a>
+</h2>
+Köszönetet szeretnék mondani dr. Istenes Zoltánnak az NXT csomag
+használatához nyújtott segítségéért, tanácsaiért, valamint Salamon Andrásnak hasznos
+ötleteiért és a Spike-on végzett munkájáért.<p />
+Örömmel veszem az építõ jellegû kritikát, az oldallal kapcsolatos
+kommentárokat, kiegészítéseket a rics@nospam.inf.elte.hu (a
+nospam rész törlendõ) címre.
+      </div>
+    </div>
+
+    <!-- ##### Footer ##### -->
+
+    <div id="footer">
+
+      <div class="right">
+        Utolsó módosítás: 2007. szeptember 12. <!--|
+        Designer: <a href="http://www.oswd.org/email.phtml?user=haran" title="Email designer">haran</a>-->
+      </div>
+
+      <br class="doNotDisplay doNotPrint" />
+    </div>
+
+    
+<div class="subFooter"> 
+  <p>Copyright &copy; 2007, Szabó Richárd<br />
+  <!--This theme is free for distriubtion,  so long as  link to openwebdesing.org and florida-villa.com  stay on the theme-->
+    Courtesy <a href="http://www.openwebdesign.org" target="_blank">Open Web Design</a><a href="http://www.dubaiapartments.biz" target="_blank"><img src="spacer.gif" width="5" height="5" border="0"/></a>Thanks 
+    to <a href="http://www.florida-villa.com" target="_blank">Florida Vacation Homes</a> <br class="doNotPrint" />
+      <p>&nbsp;  </p>
+<!-- BEGIN WebSTAT Activation Code -->
+<script type="text/javascript" language="JavaScript" src="http://hits.webstat.com/cgi-bin/wsv2.cgi?39877"></script>
+<noscript>
+<a href="http://www.webstat.com">
+<img src="http://hits.webstat.com/scripts/wsb.php?ac=39877" border="0" alt="WebSTAT - Free Web Statistics" /></a>
+</noscript>
+<!-- END WebSTAT Activation Code -->
+    </div>
+  </body>
+</html>

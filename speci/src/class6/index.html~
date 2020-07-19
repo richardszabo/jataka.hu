@@ -1,0 +1,281 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+                      "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+<h1>Mobil robotok szimulációja speci 6. óra</h1>
+
+<h2>Önszervezõdés</h2>
+<ul>
+<li>tanulás más formája
+<li>példák mindenféle tanítás nélkül
+<li>a bemenet belsõ struktúráját kell felfedezni
+<li>osztályozás, kluszterezés, dimenziószám-csökkentés,
+tulajdonság-kiemelés
+<li>csillagászat, képi megjelenítés
+</ul>
+<h2>Csoportosítás</h2>
+<ul>
+<li>mindennapi élet gyakori feladata
+<li>csoportokba rendezése, csoportokon belül nagy hasonlóság, 
+a csoportok között kis hasonlóság
+<li>hierarchikus klaszter analízis: osztályok folytonos összevonása
+<li>k-várható érték módszere: Gauss eloszlások paramétereinek becslése
+<li>teljes összekötöttségû, kétrétegû háló
+<li>a bemeneti réteg az adatok dimenziója, a kimeneti réteg 
+a csoportok száma
+<li>hálósúlyok módosítása
+<li>kezdeti véletlen súlyok
+<li>hálódinamika    
+<p><img src="pict/k1.jpg" alt="k1"></p>
+<li>egységvektorok
+<li>maximum
+<p><img src="pict/k2.jpg" alt="k2"></p>
+<li>a kimenet: a legnagyobb 1, a többi 0 (versenyzés)
+<li>tanulás során egyedül a gyõztes neuron súlyai változnak
+<li>súlyvektor elforgatása a példa irányába
+<p><img src="pict/k4.jpg" alt="k4"></p>
+<p><img src="pict/sphere.png" alt="sphere"></p>
+<li>csoportosítás:súlyvektorok a térnek azon részei felé fordulnak el,
+ahol sok a példavektor
+<li>súlyvektor, mint osztálycímke 
+<li>maximumkeresés nem lokális feladat, neurális hálóval másképp kell megoldani
+<li>MAXNET
+<li>teljes összekötöttség, fix súlyokkal
+<p><img src="pict/k3.jpg" alt="k3"></p>
+<li>minden neuron kimenete 0-hoz konvergál, kivéve a legnagyobbé
+<li>normalizálás nélkül: egy a példával kis szöget bezáró,
+de hosszú súlyvektor példával való szorzata nagyobb lenne, mint egy
+kis abszolút értékû, de közeli súlyvektoré
+<li>általánosabb megoldás
+<p><img src="pict/k5.jpg" alt="k5"></p>
+<li>súlyok módosítása e szerint
+<p><img src="pict/k6.jpg" alt="k6"></p>
+<li>távolságfüggvény és bemenet választásának fontossága
+<li>mozdulatlan súlyvektorok elkerülése
+<li>sok neuron, magas dimenziószám: súlyvektor sohasem lesz gyõztes
+<li>súlyvektorok egyenletes inicializálása
+<li>szivárgásos tanulás
+<p><img src="pict/k7.jpg" alt="k7"></p>
+<li>frekvencia-érzékeny tanulás
+<li>megállás kérdése, hibafüggvény szerepe
+<p><img src="pict/k8.jpg" alt="k8"></p>
+</ul>
+
+<!--
+<h2>Vektor kvantálás</h2>
+<ul>
+<li>függvény-approximációs módszer
+<li>három réteg, kettõ között önszervezõdés, kettõ között tanulás
+tanítóval
+<li>egy lépés önszervezõdés, egy lépés tanítás ugyanazzal a példával
+</ul>
+-->
+
+<h2>Kohonen-féle tulajdonságtérkép</h2>
+<ul>
+<li>winner-take-all - lágy versenyzés
+<li>Kohonen eredménye a nyolcvanas évekbõl
+<li>háló struktúrája megfelel a csoportosításnál látottaknak
+<li>gyõztes kiválasztása sem tér el
+<li>azonban van egy szomszédsági reláció
+<li>bármilyen kapcsolati forma: négyzetháló, lánc, kör,...
+<li>szomszédsági reláció != háló kapcsolatai
+<li>tanulás új szabálya
+<p><img src="pict/k9.jpg" alt="k9"></p>
+<li>h gyõztes és az éppen vizsgált neuron közötti kapcsolat függvénye
+<li>h nagyjából tetszõleges, h(k,k) = 1
+<li>ha h mindenütt 0, akkor a csoportosításhoz jutunk vissza
+<li>négy, nyolc szomszédság síkban, hat, huszonhat szomszédság térben
+<li>Gauss függvény: jobb mozgás, kevesebb mozdulatlan neuron, de
+ hátrány nagyobb számításigény
+<li>idõben csökkenõ szomszédság
+<li>az idõ elõrehaladtával a háló mintegy kifeszíti a négyzet területét
+<p><img src="pict/som.jpg" alt="som"></p>
+<li>tér diszkrétizációja
+<li>láthatóvá teszi a példák terének struktúráját
+<li>navigáció
+</ul>
+
+<h2>Önszervezõdési eljárások demonstrációja</h2>
+<ul>
+<li>Internetrõl letölthetõ programok, demok
+<li>Loos és Fritzke DemoGNG programja
+<li>alaptípusok és újak is
+<li>neurális gáz: idõben csökkenõ szomszédság
+<li>növekvõ neurális gáz: egyre több neuron közelít
+<p><img src="pict/demogng.jpg" alt="demogng"></p>
+</ul>
+
+<h2>Önszervezõdés robotszimulációban</h2>
+
+<ul>
+<li>Nehmzow és Smithers, 1990 a Kohonen-féle önszervezõdõ
+    tulajdonságtérkép egy robot navigációjához
+<li>külvilág belsõ reprezentációja
+<li>három fõ modul
+<p><img src="pict/struct.jpg" alt="struct"></p>
+<li>térkép bijekció a lehetséges állapotok terébõl a térkép terébe
+<li>nem csak felülnézeti térkép, hanem telefonkönyv vagy a családfa is lehet
+<li>hasonlít a csoportosításnál bemutatott elsõ változathoz (normálás)
+<li>50 neuronból álló hálózat, gyûrû
+<li>egydimenziós szomszédsági reláció
+<li> a gyõztes súlymódosulásában két-két szomszédja osztozhat
+<p><img src="pict/outvect.jpg" alt="outvect"></p>
+<li>a kimenet nem lesz binárissá alakítva
+<li>helyek meghatározása nem a gyõztes neuronhoz rendelt pozíció alapján történik
+<li>50 neuron által alkotott összetett válasz egyedisége a pozíció címe
+<li>a cím egyediségéhez a példáknak megfelelõen kell reprezentálnia a külvilágot
+<li>elõször akadálykikerülés és véletlen mozgás
+<li>példák a szenzorok értékei és két akadállyal való találkozás közben megtett távolság
+<li>csukott szemmel sétálásból térkép
+<li>falkövetés
+<li>elsõ modul: sarok konvex vagy konkáv
+<li>példa: az aktuális és a megelõzõ sarok irányultsága és távolsága
+<li>az eljárás az ismert formában zajlik
+<li>robot a fal mellett több kört megtesz
+<li>sarkonként példa keletkezett
+<li>a kezdetben nagy eta minden lépésben 5 százaléknyit csökken
+<li>három kör után sarokkijelölés
+<li>ezután különbségnorma számítása minden sarokra
+<p><img src="pict/k10.jpg" alt="k10"></p>
+<li>megfelelõ belsõ reprezentációt -> jelöltnél kisebb norma, mint máshol
+<li>H sarok felismerése
+<p><img src="pict/hcorner.jpg" alt="hcorner"></p>
+<li>C és F, valamint B és E problémás
+<li>példák kibõvítése két sarokra nem elég (B és E)
+<li>még mindig kevés
+<li>példák kibõvítése három sarokra már elég (B és E)
+<p><img src="pict/bcorner.jpg" alt="bcorner"></p>
+<li>elõre meghatározott mozgás, de mûködõ térkép, robusztus viselkedés
+</ul>
+
+<h2>Megerõsítéses tanulás</h2>
+<ul>
+<li>tanulás más formája
+<li>hétköznapjaink szerves része
+<li>járás, kockatorony építése, vezetés, bioreaktor
+<li>nincs tanító, a környezet reakcióiból következik a tevékenység jó vagy
+    rossz eredménye
+<li>meghatározott környezet, cselekvések
+<li>diszkrét idõ
+<li>környezet cselekvésektõl megváltozik, új állapot
+<li>cselekvésért járó jutalom
+<li>megerõsítéses tanulás struktúrája
+<p><img src="pict/rlstruct.png" alt="rlstruct"></p>
+<li>döntési függvény: adott állapotban, adott cselekvés 
+végrehajtásának valószínûsége
+<p><img src="pict/k11.jpg" alt="k11"></p>
+<li>tanulás a döntési függvény módosításának folyamata
+<li>szemétgyûjtõ robot példája
+<li>döntés haladási irány, állapot: robot és szemét helye, akku
+<li>általában nincs jutalom, csak szemét felszedésekor, büntetés
+    lemerült akkunál
+<li>nem szimplán a legnagyobb jutalom kiválasztása, hanem legnagyobb várható nyereség
+<li>véges és végtelen eset
+<p><img src="pict/k12.jpg" alt="k12"></p>
+<li>felfedezés, kiaknázás dilemmája (exploráció-exploitáció)
+</ul>
+
+<h2>Kiértékelõ függvények</h2>
+<ul>
+<li>a döntési függvény (pi) közvetlen megadása általában 
+nem lehetséges,
+    a megoldáshoz további függvények bevezetése szükséges
+<li>Markov tulajdonság: nem kell korábbi állapotokhoz 
+    visszanyúlni a helyzet megismeréséhez (sakkállás)
+<li>és véges az állapotok és a cselekvések halmaza
+<li>akkor a teljes feladat-specifikáció az alábbi két egyenletrendszer
+<li>átmenet valószínûségek
+<p><img src="pict/k13.jpg" alt="k13"></p>
+<li>várható jutalom
+<p><img src="pict/k14.jpg" alt="k14"></p>
+<li>az egyenletek nincsenek mindig a tanuló birtokában, de megismerhetõek. 
+<li>teljes feladat-specifikáció esetén sem könnyû a megoldás (sakk,
+    Rubik-kocka)
+<li>állapotérték-függvény: mennyire értékes az adott állapot 
+a feladat szempontjából, az aktuális pi szerint
+<p><img src="pict/k15.jpg" alt="k15"></p>
+<li>akcióérték-függvény:mennyire értékes az adott állapotban az adott
+    cselekvés  a feladat szempontjából, az aktuális pi szerint
+<p><img src="pict/k16.jpg" alt="k16"></p>
+<li>leggyakrabban ezeken és a döntési függvény dolgozik a tanulás
+<li>tanulás: értékfüggvények közelítése -> döntési függvény számítása
+    -> értékfüggvények növekedése -> ...
+<li>optimális döntési függvény: minden állapotban a legjobb cselekvést választja
+<p><img src="pict/k17.jpg" alt="k17"></p>
+<li>négyzetháló-világban optimális állapotérték-függvény és optimális
+    döntési függvény
+<p><img src="pict/gridworld.jpg" alt="gridworld"></p>
+</ul>
+
+<h2>Megoldási módszerek</h2>
+<ul>
+<li>dinamikus programozás
+<ul>
+<li>teljes feladat-specifikáció ismert
+<li>értékfüggvény rekurzív kiszámítása Bellman-egyenlõség alapján
+<p><img src="pict/k18.jpg" alt="k18"></p>
+<li>döntési függvény mohó módosítása állapotérték-függvény 
+szerint
+<li>iteráció konvergenciáig
+</ul>
+<li>Monte-Carlo módszerek
+<ul>
+<li>nem ismert feladat-specifikáció
+<li>a tanuló epizódokat gyárt
+<li>jutalmak átlaga az érintett állapotokra és cselekvésekre meghatározott 
+    akcióérték-függvény
+<li>algoritmusa 
+<p><img src="pict/mc.jpg" alt="mc"></p>
+</ul>
+<li>idõbeli differenciák
+<ul>
+<li>Monte-Carlo modellnélkülisége
+<li>értékfüggvény rekurzív elõállítása, nem kell az epizódokat végigvárni
+<li>konvergencia: korlátos jutalom, minden állapot-cselekvés páros tetszõlegesen sokszor legyen kiválasztva
+<li>Q-tanulás
+<p><img src="pict/qlearn.jpg" alt="qlearn"></p>
+</ul>
+<li>egyéb módszerek: megbízhatósági nyomok, függvényapproximáció
+    neurális hálóval
+</ul>
+
+<h2>Megerõsítéses tanulás Java nyelven</h2>
+<ul>
+<li>
+<p><img src="pict/classes.png" alt="classes"></p></li>
+<li><a href="src/rl">Az rl csomag</a></li>
+<li><a href="src/gridworld">A gridworld csomag</a></li>
+<li><a href="src/results">Eredmények</a></li>
+</ul>
+
+<h2>Navigáció megerõsítéses tanulása</h2>
+<ul>
+<li>megerõsítéses tanulás jól használható, ha idõ és a tér is diszkrét módon definiált
+<li>robotikában nem ez a helyzet: folytonos tér, végtelen sok állapot
+    és cselekvés
+<li>térdiszkrétizáció önszervezõdéssel
+<li>B. Kröse és M. Eecen munkája: Kohonen-térképre épített dinamikus programozás
+<li>16 távolságszenzor + iránytû
+<li>térkép a szenzortérben van, mégis a valós világ pontjait reprezentálják
+<li>Kohonen szomszédság elemei nem feltétlenül fizikailag közvetlenül
+    elérhetõ pontokat kötnek össze
+<li>a szomszédsági relációk helyett a dinamikus programozás
+    hozza létre az állapotátmenetekhez szükséges cselekvések döntési 
+    függvényét
+<li>átmenetek valószínûségének meghatározása a robot szabadon közlekedésével
+<li>közvetlen jutalom: a távolság és a tárgyaknak való ütközések
+    függvényében jön létre
+<li>teljesen specifikáltság
+<li>egy önszervezõdés során elõálló térkép
+<p><img src="pict/somrob.jpg" alt="somrob"></p>
+<li>a robot navigációja 
+<p><img src="pict/rlrob.jpg" alt="rlrob"></p>
+</ul>
+
+</body>
+</html>

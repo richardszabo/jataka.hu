@@ -1,0 +1,35 @@
+body {
+  background-color: #d9c1ae;
+/*  background-image: url("../images/background.jpg");*/
+}
+
+.own-photo {
+  text-align: center;
+}
+
+h1 {
+  text-align: center;
+}
+
+.address {
+    text-align: center;
+}
+
+.title {
+    text-align: center;
+    font-weight: bold;
+    font-style: italic;
+    padding-bottom: 1em;
+
+}
+
+
+#tasks {
+  background-color: #e9e1ce;
+}
+
+table#projects {
+    width: 100%;
+    text-align: center;
+
+}

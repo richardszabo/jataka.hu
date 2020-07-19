@@ -1,0 +1,6 @@
+package rl;
+
+public class ActionDecision {
+    Action a;
+    Probability p;
+}

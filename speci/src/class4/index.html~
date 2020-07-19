@@ -1,0 +1,353 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+                      "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+<h1>Mobil robotok szimulációja speci 4. óra</h1>
+
+<h2>Age of Kings AI editor tulajdonságai</h2>
+
+<ul>
+<li>szabályalapú rendszer</li>
+<li>a szabályok tüzelnek, ha feltételeik igazzá válnak</li>
+<li>stratégiai számok határozzák meg a csapat viselkedését 
+  (sn-wood-gatherer-percentage)</li>
+<li>példák szabályra
+
+<pre>
+(defrule
+    (can-afford-unit villager)  ; van elég erõforrás
+    (can-train villager)	; van elég ház
+=>
+    (train villager)		; új dolgozó létrehozása
+)
+</pre>
+
+</li>
+<li><a href="aok/food.per">food.per</a></li>
+<li><a href="aok/castle.per">castle.per</a></li>
+
+<li> nem elég konstruktív, csak az fejlesztõk által kitalált 
+  mederben folyhat az intelligencia építése
+  pl.: 
+  <ul>
+  <li>town-under-attack - mikor van támadás alatt?, </li>
+  <li>sn-wood-gatherer-percentage - melyik városnál hányan gyûjtsenek
+  fát?</li>
+  <li>sn-attack-intelligence (Y/N) - támadási stratégiák hiánya</li>
+  </ul>
+</li> 
+<li>térképkezelésre, katonaság finom irányítására nincs lehetõség</li>
+</ul>
+
+<h2>Konnekcionizmus és párhuzamosság</h2>
+<ul>
+  <li>A konnekcionista felfogás alapgondolatai
+    <ul>
+      <li>az emberi értelem idegrendszerszerû modellálása</li>
+      <li>minden tudásunk csomópontok izgalmi állapotával, s köztük levõ
+        serkentõ és gátló kapcsolatokkal írható le</li>
+      <li>a hálózatok címkézetlenek</li>
+      <li>nincsenek szimbólumok és szabályok</li>
+      <li>párhuzamos aktiválás és versengés</li>
+      <li>a tudás a hálózat egy részének aktivált állapota</li>
+      <li>minden reprezentáció kicsiny építõkövekbõl áll össze</li>
+      <li>a tanulás a háló súlyviszonyainak beállítása</li>
+      <li>a sémák együtt aktivált hálózatrészek</li>
+      <li>neurális, pszichológiai és számítástechnikai modellálás új
+        szövetsége</li>
+    </ul>
+  </li>
+  <li>A mesterséges neurális hálók biológiai motívációjának egyik oka
+    <ul>
+      <li>százlépéses szabály</li>
+      <li>minden tudásjellegû felismerés (rokon megismerése) nagyjából a 100
+        és a 800 msec tartományban történik</li>
+      <li>egy átlagos neuron 1 msec-ként képes tüzelni</li>
+      <li>egy felismerés nem tarthat tovább néhány száz lépésnél</li>
+      <li>komplex döntések =&gt; nagyfokú párhuzamosságot</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Mesterséges neurális hálózatok története</h2>
+<ul>
+  <li>körülbelül ötven éves, idegrendszerszerû modellálás</li>
+  <li>egysejt-modell McCulloch, Pitts (1943), univerzális számoló gép</li>
+  <li>Perceptron Rosenblatt (50-es évek), tanulás</li>
+  <li>Perceptronok Minsky, Papert (1969), XOR-probléma</li>
+  <li>önszervezõdés (Kohonen), backpropagáció (McClelland, Rumelhart) (80-as
+    évek)</li>
+  <li>tudományfilozófia: konnekcionizmus</li>
+  <li>biológia kapcsolat, párhuzamosság</li>
+</ul>
+
+<h2>Mesterséges neurális hálózatok felépítése</h2>
+<ul>
+  <li>eltérõ típusok, nincs egységes forma</li>
+  <li>neuronok és köztük lévõ irányított kapcsolatok</li>
+  <li>input kívülrõl vagy más neurontól (dendrit)</li>
+  <li>bemenetek feldolgozása, belsõ állapot</li>
+  <li>kimenet vagy más neuron bemenete (axon)</li>
+  <li>mindig lokális információk felhasználása</li>
+  <li>belsõ paraméterek felhasználása az állapot meghatározására: súlyok</li>
+  <li>serkentés - pozitív, gátlás - negatív súly</li>
+  <li>tanulás: neuron súlyainak változása</li>
+  <li>tudás: struktúra és súlyok</li>
+  <li>nincs szimbólum-reprezentáció, címkék</li>
+  <li>fogalmaink reprezentánsai: gyakori együttjárási mintázatok</li>
+  <li>bár univerzálisak, nem mindig érdemes õket alkalmazni:
+    <ul>
+      <li>példák attribútum-érték párok</li>
+      <li>célfüggvény számokon definiált, diszkrét és valós, skalár és
+      vektor</li>
+      <li>példák hibát tartalmazhatnak</li>
+      <li>hosszú tanítási idõ, olykor több ezer példa</li>
+      <li>célfüggvény gyors kiértékelése szükséges</li>
+      <li>célfüggvény emberi érthetõsége nem fontos</li>
+    </ul>
+  </li>
+  <li>neuron - feldolgozó egység</li>
+  <li>könnyû feladatmegoldás?</li>
+</ul>
+
+<h2>Elõre huzalozott architektúra</h2>
+<ul>
+  <li>Beer, neuroetológia, animat csótány, moduláris felépítéssel</li>
+  <li>Brooks-szabl szemben a modulok itt neuronokból és serkentõ-gátló kapcsolatokból
+  állnak</li>
+  <li>négy modul: járás, falkövetés, táplálék-keresés,
+  táplálék-fogyasztás</li>
+  <li>gátló kapcsolatok modulok között és szenzorok serkentése
+    <p><img src="pict/modulok.png" alt="Modulok"></p>
+  </li>
+  <li>motoros neuronok (állás, mozgás, lábletevés), ritmus, szenzoros
+    szabályozás, parancs
+    <p><img src="pict/jarmod_a.png" alt="Járás">
+    <img src="pict/jarmod_b.png" alt="Járás"></p>
+  </li>
+  <li>gátlás a szomszédos ritmusneuronok között</li>
+  <li>Braitenberg-szerû táplálék-keresés: antennák, szagszenzorok, parancs,
+    elfordulás
+    <p><img src="pict/eves_a.png" alt="Evés">
+    <img src="pict/eves_b.png" alt="Evés"></p>
+  </li>
+  <li>rágás: szenzorok, harapása ritmusa</li>
+</ul>
+
+<h2>A Perceptron</h2>
+<ul>
+  <li>elsõ típus, bemenet súlyozott összege, kimenet 1 vagy -1
+    <p><img src="pict/perceptron.png" alt="Perceptron"></p>
+    <p></p>
+    <p><img src="pict/k1.jpg" alt="k1"></p>
+  </li>
+  <li>asszimetria, 0-s súly szerepe, konstans inputtal skalárszorzat</li>
+  <li>paraméterezhetõ Boole-függvény
+    <p><img src="pict/k2.jpg" alt="k2"></p>
+  </li>
+  <li>logikai ÉS, VAGY, negálás</li>
+  <li>elemi függvények reprezentálása -&gt; hálózattal tetszõleges logikai
+    függvény</li>
+  <li>diszjunktív normálforma, univerzalitás</li>
+  <li>hipersík az inputvektorok n-dimenziós terében</li>
+  <li>létezik nem szétválasztható inputvektor-halmaz, kizáró VAGY
+    <p><img src="pict/xor.png" alt="XOR"></p>
+  </li>
+  <li>lineáris szeparábilitás</li>
+  <li>tanulási szabály a Perceptronnal megoldható feladatokra</li>
+  <li>véletlen súlyok, hiba esetén módosítás
+    <p><img src="pict/k3.jpg" alt="k3"></p>
+  </li>
+  <li>változtatás helyessége</li>
+  <li>véges sok tanulási lépés után helyesen osztályoz</li>
+  <li>eta szerepe</li>
+</ul>
+
+<h2>Az Adaline</h2>
+<ul>
+  <li>Adaptive Linear Neuron, Adaptive Linear Element</li>
+  <li>approximáció minden példahalmazra, nem csak lineárisan szeparábilisra</li>
+  <li>tanulási szabálya jól általánosítható</li>
+  <li>kimenet szignum nélkül, tetszõleges valós szám (approximáció)
+    <p><img src="pict/k4.jpg" alt="k4"></p>
+  </li>
+  <li>leképezés hibájának mérése, például:
+    <p><img src="pict/k5.jpg" alt="k5"></p>
+  </li>
+  <li>E, mint a súlyok közvetett függvénye egy parabola
+    <p><img src="pict/error.jpg" alt="Hibafüggvény"></p>
+  </li>
+  <li>Widrow-Hoff szabály a minimum megtalálására</li>
+  <li>hibafüggvény gradiensének számítása (legnagyobb növekedés)
+    <p><img src="pict/k6.jpg" alt="k6"></p>
+  </li>
+  <li>legnagyobb csökkenés iránya
+    <p><img src="pict/k7.jpg" alt="k7"></p>
+    <p></p>
+    <p><img src="pict/k8.jpg" alt="k8"></p>
+  </li>
+  <li>a gradiens kiszámítása:
+    <p><img src="pict/k9.jpg" alt="k9"></p>
+  </li>
+  <li>Perceptronéhoz hasonló tanítási folyamat</li>
+  <li>gradiens módszer általában: mindig használható folytonos paramétereknél, ha a
+    függés kalkulálható, de </li>
+  <li>lassú, lokális minimumban elakadhat</li>
+  <li>hibák enyhítésére inkrementális módszer</li>
+  <li>minden példára külön hibaszámítás és súlymódosítás
+    <p><img src="pict/k11.jpg" alt="k11"></p>
+  </li>
+</ul>
+<ul>
+  <li><p><img src="pict/k12.jpg" alt="k12"></p>
+  </li>
+  <li>véletlen súlyok, példák alkalmazása konvergenciáig</li>
+  <li>eltérõ alakú hibafüggvények -&gt; minimum megtalálható, kevesebb
+    számítást igényel, de kisebbeket szabad lépni</li>
+  <li>inkrementális Widrow-Hoff - Perceptron: eltérés az output
+  definíciójában</li>
+  <li>Perceptron: véges lépésben konvergál, de csak lineárisan szeparábilis
+    példákra</li>
+  <li>Adaline: minden példára alkalmazható, approximáció, konvergencia nem
+    biztosított</li>
+</ul>
+
+<h2>Egy neuronos robot irányítása</h2>
+<ul>
+  <li>Wyeth, kicsi architektúra, de valamennyire használható</li>
+  <li>Perceptron, Adaline, nem tanuló, tanuló formában</li>
+  <li>két pár szenzor, szimmetrikusan, akadályokra és teniszlabdákra</li>
+  <li>labdák begyûjtése egy tárgyakkal teli szobában</li>
+  <li>90 fokos érzékelés 30 fokos átfedéssel, fix távolságon belül</li>
+  <li>egyszerûsített szimulátor: lineáris függés a parancsoktól, kinematika,
+    átlátszó tárgyak, nincs ütközés</li>
+  <li>Braitenberg-jármû - neurális háló kapcsolata</li>
+  <li>akadály - gátló keresztezett (asszimetria), teniszlabda - gátló
+  soros</li>
+  <li>versengés az ingerek között elkerülhetõ</li>
+  <li>Adaline: térkép hiánya, versengés mégsem küszöbölhetõ ki</li>
+  <li>Perceptron: 0 nélküli szignum helyett {0,1}-kimenet, robot négyféle dolgot tehet,
+    további keresztezõ kapcsolat szükséges a szaggatott haladás miatt
+    <p><img src="pict/threshold.jpg" alt="threshold"></p>
+  </li>
+</ul>
+<ul>
+  <li><img src="pict/k13.jpg" alt="k13"></li>
+  <li>akadálykikerülés tanulása: gombnyomásokból helyes irány leszûrése</li>
+  <li>súlyváltozások kötegekben: stabilitási-plaszticitási dilemma</li>
+  <li>valódi robot (CORGI), dinamika a kinematika helyett, képfeldolgozás,
+    visszafele kapcsolt motor
+    <p><img src="pict/corgi.jpg" alt="corgi"></p>
+    <p></p>
+    <p><img src="pict/corgiarch.jpg" alt="arch"></p>
+    <p></p>
+    <p><img src="pict/corgivis.jpg" alt="vis"></p>
+  </li>
+</ul>
+
+<h2>Több neuron elõnyei, megvalósítása</h2>
+<ul>
+  <li>általános függvényapproximáció szökséges</li>
+  <li>biológiai megoldások</li>
+  <li>egyenlet kontra egyenletrendszer</li>
+  <li>Perceptron és Adaline elõnyeinek egyesítése: nem lináris kimenet,
+    továbbfejleszthetõ tanulási szabály</li>
+  <li>módosított neuron (szigmoid függvény)
+    <p><img src="pict/k14.jpg" alt="k14"></p>
+    <p></p>
+    <p><img src="pict/sigmoid.png" alt="sigmoid"></p>
+    <p></p>
+    <p><img src="pict/k15.jpg" alt="k15"></p>
+  </li>
+  <li>könnyen deriválható, folytonos, összehúzó függvény</li>
+  <li>paraméterezés, hõmérséklet</li>
+  <li>tanh</li>
+</ul>
+
+<h2>A Backpropagáció algoritmusa</h2>
+<ul>
+  <li>McClelland, Rumelhart a nyolcvanas években</li>
+  <li>gradiens módszer kiterjesztése</li>
+  <li>több kimenet, az új hibafüggvény
+    <p><img src="pict/k16.jpg" alt="k16"></p>
+  </li>
+  <li>komolyabb kihívás, keresés az összes neuron összes súlyának terében</li>
+  <li>összetett hibafüggvény, lokális minimumok</li>
+  <li>neuronok tetszõleges, körmentes hálózata</li>
+  <li>elõször háromrétegû struktúra, bemenet, rejtett réteg,
+  kimenet
+    <p><img src="pict/network.png" alt="network"></p>
+  </li>  
+  <li>teljes kapcsolat, lineáris, szigmoid, szigmoid formában</li>
+  <li>BackPropagation(példák,eta,n_in,n_out,n_hidden) {
+    <p>Itt a példák a tanítást elõsegítõ vektorpárok, n_in az inputneuronok,
+    n_hidden a rejtett rétegbeli neuronok n_out a kimeneti neuronok száma, és
+    eta a tanulási sebesség.</p>
+    <ul>
+      <li>Elsõ lépés a körmentes háló létrehozása a megadott paramétereknek
+        megfelelõen.</li>
+      <li>Ezután a háló súlyainak inicializálása következik kis, véletlen
+        értékekkel (pl. -0.05 és 0.05 között).</li>
+      <li>Majd, amíg a háló hibája nem elég kicsi a következõket kell
+        végrehajtani:
+        <ul>
+          <li>Minden egyes példára végrehajtandó:
+            <ul>
+              <li>A bemenet propagálása a teljes hálón elõre a kimenet
+                létrejöttéig.</li>
+              <li>A hiba propagálása a teljes hálón visszafele a
+              kezdetekig.</li>
+              <li>Hiba kiszámítása a kimeneti neuronokra: <img
+                src="pict/k17.jpg" alt="k17"></li>
+              <li>Hiba kiszámítása a rejtett réteg neuronjaira: <img
+                src="pict/k18.jpg" alt="k18"></li>
+              <li>Hálósúlyok módosítása: <img src="pict/k19.jpg"
+              alt="k19"></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>indexek: k - kimenet, h - rejtett réteg, ji - i-bõl j-be</li>
+  <li>súlymódosítás: eta, bemenet, delta - korábbi különbség vagy a
+    rákövetkezõ réteg hibájából a neuronra vonatkozó</li>
+  <li>bizonyíthatóan gradiens módszert végez</li>
+  <li>kiterjesztés több rétegre 
+    <p><img src="pict/k20.jpg" alt="k20"></p>
+  </li>
+  <li>kiterjesztés tetszõleges körmentes hálóra 
+    <p><img src="pict/k21.jpg" alt="k21"></p>
+  </li>
+</ul>
+
+<h2>Konvergencia és lokális minimum</h2>
+<ul>
+  <li>a bonyolult felület miatt nem garantált a globális minimum
+  megtalálása</li>
+  <li>mégis általában jól teljesít</li>
+  <li>összes neuron összes súlya által alkotott tér</li>
+  <li>minimum az egyik súly szerint, másik szerint még elmozdulhat-></li>
+  <li>több súly, kevesebb elakadás</li>
+  <li>szigmoid függvény alakja, inicializálás</li>
+  <li>kis súlyok, kis összeg, nagyjából lineáris, lokális minimumok
+  nélkül</li>
+  <li>a lokális minimumok elkerülésére léteznek módszerek</li>
+  <li>momentum: elõnyös síkon és gödörben, 
+    <p><img src="pict/k35.jpg" alt="k35"></p>
+    <p>guruló labda</p>
+  </li>
+  <li>standard és inkrementális Widrow-Hoff</li>
+  <li>eta csökkentése
+    <p><img src="pict/oszcillacio.png" alt="oszcillacio"></p>
+   </li>
+  <li>egyszerre több neurális háló futtatása</li>
+  <li>több számítás, de közös döntés vagy a legjobb háló döntése</li>
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+/* Backpropagation network structure description */
+/* @author: Richard Szabo */
+/* Version: 0.1 */
+/* Creation: 2002-Mar-17 */
+
+layers: 3
+neurons: 10304 400 4
+learning rate: 0.0026615874315327887
+theta: 0.0
+elasticity: 1.0
+calming rate: 0.995
+momentum: 0.0
+elasticity rate: 0.0

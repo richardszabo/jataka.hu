@@ -1,0 +1,252 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>Neural network controlling architectures in autonomous agents</TITLE>
+</HEAD>
+<BODY>
+
+<B><FONT SIZE=5><P ALIGN="CENTER"></P>
+<P ALIGN="CENTER">&nbsp;</P>
+<P ALIGN="CENTER">Neural network controlling architectures in autonomous agents</P>
+</B></FONT>
+<B><P ALIGN="CENTER">Rich&aacute;rd Szab&oacute;</P>
+</B><FONT SIZE=2><P ALIGN="CENTER">Department of General Computer Science</P>
+<P ALIGN="CENTER">University of E&ouml;tv&ouml;s Lor&aacute;nd</P>
+<P ALIGN="CENTER">1117, P&aacute;zm&aacute;ny P. s. 1/D.</P>
+<P ALIGN="CENTER">Budapest, Hungary</P>
+<P ALIGN="CENTER"></P>
+<P ALIGN="CENTER">Department of History and Philosophy of Science</P>
+<P ALIGN="CENTER">University of E&ouml;tv&ouml;s Lor&aacute;nd</P>
+<P ALIGN="CENTER">1117, P&aacute;zm&aacute;ny P. s. 1.</P>
+<P ALIGN="CENTER">Budapest, Hungary</P>
+<P ALIGN="CENTER"></P>
+<P ALIGN="CENTER">&nbsp;</P>
+</FONT><B><P>Abstract</P><DIR>
+
+</B><FONT SIZE=1><P ALIGN="JUSTIFY">This paper gives an overview on adaptive synthetic animals with neural network as a behaviour controlling architecture. The overview covers simulated and physical agents living in different synthetic environments.  The investigated controlling architectures are determined by a human designer (programmed) or nature-mimicking processes such as learning and evolution.</P></DIR>
+
+</FONT><B><FONT SIZE=4><P>1. Introduction</P>
+</FONT><P>1.1. Autonomous agents</P><DIR>
+
+</B><FONT SIZE=2><P ALIGN="JUSTIFY">Man always has an idea to build intelligent and autonomous entities to replace its own mental work. In the last few decades the dream is turning to reality, now we have robots in a number of industrial fields. The scope of application is far from exhausted, the level of intelligence of robots can be increased. </P>
+<P ALIGN="JUSTIFY">The topic is also interesting from other aspects, we can learn a lot about the properties of living beings. Beyond their industrial benefit, synthetic animals help to spread our knowledge in ethology, neurobiology and raise questions in philosophy and about artificial life [1].</P>
+<P ALIGN="JUSTIFY">The general purpose of synthetic animals (often called <I>animat </I>from the words <I>animal </I>and <I>automaton</I>) is to create adaptive, robust, complex behaviour with minimal representation requirements [2]. Adaptation is an ability to learn properties of the surroundings. A robust creature is insensitive to sudden changes of its synthetic environment. Complexity against minimal representation is something like shoes which are comfortable inside but looks tiny outside.</P>
+<P ALIGN="JUSTIFY">How can we realize these special synthetic creatures? </P>
+<P ALIGN="JUSTIFY">There are two main possible solutions: virtual or physical. The virtual implementation is a simulation which is simpler, cheaper than the real and suitable for a preliminary version. In this case the description of the environment has to be contained in the simulation that causes extra computational load. A physical implementation, namely a robot, is harder to implement because of engineering problems but it works in a real environment.</P></DIR>
+
+<OL START=2>
+
+</FONT><B><LI>Neural network architecture</LI></OL>
+<DIR>
+
+</B><FONT SIZE=2><P ALIGN="JUSTIFY">There is an important connection among the investigated agents of this paper. Their behaviour controlling architectures are based on neural networks that we will discuss separately in this section. The difference among the agents is in the method of their controller [3].</P>
+<P ALIGN="JUSTIFY">An artificial neural network consists of a set a processing units (neurons) which communicate by sending signals to each other over weighted connections [4]. The signals received on a neuron's input connections coming from other neurons and the neuron's current state are the parameters of the activation function which determine the actual activation of the neuron. An excitatory input (connection with positive weight) increases the activation of the neuron, an inhibitory input (connection with negative weight) decreases the activation. The actual activation as the neuron's output is multiplexed to other neurons as their input values. The processing units work in parallel and autonomously without any central control. </P>
+<P ALIGN="JUSTIFY"><IMG SRC="Image1.gif" WIDTH=437 HEIGHT=149></P>
+</FONT><B><FONT FACE="Arial" SIZE=2><P ALIGN="JUSTIFY">Figure 1. </B>Basic components of an artificial neural network. After </FONT><FONT SIZE=2>[4]</P>
+<P ALIGN="JUSTIFY">To increase the adequateness of a network to a special task we need to tune the network parameters: the number of processing units, connections and the weights of the connections. There are several approaches to solve this task but there is no universally suitable. </P>
+<P ALIGN="JUSTIFY">A skillfully tuned neural network meets the requirements we drafted in the previous section: adaptive, is able to generalize, robust, complex (its expressive capacity is equal to the Turing machine); but the architecture is fairly simple. The neural network approach differs from the conventional artificial intelligence approaches because there are no symbols and rules. Our only task is to create the network and condition it until it works adequately. This is a tempting offer: to solve the problem in question without detailed analysis. But the appearances can be deceptive: <I>the emphasis is on the skillful tuning which requires deep knowledge about the problem</I>.</P>
+<P ALIGN="JUSTIFY">The examples in this paper are somewhere in the middle: they try to exploit the advantages of the neural networks by adequate tuning methods without getting entangled in complicated details.</P></DIR>
+
+</FONT><B><FONT SIZE=4><P>2. Preprogrammed agents</P><DIR>
+
+</FONT><P>2.1. Braitenberg-vehicles</P>
+</B><FONT SIZE=2><P ALIGN="JUSTIFY">In the mid-eighties Braitenberg published a book entitled &quot;Vehicles&quot; [5]. This contains some of the earliest ideas on the description of animats. These agents' controlling architectures are designed and implemented by hand and after installation they are not able to change. </P>
+<P ALIGN="JUSTIFY">Braitenberg mentions really simple mobile agents with different number of sensors and motors in his book. The sensors and motors form various connections that causes various interesting behaviour. Considering the possibilities with two sensors and two motors we have four different basic behaviour types.</P></DIR>
+
+<P ALIGN="CENTER">           <IMG SRC="Image2.gif" WIDTH=407 HEIGHT=98></P><DIR>
+
+</FONT><B><FONT FACE="Arial" SIZE=2><P>Figure 2.</B> Braitenberg-vehicles with two sensors and two motors.</P>
+</FONT><FONT SIZE=2><P ALIGN="JUSTIFY">These animats can be viewed as primitive agents with a simple neural controller. The neural controller contains two neurons which connect a sensor and a motor. A plus sign means an excitatory, a minus sign an inhibitory connection. The connections between the sensors and the motors can be normal or crossed. The four different agents show four different trajectories. For example, the animat with crossed excitatory connections sensing stronger stimuli from the right side will result stronger input on the left neuron and, because of the excitation, a stronger motor response on the left side. So the animat will turn to the direction of stimuli speeding up. When it turns straight to the source of the stimuli the left sensor gets the same strong stimuli so the animat will attack the source of the stimuli. It can be called &quot;aggressive&quot;. The &quot;lover&quot; animat contains normal inhibitory connections. Stronger stimuli from right side effect on the right motor decreasing its speed while the speed on the left side does not change. So the animat will turn to the direction of the stimuli and will stop in front of the stimuli source.</P>
+<P ALIGN="JUSTIFY">There are more complicated Braitenberg-vehicles with four or eight sensors and more neurons but the two sensors and two neurons example already showed that an extremely simple neural controller can already produce interesting animal-like behaviour.</P>
+</FONT><B><P>2.2. Beer's artificial insects</P>
+</B><FONT SIZE=2><P ALIGN="JUSTIFY">Our another preprogrammed agent example is Beer's famous cockroach [6]. </P>
+<P ALIGN="JUSTIFY">This small robot has to survive in a simulated environment with walls, obstacles, and food. The structure of the robot and its nervous system tries to be similar to the natural so it has three pairs of legs with motors, chemical and tactile sensors for navigation and food gathering, and angle sensors for locomotion. It has a hierarchical neural controller that is easier to build and easier to understand than a monolithic one. The levels of the hierarchy are the follows: locomotion, edge-following, appetition and consumption. Each level is a fairly autonomous neural network with some slight connections to other levels: excitatory input from the sensors it is connected to and inhibitory input from other levels. At the top of the hierarchy is the consummatory controller of feeding without any inhibitions from other levels. This controller works when its sensors make it work: the animat is hungry and there is food at the mouth of the animat. At the bottom of the hierarchy is the locomotion controller which works when the levels above let it work. </P>
+<P ALIGN="CENTER"><IMG SRC="Image3.gif" WIDTH=404 HEIGHT=197></P>
+</FONT><B><FONT FACE="Arial" SIZE=2><P>Figure 3.</B> Controll architecture of Beer’s artificial insect. After [6]</P>
+</FONT><FONT SIZE=2><P ALIGN="JUSTIFY">Now we focus on the appetitive controller of feeding. This module is responsible for food seeking governed by three sensors. Two of them are chemical sensor antennae sensitive to odors emitted by food. The antenna neurons' outputs are compared by the left and the right odor sensors and the difference between the two directions generate a rotation in the movement of the animat. For example a higher excitation on the left turn neuron makes the animat turn to left governing the left front leg's lateral extension. The whole behaviour is active just when other levels does not inhibit this controller and besides the animat is hungry. The later is detected by the energy sensor. This neuron disinhibits the feeding arousal neuron with the decrease of the energy causing the activation of the search command neuron. </P>
+<P ALIGN="CENTER"><IMG SRC="Image4.gif" WIDTH=192 HEIGHT=255></P>
+</FONT><B><FONT FACE="Arial" SIZE=2><P>Figure 4.</B> Appetitive controller of feeding. After [6]</P>
+</FONT><FONT SIZE=2><P ALIGN="JUSTIFY">It is interesting to observe that this architecture is similar to the composition of two Braitenberg vehicles: the so-called &quot;coward&quot; and the &quot;explorer&quot;.</P></DIR>
+
+</FONT><B><FONT SIZE=4><P>3. Neural network training</P><DIR>
+
+</FONT><P>3.1. Paradigms of learning </P>
+</B><FONT SIZE=2><P ALIGN="JUSTIFY">In addition to the obvious idea of hand-crafting a neural controller to the demands of the task there are some other possibilities. It is better to build a fundamental neural network and then help it to train itself  to the expectations of the task. This approach has a biological equivalent: learning.</P>
+<P ALIGN="JUSTIFY">There are three fundamental methods of artificial neural network training and a mixture of them is  also possible.</P>
+<P ALIGN="JUSTIFY">In the supervised learning paradigm the neural network is provided with input and matching output pairs. The correct output can be compared to network response and the network can change its weights according to the differences between the values. We will investigate this type of training in the next section.</P>
+<P ALIGN="JUSTIFY">In some cases it is hard to couple a correct output to the input value and only a reinforcement signal can be given on the outputs of the network. This signal teaches the network if its action was good or bad. For example there is no straightforward answer how to avoid obstacles in a cluttered environment but punishing the collisions with low reinforcement values is expedient. This paradigm is called reinforcement learning and it is used frequently in animat research [9], [10]. </P>
+<P ALIGN="JUSTIFY">The third paradigm of network training is unsupervised learning. In this case the network is learning alone without any supervisory help and it is supposed to discover statistically salient features of the input population. This method is useful in clustering, vector quantisation and map building. The last one is often used to help the animat to discover its environment and increase its navigational competence [11].  </P>
+</FONT><B><P>3.2. Wyeth's learning vehicle</P>
+</B><FONT SIZE=2><P ALIGN="JUSTIFY">Our training example is a robot built by Wyeth which is an instance for the supervised learning paradigm [7], [8].</P>
+<P ALIGN="JUSTIFY">The robot has been developed to perform hunting and gathering tasks, in other words, it has to explore its surroundings without any collision, locate and collect tennis balls, and return to the starting position. Before creating the robot’s controller it seemed to be practical to build a simulator. In the simulator the parameters of the environment, the controller and the robot can be set at will. This is useful for rapid investigations. </P>
+<P ALIGN="JUSTIFY">The structure of the neural controller is extremely simple: that is just a composition of the above mentioned &quot;lover&quot; and &quot;explorer&quot; Braitenberg-vehicles. In the two neurons of the network the transfer functions are responsible to project the neuron’s two inputs to an output. In this example the so-called <I>Adaline</I> and the <I>Perceptron </I>transfer functions appear. </P><DIR>
+<DIR>
+<DIR>
+
+</FONT><FONT SIZE=3><P>Vi = <FONT FACE="Symbol">&#83;</FONT>
+j wij Vj + <FONT FACE="Symbol">&#81;</FONT>
+i</P>
+<P>Vi = g</FONT><FONT SIZE=4>(<FONT FACE="Symbol">&#83;</FONT>
+</FONT><FONT SIZE=3>j wij Vj + <FONT FACE="Symbol">&#81;</FONT>
+i</FONT><FONT SIZE=4>)  </FONT><FONT SIZE=2>, where g() is the threshold function.</P></DIR>
+</DIR>
+</DIR>
+
+<P ALIGN="JUSTIFY">Here Vi is the output from neuron i and Vj is the input from neuron j. Wij is the weight of the connection between i and j neurons. The second transfer function is just the binary version of the first one. </P>
+<P ALIGN="JUSTIFY">Learning take place on these two architectures with two different learning rules: the Widrow-Hoff rule on the Adaline and the Perceptron rule on the Perceptron. The rules are the following:</P>
+</FONT><FONT SIZE=3><P>  &#9;&#9; wij = wij + <FONT FACE="Symbol">&#104;</FONT>
+(<FONT FACE="Symbol">&#122;</FONT>
+i - Vi)Vj</P></DIR>
+</FONT>
+<P ALIGN="CENTER"><CENTER><TABLE CELLSPACING=0 BORDER=0 CELLPADDING=7 WIDTH=255>
+<TR><TD WIDTH="26%" VALIGN="TOP">
+<FONT SIZE=3><P>wij = </FONT><FONT FACE="Book Antiqua" SIZE=7>{</FONT></TD>
+<TD WIDTH="74%" VALIGN="TOP">
+<FONT SIZE=3><P>wij + <FONT FACE="Symbol">&#104;</FONT>
+<FONT FACE="Symbol">&#122;</FONT>
+iVj  </FONT><FONT SIZE=2>, if  </FONT><FONT SIZE=3> <FONT FACE="Symbol">&#122;</FONT>
+i <FONT FACE="Symbol">&#185;</FONT>
+ Vi</P>
+<P>wij                , else</FONT></TD>
+</TR>
+</TABLE>
+</CENTER></P>
+<DIR>
+
+<FONT SIZE=2><P ALIGN="JUSTIFY">where <FONT FACE="Symbol">&#122;</FONT>
+i is the correct output of neuron i given by the supervisor and <FONT FACE="Symbol">&#104;</FONT>
+ is the learning rate which influences the speed of the convergence of the behaviour to an acceptable one. In the Widrow-Hoff rule the gradient descent of the error determine the change of the weight value while in the Perceptron rule the weight increases when the neuron’s activity corresponds to the correct output.</P>
+<P ALIGN="JUSTIFY">These two neural controllers in the simulator are working fairly well: they do not stuck among the obstacles, they only have problem after starting the second circle. At that point they seem to forget what they learnt at the beginning because the later input-output associations obscure them. Changing the learning rate could help but the animat would learn slower. This is called the <I>stability-plasticity dilemma</I>.</P>
+<P ALIGN="JUSTIFY">After the turns of the simulator the real robot training follows. This raises new problems about the processing of the real input image, the handling of the unexpected changes in the physical environment and in the robot’s dynamics. Image processing requires a vision system that is able to detect obstacles and tennis balls and its output can serve as an input to the investigated neural controller. To solve the other problem a bit more complicated network is necessary which is a composition of all four basic Braitenberg-vehicles. The advantage of the chosen architecture that the network dynamics and the learning rule is the same for this bigger network. </P>
+<P ALIGN="JUSTIFY">This network was able to learn the hunting and gathering behaviour after only four minutes of training, which means 2000 input-output pairs.</P></DIR>
+
+</FONT><B><FONT SIZE=4><P>4. Evolutionary neural controllers</P><DIR>
+
+</FONT><P>4.1. Elements of evolutionary algorithms</P>
+</B><FONT SIZE=2><P ALIGN="JUSTIFY">Evolutionary algorithms are a collection of computational methods used frequently in artificial intelligence. It is useful when we can not see all the elements of the problem space and it is better to take small steps improving our answer to the problem.  We do not aim to find the best solution but an acceptable one. In one algorithmical step we do not try to improve one single animat's neural controller program but to find the best animat from a large number of candidates. </P>
+<P ALIGN="JUSTIFY">Here are the fundamental steps of an evolutionary algorithm:</P></DIR>
+
+
+<UL>
+<P ALIGN="JUSTIFY"><LI>projection of the basic building blocks of the task solving program to the genetic code</LI></P>
+<P ALIGN="JUSTIFY"><LI>initiation of a starting population of entities using the basic building blocks</LI></P>
+<P ALIGN="JUSTIFY"><LI>testing the vitality of the formed programs using a fitness function</LI></P>
+<P ALIGN="JUSTIFY"><LI>dropping the less vital entities</LI></P>
+<P ALIGN="JUSTIFY"><LI>creation of new entities from the more vital entities using genetic operators (crossing, mutation)</LI></P>
+<P ALIGN="JUSTIFY"><LI>iteration until getting a program with acceptable quality.</LI></P></UL>
+<DIR>
+
+<P ALIGN="JUSTIFY">The large number of different evolutionary algorithms comes from the variation of non-restricted parameters and the different approaches in every step.</P>
+</FONT><B><P>4.2. Kodjabachian and Meyer's simple geometry-oriented cellular enconding scheme</P>
+</B><FONT SIZE=2><P ALIGN="JUSTIFY">This evolutionary approach to the animat problem is a representative example because it reveals a lot of details of the method [12]. The task is to create a six-legged animat's control architecture which can move in one dimension and after improvements can follow gradients and avoid obstacles.</P>
+<P ALIGN="JUSTIFY">The first step of the work is to design a suitable encoding scheme of the creature's neural controller to a genetically manipulable form. The chosen form is a tree labeled by instructions. It is easy to perform a mutation on a subtree or a recombination on subtrees. Each developing cell in the animat contains a copy of this tree which works as a program determining the development of the neural network. The useful instructions are the following: </P></DIR>
+</FONT>
+<P ALIGN="CENTER"><CENTER><TABLE CELLSPACING=0 BORDER=0 CELLPADDING=7 WIDTH=378>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<B><FONT FACE="Courier New" SIZE=1><P>DIVIDE <FONT FACE="Symbol">&#97;</FONT>
+ r</B></FONT></TD>
+<TD WIDTH="75%" VALIGN="TOP">
+<FONT FACE="Courier New" SIZE=1><P>create a new cell</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<B><FONT FACE="Courier New" SIZE=1><P>GROW <FONT FACE="Symbol">&#97;</FONT>
+ r <FONT FACE="Symbol">&#119;</FONT>
+ </B></FONT></TD>
+<TD WIDTH="75%" VALIGN="TOP">
+<FONT FACE="Courier New" SIZE=1><P>create a connection to another cell</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<B><FONT FACE="Courier New" SIZE=1><P>DRAW <FONT FACE="Symbol">&#97;</FONT>
+ r <FONT FACE="Symbol">&#119;</FONT>
+ </B></FONT></TD>
+<TD WIDTH="75%" VALIGN="TOP">
+<FONT FACE="Courier New" SIZE=1><P>create a connection from another cell</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<B><FONT FACE="Courier New" SIZE=1><P>SETBIAS b</B></FONT></TD>
+<TD WIDTH="75%" VALIGN="TOP">
+<FONT FACE="Courier New" SIZE=1><P>modify the bias parameter</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<B><FONT FACE="Courier New" SIZE=1><P>SETTAU <FONT FACE="Symbol">&#116;</FONT>
+</B></FONT></TD>
+<TD WIDTH="75%" VALIGN="TOP">
+<FONT FACE="Courier New" SIZE=1><P>modify the time constant parameter</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<B><FONT FACE="Courier New" SIZE=1><P>DIE</B></FONT></TD>
+<TD WIDTH="75%" VALIGN="TOP">
+<FONT FACE="Courier New" SIZE=1><P>trigger cellular death</FONT></TD>
+</TR>
+</TABLE>
+</CENTER></P>
+<DIR>
+
+<B><FONT FACE="Arial" SIZE=2><P>Table 1.</B> Basic network developmental instructions. After [12]</P>
+</FONT><FONT SIZE=2><P ALIGN="JUSTIFY">The execution of the instructions starts from precursor cells and is ordered by the structure of the cell's program tree: it starts at the root node reading the label and following it. Whenever the execution reaches a branch the leftmost branch contains the next instruction for this cell and the other branches will be executed as a new program parallel to their parent in their on coordinate system. After reading the last instruction of the program the cell stops developing and become an interneuron. The next figure shows an example on the development of a small network.  </P>
+<P ALIGN="CENTER"><IMG SRC="Image5.gif" WIDTH=432 HEIGHT=110></P>
+</FONT><B><FONT FACE="Arial" SIZE=2><P>Figure 5.</B> The effect of a sample developmental code. After [12]</P>
+</FONT><FONT SIZE=2><P ALIGN="JUSTIFY">Executing the divide instruction at the state of the first picture creates a new cell at the angle <FONT FACE="Symbol">&#97;</FONT>
+ and the distance r from the developing cell. The execution branches, the left side will grow a connection near to the left neuron and the right side will grow a connection somewhere in the middle. These hanging connections will be connected to the closest neuron: to the left one and to the child itself. Reading the last instructions of the tree the cells become interneurons.</P>
+<P ALIGN="JUSTIFY">It is worth mentioning that the trees' structure is constrained syntactically to reduce the size of the genetic search-space. A context-free grammar is defined which results networks limited to the size of 8 neurons and 32 connections. As it is shown this relatively small network is still enough to meet the requirements.</P>
+<P ALIGN="JUSTIFY">After the development of the neural network from the genetical code the network will work according to its dynamics. The neurons are governed by a leaky integrator model that has already been used in a lot of applications. The mean membrane potential mi of neuron i changes according to the following equation:</P><DIR>
+<DIR>
+<DIR>
+<DIR>
+
+</FONT><FONT SIZE=3><P><FONT FACE="Symbol">&#116;</FONT>
+i . dmi/dt = –mi + <FONT FACE="Symbol">&#83;</FONT>
+j wij xj + Ii</FONT><FONT SIZE=2>  ,</P></DIR>
+</DIR>
+</DIR>
+</DIR>
+
+<P ALIGN="JUSTIFY">where <FONT FACE="Symbol">&#116;</FONT>
+i is the time constant of the neuron’s membrane, xj is the neuron’s short-term average firing frequency and Ii is the sensorial input.</P>
+<P ALIGN="JUSTIFY">After deciding about the basic building blocks of the task it is necessary to determine the parameters of the algorithm used on the population of program trees. First the size of the substrate, the positions of the sensors, the motors and the precursor cells connected to the controller has to be fixed. On this background 200 randomly generated programs serve as a starting population. In every creation of a new population generation the following procedure is applied:</P></DIR>
+
+
+<UL>
+<P ALIGN="JUSTIFY"><LI>two programs are chosen in a neighbourhood and the better performing is selected to modify by genetical operators</LI></P>
+<P ALIGN="JUSTIFY"><LI>recombination (change of two compatible subtrees) is used with the probability pc, structure mutation (change of a subtree to a randomly generated one) is used with the probability pm and constant perturbation (change some of the numerical parameters of the tree) is used with the probability 1</LI></P>
+<P ALIGN="JUSTIFY"><LI>the fitness of this new controller is measured within a simulated environment</LI></P>
+<P ALIGN="JUSTIFY"><LI>two programs are chosen and the worse performing is replaced with the new one.</LI></P></UL>
+<DIR>
+
+<P ALIGN="JUSTIFY">The fitness function is the distance covered by the animat controlled by the evolved program increased with the leg frequency terms to reward the fast non-jumping but running movements.</P>
+<P ALIGN="JUSTIFY">In a series of five experiments 100,000 replacements in each were made and one out of the five best controllers shows non-symmetric tripod gait that is the natural behaviour of a large number of insects. This tripod gait could be obtained with intrinsic periodic activity produced by <I>central pattern generators</I>, opposite legs have to work out of phase and the middle leg has to work in phase with first and the last opposite ones. One leg's periodic activity is ensured with an oscillator where the membrane potentials oscillate according to the excitatory and inhibitory connections in the circuitry.</P>
+<P ALIGN="CENTER"><IMG SRC="Image6.gif" WIDTH=236 HEIGHT=116></P>
+</FONT><B><FONT FACE="Arial" SIZE=2><P>Figure 6.</B> A basic oscillator. After [12]</P>
+</FONT><FONT SIZE=2><P ALIGN="JUSTIFY">At this point we have an insect-like animat with biologically acceptable walking behaviour. This creature can serve as a basic module to animats performing more complicated tasks. This incremental approach is good way focusing our attention to the desired capability and it radically decreases the problem complexity and the search space. </P>
+<P ALIGN="JUSTIFY">In the following experiments new modules implement the starting and the stopping of the animat, gradient-following and obstacle avoidance [13]. These new neural networks are connected to the basic module altering its inner working. The creation of these modules is the same as the basic one's: evolution of the controller in question until an acceptable candidate appears. </P>
+<P ALIGN="JUSTIFY">Although the evolution of a good animat is time consuming and causes a heavy computational load, the result is reliable, robust and shows a quite complex behaviour with minimal representational costs.</P></DIR>
+
+</FONT><B><FONT SIZE=4><P>5. Conclusions</P><DIR>
+
+</B></FONT><FONT SIZE=2><P ALIGN="JUSTIFY">After reviewing the literature we can state that there are several useful models and controlling methods in the field of autonomous creatures. The chosen architectures are usually simple to overview and to handle, and what is more important they work. An animat equipped with one of these controllers is embedded in the world the lack of which was a big shortcoming in artificial intelligence so far.</P>
+<P ALIGN="JUSTIFY">On the other hand there is always a compromise between the number of available solutions and the complexity of the method: for better performing animats we have to pay with time, memory or computational load so we are not able to find the fittest and simplest in one and we do not know how far we are from that. Other problem is that the animats are too task-specific, they only scratch the surface of possible problems and there has not been a general solution to correctly simulate — at least —  a simple living being and even a human.  </P>
+<P ALIGN="JUSTIFY">Finally borrowing the striking statements of [2] we can conclude that it may take a long time before we see an animat as complicated as an insect. Conversely, it may take a long time before we see an animat as simple as an insect.</P></DIR>
+
+</FONT><B><FONT SIZE=4><P>Acknowledgements</P><DIR>
+
+</B></FONT><FONT SIZE=2><P>Thanks to my supervisor Gy&ouml;rgy Kampis for his useful comments on the drafts of this paper and thanks to Andr&aacute;s Salamon for his constructive ideas.</P></DIR>
+
+</FONT><B><FONT SIZE=4><P>References</P><DIR>
+
+</B></FONT><FONT SIZE=2><P ALIGN="JUSTIFY">[1]  S. Smoliar: C. G. Langton, ed., Artificial life, Book review, Artificial Intelligence 73 (1995) pp. 371-377.</P>
+<P ALIGN="JUSTIFY">[2]  M. Brand, P. Prokopowicz &amp; C. Elliott: J-A. Meyer ans S. W. Wilson eds., From animals to animats I., Proc. 1<SUP>st</SUP> conference on simulation of adaptive behaviour, Book review, Artificial Intelligence 73 (1995) pp. 307-322.</P>
+<P ALIGN="JUSTIFY">[3]  A. Guillot &amp; J-A. Meyer: Synthetic animals in synthetic worlds, In Kunii et Luciani (Eds), Synthetic Worlds, John Wiley and Sons, In press.</P>
+<P ALIGN="JUSTIFY">[4] P. P. van der Smagt &amp; B. J. A. Krose: Artificial neural networks, Elsevier Science Publishers B. V., 1991.</P>
+<P ALIGN="JUSTIFY">[5] V. Braitenberg: Vehicles, Bradford Book/ MIT Press, Cambridge, MA, 1984.</P>
+<P ALIGN="JUSTIFY">[6] R. D. Beer: Intelligence as adaptive behavior: an experiment in computational neuroethology, Academic Press, 1990.</P>
+<P ALIGN="JUSTIFY">[7] G. Wyeth: Neural mechanisms for training autonomous robots, Proc. of mechatronics and machine vision in practice 4, IEEE Computer Society Press, (1997) pp. 194-199.</P>
+<P ALIGN="JUSTIFY">[8] G. Wyeth: Hunt and gather robotics, International Conference on Field and Service Robotics, (1997) pp.334-341.</P>
+<P ALIGN="JUSTIFY">[9] A. G. Barto &amp; R. S. Sutton: Landmark learning: an illustration of associative search, Biological Cybernetics 42, (1981) pp. 1-8.</P>
+<P ALIGN="JUSTIFY">[10] B. J. A. Krose &amp; J. W. M. van Dam: Learning to avoid collisions: A reinforcement learning paradigm for mobile robot navigation, Proceedings of the 1992 IFAC/IFIP/IMACS Symposium on Artificial Intelligence in Real-Time control, (1992) pp. 295—301. </P>
+<P ALIGN="JUSTIFY">[11] U. Nehmzow &amp; T. Smithers: Mapbuilding using self-organising networks in "Really Useful Robots", From animals to animats I., Proc. 1<SUP>st</SUP> conference on simulation of adaptive behaviour, MIT Press, 1991.</P>
+<P ALIGN="JUSTIFY">[12] J. Kodjabachian &amp; J-A. Meyer: Evolution and development of modular control architectures for 1-D locomotion in six-legged animats, 1997, Submitted for publication </P>
+<P ALIGN="JUSTIFY">[13] J. Kodjabachian &amp; J-A. Meyer: Evolution and development of neural networks controlling locomotion, gradient-following, and obstacle-avoidance in artificial insects, 1997, Submitted for publication </P>
+</DIR>
+</FONT></BODY>
+</HTML>

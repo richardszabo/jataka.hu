@@ -1,0 +1,68 @@
+#magyarorszag {
+    width: 55%;
+}
+#start {
+    left: 40%;
+    right: 40%;
+}
+.input_panel {
+    top: 32%;
+}
+@media only screen and (max-width: 900px) {
+    #magyarorszag {
+        width: 95%;
+    }
+    #start {
+        left: 10%;
+        right: 10%;
+    }
+    .input_panel {
+        top: 5%;
+    }
+}
+
+#level_selector {
+    overflow: hidden;
+    text-align: center;
+}
+#level_selector label {
+    display: inline-block;
+    margin:4px;
+    background-color:#EFEFEF;
+    border-radius:4px;
+    border: 2px solid #333333;
+}
+#level_selector label span {
+    text-align:center;
+    padding:0.5em;
+    display:block;
+}
+
+#level_selector label input {
+    visibility:hidden;
+    position:absolute;
+    top:-2000px;
+    background-color:#404040;
+    color:#F7F7F7;
+}
+
+#level_selector label {
+    background-color:#404040;
+    color:#F7F7F7;
+}
+#level_selector input:checked + span {
+    background-color:#667755;
+}
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+#footer p {
+    font-size: 75%;
+    font-style: italic;
+    float: left;
+}
+#footer div {
+    float: right;
+}

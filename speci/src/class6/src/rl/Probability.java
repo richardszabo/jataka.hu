@@ -1,0 +1,34 @@
+package rl;
+
+/**
+ * Wrapping class of the mathematical proba 
+ */
+public class Probability {
+    double p;
+    
+    public Probability() {
+	p = 0.0;
+    }
+
+    public Probability(double p) throws InvalidProbabilityException {
+	this.setProbability(p);
+    }
+
+    /**
+     * Returns a value between 0 and 1 inclusive.
+     */
+    public double getProbability() {
+	return p;
+    }
+
+    /**
+     * Sets the probability.
+     */
+    public void setProbability(double prob) throws InvalidProbabilityException {
+	if( prob < 0 || prob > 1 ) {
+	    throw new InvalidProbabilityException();
+	} else {
+	    p = prob;
+        }
+    }
+}

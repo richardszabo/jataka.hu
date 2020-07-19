@@ -1,0 +1,115 @@
+#include "NXCDefs.h"
+
+#define min(a,b) ((a)<(b)?(a):(b))
+#define max(a,b) ((a)>(b)?(a):(b))
+
+#define SCREEN_WIDTH 100
+#define SCREEN_HEIGHT 65
+
+
+#define MAX_SENSE_DIST 100
+
+#define PRECISION 36
+int dist[PRECISION];
+int dir[PRECISION];
+int pos;
+
+struct point {
+   int x;
+   int y;
+};
+
+struct screen_point {
+   int x;
+   int y;
+
+};
+
+void scp2p(screen_point scp, point &p) {
+      p.x = scp.x - SCREEN_WIDTH/2;
+      p.y = scp.y - SCREEN_HEIGHT/2;
+}
+
+void p2scp(point p,screen_point &scp) {
+      scp.x = p.x + SCREEN_WIDTH/2;
+      scp.y = p.y + SCREEN_HEIGHT/2;
+}
+
+// converts object distance to line length on screen
+void dist2length(int d, int &len) {
+    len = d * min(SCREEN_WIDTH,SCREEN_HEIGHT);
+    len = len / MAX_SENSE_DIST;
+}
+
+// converts d distance in a angle (in degrees)
+// to a position in robot coordinate
+void dist2point(int d, int a, point &p) {
+    int l;
+    int angle;
+    dist2length(d,l);
+    // / 100 is necessary because cos and sin values are returned in (-100,100)
+    // +90 in angle is necessary to keep the image parallel with the robot body
+    angle = a+90;
+    p.x = l * Cos(angle) / 100;
+    p.y = l * Sin(angle) / 100;
+}
+
+// displays current senses
+void display_senses(void) {
+     int i;
+     point p;
+     screen_point scp;
+     screen_point orig;
+
+     ClearScreen();
+     p.x = 0; p.y = 0;
+     p2scp(p,orig);
+     for( i = 0; i < PRECISION; ++i ) {
+         dist2point(dist[i],dir[i],p);
+         p2scp(p,scp);
+         LineOut(orig.x, orig.y,scp.x,scp.y);
+     }
+}
+
+// stores ultrasonic value in the current head direction
+void collect_data(void) {
+    dist[pos] = SensorUS(IN_2);
+    dir[pos] = -1 * MotorTachoCount(OUT_A);
+    pos = (pos+1)%PRECISION;
+    Wait(10);
+}
+
+// collects ultrasonic data and
+// displays sensed information
+task sense() {
+     int i;
+
+     SetSensorLowspeed(IN_2);
+     ResetTachoCount(OUT_A);
+
+     while(true) {
+          // stores ultrasonic value in the current head direction
+          for( i = 0; i < PRECISION; ++i ) {
+              collect_data();
+          }
+
+          // display sensed values
+          display_senses();
+     }
+}
+
+// rotates the sonar to sense objects around the robot
+task rotate() {
+     while(true) {
+          // turning from right to left
+          RotateMotor(OUT_A,50,-360);
+          // turning back
+          RotateMotor(OUT_A,50,360);
+     }
+}
+
+// the main program
+task main() {
+     start rotate;
+     start sense;
+}

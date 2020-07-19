@@ -1,0 +1,624 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+                      "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+<h1>Mobil robotok szimulációja speci 11. óra</h1>
+
+<h2>Lego robotok</h2>
+<ul>
+<li>
+Gyermekkori konstrukciós játék, számítástechnikai támogatással
+kiegészítve.
+</li>
+<li>
+A Lego filozófiája: minden korosztály érdekelt a
+kisiskolásoktól a képzett programozókig. 
+</li>
+<li>
+RCX hardver- és NQC szoftvereszköz, mellett egyebek is. (MIT)
+</li>
+</ul>
+
+<h3>RCX</h3>
+<ul>
+<li>
+Népszerû az ELTÉ-n is használt hardvereszköz.
+</li>
+<li>
+Programozható, mikrokontroller alapú, Lego kocka a
+Robot Feltaláló Rendszer (Robotic Invention System) eleme. <br />
+<img src="pict/lego/RCX.jpg" alt="RCX">
+</li>
+<li>
+Megszokott csatlakozással felszerelhetõ, 
+három aktor, három szenzor kezelhetõ.
+<li>
+Infravörös port irányításra és lefordított programok letöltésére.
+</li>
+<li>
+H8/3292 típusú Hitachi mikrokontroller, mely 32 kilobájt
+memória, 6 kilobájt hasznos bájtkód-terület: hat 
+felhasználói program egyidejû tárolására.<br />
+<img src="pict/lego/RCX_inside.jpg" alt="RCX_inside">
+</li>
+<li>
+Elõny: teljesen önállóság az elemek miatt.
+</li>
+<li>szenzorok: 
+    <ul>
+    <li>hõmérséklet 0 és 50 fok közötti
+    értékek analóg kijelzésére<br />
+    <img src="pict/lego/temp.jpg" alt="temp"></li>
+    <li> A fényszenzor 0,6 és 760 Lux között fényforrásokhoz
+    és színes Lego elemekhez. <br />
+    <img src="pict/lego/light.jpg" alt="light">
+    </li>
+    <li>Bináris nyomásérzékelés a kapcsolóval, két robothoz
+    vagy a robot saját alkatrészeihez.<br />
+    <img src="pict/lego/push.jpg" alt="push">
+    </li>
+    <li>A 16 fokozatú digitális elfordulásszenzor 
+    forgó alkatrészek mozgásának követésére.<br />
+    <img src="pict/lego/rotation.jpg" alt="rotation">
+    </li>
+    </ul>
+</li>
+<li>aktorok:
+  <ul>
+  <li>Nyolcfokozatú motor elõre-hátra mûködhet.<br />
+  <img src="pict/lego/motor.jpg" alt="motor">
+  </li>
+  <li>Lámpa robotkommunikációhoz.<br />
+  <img src="pict/lego/lamp.jpg" alt="lamp">
+  </li>
+  <li>Kürt: jelzés a fejlesztõnek.<br />
+  <img src="pict/lego/beeper.jpg" alt="beeper">
+  </li>
+  </ul>
+</li>
+</ul>
+
+<h3>A Robolab</h3>
+<ul>
+<li>
+A Lego cég által kiadott, hivatalos programozási felület.</li>
+<li>Gyerekeknek, oktatási célokra.<br />
+  <img src="pict/lego/robolab.png" alt="robolab"><br />
+  <img src="pict/lego/robolab2.png" alt="robolab2">
+</li>
+<li>Összefüggõ, irányított gráf építése, a gráf elemei egy zöld
+és egy piros jelzõlámpa között az ismert RCX szenzorok és aktorok.
+</li>
+<li>
+Bonyolultsági szintek a különbözõ korúaknak.
+</li>
+<li>
+NQC-nél szûkebb lehetõségek.
+</li>
+
+</ul>
+
+<h3>NQC</h3>
+<ul>
+<li>Az RCX programozásához, D. Baum fejlesztése, Not Quite C.
+</li>
+<li>Nqce, mely egy Java alapú szövegszerkesztõ.</li>
+<li>RCX Command Center Windows-on, irányításra is.<br />
+  <img src="pict/lego/RCX_cc.jpg" alt="RCX_cc">
+</li>
+<li>C-hez hasonló, egyszerû nyelv:  a kulcsszavak többsége, 
+a változónevek, a konstansok,
+a megjegyzések, az értékadások, a programkonstrukciók 
+és a függvényhívások képzése sem különbözik.
+</li>
+<li>A program itt is globális változók és eljárások halmaza,
+viszont léteznek szubrutinok vagy taszkok.
+</li>
+<li>A függvényeknek nincs visszatérési értéke,
+a szubrutinok kódot osztanak meg, de: szubrutinok nem hívhatják 
+meg egymást, szubrutinhoz nem tartozhat argumentum és visszatérési
+érték, sõt még lokális változó sem, és csak 8 lehet belõlük.
+</li>
+<li>
+Taszk kódok párhuzamos végrehajtására. 
+NQC taszk - RCX taszk, de maximum 10 lehet belõle.
+</li>
+<li>
+Csak int típusú változók, preprocesszor.
+</li>
+<li>Szenzorértékek (SENSOR_1), szenzortípusok (
+SENSOR_TYPE_ROTATION, SENSOR_TYPE_TEMPERATURE, SENSOR_TYPE_LIGHT, 
+SENSOR_TYPE_TOUCH, SENSOR_TYPE_NONE) az érzékelõfajtákra,
+szenzormódok (SENSOR_MODE_RAW,
+SENSOR_MODE_BOOL, SENSOR_MODE_EDGE,
+SENSOR_MODE_PULSE, SENSOR_MODE_PERCENT, 
+SENSOR_MODE_FAHRENHEIT, SENSOR_MODE_CELSIUS,
+SENSOR_MODE_ROTATION) a visszaadott érték alakítására:
+<ul>
+<li>
+<b>SetSensor(sensor,configuration)</b>
+Konfiguráció kiválasztása. Elõre definiált típus és mód párosok közül
+lehet választani.
+</li>
+<li>
+<b>SetSensorType(sensor,type)</b>
+Szenzortípus kiválasztása.
+</li>
+<li>
+<b>SetSensorMode(sensor,mode)</b>
+Szenzormód kiválasztása.
+</li>
+<li>
+<b>ClearSensor(sensor)</b>
+Szenzorérték törlése, kumulatív mennyiségek (elfordulás, periódus) mérése esetén.
+</li>
+<li>
+<b>SensorValue(n)</b>
+Szenzor aktuális értékének visszaadása. A további függvényeknél nem
+lehet a szenzorkonstansokat használni.
+</li>
+<li>
+<b>SensorType(n)</b>
+Szenzortípus visszaadása.
+</li>
+<li>
+<b>SensorMode(n)</b>
+Szenzormód visszaadása.
+</li>
+<li>
+<b>SensorValueBool(n)</b>
+Szenzor aktuális értékének logikai értékre konvertált visszaadása.
+</li>
+<li>
+<b>SensorValueRaw(n)</b>
+Szenzor értékének transzformáció nélküli visszaadása.
+</li>
+</ul>
+</li>
+<li>Aktoroknál: mód, irány, erõsség.
+<ul>
+<li>
+<b>SetOutput(outputs,mode)</b>
+Az aktor mûködési módjának beállítása.
+</li>
+<li>
+<b>SetDirection(outputs,direction)</b>
+Az aktor irányának beállítása.
+</li>
+<li>
+<b>SetPower(outputs,power)</b>
+Az aktor erõsségének beállítása 0 és 7 közötti értékekkel. 
+</li>
+<li>
+<b>OutputStatus(n)</b>
+Az aktuális beállítás visszaadása.
+</li>
+</ul>
+</li>
+<li>Ezen kívül: hang, LCD kijelzõ, kommunikáció, 
+idõzítõ, naplózás,...
+</li>
+
+</ul>
+
+<h2>Miniboard</h2>
+<ul>
+<li>
+Nyomtatott áramköri lapra integrált számítógép
+kisméretû motorok irányítására és szenzorok jeleinek 
+feldolgozására.<br />
+<img src="pict/lego/mb.png" alt="miniboard">
+</li>
+<li>F. Martin, 1992, MIT Lego robotverseny</li>
+<li>Motorola 6811, négy motor, nyolc analóg és 
+nyolc digitális szenzor, RS-232 port, 256 bájt RAM és 
+2 kilobájt programmemória.
+</li>
+<li>Futtatás/letöltés kapcsoló, egy megszakítás és egy
+reset gombbal tudja befolyásolni a kártya mûködését, visszajelzést a
+feszültség és a letöltés LED-ektõl kaphat.
+</li>
+
+<li>
+Assembly vagy Micro-C nyelven programozható.
+</li>
+
+<li>Micro-C utasítások:
+<ul>
+<li>
+<b>analog(int port)</b>
+Analóg szenzor aktuális értékének lekérdezése, a válasz 0 és 255
+között lehet.
+</li>
+<li>
+<b>digital(int port)</b>
+Digitális szenzor aktuális értékének lekérdezése.
+</li>
+<li>
+<b>motor(int m, int s)</b>
+Az m. motor s erõre állítása, ahol s +16 és -16 között mozoghat.
+</li>
+<li>
+<b>off(int m)</b>
+Motor kikapcsolása, ekvivalens motor(m,0)-val. 
+</li>
+<li>
+<b>button()</b>
+A függvény 1-et ad vissza, ha az utolsó meghívása óta eltelt idõben a
+megszakítás gombot lenyomták.
+</li>
+<li>
+<b>msleep(int msec)</b>
+A kártya nem hajt végre semmilyen mûveletet msec milliszekundumig.
+</li>
+<li>
+<b>tone(int freq,int duration)</b>
+Hang generálása freq frekvenciával, ami a második paraméternek
+megfelelõ ezredmásodpercig hallatszik.
+</li>
+<li>
+<b>printdec(int num)</b>
+Szám írása a soros portra, hibakereséshez jól használható.
+</li>
+<li>
+<b>getch()</b>
+Karakter fogadása a soros porton keresztül.
+</li>
+<li>
+<b>time</b>
+Az idõ múlását jelzõ integer változó másodpercenként 1000-ig jut
+el. Hozzáférni az extern int time deklarációval lehetséges.
+</li>
+<li>
+<b>rand(int limit)</b>
+Véletlenszám-generálás adott értékhatáron belül.
+</li>
+</ul>
+</li>
+
+</ul>
+
+<h3>A legOS</h3>
+
+<ul>
+<li>Nyílt forráskódú, beágyazott operációs rendszer az
+RCX-re.</li>
+<li>1998-ban indult, M. Noga fejlesztése.</li>
+
+<li>C-ben íródott operációs rendszer az RCX-be
+tölthetõ és ott a bájtkód-interpreter helyét foglalja el. 
+E mellé
+tölthetõek le a felhasználói programok, melyek 
+dinamikusan linkelõdnek
+az operációs rendszerhez.
+</li>
+<li>dsensor.h,dmotor.h és lnp alkönyvtár header fájljai.
+</li>
+<li>RCX-RCX és RCX-számítógép kommunikáció a LegOS Network Protocol
+(lnp) függvényei végzik. 
+</li>
+<li>RCX-RCX: broadcast és UDP-szerû címzés
+</li>
+<li>RCX-számítógép:
+linuxos PC-n futó lnpd démon
+lnp_addressing_write(uzenet,hossz,cimzett,port), 
+lnp_addressing_set_handler(port,elkapo_handler).
+</li>
+</ul>
+
+<h2>Biológiai vonatkozások</h2>
+<ul>
+  <li>robotika fõ célja intelligensen viselkedõ gépek létrehozása</li>
+  <li>természetben bevált módszerek alkalmazása</li>
+  <li>szinte minden absztrakt mûködéshez létezik biológiai megfelelõ</li>
+  <li>másrészrõl a biológia mélyebb megismerése</li>
+  <li>más szempontból is kettõs kapcsolat</li>
+  <li>mit? viselkedés tanulmányozása -&gt; életszerû viselkedés, etológia</li>
+  <li>hogyan? biológiai struktúrák másolása, idegrendszer -&gt;
+  neurobiológia</li>
+  <li>Csányi V., Érdi P., D. Redish munkái</li>
+  <li>a valóság szerteágazóbb, mint a robotikai megfelelõje
+</ul>
+
+<h2>Etológia</h2>
+    Az állatok viselkedésének vizsgálata
+
+<h3>Érzékelés és viselkedés</h3>
+    <ul>
+      <li>visszacsatolás szerepe az érzékelés és a viselkedés között</li>
+      <li>állandóság kiemelése, saját tevékenységek szerepe</li>
+      <li>érzékelési modalitások</li>
+      <li>belsõ receptorok: oxigén, szén-dioxid, ionkoncentráció,
+          hõmérséklet, vízháztartás, vércukorszint</li>
+      <li>szervek egymáshoz való viszonyának érzékelése: izomhosszúság,
+        végtagok elhajlása, egyensúly</li>
+      <li>hagyományos, külsõ érzékelõk: látás, hallás, szaglás, tapintás,
+        ízlelés, vibráció, fájdalom, külsõ hõmérséklet, ultrahang, elektromos
+        tér, polarizált fény, ...</li>
+      <li>az érzékelés szûrõi: a nagy információmennyiségbõl a lényeges elemek
+        kiválasztása</li>
+      <li>perifériás ingerszûrõk: az érzékszervek elõszûrése (béka
+        bogárdetektora)</li>
+      <li>központi ingerszûrõk: kulcsinger (vörösbegy vörös foltja), keresõkép
+        (szokatlan kinézetû tárgy keresése a lakásban)</li>
+    </ul>
+
+    <h3>Motiváció és belsõ állapot</h3>
+    <ul>
+      <li>belsõ környezet egyensúlyának megteremtése a változó körülmények
+        ellenére (testhõmérséklet, vízháztartás)</li>
+      <li>szabályozóciklusok, visszacsatolások (pozitív, negatív)</li>
+      <li>a viselkedés három fõ fázisa: appetencia, konszummáció,
+      szatiáció</li>
+      <li>appetencia: könnyen reagálás a kulcsingerekre, nagy késztetés</li>
+      <li>konszummáció: táplálék elfogyasztása, sokkal gépiesebb</li>
+      <li>szatiáció: nyugalmi idõszak, amikor az állat nem reagál az
+      ingerekre</li>
+      <li>a három fázis között a motivációk teremtik meg a kapcsolatot (evés:
+        gyomor teltsége, rágás mennyisége, vércukorszint (patkány))</li>
+      <li>motivációs modellek
+        <p><img src="pict/bio/siraly.jpg" alt="siraly"></p>
+      </li>
+    </ul>
+
+    <h3>Mozgásmintázatok szervezõdése</h3>
+    <ul>
+      <li>az egész tudomány az állatok megfigyelhetõ viselkedésével
+        foglalkozik</li>
+      <li>mozgás különbözõ szintjei: szövetek, szervek, egyedek,
+      populáció</li>
+      <li>viselkedés öröklött és tanult összetevõkbõl áll</li>
+      <li>öröklött mozgásmintázatok (ÖMM)
+        <ul>
+          <li>belsõ késztetés hatására váltódik ki</li>
+          <li>veleszületett, genetikailag meghatározott, fajspecifikus, de
+            egyedenként változó, az élet során bármikor szerepet játszhat</li>
+          <li>magasabbrendû fajoknál visszaszorul és a tanult formák
+            dominálnak</li>
+          <li>formaállandó, megszakíthatatlan, nincs visszacsatolás</li>
+          <li>például pók hálószövése, táplálék elrejtése (róka-tojás)</li>
+          <li>embernél is létezik: evés közben állandó körülnézés</li>
+          <li>használata tanulással módosítható: róka vészkiáltása</li>
+          <li>aktivitási központ</li>
+          <li>kifáradás, vákuumaktivitás</li>
+          <li>szimulációban elõre lekódolt mozgássorozat: Mzperx
+            körbefordulása</li>
+        </ul>
+      </li>
+      <li>reflexek
+        <ul>
+          <li>külsõ környezet hatásaira válaszreakció</li>
+          <li>inger be, latencia, bemelegedés, inger ki, utánlövés</li>
+          <li>pislogás, térdreflex, kutya vakaródzása</li>
+          <li>Pavlov: feltételes és feltétlen reflexek</li>
+        </ul>
+      </li>
+      <li>taxisok: az állat cselekvését az inger folyamatosan irányítja
+        <ul>
+	  <li>kinézis: a válasz arányos az ingerrel, de nem orientál 
+	  (papucsállatka - szén-dioxid-koncentráció)</li>
+          <li>klinotaxis: egymás után érkezõ ingerek intenzitáskülönbsége egy
+            szenzoron (kék dongólégy lárvájának fénykerülése)</li>
+          <li>tropotaxis: inger egyidejûleg két receptoron
+            (Braitenberg-jármûvek)</li>
+          <li>telotaxis: irány érzékelése egy szenzorszervvel is (vadászat egy
+            szemmel)</li>
+          <li>mnemotaxis: memória használata
+            <p><img src="pict/bio/tajek.jpg" alt="tajek"></p>
+          </li>
+        </ul>
+      </li>
+      <li>összetett mozgásmintázatok: az eddig felsorolt elemiekbõl építkezés
+        (nyári lúd tojásgörgetése)</li>
+      <li>mozgásmintázatok kölcsönhatásai: mozgásmintázatok hálózata, kizárás,
+        maga után vonás, és együtt megjelenés kapcsolati formákkal</li>
+    </ul>
+
+    <h3>A hormonok szerepe a viselkedésben</h3>
+    <ul>
+      <li>szabályozó funkciót betöltõ belsõ vegyületek</li>
+      <li>mirigyek vagy neuronok termelik</li>
+      <li>növekedés, anyagcsere, vízháztartás, szaporodás szabályozása</li>
+      <li>aktiválás: hormon jelenléte aktivál egy viselkedést
+        <ul>
+          <li>imádkozó sáska fej nélküli párzó mozgása - hasi idegdúc
+            hormonkibocsátásnak gátlása</li>
+          <li>báb kikelési idejének szabályozása</li>
+        </ul>
+      </li>
+      <li>organizációs hatás lassú egyedfejlõdési folyamatokon keresztül
+        <ul>
+          <li>rovarok állapotváltozásai</li>
+          <li>téli bunda</li>
+          <li>nemi hormon - szexuális aktivitás, agresszió,
+            dominanciaviszonyok</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h3>Biológiai ritmusok</h3>
+    <ul>
+      <li>lepkék hajnali kikelése a páratartalom szempontjából kedvezõ</li>
+      <li>biológiai óra: belsõ ritmusközpont és külsõ ritmusszinkronizáló
+        hatás</li>
+      <li>ritmicitás jellemzõi: ciklus, periódus, amplitúdó, amit sok minden
+        befolyásolhat</li>
+      <li>sokféleség: évi (téli alvás), napi (pihenés), napon belüli ritmusok
+        (evés), folyamatos (levegõvétel)</li>
+      <li>öröklött és tanult tényezõk</li>
+      <li>muslica esetében 24, 19 és 28 óra napi ciklusú egyedek
+        génkészletében az eltérés kimutatható</li>
+      <li>tanulás: egerek 20-28 órás napi ciklusra áthangolhatók</li>
+      <li>emberi több idõzónát érintõ repülés</li>
+      <li>deprivációs kísérletek</li>
+    </ul>
+
+    <h2>A magatartás idegélettani alapjai</h2>
+    <ul>
+      <li>fejlettebb élõlények viselkedését alapvetõen meghatározó
+        szervrendszer</li>
+      <li>alapvetõ szerkezeti egység a neuron</li>
+      <li>molekuláris szerkezetekbõl álló gép, amire vegyületek hatnak
+        <p><img src="pict/bio/neuronok.jpg" alt="neuronok"></p>
+      </li>
+      <li>sejttest, axon, dendrit, szinapszisok</li>
+      <li>információ terjedése a sejten belül elektromos úton
+        <p><img src="pict/bio/axon.jpg" alt="axon"></p>
+      </li>
+      <li>-70 mV nyugalmi potenciál (Na+ kívül, K+ belül), depolarizáció,
+        akciós potenciál (tüzelés), refrakter periódus (Na-K pumpa)</li>
+      <li>információ terjedése a sejtek között kémiai úton
+        <p><img src="pict/bio/szinapszis.jpg" alt="szinapszis"></p>
+      </li>
+      <li>szinaptikus hólyagocskák ingerületátvivó anyagokat választanak ki
+        (noradrenalin, acetilkolin, peptidek), dendrit depolarizációja</li>
+      <li>láthatóan bonyolultabb, mint az eddig vizsgált modellek</li>
+      <li>hálózatos idegrendszer</li>
+      <li>ember moduláris idegrendszere</li>
+      <li>
+        <table border="1">
+          <tbody>
+            <tr>
+              <td><b>Szint</b></td>
+              <td><b>Változók</b></td>
+              <td><b>Leíró egyenletek</b></td>
+            </tr>
+            <tr>
+              <td>molekula</td>
+              <td>kémiai összetétel</td>
+              <td>reakciókinetika</td>
+            </tr>
+            <tr>
+              <td>membrán</td>
+              <td>membránpotenciál</td>
+              <td>Hodgkin-Huxley egyenletek</td>
+            </tr>
+            <tr>
+              <td>sejt</td>
+              <td>sejtaktivitás</td>
+              <td>McCulloch-Pitts modell</td>
+            </tr>
+            <tr>
+              <td>szinapszis</td>
+              <td>szinpatikus erõsség</td>
+              <td>elemi tanulási szabályok (Hebb)</td>
+            </tr>
+            <tr>
+              <td>hálózat</td>
+              <td>szinaptikus erõsségi mátrix</td>
+              <td>tanulási szabályok</td>
+            </tr>
+            <tr>
+              <td>idegcentrum</td>
+              <td>hierarchikus modellek</td>
+              <td> </td>
+            </tr>
+            <tr>
+              <td>idegrendszer</td>
+              <td> </td>
+              <td> </td>
+            </tr>
+            <tr>
+            </tr>
+          </tbody>
+        </table>
+      </li>
+    </ul>
+
+    <h2>Kognitív térkép, környezeti modell</h2>
+    <ul>
+      <li>a kognitív térkép jellemzõi
+        <ul>
+          <li>memóriában tárolt információ a környezet jellegzetességeirõl,
+            viszonyairól (tanulás)</li>
+          <li>élõhely, rejtekhely, táplálék forrás felismerése,
+            összekapcsolása</li>
+          <li>sokáig nem hittek létezésében, de kísérletekkel bizonyítható
+            <p><img src="pict/bio/mehfarkas.jpg" alt="mehfarkas"></p>
+          </li>
+          <li>belsõ reprezentáció, ami nem hasonlít a hagyományos
+          térképekhez</li>
+          <li>fajspecifikus, nagyban függ a szenzoroktól</li>
+          <li>labirintustanulási kísérletek olyan állatokkal, melyek ilyen
+            környezetben otthonosan mozognak (hangyák, rágcsálók)
+            <p><img src="pict/bio/labirintus.jpg" alt="labirintus"></p>
+          </li>
+          <li>csimpánzok esetében már a környezet dinamikus modellje épül ki,
+            rendkívül hosszú emlékezéssel, és a változások követésével</li>
+          <li>öröklött instrukciók: a térképet csak elõre meghatározott
+            feladatokra lehet használni (cukormadár viráglátogatása - "nyersz
+            maradj- nyersz válts" stratégiák, labirintusos feladatok,
+            kismacska mélységérzékelése)</li>
+        </ul>
+      </li>
+      <li>a kognitív térkép felépítése rágcsálóknál
+        <ul>
+          <li>rengeteg különféle kísérlet: aréna, T, Y, + alakú szobák,
+            sugaras kiépítés
+            <p><img src="pict/bio/sugar.jpg" alt="sugar"></p>
+            összetett labirintusok</li>
+          <li>a legegyszerûbb mozgásformákhoz, amikor látható a cél, vagy fix
+            irányba lehet haladni, is komoly neurális háttér kapcsolódik</li>
+          <li>térképépítés több részfeladatra bontható: lokális kép, fejirány,
+            útvonalösszegzés, helykódolás, célmemória
+            <ul>
+              <li>a lokális kép eltárolása, a tereptárgyak megfelelõ
+                reprezentálása (pontszerû tereptárgyak, felületek, irányzékot
+                segítõ távoli tárgyak), nem feltétlenül csak látvány</li>
+              <li>fejirány kezelése
+                <ul>
+                  <li>ábra a fejiránysejtek gyûrûszerû elhelyezésérõl
+                    <p><img src="pict/bio/hd.jpg" alt="hd"></p>
+                  </li>
+                  <li>önszervezõdõ versenyzés a gyûrûben a stabil
+                    reprezentáció kialakulásához</li>
+                  <li>a gyõztes eltolódása a fej szögsebességének adatai
+                    alapján</li>
+                  <li>reset helyi kép alapján</li>
+                  <li>Postsubiculumban található sejtek képesek a
+                  fentiekre</li>
+                </ul>
+              </li>
+              <li>útvonalösszegzés a térbeli pozíciók egymáshoz viszonyított
+                helyzetének, távolságának rögzítéséhez
+                <p><img src="pict/bio/pi.jpg" alt="pi"></p>
+                <ul>
+                  <li>hajózásban régóta ismert eszköz</li>
+                  <li>metrikus koordináták megjegyzése</li>
+                  <li>vakon futás: új falba beleütközik a patkány</li>
+                </ul>
+              </li>
+              <li>a hely kódolása: az aktuális kép és az útvonalösszegzéssel
+                elõálló fizikai pozíció összekapcsolása
+                <ul>
+                  <li>hippocampus kiemelt szerepe</li>
+                  <li>place cell (helysejt), place field, fix helyen történõ
+                    tüzelés</li>
+                  <li>robusztus, sötétben is, de áthelyezésre érzékeny</li>
+                  <li>folyosókon iránya van, nyílt téren nincs</li>
+                  <li>több helyre is érzékenyek, többször tüzelnek</li>
+                  <li>különbözõ referencia keretekben teljesen másképp
+                    viselkednek</li>
+                </ul>
+              </li>
+              <li>célmemória</li>
+            </ul>
+          </li>
+          <li>ábra a funkcionális összefüggésekrõl
+            <p><img src="pict/bio/navifunc.jpg" alt="navifunc"></p>
+          </li>
+          <li>ábra a biológiai megvalósulásról
+            <p><img src="pict/bio/navibio.jpg" alt="navibio"></p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+</body>
+</html>
+
